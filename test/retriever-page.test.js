@@ -37,6 +37,7 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(html, />Analyze in Claude<\/span>/);
   assert.match(html, /id="claude-steps" hidden/);
   assert.match(html, /public reviews only · nothing stored/);
+  assert.equal((html.match(/href="\/setup">Claude \/ Codex setup<\/a>/g) ?? []).length, 2);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.doesNotMatch(html, /class="action-dock"/);
   assert.doesNotMatch(html, /id="claude-skill-modal"/);

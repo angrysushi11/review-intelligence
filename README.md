@@ -49,7 +49,7 @@ npm test
 npm start
 ```
 
-The local web interface starts at `http://127.0.0.1:8787`.
+The local web interface starts at `http://127.0.0.1:4173`.
 
 The command-line retriever writes a Markdown export to `./exports` by default:
 

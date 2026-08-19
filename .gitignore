@@ -12,3 +12,6 @@ output/
 review-intelligence.manifest.json
 web/review-retriever-og.svg.png
 *.tgz
+.vercel/
+.env.local
+.env.*.local
