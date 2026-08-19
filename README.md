@@ -41,7 +41,7 @@ The plugin lives in [`plugins/review-intelligence`](./plugins/review-intelligenc
 
 ## Run Review Retriever locally
 
-Review Retriever requires Node.js 18 or newer.
+Review Retriever supports Node.js 20 through 24.
 
 ```bash
 npm ci
