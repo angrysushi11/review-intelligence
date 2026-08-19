@@ -36,5 +36,7 @@ jobs:
         with:
           node-version: 24
       - run: npm install --global @openai/codex@0.148.0
-      - run: codex plugin marketplace add angrysushi11/review-intelligence --ref "$GITHUB_SHA" --json
+      - run: codex plugin marketplace add angrysushi11/review-intelligence --ref "$MARKETPLACE_REF" --json
+        env:
+          MARKETPLACE_REF: ${{ github.event.pull_request.head.sha || github.sha }}
       - run: codex plugin add review-intelligence@doubledash --json
