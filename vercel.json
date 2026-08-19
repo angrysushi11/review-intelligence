@@ -8,8 +8,6 @@
     { "src": "/mcp", "dest": "/api/mcp.js" },
     { "src": "/api/extract", "dest": "/api/extract.js" },
     { "src": "/setup/?", "dest": "/web/setup.html" },
-    { "src": "/setup.css", "dest": "/web/setup.css" },
-    { "src": "/setup.js", "dest": "/web/setup.js" },
     { "src": "/styles.css", "dest": "/web/styles.css" },
     { "src": "/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/app.js", "dest": "/web/app.js" },

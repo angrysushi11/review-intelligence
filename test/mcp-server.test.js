@@ -176,7 +176,7 @@ test("Streamable HTTP serializes review records for content-only clients and pre
     redirect: "manual"
   });
   assert.equal(browserGetResponse.status, 302);
-  assert.equal(browserGetResponse.headers.get("location"), "/setup#codex-connector");
+  assert.equal(browserGetResponse.headers.get("location"), "https://www.doubledash.me/tools/review-intelligence/mcp/");
   assert.equal(browserGetResponse.headers.get("cache-control"), "no-store");
   assert.equal(browserGetResponse.headers.get("vary"), "accept");
 

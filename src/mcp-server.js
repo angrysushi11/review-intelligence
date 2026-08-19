@@ -16,6 +16,7 @@ const SERVER_NAME = "review-retriever";
 const SERVER_VERSION = "1.0.0";
 const TOOL_NAME = "retrieve_app_reviews";
 const SCHEMA_VERSION = "review-retriever.v1";
+const POWER_USER_SETUP_URL = "https://www.doubledash.me/tools/review-intelligence/mcp/";
 
 const platformSchema = z.enum(["auto", "app_store", "google_play"]);
 const resolvedPlatformSchema = z.enum(["app_store", "google_play"]);
@@ -190,7 +191,7 @@ export function createMcpHttpHandler(options = {}) {
     if (request.method === "GET" && acceptsHtml(request)) {
       response.statusCode = 302;
       response.setHeader("cache-control", "no-store");
-      response.setHeader("location", "/setup#codex-connector");
+      response.setHeader("location", POWER_USER_SETUP_URL);
       response.setHeader("vary", "accept");
       return response.end();
     }

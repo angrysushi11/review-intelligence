@@ -489,6 +489,7 @@ export function buildDataset({
     sources,
     pages_fetched: pagesFetched,
     review_limit: reviewLimit,
+    app_icon_url: metadata.iconUrl || "",
     app_store_category: metadata.primaryGenreName || "",
     app_store_genres: metadata.genres || [],
     google_play_score: metadata.score ?? null,
@@ -518,6 +519,7 @@ async function fetchAppMetadata(appId, country) {
     const result = payload?.results?.[0] || {};
     return {
       appName: normalizeText(result.trackName || ""),
+      iconUrl: normalizeText(result.artworkUrl512 || result.artworkUrl100 || result.artworkUrl60 || ""),
       primaryGenreName: normalizeText(result.primaryGenreName || ""),
       genres: Array.isArray(result.genres) ? result.genres.map(normalizeText).filter(Boolean) : []
     };
@@ -830,7 +832,7 @@ function localeForCountry(country) {
 }
 
 function emptyMetadata() {
-  return { appName: "", primaryGenreName: "", genres: [] };
+  return { appName: "", iconUrl: "", primaryGenreName: "", genres: [] };
 }
 
 function normalizeText(value) {

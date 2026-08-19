@@ -149,6 +149,7 @@ async function fetchGooglePlayMetadata(gplay, { appId, lang, country }) {
     const app = await gplay.app({ appId, lang, country });
     return {
       appName: normalizeText(app?.title || ""),
+      iconUrl: normalizeText(app?.icon || ""),
       primaryGenreName: normalizeText(app?.genre || ""),
       genres: [app?.genre, app?.genreId].map(normalizeText).filter(Boolean),
       score: app?.score ?? null,
@@ -159,6 +160,7 @@ async function fetchGooglePlayMetadata(gplay, { appId, lang, country }) {
   } catch {
     return {
       appName: "",
+      iconUrl: "",
       primaryGenreName: "",
       genres: [],
       score: null,

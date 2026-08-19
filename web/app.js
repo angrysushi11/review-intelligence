@@ -12,6 +12,7 @@ const country = document.querySelector("#country");
 const error = document.querySelector("#form-error");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
+const appIcon = document.querySelector("#app-icon");
 const packetTitle = document.querySelector("#packet-title");
 const receiptMeta = document.querySelector("#receipt-meta");
 const packetLedger = document.querySelector("#packet-ledger");
@@ -55,6 +56,7 @@ startOver.addEventListener("click", resetRetriever);
 copyButton.addEventListener("click", copyMarkdown);
 downloadButton.addEventListener("click", downloadMarkdown);
 claudeButton.addEventListener("click", toggleClaudeSteps);
+appIcon.addEventListener("error", hideAppIcon);
 
 gptAnalysisLink.addEventListener("click", () => {
   track("review_analysis_open", { tool: "gpt", cta_id: "review_retriever_gpt" });
@@ -139,6 +141,7 @@ async function fetchReviews(link, selectedCountry) {
     filename: payload.filename || "reviews.md",
     count: Number(dataset.reviews_exported || 0),
     appName: dataset.app_name || "App",
+    iconUrl: safeImageUrl(dataset.app_icon_url),
     appId: dataset.app_id || "",
     store: platformLabel(dataset.platform),
     country: dataset.country || selectedCountry,
@@ -228,7 +231,8 @@ function renderSamples(samples) {
 }
 
 function renderPacket(result) {
-  packetTitle.textContent = `${result.appName} review export`;
+  packetTitle.textContent = result.appName;
+  renderAppIcon(result);
   const note = packetNote(result);
   receiptMeta.textContent = note;
   receiptMeta.hidden = !note;
@@ -251,6 +255,32 @@ function renderPacket(result) {
     row.append(term, detail);
     return row;
   }));
+}
+
+function renderAppIcon(result) {
+  if (!result.iconUrl) {
+    hideAppIcon();
+    return;
+  }
+
+  appIcon.alt = `${result.appName} app icon`;
+  appIcon.src = result.iconUrl;
+  appIcon.hidden = false;
+}
+
+function hideAppIcon() {
+  appIcon.hidden = true;
+  appIcon.alt = "";
+  appIcon.removeAttribute("src");
+}
+
+function safeImageUrl(value) {
+  try {
+    const url = new URL(String(value || ""));
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
 }
 
 function packetNote(result) {
@@ -289,6 +319,7 @@ function resetRetriever() {
   markdown = "";
   currentFilename = "reviews.md";
   packetTitle.textContent = "Reviews exported";
+  hideAppIcon();
   receiptMeta.textContent = "";
   receiptMeta.hidden = true;
   packetLedger.replaceChildren();

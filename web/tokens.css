@@ -13,5 +13,5 @@
   --error: #9b3a2e;
   --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   --font-hand: "Caveat", cursive;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }

@@ -11,6 +11,7 @@ const rootDir = path.resolve(__dirname, "..");
 const webDir = path.join(rootDir, "web");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
+const powerUserSetupUrl = "https://www.doubledash.me/tools/review-intelligence/mcp/";
 
 const server = createServer(async (request, response) => {
   try {
@@ -21,7 +22,8 @@ const server = createServer(async (request, response) => {
     }
 
     if (request.method === "GET" && (url.pathname === "/setup" || url.pathname === "/setup/")) {
-      return serveFile(response, path.join(webDir, "setup.html"));
+      response.writeHead(302, { location: powerUserSetupUrl });
+      return response.end();
     }
 
     if (request.method === "GET" && url.pathname === "/api/countries") {
