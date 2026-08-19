@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Review Retriever Setup</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="Retrieve public App Store and Google Play reviews for analysis in the Review Intelligence Custom GPT, Claude, or Codex.">
+    <link rel="canonical" href="https://reviews.doubledash.me/setup">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reviews.doubledash.me/setup">
+    <meta property="og:title" content="Review Retriever">
+    <meta property="og:description" content="Retrieve public App Store and Google Play reviews for analysis in the Review Intelligence Custom GPT, Claude, or Codex.">
+    <meta property="og:image" content="https://reviews.doubledash.me/review-retriever-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Review Retriever">
+    <meta name="twitter:description" content="Retrieve public App Store and Google Play reviews for analysis in the Review Intelligence Custom GPT, Claude, or Codex.">
+    <meta name="twitter:image" content="https://reviews.doubledash.me/review-retriever-og.png">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/setup.css">
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      if (window.location.hostname === "reviews.doubledash.me") {
+        const analyticsScript = document.createElement("script");
+        analyticsScript.async = true;
+        analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5W48W3ZCBF";
+        document.head.append(analyticsScript);
+        gtag("js", new Date());
+        gtag("config", "G-5W48W3ZCBF");
+      }
+    </script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <h1>Review Retriever</h1>
+            <p>Custom GPT needs a Markdown file. Claude and Codex can work from the app link after their one-time setup.</p>
+          </div>
+          <a class="topbar-link" href="https://www.doubledash.me/tools/review-intelligence/">Review Intelligence</a>
+        </header>
+
+        <section id="codex-connector" class="route-selector" aria-labelledby="route-title">
+          <div class="route-heading">
+            <h2 id="route-title" class="section-title">Three ways to use it</h2>
+            <p>Use the route for the tool where you want to analyze the reviews.</p>
+          </div>
+
+          <div class="route-list">
+            <article class="route-card">
+              <div class="route-card-main">
+                <p class="route-label">Custom GPT</p>
+                <h3>Export reviews, then upload</h3>
+                <p>The Custom GPT cannot call Review Retriever directly. This is the only route that needs a Markdown file.</p>
+              </div>
+              <div class="route-card-body">
+                <ol class="route-steps">
+                  <li>Paste the app link below, choose the country, and select <strong>Extract Reviews</strong>.</li>
+                  <li>Copy or download the generated Markdown file.</li>
+                  <li>Upload the file to the Custom GPT and ask for review analysis.</li>
+                </ol>
+                <div class="route-actions">
+                  <a class="route-link" href="#manual-export">Create the export</a>
+                  <a id="gpt-analysis-link" class="route-link route-link-secondary" href="https://chatgpt.com/g/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noreferrer">Open the Custom GPT</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="route-card route-card-connected">
+              <div class="route-card-main">
+                <p class="route-label">Claude</p>
+                <h3>Connect once, then paste the app link</h3>
+                <p>Claude retrieves and analyzes the reviews in the same chat. After setup, you do not need to return here or create an export.</p>
+                <p class="route-note">Available on Free, Pro, Max, Team, and Enterprise. Free accounts can add one custom connector.</p>
+              </div>
+              <div class="route-card-body">
+                <ol class="route-steps">
+                  <li>Download the Review Intelligence skill. Open Claude Skills and select <strong>Add → Upload a skill</strong>. Choose the ZIP and turn the skill on.</li>
+                  <li>Connect Review Retriever. Leave the optional OAuth client fields empty, select <strong>Add</strong>, then <strong>Connect</strong>.</li>
+                  <li>Start a new chat. Use <strong>+ → Connectors</strong> to enable Review Retriever. Paste the app link and country; approve the read-only retrieval tool when Claude asks.</li>
+                </ol>
+                <div class="route-actions">
+                  <a id="claude-skill-download" class="route-link" href="/app-review-growth-analyzer-skill.zip" download>Download the skill</a>
+                  <a id="claude-skills-link" class="route-link route-link-secondary" href="https://claude.ai/customize/skills" target="_blank" rel="noreferrer">Open Claude Skills</a>
+                  <a id="claude-connector-link" class="route-link route-link-secondary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noreferrer">Connect Review Retriever</a>
+                </div>
+                <div class="prompt-example">
+                  <span>First prompt</span>
+                  <code>Analyze reviews for [app URL] in the US market. Use Review Retriever, then give me the first useful read.</code>
+                </div>
+              </div>
+            </article>
+
+            <article class="route-card">
+              <div class="route-card-main">
+                <p class="route-label">Codex / Work</p>
+                <h3>Install once, then paste the app link</h3>
+                <p>The Review Intelligence plugin includes the analysis skill and the Review Retriever connection. No Markdown export is needed.</p>
+                <p class="route-note">The GitHub release is available for Codex. A separate public-directory listing for Work is still pending.</p>
+              </div>
+              <div class="route-card-body">
+                <ol class="route-steps">
+                  <li>Add the DoubleDash plugin marketplace in Codex.</li>
+                  <li>Install Review Intelligence, then start a new task so the plugin loads.</li>
+                  <li>Paste the App Store or Google Play link, add the country if it matters, and ask for review analysis.</li>
+                </ol>
+                <div class="install-commands" aria-label="Codex installation commands">
+                  <code>codex plugin marketplace add angrysushi11/review-intelligence --ref main</code>
+                  <code>codex plugin add review-intelligence@doubledash</code>
+                </div>
+                <div class="route-actions">
+                  <a id="codex-plugin-guide" class="route-link" href="https://github.com/angrysushi11/review-intelligence/tree/main/plugins/review-intelligence#install-from-github" target="_blank" rel="noreferrer">Open the install guide</a>
+                </div>
+                <div class="prompt-example">
+                  <span>First prompt</span>
+                  <code>Analyze reviews for [app URL] in the US market. Retrieve the reviews, then give me the first useful read.</code>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="manual-export" class="manual-export" aria-labelledby="manual-export-title">
+          <div class="manual-export-heading">
+            <h2 id="manual-export-title" class="section-title">Extract reviews</h2>
+          </div>
+
+          <form id="extract-form" class="controls">
+            <label class="field field-url">
+              <span>App URL</span>
+              <input id="app-url" name="url" type="url" placeholder="https://apps.apple.com/... or https://play.google.com/store/apps/details?id=..." required>
+            </label>
+
+            <label class="field field-country">
+              <span>Country</span>
+              <input id="market" name="market" type="hidden" value="us">
+              <div class="country-picker">
+                <button
+                  id="country-button"
+                  class="country-button"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-controls="country-list"
+                >United States</button>
+                <div id="country-list" class="country-list" role="listbox" hidden></div>
+              </div>
+            </label>
+
+            <button id="extract-button" type="submit">Extract Reviews</button>
+          </form>
+
+          <section id="status" class="status" aria-live="polite">Apple public review feeds can be inconsistent. If an App Store export returns 0 or only 10 visible reviews, try again in a minute.</section>
+
+          <section class="result-layout">
+            <aside class="dataset-panel">
+              <h2>Dataset</h2>
+              <dl id="dataset"></dl>
+            </aside>
+
+            <section class="markdown-panel">
+              <div class="panel-header">
+                <h2>Markdown</h2>
+                <div class="button-row">
+                  <button id="copy-button" type="button" disabled>Copy</button>
+                  <button id="download-button" type="button" disabled>Download .md</button>
+                </div>
+              </div>
+              <textarea id="markdown-output" spellcheck="false" placeholder="Your extracted reviews will appear here."></textarea>
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Review Retriever collects public written reviews. Review Intelligence analyzes them.</p>
+      <nav aria-label="Related links">
+        <a href="https://www.doubledash.me/tools/review-intelligence/">Review Intelligence</a>
+        <a href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
+      </nav>
+    </footer>
+
+    <script type="module" src="/setup.js"></script>
+  </body>
+</html>

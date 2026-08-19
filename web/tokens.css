@@ -1,0 +1,17 @@
+:root {
+  --paper: #f7f4ec;
+  --well: #efe9da;
+  --well-focus: #fbf9f3;
+  --ink: #1a1a18;
+  --ink-soft: #3d3a34;
+  --ink-faint: #6b675e;
+  --pencil: #8a8578;
+  --rule: #d9d3c4;
+  --pen: #3a6b5c;
+  --placeholder: #a9a396;
+  --outline-soft: #b9b3a3;
+  --error: #9b3a2e;
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --font-hand: "Caveat", cursive;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

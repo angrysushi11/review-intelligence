@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "review-intelligence": {
+      "type": "http",
+      "url": "https://reviews.doubledash.me/mcp"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "review-retriever",
+  "version": "0.1.0",
+  "description": "Fetch App Store and Google Play reviews and export them as Markdown for external LLM analysis.",
+  "license": "Apache-2.0",
+  "homepage": "https://www.doubledash.me/tools/review-intelligence/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angrysushi11/review-intelligence.git"
+  },
+  "type": "module",
+  "private": true,
+  "bin": {
+    "review-retriever": "./bin/review-retriever.js"
+  },
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "node --test",
+    "check:package": "npm pack --dry-run --json | node ./scripts/check-public-package.mjs"
+  },
+  "files": [
+    "api/",
+    "bin/",
+    "src/",
+    "web/",
+    "plugins/",
+    ".agents/plugins/marketplace.json",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE",
+    "NOTICE",
+    "vercel.json"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "google-play-scraper": "^10.0.0",
+    "zod": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

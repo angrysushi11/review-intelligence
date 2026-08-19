@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Review Retriever</title>
+    <meta name="description" content="Paste an App Store or Google Play link. Get up to 500 public written reviews, ready to analyze.">
+    <link rel="canonical" href="https://reviews.doubledash.me/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reviews.doubledash.me/">
+    <meta property="og:title" content="Review Retriever">
+    <meta property="og:description" content="Paste an App Store or Google Play link. Get up to 500 public written reviews, ready to analyze.">
+    <meta property="og:image" content="https://reviews.doubledash.me/review-retriever-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Review Retriever">
+    <meta name="twitter:description" content="Paste an App Store or Google Play link. Get up to 500 public written reviews, ready to analyze.">
+    <meta name="twitter:image" content="https://reviews.doubledash.me/review-retriever-og.png">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      if (window.location.hostname === "reviews.doubledash.me") {
+        const analyticsScript = document.createElement("script");
+        analyticsScript.async = true;
+        analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5W48W3ZCBF";
+        document.head.appendChild(analyticsScript);
+        gtag("js", new Date());
+        gtag("config", "G-5W48W3ZCBF");
+      }
+    </script>
+  </head>
+  <body>
+    <main class="wrap">
+      <section id="state-idle">
+        <header>
+          <div class="pencil">app review export</div>
+          <h1 class="title">Review Retriever</h1>
+          <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+            <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+          </svg>
+          <p class="lede">Paste an App Store or Google Play link. Get up to 500 public written reviews, ready to analyze.</p>
+        </header>
+
+        <hr class="rule">
+
+        <form class="tool-frame" id="extract-form" novalidate>
+          <div class="fields">
+            <div>
+              <label class="field-label" for="app-url">app url</label>
+              <div class="field-wrap">
+                <input class="fld" id="app-url" name="url" type="url" autocomplete="off" spellcheck="false" autofocus placeholder="apps.apple.com/… or play.google.com/…" aria-describedby="form-error">
+                <svg class="baseline" viewBox="0 0 400 9" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M2 5 C 70 2, 150 8, 230 4 S 340 3, 398 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="picker">
+              <label class="field-label" for="country">country</label>
+              <div class="field-wrap">
+                <select class="fld" id="country" name="country">
+                  <option value="us" selected>United States</option>
+                </select>
+                <svg class="chev" viewBox="0 0 15 10" aria-hidden="true">
+                  <path d="M1.5 2 L 7.5 8 L 13.5 2" fill="none" stroke="var(--ink-faint)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <svg class="baseline" viewBox="0 0 200 9" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M2 5 C 40 2, 90 8, 130 4 S 175 3, 198 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button class="drawn" type="submit" id="extract-btn">
+              <svg viewBox="0 0 190 52" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M6 8 C 50 3, 140 4, 184 7 C 187 20, 186 34, 183 45 C 130 49, 55 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+              </svg>
+              <span id="extract-label">Extract reviews</span>
+            </button>
+
+            <svg class="submit-arrow" width="70" height="40" viewBox="0 0 70 40" aria-hidden="true">
+              <path d="M64 30 C 48 33, 30 28, 16 20" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
+              <path d="M16 20 l 11 1 M16 20 l 4 9" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+
+            <span class="hand tilt">that's the whole thing,<br>really</span>
+          </div>
+
+          <p class="error" id="form-error" role="alert" aria-live="assertive" hidden>that doesn't look like a store link</p>
+
+          <p class="notice">Apple's public review feed can be flaky. If an App Store export comes back with 0 or only 10 reviews, try again in a minute.</p>
+        </form>
+
+        <hr class="rule">
+
+        <ol class="steps">
+          <li><span class="n">1</span>Export the reviews.</li>
+          <li><span class="n">2</span>Open them in the GPT or Claude workflow.</li>
+          <li><span class="n">3</span>Decide something with what people actually said.</li>
+        </ol>
+
+        <hr class="rule">
+
+        <footer class="foot">
+          <span class="pencil">public reviews only · nothing stored</span>
+          <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
+        </footer>
+      </section>
+
+      <section id="state-done" hidden>
+        <header class="result-masthead">
+          <div class="pencil">app review export</div>
+          <h1 class="title">Review Retriever</h1>
+          <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+            <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+          </svg>
+          <button class="lnk pencil start-over" id="start-over" type="button">start over</button>
+        </header>
+
+        <hr class="rule">
+
+        <div class="receipt packet">
+          <div class="packet-head">
+            <div>
+              <div class="pencil">review packet ready</div>
+              <h2 class="packet-title" id="packet-title">Reviews exported</h2>
+              <p class="receipt-meta" id="receipt-meta" hidden></p>
+            </div>
+          </div>
+          <div class="receipt-actions">
+            <button class="lnk" id="copy-btn" type="button">Copy</button>
+            <button class="lnk" id="download-btn" type="button">Download.md</button>
+          </div>
+          <dl class="packet-ledger" id="packet-ledger"></dl>
+        </div>
+
+        <section class="evidence" aria-labelledby="evidence-title">
+          <div class="evidence-head">
+            <h2 class="pencil evidence-title" id="evidence-title">evidence preview</h2>
+          </div>
+          <div class="peek" id="peek" aria-label="Review sample"></div>
+        </section>
+
+        <hr class="rule">
+
+        <div class="handoff-note">
+          <span class="hand tilt">the reviews are the easy part —<br>here's where you get the answer</span>
+          <svg width="60" height="44" viewBox="0 0 60 44" aria-hidden="true">
+            <path d="M6 8 C 22 6, 34 16, 32 34" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
+            <path d="M32 34 l 8 -7 M32 34 l -8 -5" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+        </div>
+
+        <div class="handoff">
+          <a class="card card--primary" id="gpt-analysis-link" href="https://chatgpt.com/g/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener">
+            <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M7 9 C 70 3, 190 5, 253 8 C 257 32, 256 58, 252 74 C 180 79, 74 78, 8 73 C 4 52, 3 27, 7 9 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <span class="inner">
+              <span class="h">Analyze with ChatGPT</span>
+              <span class="s">No setup. Opens ready to go.</span>
+            </span>
+          </a>
+
+          <button class="card" id="claude-btn" type="button" aria-expanded="false" aria-controls="claude-steps">
+            <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M8 10 C 72 5, 188 4, 252 9 C 256 34, 255 56, 251 73 C 178 78, 72 77, 7 72 C 3 50, 4 28, 8 10 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <span class="inner">
+              <span class="h">Analyze in Claude</span>
+              <span class="s">One-time skill install, then it's instant.</span>
+            </span>
+          </button>
+        </div>
+
+        <div id="claude-steps" hidden>
+          <hr class="rule">
+          <div class="pencil">installing the claude skill</div>
+          <ol class="steps claude-install-steps">
+            <li><span class="n">1</span>Download the skill file.</li>
+            <li><span class="n">2</span>Open Claude → Customize → Skills → <strong>+</strong> → Upload a skill.</li>
+            <li><span class="n">3</span>Turn it on. Then paste any export and say “analyze reviews.”</li>
+          </ol>
+          <div class="claude-links">
+            <a class="lnk" id="claude-skill-download" href="/app-review-growth-analyzer-skill.zip" download>Download the skill</a>
+            <a class="lnk" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">Open Claude skills</a>
+          </div>
+        </div>
+
+        <hr class="rule">
+
+        <footer class="foot">
+          <span class="pencil">public reviews only · nothing stored</span>
+          <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

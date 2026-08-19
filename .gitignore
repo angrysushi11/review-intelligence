@@ -1,0 +1,14 @@
+node_modules/
+.vercel/
+.env
+.env.*
+!.env.example
+.DS_Store
+.hallmark/
+.playwright-cli/
+exports/
+output/
+*.log
+review-intelligence.manifest.json
+web/review-retriever-og.svg.png
+*.tgz

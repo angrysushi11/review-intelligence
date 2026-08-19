@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "web/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/mcp", "dest": "/api/mcp.js" },
+    { "src": "/api/extract", "dest": "/api/extract.js" },
+    { "src": "/setup/?", "dest": "/web/setup.html" },
+    { "src": "/setup.css", "dest": "/web/setup.css" },
+    { "src": "/setup.js", "dest": "/web/setup.js" },
+    { "src": "/styles.css", "dest": "/web/styles.css" },
+    { "src": "/tokens.css", "dest": "/web/tokens.css" },
+    { "src": "/app.js", "dest": "/web/app.js" },
+    { "src": "/markets.js", "dest": "/web/markets.js" },
+    { "src": "/storefronts.js", "dest": "/web/storefronts.js" },
+    { "src": "/review-retriever-og.png", "dest": "/web/review-retriever-og.png" },
+    { "src": "/review-retriever-og.svg", "dest": "/web/review-retriever-og.svg" },
+    { "src": "/favicon.svg", "dest": "/web/favicon.svg" },
+    { "src": "/robots.txt", "dest": "/web/robots.txt" },
+    { "src": "/sitemap.xml", "dest": "/web/sitemap.xml" },
+    { "src": "/app-review-growth-analyzer-skill.zip", "dest": "/web/app-review-growth-analyzer-skill.zip" },
+    { "src": "/", "dest": "/web/index.html" }
+  ]
+}

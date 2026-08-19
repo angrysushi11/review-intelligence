@@ -1,0 +1,36 @@
+{
+  "name": "review-intelligence",
+  "version": "0.1.0",
+  "description": "Retrieve and analyze app reviews into evidence-backed product, pricing, growth, and ASO insights.",
+  "author": {
+    "name": "Dasha Antonova",
+    "url": "https://www.doubledash.me/"
+  },
+  "homepage": "https://www.doubledash.me/tools/review-intelligence/",
+  "repository": "https://github.com/angrysushi11/review-intelligence",
+  "keywords": [
+    "app reviews",
+    "review analysis",
+    "product strategy",
+    "growth",
+    "ASO"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Review Intelligence",
+    "shortDescription": "Retrieve and turn app reviews into evidence-backed growth insight.",
+    "longDescription": "Give Review Intelligence an App Store or Google Play URL and its read-only Review Retriever connection can collect public written reviews for evidence-backed analysis. You can also upload an existing review export. The skill surfaces patterns and prioritizes product, pricing, growth, and ASO opportunities without treating reviews as proof of business outcomes.",
+    "developerName": "DoubleDash by Dasha Antonova",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://www.doubledash.me/tools/review-intelligence/",
+    "defaultPrompt": [
+      "Retrieve reviews from this App Store or Google Play URL and show me the first useful read.",
+      "Analyze this review export and find the strongest product, pricing, and ASO gaps.",
+      "Compare these competitor app URLs and reveal the most actionable gap."
+    ]
+  }
+}
