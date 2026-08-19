@@ -27,3 +27,14 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - run: unzip -t web/app-review-growth-analyzer-skill.zip
       - run: node ./bin/review-retriever.js countries > /dev/null
+
+  plugin-install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: npm install --global @openai/codex@0.148.0
+      - run: codex plugin marketplace add angrysushi11/review-intelligence --ref "$GITHUB_SHA" --json
+      - run: codex plugin add review-intelligence@doubledash --json

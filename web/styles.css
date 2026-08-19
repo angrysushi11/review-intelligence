@@ -581,6 +581,12 @@ select.fld {
   gap: 20px;
 }
 
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .result-masthead {
   position: relative;
 }
