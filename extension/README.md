@@ -13,7 +13,7 @@ It does not scrape the page, retrieve reviews in the background, run analysis, o
 
 This source is an MVP for local testing. It has not been submitted to or published in the Chrome Web Store.
 
-The review candidate includes a factual [privacy disclosure](./PRIVACY.md). Store icons, screenshots, distribution settings, and submission remain separate publication work.
+The review candidate includes a factual [privacy disclosure](./PRIVACY.md) and the official Double Dash mark as its Chrome icon. Store screenshots, distribution settings, and submission remain separate publication work.
 
 ## Permission and data boundary
 

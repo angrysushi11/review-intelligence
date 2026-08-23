@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { buildRetrieverUrl, isSupportedStoreUrl, normalizeStoreUrl } from "../extension/retriever-url.js";
 
@@ -62,6 +62,19 @@ test("the MVP requests only activeTab and has no page-level access", async () =>
   assert.equal(manifest.background.service_worker, "background.js");
   assert.equal(manifest.background.type, "module");
   assert.equal(manifest.action.default_title, "Open this public app URL in Review Retriever");
+  assert.deepEqual(manifest.icons, {
+    16: "icons/icon16.png",
+    32: "icons/icon32.png",
+    48: "icons/icon48.png",
+    128: "icons/icon128.png"
+  });
+  assert.deepEqual(manifest.action.default_icon, {
+    16: "icons/icon16.png",
+    32: "icons/icon32.png"
+  });
+  for (const iconPath of Object.values(manifest.icons)) {
+    await access(new URL(`../extension/${iconPath}`, import.meta.url));
+  }
   assert.match(background, /chrome\.action\.onClicked\.addListener/);
   assert.match(background, /chrome\.tabs\.create/);
   assert.doesNotMatch(background, /fetch\(|chrome\.storage|chrome\.scripting/);

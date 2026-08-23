@@ -3,11 +3,21 @@
   "name": "Review Retriever",
   "version": "0.1.0",
   "description": "Open an App Store or Google Play listing in Review Retriever with the URL ready to use.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "activeTab"
   ],
   "action": {
-    "default_title": "Open this public app URL in Review Retriever"
+    "default_title": "Open this public app URL in Review Retriever",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
   },
   "background": {
     "service_worker": "background.js",
