@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Review Retriever",
+  "version": "0.1.0",
+  "description": "Open an App Store or Google Play listing in Review Retriever with the URL ready to use.",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_title": "Open this public app URL in Review Retriever"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}
