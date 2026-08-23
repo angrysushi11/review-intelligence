@@ -10,6 +10,7 @@ Review Retriever gets the evidence. Review Intelligence analyzes it.
 ## Use it
 
 - Review Retriever: <https://reviews.doubledash.me/>
+- Worked analysis example (no model required): <https://www.doubledash.me/tools/review-intelligence/#example>
 - Review Intelligence guide: <https://www.doubledash.me/tools/review-intelligence/>
 - MCP setup: <https://www.doubledash.me/tools/review-intelligence/mcp/>
 
@@ -67,11 +68,18 @@ node ./bin/review-retriever.js countries
 node ./bin/review-retriever.js markets
 ```
 
+## Chrome extension MVP
+
+The source-only Chrome extension in [`extension`](./extension) opens the current App Store or Google Play listing in the hosted Review Retriever with its URL prefilled. It uses only `activeTab`, has no host permissions or content scripts, and does not extract anything until the user presses **Extract reviews** in the web tool.
+
+It is ready for unpacked local testing but has not been submitted to or published in the Chrome Web Store. See the [extension README](./extension/README.md) for loading steps and the full data boundary.
+
 ## Repository map
 
 - `api/` — Vercel functions for extraction and the MCP endpoint
 - `src/` — store retrieval, normalization, Markdown export, CLI, and MCP logic
 - `web/` — hosted Review Retriever and setup pages
+- `extension/` — source-only Chrome extension MVP for opening a store listing in Review Retriever
 - `plugins/review-intelligence/` — Codex plugin and analysis skill
 - `.agents/plugins/marketplace.json` — DoubleDash marketplace manifest
 - `test/` — retriever, MCP, page, and request-boundary tests

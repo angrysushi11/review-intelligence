@@ -27,9 +27,11 @@ const claudeSkillDownload = document.querySelector("#claude-skill-download");
 const claudeSkillsLink = document.querySelector("#claude-skills-link");
 
 const query = new URLSearchParams(window.location.search);
+const fragment = new URLSearchParams(window.location.hash.slice(1));
 const querySource = query.get("source_path") || query.get("source") || "";
 const queryRoute = query.get("route") || "";
 const queryCluster = query.get("content_cluster") || "";
+const queryAppUrl = fragment.get("app_url") || query.get("app_url") || "";
 
 if (querySource) sessionStorage.setItem("dd_review_source", querySource);
 if (queryRoute) sessionStorage.setItem("dd_review_route", queryRoute);
@@ -44,6 +46,14 @@ let currentFilename = "reviews.md";
 let isLoading = false;
 
 renderCountryOptions();
+if (looksLikeStoreLink(queryAppUrl)) {
+  appUrl.value = queryAppUrl;
+  if (window.location.hash) {
+    const cleanLocation = new URL(window.location.href);
+    cleanLocation.hash = "";
+    window.history.replaceState(null, "", cleanLocation);
+  }
+}
 
 track("review_tool_open", {
   route: originalRoute,
