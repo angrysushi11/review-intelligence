@@ -33,7 +33,9 @@
         analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5W48W3ZCBF";
         document.head.appendChild(analyticsScript);
         gtag("js", new Date());
-        gtag("config", "G-5W48W3ZCBF");
+        gtag("config", "G-5W48W3ZCBF", {
+          page_location: `${window.location.origin}${window.location.pathname}`,
+        });
       }
     </script>
   </head>
@@ -131,6 +133,7 @@
               </span>
               <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude Cowork or Codex</a>
             </span>
+            <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
         </footer>
@@ -206,6 +209,8 @@
           </button>
         </div>
 
+        <p class="worked-example"><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/#example" target="_blank" rel="noopener">See a worked example — no model required</a></p>
+
         <div id="claude-steps" hidden>
           <hr class="rule">
           <div class="pencil">installing the claude skill</div>
@@ -245,6 +250,7 @@
               </span>
               <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude Cowork or Codex</a>
             </span>
+            <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
         </footer>
