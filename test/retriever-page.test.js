@@ -42,18 +42,27 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(html, /class="card card--primary" id="gpt-analysis-link"/);
   assert.match(html, />Analyze with ChatGPT<\/span>/);
   assert.match(html, />Analyze in Claude<\/span>/);
+  assert.match(html, /See a worked example — no model required/);
+  assert.match(html, /href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/#example"/);
   assert.match(html, /id="claude-steps" hidden/);
   assert.match(html, /Open Claude Skills, click <strong>Add<\/strong>, choose <strong>Upload a skill<\/strong>/);
   assert.match(html, /class="card claude-action" id="claude-skill-download"/);
   assert.match(html, /class="card claude-action" id="claude-skills-link"/);
   assert.match(html, /public reviews only · nothing stored/);
   assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Use it in Claude Cowork or Codex<\/a>/g) ?? []).length, 2);
+  assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/<span class="hand">for power users<\/span>/g) ?? []).length, 2);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.doesNotMatch(html, /class="action-dock"/);
   assert.doesNotMatch(html, /id="claude-skill-modal"/);
   assert.doesNotMatch(html, /Three ways to use it/);
   assert.doesNotMatch(html, /Codex \/ Work/);
+
+  assert.match(appJs, /const fragment = new URLSearchParams\(window\.location\.hash\.slice\(1\)\)/);
+  assert.match(appJs, /const queryAppUrl = fragment\.get\("app_url"\) \|\| query\.get\("app_url"\) \|\| ""/);
+  assert.match(appJs, /appUrl\.value = queryAppUrl/);
+  assert.match(appJs, /window\.history\.replaceState\(null, "", cleanLocation\)/);
+  assert.match(html, /page_location: `\$\{window\.location\.origin\}\$\{window\.location\.pathname\}`/);
 
   assert.match(styles, /@import url\("\/tokens\.css"\)/);
   assert.match(tokens, /--paper:\s*#f7f4ec/);
@@ -102,6 +111,104 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(appJs, /1600/);
   assert.match(appJs, /claudeSteps\.hidden = !willOpen/);
   assert.doesNotMatch(appJs, /extractButton\.disabled/);
+});
+
+test("the extension handoff prefills locally, clears the fragment, and waits for user action", async () => {
+  const appJs = await readFile(new URL("app.js", webUrl), "utf8");
+  const executableAppJs = appJs.replace(
+    'import { COUNTRY_OPTIONS } from "./markets.js";',
+    'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
+  );
+  assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
+
+  const storeUrl = "https://apps.apple.com/us/app/example/id123456789";
+  const location = {
+    href: `https://reviews.doubledash.me/#app_url=${encodeURIComponent(storeUrl)}`,
+    origin: "https://reviews.doubledash.me",
+    pathname: "/",
+    search: "",
+    hash: `#app_url=${encodeURIComponent(storeUrl)}`,
+  };
+  const listeners = new Map();
+  const elements = new Map();
+  const elementFor = (selector = "created") => {
+    if (!elements.has(selector)) {
+      const elementListeners = new Map();
+      listeners.set(selector, elementListeners);
+      elements.set(selector, {
+        value: "",
+        hidden: false,
+        textContent: "",
+        className: "",
+        classList: { toggle() {} },
+        addEventListener(type, handler) {
+          elementListeners.set(type, handler);
+        },
+        append() {},
+        replaceChildren() {},
+        setAttribute() {},
+        removeAttribute() {},
+        focus() {},
+        scrollIntoView() {},
+      });
+    }
+    return elements.get(selector);
+  };
+
+  let cleanLocation;
+  let fetchCalls = 0;
+  const globals = {
+    document: {
+      referrer: "",
+      querySelector: elementFor,
+      createDocumentFragment: () => ({ append() {} }),
+      createElement: () => elementFor(`created-${elements.size}`),
+    },
+    window: {
+      location,
+      history: {
+        replaceState(_state, _title, nextLocation) {
+          cleanLocation = nextLocation;
+        },
+      },
+      dataLayer: [],
+      scrollTo() {},
+      setTimeout,
+      matchMedia: () => ({ matches: true }),
+    },
+    sessionStorage: {
+      getItem: () => null,
+      setItem() {},
+    },
+    navigator: { clipboard: { writeText: async () => {} } },
+    fetch: async () => {
+      fetchCalls += 1;
+      throw new Error("retrieval must wait for form submission");
+    },
+  };
+  const previousDescriptors = new Map();
+
+  try {
+    for (const [name, value] of Object.entries(globals)) {
+      previousDescriptors.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
+      Object.defineProperty(globalThis, name, { configurable: true, writable: true, value });
+    }
+
+    const sourceUrl = `data:text/javascript;base64,${Buffer.from(executableAppJs).toString("base64")}`;
+    await import(sourceUrl);
+
+    assert.equal(elementFor("#app-url").value, storeUrl);
+    assert.equal(fetchCalls, 0, "loading a handed-off URL must not start retrieval");
+    assert.equal(listeners.get("#extract-form").has("submit"), true);
+    assert.ok(cleanLocation instanceof URL);
+    assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
+    assert.equal(cleanLocation.hash, "");
+  } finally {
+    for (const [name, descriptor] of previousDescriptors) {
+      if (descriptor) Object.defineProperty(globalThis, name, descriptor);
+      else delete globalThis[name];
+    }
+  }
 });
 
 test("the normalized review dataset exposes store artwork for the result packet", () => {
