@@ -8,6 +8,7 @@
     { "src": "/mcp", "dest": "/api/mcp.js" },
     { "src": "/api/extract", "dest": "/api/extract.js" },
     { "src": "/setup/?", "dest": "/web/setup.html" },
+    { "src": "/extension/privacy/?", "dest": "/web/extension-privacy.html" },
     { "src": "/styles.css", "dest": "/web/styles.css" },
     { "src": "/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/app.js", "dest": "/web/app.js" },

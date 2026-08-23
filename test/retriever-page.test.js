@@ -51,6 +51,7 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(html, /public reviews only · nothing stored/);
   assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Use it in Claude Cowork or Codex<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
+  assert.equal((html.match(/href="\/extension\/privacy\/">Extension privacy<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/<span class="hand">for power users<\/span>/g) ?? []).length, 2);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.doesNotMatch(html, /class="action-dock"/);
@@ -233,11 +234,25 @@ test("the retired local setup page forwards to the canonical MCP guide", async (
   assert.doesNotMatch(html, /setup\.css|setup\.js|manual-export/);
 });
 
+test("the extension privacy page publishes the exact handoff and data boundary", async () => {
+  const html = await readFile(new URL("extension-privacy.html", webUrl), "utf8");
+
+  assert.match(html, /<link rel="canonical" href="https:\/\/reviews\.doubledash\.me\/extension\/privacy\/">/);
+  assert.match(html, /uses Chrome's <code>activeTab<\/code> permission/);
+  assert.match(html, /read the current tab URL only after you click the toolbar action/);
+  assert.match(html, /does not retain the listing URL or browsing history/);
+  assert.match(html, /no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code/);
+  assert.match(html, /Analytics receives a sanitized page location without the app URL, query parameters, or fragment/);
+  assert.match(html, /dash@doubledash\.me/);
+  assert.match(html, /class="drawn privacy-return" href="\/">[\s\S]*?<span>Open Review Retriever<\/span>/);
+});
+
 test("the setup bridge and retriever assets are published explicitly", async () => {
   const config = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8"));
   const routes = new Map(config.routes.map(({ src, dest }) => [src, dest]));
 
   assert.equal(routes.get("/setup/?"), "/web/setup.html");
+  assert.equal(routes.get("/extension/privacy/?"), "/web/extension-privacy.html");
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");

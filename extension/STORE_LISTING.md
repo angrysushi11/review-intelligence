@@ -1,6 +1,6 @@
 # Review Retriever Chrome Web Store packet
 
-Status: local publication candidate only. Not submitted or published.
+Status: Chrome Web Store submission candidate. The extension MVP and hosted Review Retriever handoff are live; the Store listing has not been submitted.
 
 ## Commitment diagnosis
 
@@ -69,20 +69,26 @@ Certify only after confirming the uploaded package matches this repository state
 
 ### Privacy policy URL
 
-After this file is public on `main`, use:
+Use the hosted, branded policy page:
+
+`https://reviews.doubledash.me/extension/privacy/`
+
+The same policy remains reviewable in source at:
 
 `https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md`
 
 ## Store assets
 
-Icons and screenshots are deliberately not included in this review-only branch. Create them only after the live extension-to-Retriever flow is separately authorized and verified; do not present a local mockup as evidence that production already works.
+The package includes 16, 32, 48, and 128px official Double Dash icons. The 128px Store icon uses the required 96px mark with 16px transparent padding.
+
+Prepared outside the extension ZIP:
+
+- one 1280×800 screenshot from the verified live Review Retriever flow;
+- one 440×280 small promotional tile using the official Double Dash extension mark.
 
 ## Remaining publication gates
 
-- Deploy and live-verify the Retriever fragment-prefill path.
-- Run the full public GitHub workflow and review its result.
-- Load the exact packaged extension locally and verify a supported Apple listing, supported Google Play listing, unsupported page, and Chrome internal page.
-- Create the store icons and screenshot from the verified live flow.
+- Finish the production click-through readback for one supported Apple listing and one supported Google Play listing.
 - Choose distribution and category in the Chrome Web Store dashboard.
 - Review the final listing and privacy disclosures against the uploaded ZIP.
 - Obtain explicit extension-submission authority before registration or publication.
