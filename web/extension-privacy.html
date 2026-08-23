@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Review Retriever extension privacy</title>
+    <meta name="description" content="How the Review Retriever Chrome extension handles the current supported app-listing URL.">
+    <link rel="canonical" href="https://reviews.doubledash.me/extension/privacy/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="wrap privacy-page">
+      <header class="privacy-masthead">
+        <a class="lnk privacy-back" href="/">Back to Review Retriever</a>
+        <p class="pencil privacy-kicker">Chrome extension · last updated 23 August 2026</p>
+        <h1 class="title">Privacy, without the fog.</h1>
+        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <p class="privacy-lede">The extension does one thing: when you click it on a public App Store or Google Play app page, it opens Review Retriever with that listing URL ready in the form.</p>
+      </header>
+
+      <section class="privacy-summary" aria-labelledby="privacy-summary-title">
+        <h2 class="privacy-summary-title" id="privacy-summary-title">The short version</h2>
+        <ul>
+          <li>No background scraping.</li>
+          <li>No browsing-history storage.</li>
+          <li>No page-content access.</li>
+          <li>No ads, profiling, or sale of data.</li>
+        </ul>
+      </section>
+
+      <div class="privacy-sections">
+        <section>
+          <h2>What the extension can access</h2>
+          <p>Review Retriever uses Chrome's <code>activeTab</code> permission. It can read the current tab URL only after you click the toolbar action.</p>
+          <p>If that URL is a supported App Store or Google Play app-detail page, the extension keeps only the canonical public listing URL. It removes fragments and nonessential tracking parameters. It does not handle unrelated pages, other store pages, or privileged Chrome pages.</p>
+        </section>
+
+        <section>
+          <h2>What gets sent</h2>
+          <p>The extension opens <a href="https://reviews.doubledash.me/">reviews.doubledash.me</a> in a new tab. The supported listing URL is placed in the new tab's URL fragment so the form can be prefilled. URL fragments are not sent in the page request, and Review Retriever clears the fragment after prefilling.</p>
+          <p>The listing URL reaches the extraction service only if you press <strong>Extract reviews</strong>. The extension does not retrieve reviews itself. It does not send page content, form data, credentials, browsing history, or the URL of an unsupported page.</p>
+        </section>
+
+        <section>
+          <h2>Storage and data use</h2>
+          <p>The current supported app-listing URL counts as web browsing activity under Chrome Web Store policy. The extension handles that one URL only after your deliberate click and only for the handoff described above. It has no storage permission and does not retain the listing URL or browsing history. Chrome may still record the page it opens in normal browser history.</p>
+          <p>The extension has no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code. Extension data is not sold, used for advertising or profiling, or used to determine creditworthiness or lending eligibility.</p>
+        </section>
+
+        <section>
+          <h2>The hosted Retriever</h2>
+          <p>The hosted Review Retriever uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location without the app URL, query parameters, or fragment. Those providers may still process ordinary request or page metadata under their own policies.</p>
+          <p>If you start retrieval, Review Retriever processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.</p>
+        </section>
+
+        <section>
+          <h2>Limited use</h2>
+          <p>Information handled through the extension is used only to provide or improve its single user-facing purpose. It is not transferred except where necessary to provide or secure that purpose, comply with law, or as otherwise allowed by the Chrome Web Store User Data Policy.</p>
+          <p>Humans do not read extension-handled data except with your explicit consent, when necessary for security or legal compliance, or in an aggregated and anonymized form for internal operations. Use of information received from Chrome APIs follows the Chrome Web Store User Data Policy, including its Limited Use requirements.</p>
+        </section>
+
+        <section>
+          <h2>Your control</h2>
+          <p>Do not click the toolbar action if you do not want the handoff to run. You can remove the extension from Chrome at any time.</p>
+          <p>Questions: <a href="mailto:dash@doubledash.me">dash@doubledash.me</a></p>
+        </section>
+      </div>
+
+      <hr class="rule">
+      <footer class="privacy-footer">
+        <a class="drawn privacy-return" href="/">
+          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+          </svg>
+          <span>Open Review Retriever</span>
+        </a>
+        <a class="lnk" href="https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md" target="_blank" rel="noreferrer">Policy source</a>
+      </footer>
+    </main>
+  </body>
+</html>
