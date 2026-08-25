@@ -147,7 +147,8 @@ test("the privacy disclosure matches the extension's narrow data boundary", asyn
   assert.match(privacy, /Chrome Web Store User Data Policy/i);
   assert.match(privacy, /Google Analytics/);
   assert.match(privacy, /Vercel/);
-  assert.match(privacy, /dash@doubledash\.me/);
+  assert.match(privacy, /tools@doubledash\.me/);
+  assert.doesNotMatch(privacy, /dash@doubledash\.me/);
 });
 
 test("all executable extension code is packaged and contains no remote-code loader", async () => {
