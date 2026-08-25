@@ -17,20 +17,17 @@ Review Retriever
 
 ### Summary
 
-Open the current App Store or Google Play listing in Review Retriever with the public app URL ready to extract.
+Open an App Store or Google Play listing in Review Retriever, ready to extract and analyze its public reviews.
 
 ### Detailed description
 
-Review Retriever turns public written App Store and Google Play reviews into a Markdown export.
+Get public App Store and Google Play reviews out of the storefront and into your analysis.
 
-The extension removes one manual step:
+Open an app listing and click Review Retriever. The extension opens the tool with the app URL already filled in. One more click retrieves the public written reviews, ready to copy into ChatGPT, Claude, Codex, or another analysis workflow. You can also download the same content as a Markdown file.
 
-1. Open a supported App Store or Google Play app-detail page.
-2. Click the Review Retriever toolbar action.
-3. Review Retriever opens in a new tab with the canonical public listing URL ready in the form.
-4. Press **Extract reviews** when you want the retrieval to begin.
+No App Store Connect account, Play Console account, API key, or sign-up is required.
 
-On any unsupported page, the action opens a blank Review Retriever without forwarding that page's URL.
+The extension runs only when you click it. It reads only the URL of a supported public app listing. It does not read page content, scrape reviews in the background, retain browsing history, or forward URLs from unsupported pages.
 
 ### Data disclosure — keep this prominent in the listing
 
@@ -76,6 +73,10 @@ Use the hosted, branded policy page:
 The same policy remains reviewable in source at:
 
 `https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md`
+
+### Contact email
+
+`tools@doubledash.me`
 
 ## Store assets
 

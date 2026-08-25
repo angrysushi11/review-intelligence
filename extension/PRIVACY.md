@@ -1,6 +1,6 @@
 # Review Retriever Chrome extension privacy
 
-Last updated: 2026-08-23
+Last updated: 2026-08-25
 
 ## Purpose
 
@@ -38,4 +38,4 @@ The use of information received from Chrome APIs adheres to the Chrome Web Store
 
 The user can stop the extension's behavior by not clicking its toolbar action or by removing the extension from Chrome.
 
-Questions: [dash@doubledash.me](mailto:dash@doubledash.me)
+Questions: [tools@doubledash.me](mailto:tools@doubledash.me)

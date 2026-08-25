@@ -59,6 +59,10 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.doesNotMatch(html, /Three ways to use it/);
   assert.doesNotMatch(html, /Codex \/ Work/);
 
+  const extensionPrivacy = await readFile(new URL("extension-privacy.html", webUrl), "utf8");
+  assert.match(extensionPrivacy, /mailto:tools@doubledash\.me/);
+  assert.doesNotMatch(extensionPrivacy, /mailto:dash@doubledash\.me/);
+
   assert.match(appJs, /const fragment = new URLSearchParams\(window\.location\.hash\.slice\(1\)\)/);
   assert.match(appJs, /const queryAppUrl = fragment\.get\("app_url"\) \|\| query\.get\("app_url"\) \|\| ""/);
   assert.match(appJs, /appUrl\.value = queryAppUrl/);
@@ -243,7 +247,8 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   assert.match(html, /does not retain the listing URL or browsing history/);
   assert.match(html, /no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code/);
   assert.match(html, /Analytics receives a sanitized page location without the app URL, query parameters, or fragment/);
-  assert.match(html, /dash@doubledash\.me/);
+  assert.match(html, /tools@doubledash\.me/);
+  assert.doesNotMatch(html, /dash@doubledash\.me/);
   assert.match(html, /class="drawn privacy-return" href="\/">[\s\S]*?<span>Open Review Retriever<\/span>/);
 });
 
