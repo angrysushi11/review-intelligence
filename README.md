@@ -14,7 +14,7 @@ Review Retriever gets the evidence. Review Intelligence analyzes it.
 - Review Intelligence guide: <https://www.doubledash.me/tools/review-intelligence/>
 - MCP setup: <https://www.doubledash.me/tools/review-intelligence/mcp/>
 
-The hosted retriever accepts an App Store or Google Play URL and exports up to 500 public written reviews as Markdown. It does not require an App Store Connect account, Play Console account, API key, or OAuth client.
+The hosted web retriever accepts an App Store or Google Play URL and exports up to 500 public written reviews as Markdown. The MCP returns bounded batches of up to 500 records and exposes an opaque `continuation.next_cursor` for further Google Play batches. Keep calling with the same app, market, sort order, and a limit of at least 150 until `continuation.has_more` is false. Apple coverage remains limited by the public feed for each storefront. Neither route requires an App Store Connect account, Play Console account, API key, or OAuth client.
 
 ## Install the Codex plugin
 
@@ -94,7 +94,7 @@ Local exports, browser traces, screenshots, deployment metadata, and environment
 - Review text and reviewer names can still be personal data even when publicly visible. Handle exports according to the rules that apply to your use.
 - Review evidence can show patterns in the retrieved sample. It does not, by itself, prove revenue, retention, causality, or the full customer population.
 
-Public endpoints enforce request-size and review-count limits. Store availability and the number of reviews returned can change because Apple and Google control the upstream sources.
+Public endpoints enforce request-size and per-response review-count limits. Google Play MCP retrieval can continue across multiple responses; Apple can be queried by storefront, but its public feeds do not expose a compatible continuation cursor. Store availability and the number of reviews returned can change because Apple and Google control the upstream sources. No public-source retrieval should be described as every review ever posted.
 
 Review Retriever and Review Intelligence are not affiliated with or endorsed by Apple or Google.
 

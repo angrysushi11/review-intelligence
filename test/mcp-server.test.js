@@ -29,6 +29,14 @@ test("buildReviewExport produces stable evidence IDs and explicit coverage", asy
   }, { retrieveReviewsFn: fakeRetrieveReviews });
 
   assert.equal(first.schema_version, "review-retriever.v1");
+  assert.equal(first.request.cursor_supplied, false);
+  assert.deepEqual(first.continuation, {
+    supported: true,
+    cursor_supplied: false,
+    has_more: false,
+    next_cursor: null,
+    note: "The Google Play source returned no further page cursor for this app, market, language, and sort order."
+  });
   assert.deepEqual(first.reviews.map(({ review_id }) => review_id), second.reviews.map(({ review_id }) => review_id));
   assert.match(first.reviews[0].review_id, /^rr_[a-f0-9]{32}$/);
   assert.deepEqual(first.coverage, {
@@ -92,6 +100,48 @@ test("buildReviewExport leaves the store-declared count unknown when Apple does 
 
   assert.equal(result.coverage.declared, null);
   assert.equal(result.coverage.analyzed_ready, 1);
+  assert.equal(result.continuation.supported, false);
+  assert.equal(result.continuation.next_cursor, null);
+});
+
+test("buildReviewExport exposes a continuation cursor for additional Google Play batches", async () => {
+  const seen = [];
+  const retrieveReviewsFn = async (input) => {
+    seen.push(input.cursor);
+    const result = await fakeRetrieveReviews(input);
+    result.payload.nextCursor = input.cursor ? null : "opaque-next-batch";
+    return result;
+  };
+
+  const first = await buildReviewExport({
+    url: TARGET,
+    platform: "google_play",
+    market: "en-US",
+    limit: 3,
+    sort: "most_recent",
+    include_markdown: false
+  }, { retrieveReviewsFn });
+
+  assert.equal(first.request.cursor_supplied, false);
+  assert.equal(first.continuation.has_more, true);
+  assert.equal(first.continuation.next_cursor, "opaque-next-batch");
+  assert.equal(first.coverage.truncated_to_limit, true);
+  assert.match(first.coverage.warning, /more Google Play reviews are available/i);
+
+  const second = await buildReviewExport({
+    url: TARGET,
+    platform: "google_play",
+    market: "en-US",
+    limit: 3,
+    sort: "most_recent",
+    cursor: first.continuation.next_cursor,
+    include_markdown: false
+  }, { retrieveReviewsFn });
+
+  assert.deepEqual(seen, ["", "opaque-next-batch"]);
+  assert.equal(second.request.cursor_supplied, true);
+  assert.equal(second.continuation.has_more, false);
+  assert.equal(second.continuation.next_cursor, null);
 });
 
 test("Streamable HTTP serializes review records for content-only clients and preserves structured output", async (t) => {
@@ -118,6 +168,8 @@ test("Streamable HTTP serializes review records for content-only clients and pre
   assert.equal(tools.tools[0].annotations.readOnlyHint, true);
   assert.equal(tools.tools[0].annotations.destructiveHint, false);
   assert.ok(tools.tools[0].outputSchema.properties.coverage);
+  assert.ok(tools.tools[0].outputSchema.properties.continuation);
+  assert.ok(tools.tools[0].inputSchema.properties.cursor);
 
   const result = await client.callTool({
     name: "retrieve_app_reviews",
