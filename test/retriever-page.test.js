@@ -30,7 +30,7 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.doesNotMatch(hero, /\b(?:MCP|Claude|Codex|batches|continuation cursor)\b/i);
   assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
   assert.ok(html.indexOf('<ol class="steps">') < html.indexOf('<article class="retrieval-guide"'));
-  assert.match(html, /<a class="power-user-jump" href="#power-users">[\s\S]*?for power users[\s\S]*?Use it in Claude Cowork or Codex[\s\S]*?↓/);
+  assert.match(html, /<a class="power-user-jump" href="#power-users">[\s\S]*?for power users[\s\S]*?See the Claude Cowork or Codex setup[\s\S]*?↓/);
   assert.match(html, /<section class="guide-power" id="power-users" aria-labelledby="guide-power-title">/);
   assert.ok(html.indexOf('class="power-user-jump"') < html.indexOf('<article class="retrieval-guide"'));
   assert.ok(html.indexOf('<article class="retrieval-guide"') < html.indexOf('<hr class="rule">'));
@@ -120,7 +120,8 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(styles, /\.tool-frame\s*\{[^}]*margin-top:\s*68px/s);
   assert.match(styles, /\.title--hero\s*\{[^}]*max-width:\s*none[^}]*overflow-wrap:\s*normal[^}]*font-size:\s*clamp\(36px, 5\.2vw, 50px\)[^}]*text-wrap:\s*balance/s);
   assert.match(styles, /\.hero-lede\s*\{[^}]*margin:\s*14px 0 0[^}]*font-size:\s*18px[^}]*line-height:\s*1\.5/s);
-  assert.match(styles, /\.power-user-jump\s*\{[^}]*border-top:\s*1px solid var\(--rule\)[^}]*border-bottom:\s*1px solid var\(--outline-soft\)/s);
+  assert.match(styles, /\.power-user-jump\s*\{[^}]*border:\s*1px solid var\(--outline-soft\)[^}]*background:\s*color-mix\(in srgb, var\(--well\) 64%, var\(--paper\)\)[^}]*transition:\s*transform 140ms ease-out/s);
+  assert.match(styles, /\.power-user-jump__arrow\s*\{[^}]*width:\s*44px[^}]*height:\s*44px[^}]*border:\s*1px solid var\(--pen\)[^}]*border-radius:\s*999px/s);
   assert.match(styles, /\.form-nudge\s*\{[^}]*flex-direction:\s*column[^}]*font-size:\s*35px/s);
   assert.match(styles, /\.form-nudge span\s*\{[^}]*background:\s*var\(--paper\)/s);
   assert.match(styles, /label\.field-label\s*\{[^}]*font-family:\s*var\(--font-ui\)[^}]*font-style:\s*normal/s);
@@ -144,7 +145,7 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
   assert.match(styles, /@media \(min-width:\s*40rem\)/);
   assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.wrap\s*\{[^}]*padding:\s*30px/s);
-  assert.match(styles, /\.retrieval-guide\s*\{[^}]*margin-top:\s*88px[^}]*border-top:\s*1px solid var\(--rule\)/s);
+  assert.match(styles, /\.retrieval-guide\s*\{[^}]*margin-top:\s*30px[^}]*padding-top:\s*32px[^}]*border-top:\s*1px solid var\(--rule\)/s);
   assert.match(styles, /\.guide-columns\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   assert.match(styles, /\.guide-question-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   assert.match(styles, /\.guide-proof\s*\{/);
@@ -152,10 +153,12 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(styles, /\.sr-only\s*\{/);
   assert.match(styles, /\.guide-power\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*border:\s*2px solid/s);
   assert.match(styles, /\.guide-button--primary\s*\{[^}]*background:\s*var\(--ink\)[^}]*color:\s*var\(--paper\)/s);
-  assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.retrieval-guide\s*\{[^}]*margin-top:\s*72px/s);
+  assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.retrieval-guide\s*\{[^}]*margin-top:\s*28px[^}]*padding-top:\s*30px/s);
   assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-columns\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
   assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-question-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-power\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) 218px/s);
+  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-power\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
+  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-power-copy,[\s\S]*?\.guide-actions\s*\{[^}]*grid-column:\s*1 \/ -1/s);
+  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-actions\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
 
   assert.ok(appJs.includes("const STORE_LINK_PATTERN = /apps\\.apple\\.com|itunes\\.apple\\.com|play\\.google\\.com/i;"));
   assert.match(appJs, /fetch\("\/api\/extract"/);

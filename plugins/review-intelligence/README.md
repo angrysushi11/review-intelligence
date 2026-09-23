@@ -1,6 +1,6 @@
 # Review Intelligence plugin
 
-Review Intelligence is a plugin for Codex and ChatGPT Work that turns public App Store and Google Play reviews into evidence-backed product, pricing, growth, and ASO insight.
+Review Intelligence is a plugin for ChatGPT and Codex that turns public App Store and Google Play reviews into evidence-backed product, pricing, growth, and ASO insight.
 
 It combines:
 
@@ -21,6 +21,8 @@ codex plugin add review-intelligence@doubledash
 
 Start a new task after installation so the plugin's skill and MCP connection are loaded.
 
+This GitHub marketplace is a direct installation route for supported Codex environments. A listing in the universal public Plugins Directory is a separate OpenAI submission and review process; migrating a Custom GPT does not publish the replacement plugin or carry over the GPT's existing users.
+
 ## Try it
 
 ```text
@@ -31,8 +33,10 @@ You can also upload a Markdown review export and ask for product, pricing, growt
 
 ## Package structure
 
-- `.codex-plugin/plugin.json` — plugin metadata and component paths
-- `.mcp.json` — read-only Review Retriever connection
+- `plugin.json` — portable Agent Plugins manifest
+- `mcp.json` — portable read-only Review Retriever connection
+- `.codex-plugin/plugin.json` — OpenAI compatibility metadata and presentation
+- `.mcp.json` — compatibility connection for existing Codex plugin installs
 - `skills/app-review-growth-analyzer/` — the Review Intelligence workflow and evidence protocol
 
 Product guide: https://www.doubledash.me/tools/review-intelligence/

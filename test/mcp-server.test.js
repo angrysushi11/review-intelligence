@@ -167,6 +167,8 @@ test("Streamable HTTP serializes review records for content-only clients and pre
   assert.equal(tools.tools[0].name, "retrieve_app_reviews");
   assert.equal(tools.tools[0].annotations.readOnlyHint, true);
   assert.equal(tools.tools[0].annotations.destructiveHint, false);
+  assert.equal(tools.tools[0].annotations.openWorldHint, true);
+  assert.equal(tools.tools[0].annotations.idempotentHint, true);
   assert.ok(tools.tools[0].outputSchema.properties.coverage);
   assert.ok(tools.tools[0].outputSchema.properties.continuation);
   assert.ok(tools.tools[0].inputSchema.properties.cursor);
