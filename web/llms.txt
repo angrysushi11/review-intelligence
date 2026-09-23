@@ -1,0 +1,34 @@
+# Review Retriever and Review Intelligence
+
+> Review Retriever retrieves public written reviews from Apple App Store and Google Play listings. Review Intelligence analyzes those reviews while keeping evidence, inference, and business outcomes separate.
+
+This file is an optional content map for systems that choose to read llms.txt. It is not a crawler permission policy. Crawler access is controlled by https://reviews.doubledash.me/robots.txt.
+
+## Use the product
+
+- [Review Retriever](https://reviews.doubledash.me/): Retrieve up to 500 public written reviews as a Markdown packet.
+- [Review Intelligence](https://www.doubledash.me/tools/review-intelligence/): Understand the analysis method, decisions it supports, and its limits.
+- [MCP setup](https://www.doubledash.me/tools/review-intelligence/mcp/): Connect the read-only Review Retriever MCP server to Claude Cowork, Codex, or another remote HTTP MCP client.
+- [Worked analysis example](https://www.doubledash.me/tools/review-intelligence/#example): See how a review theme is named, prioritized, and traced to evidence.
+
+## What the connected workflow can do
+
+- Retrieve another app, country, Apple storefront, or Google Play language.
+- Continue through additional Google Play batches using a continuation cursor.
+- Analyze an app's or competitor's public reviews for repeated complaints, moments of value, expectation gaps, customer language, and positioning openings.
+- Trace findings back to exact review evidence instead of presenting a generic sentiment score.
+
+## Boundaries
+
+- The web export returns up to 500 public written reviews.
+- The MCP returns up to 500 reviews per response and can continue through Google Play pages until the public source returns no further page.
+- Apple coverage remains limited by the public feed available for each storefront.
+- Review evidence can show patterns in the retrieved sample. It cannot by itself prove revenue, retention, causality, or the views of every user.
+- Review Retriever uses public store listings, requires no store-console login, and does not modify store data.
+
+## Technical references
+
+- [Source code](https://github.com/angrysushi11/review-intelligence)
+- [MCP endpoint](https://reviews.doubledash.me/mcp)
+- [Sitemap](https://reviews.doubledash.me/sitemap.xml)
+- [Crawler policy](https://reviews.doubledash.me/robots.txt)

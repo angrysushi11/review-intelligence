@@ -10,6 +10,7 @@ const form = document.querySelector("#extract-form");
 const appUrl = document.querySelector("#app-url");
 const country = document.querySelector("#country");
 const error = document.querySelector("#form-error");
+const retrievalStatus = document.querySelector("#retrieval-status");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
 const appIcon = document.querySelector("#app-icon");
@@ -111,13 +112,16 @@ async function handleExtract(event) {
 
     idle.hidden = true;
     done.hidden = false;
+    retrievalStatus.textContent = `${result.appName} review packet ready with ${result.count} ${pluralize("written review", result.count)}.`;
     window.scrollTo(0, 0);
+    packetTitle.focus();
   } catch {
     track("review_extract_error", {
       platform: platformFromUrl(link),
       error_type: "extract_failed",
     });
     showError(NETWORK_MESSAGE);
+    retrievalStatus.textContent = NETWORK_MESSAGE;
   } finally {
     setLoading(false);
   }
@@ -318,6 +322,7 @@ function setLoading(loading) {
   extractButton.classList.toggle("busy", loading);
   extractButton.setAttribute("aria-busy", String(loading));
   extractLabel.textContent = loading ? "Extracting…" : "Extract reviews";
+  if (loading) retrievalStatus.textContent = "Retrieving public app reviews…";
 }
 
 function resetRetriever() {
@@ -336,6 +341,7 @@ function resetRetriever() {
   peek.replaceChildren();
   peek.hidden = false;
   clearError();
+  retrievalStatus.textContent = "";
   window.scrollTo(0, 0);
   appUrl.focus();
 }

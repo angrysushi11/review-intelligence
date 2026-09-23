@@ -19,6 +19,7 @@
     { "src": "/favicon.svg", "dest": "/web/favicon.svg" },
     { "src": "/robots.txt", "dest": "/web/robots.txt" },
     { "src": "/sitemap.xml", "dest": "/web/sitemap.xml" },
+    { "src": "/llms.txt", "dest": "/web/llms.txt" },
     { "src": "/app-review-growth-analyzer-skill.zip", "dest": "/web/app-review-growth-analyzer-skill.zip" },
     { "src": "/", "dest": "/web/index.html" }
   ]
