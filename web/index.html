@@ -36,17 +36,45 @@
         gtag("config", "G-5W48W3ZCBF", {
           page_location: `${window.location.origin}${window.location.pathname}`,
         });
+
+        const currentUrl = new URL(window.location.href);
+        const utmSource = currentUrl.searchParams.get("utm_source")?.toLowerCase() ?? "";
+        const referrerUrl = document.referrer ? new URL(document.referrer) : null;
+        const referrerHost = referrerUrl?.hostname.toLowerCase() ?? "";
+        const referrerPath = referrerUrl?.pathname.toLowerCase() ?? "";
+        const aiSource =
+          referrerHost.endsWith("chatgpt.com") || referrerHost.endsWith("chat.openai.com") || utmSource === "chatgpt" || utmSource === "chatgpt.com"
+            ? "chatgpt"
+            : referrerHost.endsWith("perplexity.ai") || utmSource === "perplexity" || utmSource === "perplexity.ai"
+              ? "perplexity"
+              : referrerHost.endsWith("copilot.microsoft.com") || (referrerHost.endsWith("bing.com") && referrerPath.includes("copilot")) || utmSource === "copilot"
+                ? "copilot"
+                : referrerHost.endsWith("gemini.google.com") || utmSource === "gemini"
+                  ? "gemini"
+                  : referrerHost.endsWith("claude.ai") || utmSource === "claude" || utmSource === "claude.ai"
+                    ? "claude"
+                    : null;
+
+        if (aiSource) {
+          gtag("event", "ai_referral_landing", {
+            ai_source: aiSource,
+            landing_path: window.location.pathname,
+          });
+        }
       }
     </script>
   </head>
   <body>
     <main class="wrap">
+      <p class="sr-only" id="retrieval-status" role="status" aria-live="polite"></p>
       <section id="state-idle">
-        <header>
-          <h1 class="title">Review Retriever</h1>
-          <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+        <header class="hero">
+          <p class="pencil hero-kicker">Review Retriever</p>
+          <h1 class="title title--hero">Export app reviews. Then ask what users actually mean.</h1>
+          <svg class="title-mark title-mark--hero" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
             <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
           </svg>
+          <p class="hero-lede">Get a free public review packet from the App Store or Google Play. Connect Review Intelligence through MCP in Claude Cowork or Codex to continue through Google Play batches, compare countries and competitors, and trace findings back to the exact words users wrote.</p>
         </header>
 
         <form class="tool-frame" id="extract-form" novalidate>
@@ -145,6 +173,32 @@
                 <p>Question another app’s public reviews to find unmet needs, weak claims, and credible positioning openings.</p>
               </div>
             </div>
+          </section>
+
+          <section class="guide-proof" aria-labelledby="guide-proof-title">
+            <header>
+              <p class="pencil guide-kicker">one theme, fully resolved</p>
+              <h3 id="guide-proof-title">What a finished theme looks like</h3>
+            </header>
+            <dl class="guide-proof-list">
+              <div>
+                <dt>Theme</dt>
+                <dd><strong>Cancellation trust gap</strong><span>Users say the trial is easy to start and weirdly hard to stop. Twenty-three reviews, four different phrasings, one problem.</span></dd>
+              </div>
+              <div>
+                <dt>Growth impact</dt>
+                <dd><strong>High</strong><span>It poisons store-page trust, wastes paid traffic on users who read the reviews before installing, drags rating quality, and closes the door on subscription recovery. In that order.</span></dd>
+              </div>
+              <div>
+                <dt>Fix order</dt>
+                <dd><strong>Before the next creative test</strong><span>No screenshot compensates for users publicly warning each other that billing feels unsafe. Fix the flow, then spend on the funnel.</span></dd>
+              </div>
+              <div>
+                <dt>Evidence</dt>
+                <dd><strong>Quoted, with IDs</strong><span>Every theme cites the reviews it came from, so the product team can read the actual sentences instead of arguing with your summary.</span></dd>
+              </div>
+            </dl>
+            <a class="guide-proof-link" href="https://www.doubledash.me/tools/review-intelligence/#example">See the full worked example</a>
           </section>
 
           <section class="guide-power" aria-labelledby="guide-power-title">
@@ -260,7 +314,7 @@
             <img class="app-icon" id="app-icon" alt="" width="72" height="72" decoding="async" referrerpolicy="no-referrer" hidden>
             <div class="packet-identity">
               <div class="pencil">review packet ready</div>
-              <h2 class="packet-title" id="packet-title">Reviews exported</h2>
+              <h2 class="packet-title" id="packet-title" tabindex="-1">Reviews exported</h2>
               <p class="receipt-meta" id="receipt-meta" hidden></p>
             </div>
           </div>

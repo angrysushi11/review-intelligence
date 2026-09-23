@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { runInNewContext } from "node:vm";
 import { buildDataset } from "../src/app-store.js";
 
 const webUrl = new URL("../web/", import.meta.url);
@@ -22,12 +23,23 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(html, /<title>Export &amp; Analyze App Reviews \| Review Retriever<\/title>/);
   assert.match(html, /name="description" content="Retrieve public app reviews, question the evidence in Claude Cowork or Codex, and continue through Google Play batches with Review Intelligence\."/);
   assert.match(html, /<article class="retrieval-guide" aria-labelledby="retrieval-guide-title">/);
+  assert.match(html, /<p class="pencil hero-kicker">Review Retriever<\/p>/);
+  assert.match(html, /<h1 class="title title--hero">Export app reviews\. Then ask what users actually mean\.<\/h1>/);
+  assert.match(html, /Get a free public review packet from the App Store or Google Play/);
+  assert.match(html, /continue through Google Play batches, compare countries and competitors/);
+  assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
   assert.ok(html.indexOf('<ol class="steps">') < html.indexOf('<article class="retrieval-guide"'));
   assert.ok(html.indexOf('<article class="retrieval-guide"') < html.indexOf('<hr class="rule">'));
   assert.match(html, /Turn app reviews into answers you can use/);
   assert.match(html, /Review Retriever collects the public evidence\. Review Intelligence helps you question it/);
   assert.match(html, /Ask questions that reviews can answer/);
   assert.match(html, /What do users hate most\?/);
+  assert.match(html, /<section class="guide-proof" aria-labelledby="guide-proof-title">/);
+  assert.match(html, /What a finished theme looks like/);
+  assert.match(html, /Cancellation trust gap/);
+  assert.match(html, /Twenty-three reviews, four different phrasings, one problem/);
+  assert.match(html, /Every theme cites the reviews it came from/);
+  assert.match(html, /See the full worked example/);
   assert.match(html, /Connect Review Intelligence to Claude Cowork or Codex/);
   assert.match(html, /The MCP returns up to 500 per response and provides a continuation cursor for Google Play/);
   assert.match(html, /No public-source route can promise every review ever posted/);
@@ -52,7 +64,7 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(html, /<header class="result-masthead">[\s\S]*?<h1 class="title">Review Retriever<\/h1>/);
   assert.match(html, /review packet ready/);
   assert.match(html, /id="app-icon"[^>]*referrerpolicy="no-referrer"[^>]*hidden/);
-  assert.match(html, /id="packet-title"/);
+  assert.match(html, /id="packet-title" tabindex="-1"/);
   assert.match(html, /copy or download the<br>extracted reviews here/);
   assert.match(html, /id="packet-ledger"/);
   assert.match(html, /id="download-btn"[^>]*>Download\.md<\/button>/);
@@ -89,6 +101,9 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(appJs, /appUrl\.value = queryAppUrl/);
   assert.match(appJs, /window\.history\.replaceState\(null, "", cleanLocation\)/);
   assert.match(html, /page_location: `\$\{window\.location\.origin\}\$\{window\.location\.pathname\}`/);
+  assert.match(html, /gtag\("event", "ai_referral_landing"/);
+  assert.match(html, /ai_source: aiSource/);
+  assert.match(html, /landing_path: window\.location\.pathname/);
 
   assert.match(styles, /@import url\("\/tokens\.css"\)/);
   assert.match(tokens, /--paper:\s*#f7f4ec/);
@@ -123,6 +138,9 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(styles, /\.retrieval-guide\s*\{[^}]*margin-top:\s*88px[^}]*border-top:\s*1px solid var\(--rule\)/s);
   assert.match(styles, /\.guide-columns\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   assert.match(styles, /\.guide-question-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
+  assert.match(styles, /\.guide-proof\s*\{/);
+  assert.match(styles, /\.guide-proof-list\s*\{/);
+  assert.match(styles, /\.sr-only\s*\{/);
   assert.match(styles, /\.guide-power\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*border:\s*2px solid/s);
   assert.match(styles, /\.guide-button--primary\s*\{[^}]*background:\s*var\(--ink\)[^}]*color:\s*var\(--paper\)/s);
   assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.retrieval-guide\s*\{[^}]*margin-top:\s*72px/s);
@@ -137,6 +155,8 @@ test("the homepage uses the approved paper-and-ink retriever flow", async () => 
   assert.match(appJs, /couldn't reach the store — try again in a minute/);
   assert.match(appJs, /link\.download = currentFilename/);
   assert.match(appJs, /function renderPacket/);
+  assert.match(appJs, /review packet ready with \$\{result\.count\}/);
+  assert.match(appJs, /packetTitle\.focus\(\)/);
   assert.match(appJs, /iconUrl:\s*safeImageUrl\(dataset\.app_icon_url\)/);
   assert.match(appJs, /function renderAppIcon/);
   assert.match(appJs, /url\.protocol === "https:"/);
@@ -277,6 +297,7 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   assert.match(html, /does not retain the listing URL or browsing history/);
   assert.match(html, /no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code/);
   assert.match(html, /Analytics receives a sanitized page location without the app URL, query parameters, or fragment/);
+  assert.match(html, /coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot/);
   assert.match(html, /tools@doubledash\.me/);
   assert.doesNotMatch(html, /dash@doubledash\.me/);
   assert.match(html, /class="drawn privacy-return" href="\/">[\s\S]*?<span>Open Review Retriever<\/span>/);
@@ -291,5 +312,55 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");
+  assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");
+});
+
+test("the crawler files publish an accurate sitemap and optional llms content map", async () => {
+  const robots = await readFile(new URL("robots.txt", webUrl), "utf8");
+  const sitemap = await readFile(new URL("sitemap.xml", webUrl), "utf8");
+  const llms = await readFile(new URL("llms.txt", webUrl), "utf8");
+
+  assert.match(robots, /Sitemap: https:\/\/reviews\.doubledash\.me\/sitemap\.xml/);
+  assert.match(sitemap, /<loc>https:\/\/reviews\.doubledash\.me\/<\/loc>/);
+  assert.match(sitemap, /<lastmod>2026-09-23<\/lastmod>/);
+  assert.match(llms, /optional content map/);
+  assert.match(llms, /not a crawler permission policy/);
+  assert.match(llms, /https:\/\/reviews\.doubledash\.me\/robots\.txt/);
+  assert.match(llms, /MCP returns up to 500 reviews per response/);
+  assert.match(llms, /cannot by itself prove revenue, retention, causality, or the views of every user/);
+});
+
+test("production analytics records an AI source without leaking the query string", async () => {
+  const html = await readFile(new URL("index.html", webUrl), "utf8");
+  const inlineScript = html.match(/<script>\s*([\s\S]*?)\s*<\/script>/)?.[1];
+  assert.ok(inlineScript, "the inline analytics script should exist");
+
+  const context = {
+    Date,
+    URL,
+    document: {
+      referrer: "",
+      createElement: () => ({}),
+      head: { appendChild: () => {} }
+    },
+    window: {
+      dataLayer: [],
+      location: {
+        hostname: "reviews.doubledash.me",
+        origin: "https://reviews.doubledash.me",
+        pathname: "/",
+        href: "https://reviews.doubledash.me/?utm_source=claude&app_url=private"
+      }
+    }
+  };
+
+  runInNewContext(inlineScript, context);
+  const analyticsCalls = context.window.dataLayer.map((entry) => Array.from(entry));
+  const pageConfig = analyticsCalls.find(([command]) => command === "config");
+  const aiEvent = analyticsCalls.find(([command, name]) => command === "event" && name === "ai_referral_landing");
+
+  assert.equal(pageConfig[2].page_location, "https://reviews.doubledash.me/");
+  assert.equal(aiEvent[2].ai_source, "claude");
+  assert.equal(aiEvent[2].landing_path, "/");
 });
