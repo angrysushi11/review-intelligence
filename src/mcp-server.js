@@ -17,6 +17,7 @@ const SERVER_VERSION = "1.0.0";
 const TOOL_NAME = "retrieve_app_reviews";
 const SCHEMA_VERSION = "review-retriever.v1";
 const POWER_USER_SETUP_URL = "https://www.doubledash.me/tools/review-intelligence/mcp/";
+const MAX_CURSOR_LENGTH = 32_768;
 
 const platformSchema = z.enum(["auto", "app_store", "google_play"]);
 const resolvedPlatformSchema = z.enum(["app_store", "google_play"]);
@@ -43,10 +44,16 @@ export const retrieveReviewsInputSchema = {
     .min(1)
     .max(500)
     .default(500)
-    .describe("Maximum unique review records to return. The connector caps this at 500."),
+    .describe("Maximum unique review records in this response. Google Play responses may include next_cursor for further batches; use a limit of at least 150 when following a cursor."),
   sort: sortSchema
     .default("most_recent")
     .describe("Review ordering requested from the public store source."),
+  cursor: z.string()
+    .trim()
+    .min(1)
+    .max(MAX_CURSOR_LENGTH)
+    .optional()
+    .describe("Opaque next_cursor from the previous Google Play response. Reuse it with the same app, market, sort order, and a limit of at least 150 to retrieve the next batch."),
   include_markdown: z.boolean()
     .default(false)
     .describe("Also render the returned records as the legacy Markdown review export. This duplicates the structured reviews, so leave false for direct analysis.")
@@ -83,6 +90,7 @@ export const retrieveReviewsOutputSchema = {
     market: z.string(),
     limit: z.number().int().min(1).max(500),
     sort: sortSchema,
+    cursor_supplied: z.boolean(),
     include_markdown: z.boolean()
   }).strict(),
   app: z.object({
@@ -138,6 +146,13 @@ export const retrieveReviewsOutputSchema = {
     language_code: nullableString,
     error: nullableString
   }).strict()),
+  continuation: z.object({
+    supported: z.boolean().describe("True when the resolved platform supports continuation through this connector."),
+    cursor_supplied: z.boolean(),
+    has_more: z.boolean(),
+    next_cursor: nullableString.describe("Opaque cursor for the next Google Play batch, or null when the source returned no further page."),
+    note: z.string()
+  }).strict(),
   reviews: z.array(normalizedReviewSchema).max(500),
   markdown: nullableString.describe("Legacy Markdown export when include_markdown is true; otherwise null.")
 };
@@ -150,7 +165,7 @@ export function createReviewRetrieverMcpServer({ retrieveReviewsFn = retrieveRev
 
   server.registerTool(TOOL_NAME, {
     title: "Retrieve public app reviews",
-    description: "Retrieve public written reviews for one App Store or Google Play app and return analysis-ready records with stable evidence IDs and explicit coverage denominators. This tool retrieves data only; it does not analyze reviews or modify any external system.",
+    description: "Retrieve public written reviews for one App Store or Google Play app and return analysis-ready records with stable evidence IDs and explicit coverage denominators. Each response contains up to 500 records. For Google Play, keep calling with continuation.next_cursor until has_more is false to retrieve beyond the first batch. This tool retrieves data only; it does not analyze reviews or modify any external system.",
     inputSchema: retrieveReviewsInputSchema,
     outputSchema: retrieveReviewsOutputSchema,
     annotations: {
@@ -286,7 +301,8 @@ export async function buildReviewExport(input, { retrieveReviewsFn = retrieveRev
     market: request.market,
     pages,
     limit: request.limit,
-    sort: request.sort
+    sort: request.sort,
+    cursor: request.cursor
   });
 
   const payload = result?.payload || {};
@@ -302,12 +318,18 @@ export async function buildReviewExport(input, { retrieveReviewsFn = retrieveRev
   const limitedEntries = entries.slice(0, request.limit);
   const reviews = limitedEntries.map(({ normalized }) => normalized);
   const analysisReady = reviews.filter((review) => review.analysis_ready);
+  const continuation = buildContinuation({
+    platform,
+    cursorSupplied: Boolean(request.cursor),
+    nextCursor: payload.nextCursor
+  });
   const coverage = buildCoverage({
     requested: request.limit,
     declared: declaredReviewCount(dataset, payload),
     retrieved: reviews.length,
     analyzedReady: analysisReady.length,
-    sourceRecordsBeforeLimit: entries.length
+    sourceRecordsBeforeLimit: entries.length,
+    hasMore: continuation.has_more
   });
   const ratings = buildRatingCoverage(analysisReady);
   const dates = buildDateCoverage(analysisReady);
@@ -337,13 +359,14 @@ export async function buildReviewExport(input, { retrieveReviewsFn = retrieveRev
   return {
     schema_version: SCHEMA_VERSION,
     retrieved_at: normalizedIsoTimestamp(payload.fetchedAt || new Date().toISOString()),
-    request,
+    request: publicRequest(request),
     app,
     storefront,
     coverage,
     ratings,
     dates,
     sources,
+    continuation,
     reviews,
     markdown
   };
@@ -356,7 +379,20 @@ function normalizeRequest(input = {}) {
     market: input.market || "en-US",
     limit: Number(input.limit) || 500,
     sort: input.sort || "most_recent",
+    cursor: normalizedString(input.cursor),
     include_markdown: Boolean(input.include_markdown)
+  };
+}
+
+function publicRequest(request) {
+  return {
+    target: request.target,
+    requested_platform: request.requested_platform,
+    market: request.market,
+    limit: request.limit,
+    sort: request.sort,
+    cursor_supplied: Boolean(request.cursor),
+    include_markdown: request.include_markdown
   };
 }
 
@@ -411,7 +447,7 @@ function normalizeReview(review = {}, context) {
   };
 }
 
-function buildCoverage({ requested, declared, retrieved, analyzedReady, sourceRecordsBeforeLimit }) {
+function buildCoverage({ requested, declared, retrieved, analyzedReady, sourceRecordsBeforeLimit, hasMore = false }) {
   const excludedWithoutText = Math.max(0, retrieved - analyzedReady);
   return {
     requested,
@@ -420,25 +456,55 @@ function buildCoverage({ requested, declared, retrieved, analyzedReady, sourceRe
     analyzed_ready: analyzedReady,
     source_records_before_limit: sourceRecordsBeforeLimit,
     excluded_without_text: excludedWithoutText,
-    truncated_to_limit: sourceRecordsBeforeLimit > retrieved,
-    warning: coverageWarning({ requested, retrieved, analyzedReady }),
+    truncated_to_limit: sourceRecordsBeforeLimit > retrieved || hasMore,
+    warning: coverageWarning({ requested, retrieved, analyzedReady, hasMore }),
     denominator_note: analyzedReady
       ? `Use analyzed_ready (${analyzedReady}) as the default denominator for all review-derived percentages unless a metric explicitly names a different denominator.`
       : "No analysis-ready review text was returned. Do not calculate review-derived percentages."
   };
 }
 
-function coverageWarning({ requested, retrieved, analyzedReady }) {
+function coverageWarning({ requested, retrieved, analyzedReady, hasMore }) {
+  const continuation = hasMore
+    ? " More Google Play reviews are available through continuation.next_cursor."
+    : "";
   if (!analyzedReady) {
-    return `Requested ${requested} reviews, retrieved ${retrieved}, and found no analysis-ready review text.`;
+    return `Requested ${requested} reviews, retrieved ${retrieved}, and found no analysis-ready review text.${continuation}`;
   }
   if (analyzedReady !== retrieved) {
-    return `Requested ${requested} reviews; ${retrieved} records were retrieved and ${analyzedReady} contain usable text. Base review-derived percentages on ${analyzedReady}.`;
+    return `Requested ${requested} reviews; ${retrieved} records were retrieved and ${analyzedReady} contain usable text. Base review-derived percentages on ${analyzedReady}.${continuation}`;
   }
   if (retrieved < requested) {
-    return `Requested ${requested} reviews; the public source returned ${retrieved}. Base review-derived percentages on ${analyzedReady}.`;
+    return `Requested ${requested} reviews; the public source returned ${retrieved}. Base review-derived percentages on ${analyzedReady}.${continuation}`;
+  }
+  if (hasMore) {
+    return `Retrieved this ${retrieved}-review batch; more Google Play reviews are available through continuation.next_cursor. Base review-derived percentages on ${analyzedReady}.`;
   }
   return null;
+}
+
+function buildContinuation({ platform, cursorSupplied, nextCursor }) {
+  if (platform !== "google_play") {
+    return {
+      supported: false,
+      cursor_supplied: cursorSupplied,
+      has_more: false,
+      next_cursor: null,
+      note: "Apple public review feeds do not expose a compatible continuation cursor. Query another storefront to inspect additional public Apple review evidence."
+    };
+  }
+
+  const normalizedCursor = nullableNormalizedString(nextCursor);
+  const hasMore = Boolean(normalizedCursor);
+  return {
+    supported: true,
+    cursor_supplied: cursorSupplied,
+    has_more: hasMore,
+    next_cursor: normalizedCursor,
+    note: hasMore
+      ? "More Google Play reviews are available. Call retrieve_app_reviews again with the same target, market, sort, a limit of at least 150, and this next_cursor; deduplicate accumulated batches by review_id."
+      : "The Google Play source returned no further page cursor for this app, market, language, and sort order."
+  };
 }
 
 function buildRatingCoverage(reviews) {

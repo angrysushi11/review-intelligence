@@ -17,18 +17,23 @@ export function parseTarget(input, platform = "auto") {
   return { platform: detectedPlatform, ...parseAppStoreUrl(input) };
 }
 
-export async function retrieveReviews({ url, platform = "auto", market = "en-US", pages = 10, limit = 500, sort = "mostRecent" }) {
+export async function retrieveReviews({ url, platform = "auto", market = "en-US", pages = 10, limit = 500, sort = "mostRecent", cursor = "" }) {
   const target = parseTarget(url, platform);
   const selectedMarket = normalizeMarket(market);
   const isGooglePlay = target.platform === "google_play";
   const selectedMarkets = isGooglePlay ? normalizeMarkets(market) : [selectedMarket];
+
+  if (cursor && !isGooglePlay) {
+    throw new Error("Continuation cursors are currently supported only for Google Play reviews.");
+  }
 
   const payload = isGooglePlay
     ? await fetchGooglePlayReviewSet({
         appId: target.appId,
         markets: selectedMarkets,
         limit,
-        sortBy: googleSort(sort)
+        sortBy: googleSort(sort),
+        cursor
       })
     : await fetchAppleReviews({
         appId: target.appId,
