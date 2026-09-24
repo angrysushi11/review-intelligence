@@ -103,7 +103,11 @@ test("the hand-off links open regular Claude and ChatGPT chats", () => {
   assert.equal(url.searchParams.get("q"), CLAUDE_PREFILL);
   assert.ok(CLAUDE_NEW_CHAT_URL.length < 2000);
   assert.doesNotMatch(CLAUDE_NEW_CHAT_URL, /'/);
-  assert.equal(CHATGPT_NEW_CHAT_URL, "https://chatgpt.com/");
+  const chatgpt = new URL(CHATGPT_NEW_CHAT_URL);
+  assert.equal(chatgpt.origin, "https://chatgpt.com");
+  assert.equal(chatgpt.pathname, "/");
+  assert.equal(chatgpt.searchParams.get("q"), CLAUDE_PREFILL);
+  assert.doesNotMatch(CHATGPT_NEW_CHAT_URL, /\/g\//);
 });
 
 
@@ -119,4 +123,13 @@ test("both targets use the same full method, including when no override is suppl
       assert.ok(buildAnalysisPayload({ markdown, method: empty, target }).text.startsWith(ANALYSIS_METHOD.trim()));
     }
   }
+});
+
+
+test("a selected screenshots question stays focused without shortening the method", () => {
+  const payload = buildAnalysisPayload({ markdown: exportFor(2), questionId: "creative" });
+  assert.ok(payload.text.startsWith(ANALYSIS_METHOD));
+  assert.match(payload.text, /My question: What should the screenshots and ads say/);
+  assert.match(payload.text, /Answer only this selected question/);
+  assert.equal(payload.text.match(/My question:/g).length, 1);
 });
