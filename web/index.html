@@ -228,11 +228,11 @@
 
         <section class="connect" id="connect" aria-labelledby="connect-title">
           <p class="hand connect-kicker">skip the copy-paste</p>
-          <h2 id="connect-title">Ask inside Claude or Codex</h2>
-          <p>Connect once. Then paste any app link in a chat and keep asking follow-ups. On Google Play it keeps pulling more reviews, batch by batch.</p>
+          <h2 id="connect-title">Want it inside your chat?</h2>
+          <p>Connect once. Then paste any app link in Claude or Codex, pull more than 500 Google Play reviews, and compare apps and countries in one conversation.</p>
           <div class="connect-actions">
-            <a class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
-            <a class="connect-button" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Codex and other clients<span>setup guide</span></a>
+            <a data-connect-placement="landing_connector" class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
+            <a data-connect-placement="landing_guide" class="connect-button" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Codex and other clients<span>setup guide</span></a>
           </div>
           <p class="connect-code-label">Claude Code</p>
           <code class="connect-code">claude mcp add --transport http review-retriever https://reviews.doubledash.me/mcp</code>
@@ -281,7 +281,7 @@
         <footer class="foot">
           <span class="pencil">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude or Codex</a>
+            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="/extension/privacy/">Extension privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
@@ -345,6 +345,8 @@
             </a>
           </div>
 
+          <p id="repeat-nudge" hidden><a class="lnk" data-connect-placement="repeat_nudge" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Another app? Connected, you'd just ask Claude for it.</a></p>
+
           <p class="analyze-toast" id="analyze-toast" role="status" aria-live="polite" hidden></p>
 
           <div class="file-actions">
@@ -354,7 +356,7 @@
           </div>
 
           <ul class="analyze-more">
-            <li><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Follow-ups without pasting: connect Claude or Codex</a></li>
+            <li><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="results_nudge">Comparing competitors or need more than 500 reviews? Connect it once and ask inside Claude or Codex.</a></li>
             <li><button class="lnk" id="claude-btn" type="button" aria-expanded="false" aria-controls="claude-steps">The full method in Claude: install the skill</button></li>
           </ul>
 
@@ -393,7 +395,7 @@
         <footer class="foot">
           <span class="pencil">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude or Codex</a>
+            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="/extension/privacy/">Extension privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
