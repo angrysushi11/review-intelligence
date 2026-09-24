@@ -91,17 +91,17 @@ export const QUESTION_GROUPS = [
       {
         id: "language",
         label: "Which words do happy users use?",
-        prompt: "Which exact words and phrases do happy users use? Give me language worth testing in positioning."
+        prompt: "Which exact words and phrases do happy users use? Give me language worth testing in positioning, ranked by how distinctive it is, plus what not to claim."
       },
       {
         id: "creative",
         label: "What should screenshots and ads say?",
-        prompt: "What should the screenshots and ads say? Give evidence-backed message directions, not final copy."
+        prompt: "What should the screenshots and ads say? Start with Say / Test / Avoid, then the evidence. Message directions, not final copy."
       },
       {
         id: "claims",
         label: "Which claims are safe to make?",
-        prompt: "Which marketing claims do these reviews support, and which would they contradict?"
+        prompt: "Which marketing claims do these reviews support, and which would they contradict? Sort them into safe, needs proof, and avoid."
       }
     ]
   },
@@ -152,7 +152,7 @@ export function buildAnalysisPayload({ markdown, questionId, maxReviews = Infini
   const question = findQuestion(questionId);
   const reviews = limitReviews(markdown, maxReviews);
   const scope = reviews.included < reviews.total
-    ? `Only the newest ${reviews.included} of the ${reviews.total} exported reviews are included, so the chat has room to answer. Use ${reviews.included} as the denominator.`
+    ? `Only the newest ${reviews.included} of the ${reviews.total} exported reviews are included, so the chat has room to answer. Say this in the first lines of your answer and use ${reviews.included} as the denominator. The rating distribution and date range in the export header describe all ${reviews.total}, not the included reviews.`
     : `All ${reviews.total} exported reviews are included.`;
 
   const text = [
@@ -160,7 +160,11 @@ export function buildAnalysisPayload({ markdown, questionId, maxReviews = Infini
     `My question: ${question.prompt}`,
     "Answer only this selected question using the method above. Keep the response focused; do not produce a full report or answer other branches unless I ask.",
     `The reviews (Review Retriever export, Markdown). ${scope}`,
-    reviews.text
+    reviews.text,
+    `Reminder — my question: ${question.prompt}`,
+    reviews.included < reviews.total
+      ? `Start with the answer in the first lines, and say there that this is the newest ${reviews.included} of ${reviews.total} exported reviews. Then give the evidence.`
+      : "Start with the answer in the first lines, then give the evidence."
   ].join("\n\n");
 
   return { text, question, included: reviews.included, total: reviews.total };

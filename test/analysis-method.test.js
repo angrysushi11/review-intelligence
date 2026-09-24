@@ -9,7 +9,7 @@ test("the committed full method matches its v13 sources without legacy instructi
     "Run npm run build:method after updating the method sources");
   assert.equal(await readFile(new URL("../web/review-intelligence-method.js", import.meta.url), "utf8"), renderMethodModule(generated));
   assert.ok(generated.length < 60000);
-  for (const marker of ["The branch hub", "Review Evidence Protocol v13", "Conversation Modes v13"]) {
+  for (const marker of ["The branch hub", "Review Evidence Protocol v13", "Conversation Modes v13", "## Claim safety", "Answer first.", "Direction Answer v13"]) {
     assert.ok(generated.includes(marker), marker);
   }
   assert.doesNotMatch(generated, /review-growth-strategist-prompt-v12\.md|references\/example-first-read\.md|## Load the right instructions|^name: app-review-growth-analyzer/m);

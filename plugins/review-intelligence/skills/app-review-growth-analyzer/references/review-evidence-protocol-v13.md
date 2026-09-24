@@ -70,6 +70,8 @@ When parsed or analyzed reviews are fewer than supplied or declared reviews, war
 
 If the declared and actually present counts disagree, say so. Do not silently use the larger number. If the denominator is unknown, do not report percentages.
 
+A paste or upload may say it contains only part of an export, for example: “Only the newest 150 of the 450 exported reviews are included.” Treat that as a coverage warning even when every included review was analyzed. Say it in the first lines of the answer (“Based on the newest 150 of 450 exported reviews.”), use the included count as the denominator, and do not describe the included reviews with the export header's rating distribution or date range, which cover the full export.
+
 ## 6. Compute before estimating
 
 When tools or reliable structured processing are available, compute:
@@ -84,7 +86,9 @@ Use **COMPUTED** only for reproducible operations over parsed records. Theme mem
 
 If exact computation is not reliable, use qualitative recurrence such as “several,” “recurring,” or “single signal.” Do not invent ranges that look measured. Do not convert a qualitative judgment into a percentage.
 
-Percentages always use the analyzed denominator. Write it when ambiguity is possible: `47/402 analyzed reviews (11.7%)`. Theme shares may overlap; say so when totals are not mutually exclusive.
+Percentages always use the analyzed denominator and are rounded to whole numbers; write “<1%” below one percent. Name the denominator in words: `47 of 402 analyzed reviews (12%)`, or `9 of 180 four- and five-star reviews (5%)` for a subset. Theme shares may overlap; say so when totals are not mutually exclusive.
+
+A count you reached by reading and coding reviews is OBSERVED, not COMPUTED. Keep one count per theme for the whole conversation; if you recode a theme later, say that the count changed and why.
 
 ## 7. Build an evidence ledger
 
@@ -128,7 +132,7 @@ Strength depends on recurrence, specificity, independence, recency, and consiste
 - Copy quoted text verbatim, including spelling, punctuation, grammar, capitalization, emojis, and original language.
 - Explain or translate outside quotation marks.
 - Never fabricate a quote or attach it to the wrong Review ID.
-- Prefer a few diagnostic quotes over quote volume.
+- Prefer a few diagnostic quotes over quote volume: two to four per finding, best first. Customer-language answers may use up to six per territory. Say how many more exist instead of listing them.
 - Do not treat generic praise as detailed evidence, but do not erase its recurrence.
 
 ## 10. Handle multiple languages
@@ -172,9 +176,13 @@ If tool, context, file, or parsing limits prevent full processing, analyze the u
 
 ## 14. Evidence presentation pattern
 
-For a major finding, prefer one compact line after the evidence:
+For a major finding, use one compact line after the evidence:
 
-> **Evidence:** 14/402 analyzed reviews (3.5%); concentrated in versions 8.1–8.2; [R014, R087, R221]. **Status:** COMPUTED + OBSERVED; payment-impact interpretation is INFERENCE. **Strength:** Moderate.
+> **Evidence:** 14 of 402 analyzed reviews (3%), concentrated in versions 8.1–8.2 · e.g. [R014, R087, R221] · **Status:** COMPUTED + OBSERVED; payment-impact interpretation is INFERENCE · **Strength:** Moderate.
+
+- Name the denominator in words every time. If a finding uses a subset, such as four- and five-star reviews, say which.
+- Use one denominator per finding where possible; if two are needed, name both.
+- Cite at most four representative Review IDs. Never list every ID in a theme; give the full list only when the user asks for the evidence or the ledger.
 
 If the claim extends to churn, retention, conversion, or revenue:
 

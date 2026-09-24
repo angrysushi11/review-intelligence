@@ -6,7 +6,7 @@ import {
   DEFAULT_QUESTION_ID,
   QUESTION_GROUPS,
   buildAnalysisPayload
-} from "./analysis-prompt.js?v=20260924-handoff";
+} from "./analysis-prompt.js?v=20260925-output";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
 const VALIDATION_MESSAGE = "that doesn't look like a store link";

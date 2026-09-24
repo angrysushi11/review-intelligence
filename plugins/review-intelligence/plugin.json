@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "review-intelligence",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Retrieve and analyze public app reviews into evidence-backed product, pricing, growth, and ASO insights.",
   "author": {
     "name": "Dasha Antonova",

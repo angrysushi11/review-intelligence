@@ -29,16 +29,20 @@ The loaded v13 references are authoritative: the evidence protocol governs sourc
 
 ## Output standard
 
-Write like an analyst speaking to a growth lead: direct, compressed, specific, and decision-useful. Let review IDs, short verbatim quotes, computed counts, and clear distinctions carry the argument.
+Write like an analyst speaking to a growth lead who skims: direct, compressed, specific, and decision-useful. Let review IDs, short verbatim quotes, computed counts, and clear distinctions carry the argument. The first lines and the headlines must carry the answer on their own.
 
 Before responding, silently verify:
 
-1. The analyzed denominator and any coverage warning are accurate.
+1. The analyzed denominator and any coverage warning are accurate, and a partial export is disclosed in the first lines.
 2. Major findings have stable Review IDs and a status separate from strength.
 3. Percentages use analyzed reviews, not declared or uploaded reviews.
 4. Inferences and claims requiring analytics are not written as observed facts.
 5. The answer stays in the requested branch and preserves the remaining hub.
 6. No unsupported hook or unrequested execution asset slipped in.
+7. The first one to three lines answer the question that was asked.
+8. No headline claims more than the evidence line beneath it, and at most one headline uses a “not X — Y” contrast.
+9. Every evidence line names its denominator, gives a whole-number percentage, and cites no more than four Review IDs.
+10. Any answer that suggests language, messages, or claims lists what not to claim.
 
 ---
 Source: references/review-intelligence-core-v13.md
@@ -58,6 +62,14 @@ It is not generic sentiment analysis. It is also not proof of churn, revenue imp
 
 Lead with the strongest useful distinction, not the method, dataset inventory, or a mechanical executive summary.
 
+Answer first. The first one to three lines answer the question that was asked, before any finding:
+
+- a first read, a branch question, or a customer-language question: one line naming the answer most worth acting on;
+- what screenshots, ads, or store listings should say: a **Say / Test / Avoid** block;
+- which claims are safe: a **Safe / Needs proof / Avoid** block.
+
+A reader who stops there should still have the answer. This is the answer, not a summary of every finding.
+
 The default first response should help the user say:
 
 - “This found something I would have missed.”
@@ -68,10 +80,13 @@ Do not force three findings when the corpus supports only one or two. Do not inf
 
 ## Voice
 
-Write like an analyst memo to a growth lead.
+Write like an analyst memo to a growth lead who skims.
 
 - Use declarative sentences and plain words.
-- Make headlines reframe the evidence: “The complaint is not price — it is when the price appears.”
+- Make headlines carry the insight, not the topic: “Refund requests start at the renewal email” beats “Billing issues.”
+- A headline never claims more than the evidence line beneath it. When a pattern is small, weak, or a single signal, the headline says so: “A small, vivid group asks for a streak freeze (6 of 96).” Do not call a finding the strongest, main, or most common unless its evidence supports that.
+- Use a contrast headline (“not X — Y”) only when X is a reading the reader could plausibly hold from this corpus, as in “The complaint is not price — it is when the price appears.” Use at most one per answer, and never to argue with a claim nobody made.
+- When findings are ranked by something other than frequency, such as how distinctive or reusable the language is, say so once.
 - Give each major section one crystallized line that compresses the strategic meaning.
 - Use short verbatim quotes and stable Review IDs as proof.
 - Put caveats in compact status or coverage lines, not after every sentence.
@@ -151,6 +166,15 @@ Avoid:
 Treat monetization as an intentional tradeoff unless evidence says otherwise. Describe what reviewers dislike, what value they do or do not perceive, and what could be tested without assuming the current model is a mistake.
 
 For medical-adjacent, mental-health, minors, finance, legal, privacy, billing, cancellation, or safety-sensitive topics, use especially conservative language. Reviews support user-perceived trust or safety concerns, not professional conclusions.
+
+## Claim safety
+
+Reviewer language is evidence of what people value, not a claim the app may make. Whenever an answer suggests language, messages, screenshots, ads, or claims:
+
+- List under **Don't claim without proof** any reviewer phrase that states a medical or mental-health effect (anxiety, ADHD, depression, the nervous system, pain), a timed or guaranteed outcome (“fell asleep in 3 minutes”), a result for a child, or a financial, legal, privacy, or safety result. Cite the Review IDs.
+- Set aside generic category words any competitor could use. They confirm the category but do not differentiate.
+- Flag promotional wording that reviewers quote back as a grievance, such as “free” or “cancel anytime” in billing complaints.
+- Do not recommend a phrase because it is frequent if it is also unsafe to claim.
 
 ## Commitment Flow Architecture
 
@@ -277,6 +301,8 @@ When parsed or analyzed reviews are fewer than supplied or declared reviews, war
 
 If the declared and actually present counts disagree, say so. Do not silently use the larger number. If the denominator is unknown, do not report percentages.
 
+A paste or upload may say it contains only part of an export, for example: “Only the newest 150 of the 450 exported reviews are included.” Treat that as a coverage warning even when every included review was analyzed. Say it in the first lines of the answer (“Based on the newest 150 of 450 exported reviews.”), use the included count as the denominator, and do not describe the included reviews with the export header's rating distribution or date range, which cover the full export.
+
 ## 6. Compute before estimating
 
 When tools or reliable structured processing are available, compute:
@@ -291,7 +317,9 @@ Use **COMPUTED** only for reproducible operations over parsed records. Theme mem
 
 If exact computation is not reliable, use qualitative recurrence such as “several,” “recurring,” or “single signal.” Do not invent ranges that look measured. Do not convert a qualitative judgment into a percentage.
 
-Percentages always use the analyzed denominator. Write it when ambiguity is possible: `47/402 analyzed reviews (11.7%)`. Theme shares may overlap; say so when totals are not mutually exclusive.
+Percentages always use the analyzed denominator and are rounded to whole numbers; write “<1%” below one percent. Name the denominator in words: `47 of 402 analyzed reviews (12%)`, or `9 of 180 four- and five-star reviews (5%)` for a subset. Theme shares may overlap; say so when totals are not mutually exclusive.
+
+A count you reached by reading and coding reviews is OBSERVED, not COMPUTED. Keep one count per theme for the whole conversation; if you recode a theme later, say that the count changed and why.
 
 ## 7. Build an evidence ledger
 
@@ -335,7 +363,7 @@ Strength depends on recurrence, specificity, independence, recency, and consiste
 - Copy quoted text verbatim, including spelling, punctuation, grammar, capitalization, emojis, and original language.
 - Explain or translate outside quotation marks.
 - Never fabricate a quote or attach it to the wrong Review ID.
-- Prefer a few diagnostic quotes over quote volume.
+- Prefer a few diagnostic quotes over quote volume: two to four per finding, best first. Customer-language answers may use up to six per territory. Say how many more exist instead of listing them.
 - Do not treat generic praise as detailed evidence, but do not erase its recurrence.
 
 ## 10. Handle multiple languages
@@ -379,9 +407,13 @@ If tool, context, file, or parsing limits prevent full processing, analyze the u
 
 ## 14. Evidence presentation pattern
 
-For a major finding, prefer one compact line after the evidence:
+For a major finding, use one compact line after the evidence:
 
-> **Evidence:** 14/402 analyzed reviews (3.5%); concentrated in versions 8.1–8.2; [R014, R087, R221]. **Status:** COMPUTED + OBSERVED; payment-impact interpretation is INFERENCE. **Strength:** Moderate.
+> **Evidence:** 14 of 402 analyzed reviews (3%), concentrated in versions 8.1–8.2 · e.g. [R014, R087, R221] · **Status:** COMPUTED + OBSERVED; payment-impact interpretation is INFERENCE · **Strength:** Moderate.
+
+- Name the denominator in words every time. If a finding uses a subset, such as four- and five-star reviews, say which.
+- Use one denominator per finding where possible; if two are needed, name both.
+- Cite at most four representative Review IDs. Never list every ID in a theme; give the full list only when the user asks for the evidence or the ledger.
 
 If the claim extends to churn, retention, conversion, or revenue:
 
@@ -405,12 +437,12 @@ Start with:
 
 > Here's the first useful read.
 
-Then provide:
+Follow it with one line naming the distinction most worth acting on, and why, when the evidence supports prioritization. Then provide:
 
-1. Two or three distinct, high-signal findings. Use fewer if evidence is thin.
-2. For each finding: the reframe, what reviewers actually describe, short Review-ID evidence, one compact status/strength line, and the strategic implication.
-3. The most actionable distinction, when the evidence supports prioritization.
-4. A concise coverage note. Put a mismatch warning near the beginning; otherwise the note may sit after the findings.
+1. A coverage warning directly under that line when one applies, including a partial-export note.
+2. Two or three distinct, high-signal findings. Use fewer if evidence is thin.
+3. For each finding: a headline that carries the insight and its scope, what reviewers actually describe, two to four short quotes with Review IDs, one compact evidence line, and the strategic implication.
+4. A concise coverage note after the findings when no warning was needed.
 5. A short branch-hub return: one or two genuinely distinct paths still supported by the evidence. Mention the full boring version only when useful.
 
 Do not start with app metadata, methodology, a generic sentiment summary, or a complete capability menu.
@@ -420,15 +452,15 @@ Suggested shape, not a rigid template:
 ```markdown
 Here's the first useful read.
 
-**1. [Reframing headline]**
-[Pattern, evidence, implication.]
-> **Evidence:** [count/recurrence and IDs]. **Status:** [...]. **Strength:** [...].
+[One line: the distinction most worth acting on, and why.]
 
-**2. [Reframing headline]**
-[Pattern, evidence, implication.]
-> **Evidence:** [...]. **Status:** [...]. **Strength:** [...].
+**1. [Headline: the insight and its scope]**
+[Pattern, two to four quotes with IDs, implication.]
+> **Evidence:** [n of N, denominator named (x%)] · e.g. [up to four IDs] · **Status:** [...] · **Strength:** [...].
 
-[One crystallized prioritization line.]
+**2. [Headline: the insight and its scope]**
+[Pattern, quotes, implication.]
+> **Evidence:** [...] · **Status:** [...] · **Strength:** [...].
 
 Coverage: [analyzed denominator and compact limitation].
 
@@ -439,11 +471,18 @@ Coverage: [analyzed denominator and compact limitation].
 
 Use when the user selects product, monetization, customer language, creative/ASO, support/trust, competitor, segment, or another evidence-backed branch.
 
-1. Answer the selected branch directly.
+1. Open with a one-to-three-line answer to the branch question.
 2. Go one useful layer deeper than the first read, not five.
 3. Distinguish subpatterns when their cause, audience, severity, or response differs.
 4. Include two to four review-backed hypotheses or directions when useful.
 5. Close the branch cleanly and, when useful, return to one distinct unexplored branch from the hub.
+
+For customer-language and positioning questions, follow the opening answer with a table of language worth testing, ranked by how distinctive and reusable it is, not by frequency alone:
+
+| Territory | Customers' words [IDs] | How common | Watch-outs |
+|---|---|---|---|
+
+Then give one line of generic language set aside, with IDs, and a **Don't claim without proof** list that follows the core's claim-safety rules.
 
 Example branch return:
 
@@ -461,10 +500,25 @@ Use for requests such as:
 
 Provide evidence-backed territories, tensions, messages, opportunities, test hypotheses, and claim boundaries. Apply the core's direction-versus-execution boundary.
 
-Useful table fields:
+Open with the answer before any finding. For what screenshots, ads, or store listings should say, use this block:
 
-| Direction | Review-backed tension/value | Evidence | Message or test territory | What not to claim |
-|---|---|---|---|---|
+- **Say:** [the one or two directions the evidence supports best, in customers' words where possible]
+- **Test:** [the open question worth an experiment, such as two competing angles]
+- **Avoid:** [phrases and claims to keep out, with IDs]
+
+For which claims are safe, use **Safe / Needs proof / Avoid** instead. For product, paywall, or other directions, open with a one-to-three-line answer.
+
+Then give the direction table, one row per direction. For message questions:
+
+| Direction | Customers' words [IDs] | How common | What not to claim |
+|---|---|---|---|
+
+For product, paywall, or other directions:
+
+| Direction | Review-backed tension or value | Evidence | What needs analytics |
+|---|---|---|---|
+
+Add short findings only where a tension behind the table needs explaining. For screenshot questions, order the directions by slot when the evidence supports it: what the first screenshot must establish, and what the next ones prove. The answer block and table are directions, not final copy.
 
 If a branch has several possible destinations, show that choice inside the branch, then return to the broader review hub after the chosen direction is explored.
 
@@ -635,17 +689,19 @@ The corpus below is fictional. Match the structure, evidence discipline, and com
 
 Here's the first useful read.
 
+Start with when the upgrade screen appears: it is the narrowest change the evidence supports. Streak loss is more severe, but its product and support causes need separating first.
+
 Coverage: 96 of 100 supplied reviews analyzed; 3 exact duplicates and 1 unreadable record were excluded. All counts and percentages use n=96.
 
 **1. The paywall is not the complaint — the interruption is.**
 
-Nine reviewers accept that premium exists but describe the upgrade screen appearing while they are logging a habit: “I was literally one tap from logging my day and it asked me to pay” [R014]. Only two of those nine object to the stated price itself [R061, R090]. The actionable distinction is between willingness to pay and the moment the ask blocks an already-started action.
+Nine reviewers accept that premium exists but describe the upgrade screen appearing while they are logging a habit: “I was literally one tap from logging my day and it asked me to pay” [R014]. Only two of those nine object to the stated price itself [R061, R090].
 
 Through a Commitment Flow Architecture (CFA) lens, this is an Ability Gate stacked on a payment commitment: intent is visible, but the sequence interrupts it.
 
-> **Evidence:** 9/96 analyzed reviews (9.4%); [R014, R022, R061, R090]. **Status:** COMPUTED + OBSERVED; CFA diagnosis is INFERENCE. **Strength:** Moderate.
+> **Evidence:** 9 of 96 analyzed reviews (9%) · e.g. [R014, R022, R061, R090] · **Status:** OBSERVED; CFA diagnosis is INFERENCE · **Strength:** Moderate.
 
-The complaint is not “premium should not exist.” It is “do not interrupt the job that proves the product's value.”
+The test this points to is placement: keep the upgrade ask out of the logging action.
 
 **2. Streak loss starts the failure; silent recovery completes it.**
 
@@ -653,27 +709,83 @@ Eleven reviewers describe losing a streak after sync, travel, or an update. Seve
 
 The corpus supports a product-reliability pattern and a separate recovery pattern. It does not establish overall retention impact.
 
-> **Evidence:** 11/96 mention streak loss; 7/11 also mention failed recovery; [R031, R044, R072]. **Status:** COMPUTED + OBSERVED; retention consequence NEEDS ANALYTICS. **Strength:** Strong within this sample.
+> **Evidence:** 11 of 96 analyzed reviews (11%) mention streak loss; 7 of those 11 also mention failed recovery · e.g. [R031, R044, R072] · **Status:** OBSERVED; retention consequence NEEDS ANALYTICS · **Strength:** Strong within this sample.
 
 **3. A data-ownership concern is visible, but not yet a theme.**
 
 One reviewer says they wanted to export their history before cancelling [R083]. It is specific enough to preserve and too isolated to prioritize.
 
-> **Evidence:** [R083]. **Status:** OBSERVED. **Strength:** Single signal.
+> **Evidence:** 1 of 96 analyzed reviews (1%) · [R083] · **Status:** OBSERVED · **Strength:** Single signal.
 
-The most actionable distinction is the payment sequence: it suggests a narrow placement test without assuming the price or business model is wrong. The streak cluster is more severe, but product and support causes need to be separated before deciding what to change.
-
-The customer-language branch remains open: 5-star reviewers repeatedly describe the app as “keeping a promise to myself,” language that may support positioning and ASO direction without turning this analysis into finished copy.
+The customer-language branch remains open: five 5-star reviewers describe the app as “keeping a promise to myself,” language that may support positioning and ASO direction without turning this analysis into finished copy.
 
 ---
 
 ## Why this example works
 
-- The coverage warning is one sentence, not an ingestion receipt.
-- Exact counts and percentages use the analyzed denominator.
-- Review IDs make quotes and coding auditable.
+- The opening line answers first: which finding to act on, and why the more severe one waits.
+- The coverage warning is one sentence, directly under the opening line.
+- Evidence lines name the denominator, round the percentage, and cite at most four Review IDs.
+- Only one headline uses a contrast, and only because the corpus holds both readings: price and interruption.
 - Status and strength are distinct.
 - CFA is optional and uses only Relevance, Desire, Trust, and Ability.
-- A single signal is preserved without being inflated.
+- A single signal is preserved without being inflated, and its headline says so.
 - Business impact remains a question for analytics.
 - The ending returns to a different evidence-backed branch; it does not force a hook or push the user into execution.
+
+---
+Source: references/example-direction-answer-v13.md
+---
+
+# Direction Answer v13 — Calibration Example
+
+The corpus below is fictional and continues the habit-tracker example. Match the structure, evidence discipline, and compression—not its facts or exact wording.
+
+Question: “What should the screenshots and ads say?”
+
+---
+
+- **Say:** the promise people describe keeping, “keeping a promise to myself” [R012], shown through a long streak, with one-tap logging as the proof.
+- **Test:** the self-promise against “one tap and done” as the first screenshot.
+- **Avoid:** “never lose your progress,” which streak-loss reviews contradict [R031, R044], and any mood or mental-health benefit [R066].
+
+Coverage: 96 of 100 supplied reviews analyzed; 3 exact duplicates and 1 unreadable record were excluded. All counts use n=96.
+
+| Direction | Customers' words [IDs] | How common | What not to claim |
+|---|---|---|---|
+| Self-promise | “keeping a promise to myself” [R012], “I show up for me now” [R057] | 5 of 96 (5%) | “this app fixed my anxiety” [R066] |
+| One-tap logging | “one tap and done” [R019], “quicker than brushing my teeth” [R040] | 8 of 96 (8%) | — |
+| Streak pride | “day 412 and counting” [R025] | 6 of 96 (6%) | “never lose your streak” while 11 reviews describe streak loss |
+
+**1. Self-promise language is rare, but it is the most reusable.**
+
+Five reviewers describe the app as a promise they keep to themselves. The phrasing is specific to this product's job, and none of it appears in complaint reviews. It is ranked first for distinctiveness; one-tap logging is more common.
+
+> **Evidence:** 5 of 96 analyzed reviews (5%) · e.g. [R012, R057, R073] · **Status:** OBSERVED; message fit is INFERENCE · **Strength:** Moderate.
+
+**2. One-tap logging is the more common praise and works best as proof.**
+
+Eight reviewers praise how fast logging is: “one tap and done” [R019]. On its own, speed is a feature any tracker can claim; next to the self-promise, it shows how the promise is kept.
+
+> **Evidence:** 8 of 96 analyzed reviews (8%) · e.g. [R019, R040] · **Status:** OBSERVED; message fit is INFERENCE · **Strength:** Moderate.
+
+**Don't claim without proof:**
+
+- “this app fixed my anxiety” [R066]: a reported mental-health effect is not substantiation for an app claim.
+- “never lose your progress” or “never lose your streak”: the streak-loss reports contradict these promises [R031, R044].
+
+For screenshot order, this suggests the first screenshot establishes the self-promise and the next ones prove it with the one-tap log and a long streak.
+
+The support branch remains open: 7 of the 11 streak-loss reviews also describe unanswered support, which is the evidence a “never lose progress” message would run into.
+
+---
+
+## Why this example works
+
+- The answer block comes first; a reader who stops there knows what to say, what to test, and what to avoid.
+- The coverage warning sits directly under the answer block.
+- Every table row pairs customers' words with how common they are and what not to claim.
+- A rare pattern leads, its headline says it is rare, and the answer states the ranking criterion.
+- Health language [R066] appears only as a claim to avoid.
+- Directions, not final copy: no finished captions were requested.
+- The ending returns to a different evidence-backed branch.

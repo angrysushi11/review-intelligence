@@ -12,6 +12,14 @@ It is not generic sentiment analysis. It is also not proof of churn, revenue imp
 
 Lead with the strongest useful distinction, not the method, dataset inventory, or a mechanical executive summary.
 
+Answer first. The first one to three lines answer the question that was asked, before any finding:
+
+- a first read, a branch question, or a customer-language question: one line naming the answer most worth acting on;
+- what screenshots, ads, or store listings should say: a **Say / Test / Avoid** block;
+- which claims are safe: a **Safe / Needs proof / Avoid** block.
+
+A reader who stops there should still have the answer. This is the answer, not a summary of every finding.
+
 The default first response should help the user say:
 
 - “This found something I would have missed.”
@@ -22,10 +30,13 @@ Do not force three findings when the corpus supports only one or two. Do not inf
 
 ## Voice
 
-Write like an analyst memo to a growth lead.
+Write like an analyst memo to a growth lead who skims.
 
 - Use declarative sentences and plain words.
-- Make headlines reframe the evidence: “The complaint is not price — it is when the price appears.”
+- Make headlines carry the insight, not the topic: “Refund requests start at the renewal email” beats “Billing issues.”
+- A headline never claims more than the evidence line beneath it. When a pattern is small, weak, or a single signal, the headline says so: “A small, vivid group asks for a streak freeze (6 of 96).” Do not call a finding the strongest, main, or most common unless its evidence supports that.
+- Use a contrast headline (“not X — Y”) only when X is a reading the reader could plausibly hold from this corpus, as in “The complaint is not price — it is when the price appears.” Use at most one per answer, and never to argue with a claim nobody made.
+- When findings are ranked by something other than frequency, such as how distinctive or reusable the language is, say so once.
 - Give each major section one crystallized line that compresses the strategic meaning.
 - Use short verbatim quotes and stable Review IDs as proof.
 - Put caveats in compact status or coverage lines, not after every sentence.
@@ -105,6 +116,15 @@ Avoid:
 Treat monetization as an intentional tradeoff unless evidence says otherwise. Describe what reviewers dislike, what value they do or do not perceive, and what could be tested without assuming the current model is a mistake.
 
 For medical-adjacent, mental-health, minors, finance, legal, privacy, billing, cancellation, or safety-sensitive topics, use especially conservative language. Reviews support user-perceived trust or safety concerns, not professional conclusions.
+
+## Claim safety
+
+Reviewer language is evidence of what people value, not a claim the app may make. Whenever an answer suggests language, messages, screenshots, ads, or claims:
+
+- List under **Don't claim without proof** any reviewer phrase that states a medical or mental-health effect (anxiety, ADHD, depression, the nervous system, pain), a timed or guaranteed outcome (“fell asleep in 3 minutes”), a result for a child, or a financial, legal, privacy, or safety result. Cite the Review IDs.
+- Set aside generic category words any competitor could use. They confirm the category but do not differentiate.
+- Flag promotional wording that reviewers quote back as a grievance, such as “free” or “cancel anytime” in billing complaints.
+- Do not recommend a phrase because it is frequent if it is also unsafe to claim.
 
 ## Commitment Flow Architecture
 

@@ -63,6 +63,8 @@ test("the Claude payload keeps every review and the chosen question", () => {
   assert.match(payload.text, /All 3 exported reviews are included\./);
   assert.match(payload.text, /## Dataset/);
   for (const number of [1, 2, 3]) assert.match(payload.text, new RegExp(`### Review ${number}\\n`));
+  assert.match(payload.text, /Reminder — my question: Is the complaint about the price itself/);
+  assert.ok(payload.text.endsWith("Start with the answer in the first lines, then give the evidence."));
 });
 
 test("the ChatGPT payload keeps the newest reviews and states the new denominator", () => {
@@ -76,6 +78,8 @@ test("the ChatGPT payload keeps the newest reviews and states the new denominato
   assert.match(payload.text, new RegExp(`### Review ${CHATGPT_REVIEW_CAP}\\n`));
   assert.doesNotMatch(payload.text, new RegExp(`### Review ${CHATGPT_REVIEW_CAP + 1}\\n`));
   assert.match(payload.text, /Review body 1\n/);
+  assert.match(payload.text, new RegExp(`Say this in the first lines of your answer and use ${CHATGPT_REVIEW_CAP} as the denominator`));
+  assert.match(payload.text, new RegExp(`say there that this is the newest ${CHATGPT_REVIEW_CAP} of ${CHATGPT_REVIEW_CAP + 30} exported reviews`));
 });
 
 test("review text that looks like a heading does not split the export", () => {
@@ -117,7 +121,8 @@ test("both targets use the same full method, including when no override is suppl
   const full = buildAnalysisPayload({ markdown, method, target: "claude", questionId: "price" });
   assert.ok(full.text.startsWith(method + "\n\nMy question:"));
   assert.match(full.text, /All 2 exported reviews are included/);
-  assert.ok(full.text.endsWith(markdown.trim()));
+  assert.ok(full.text.includes(markdown.trim()));
+  assert.ok(full.text.indexOf("Reminder — my question:") > full.text.indexOf(markdown.trim()));
   for (const target of ["claude", "chatgpt"]) {
     for (const empty of ["", "  ", undefined]) {
       assert.ok(buildAnalysisPayload({ markdown, method: empty, target }).text.startsWith(ANALYSIS_METHOD.trim()));
@@ -132,4 +137,15 @@ test("a selected screenshots question stays focused without shortening the metho
   assert.match(payload.text, /My question: What should the screenshots and ads say/);
   assert.match(payload.text, /Answer only this selected question/);
   assert.equal(payload.text.match(/My question:/g).length, 1);
+  assert.equal(payload.text.match(/Reminder — my question:/g).length, 1);
+  assert.match(payload.text, /Start with Say \/ Test \/ Avoid/);
+});
+
+
+test("the question is repeated after the reviews so a long paste ends on the task", () => {
+  const payload = buildAnalysisPayload({ markdown: exportFor(3), questionId: "language" });
+  const lastReview = payload.text.indexOf("### Review 3\n");
+  const reminder = payload.text.lastIndexOf(`Reminder — my question: ${findQuestion("language").prompt}`);
+  assert.ok(lastReview > 0 && reminder > lastReview);
+  assert.ok(payload.text.endsWith("Start with the answer in the first lines, then give the evidence."));
 });

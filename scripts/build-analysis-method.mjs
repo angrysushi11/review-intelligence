@@ -10,6 +10,7 @@ export const METHOD_SOURCES = [
   "references/conversation-modes-v13.md",
   "references/full-boring-version-v13.md",
   "references/example-first-read-v13.md",
+  "references/example-direction-answer-v13.md",
 ];
 
 export async function buildAnalysisMethod() {
