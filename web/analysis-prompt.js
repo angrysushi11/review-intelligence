@@ -2,11 +2,12 @@
 // Both destinations receive the same generated method used by the installed skill.
 import { ANALYSIS_METHOD } from "./review-intelligence-method.js";
 
-export const CLAUDE_PREFILL =
+export const CHAT_PREFILL =
   "Analyze the app reviews I'm pasting below. The instructions and my question are at the top of the paste.";
+export const CLAUDE_PREFILL = CHAT_PREFILL;
 export const CLAUDE_NEW_CHAT_URL = `https://claude.ai/new?q=${encodeURIComponent(CLAUDE_PREFILL).replace(/'/g, "%27")}`;
 export const CHATGPT_NEW_CHAT_URL =
-  "https://chatgpt.com/";
+  `https://chatgpt.com/?q=${encodeURIComponent(CHAT_PREFILL).replace(/'/g, "%27")}`;
 
 // Keep the existing bounded review sample for the ChatGPT handoff.
 export const CHATGPT_REVIEW_CAP = 150;
@@ -157,6 +158,7 @@ export function buildAnalysisPayload({ markdown, questionId, maxReviews = Infini
   const text = [
     method.trim() || ANALYSIS_METHOD,
     `My question: ${question.prompt}`,
+    "Answer only this selected question using the method above. Keep the response focused; do not produce a full report or answer other branches unless I ask.",
     `The reviews (Review Retriever export, Markdown). ${scope}`,
     reviews.text
   ].join("\n\n");
