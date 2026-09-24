@@ -60,6 +60,15 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.equal((questionMap.match(/<li>/g) ?? []).length, 12);
   assert.match(idleState, /Is it the price, or when the price appears\?/);
 
+  assert.match(idleState, /Want it inside your chat\?/);
+  assert.match(idleState, /pull more than 500 Google Play reviews, and compare apps and countries in one conversation/);
+  for (const placement of ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"]) {
+    assert.ok(html.includes(`data-connect-placement="${placement}"`));
+  }
+  assert.match(html, /Comparing competitors or need more than 500 reviews\? Connect it once and ask inside Claude or Codex\./);
+  assert.match(html, /Another app\? Connected, you'd just ask Claude for it\./);
+  assert.match(appJs, /track\("review_connect_click", \{ placement: link\.dataset\.connectPlacement \}\)/);
+
   // Connect: direct connector link, setup guide, Claude Code one-liner.
   assert.match(idleState, /href="https:\/\/claude\.ai\/customize\/connectors\?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews\.doubledash\.me%2Fmcp"/);
   assert.match(idleState, /works on the free plan/);
@@ -76,7 +85,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(idleState, /There’s no CSV, Excel or JSON export on this page/);
 
   // Footers link the guide, source, extension privacy and support.
-  assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
+  assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/"[^>]*>Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="\/extension\/privacy\/">Extension privacy<\/a>/g) ?? []).length, 2);
   assert.match(html, /public reviews only · nothing stored/);
@@ -203,7 +212,12 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     document: {
       referrer: "",
       querySelector: elementFor,
-      querySelectorAll: () => [],
+      querySelectorAll: (selector) => selector === "[data-connect-placement]"
+        ? ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"].map((placement) => {
+          const node = elementFor(`connector-${placement}`);
+          node.dataset = { connectPlacement: placement };
+          return node;
+        }) : [],
       createDocumentFragment: () => ({ append() {} }),
       createElement: () => elementFor(`created-${elements.size}`),
     },
@@ -249,6 +263,12 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.ok(cleanLocation instanceof URL);
     assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
     assert.equal(cleanLocation.hash, "");
+    for (const placement of ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"]) {
+      listeners.get(`connector-${placement}`).get("click")();
+      const event = window.dataLayer.at(-1);
+      assert.equal(event[1], "review_connect_click");
+      assert.equal(event[2].placement, placement);
+    }
 
     // Both paths carry the complete method on the first click, without another fetch.
     const copies = [];
@@ -271,6 +291,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     submit({ preventDefault() {} });
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
+    assert.equal(elementFor("#repeat-nudge").hidden, true);
     analyze("claude");
     assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
     assert.ok(copies[0].startsWith(method.trim()));
@@ -281,6 +302,12 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     analyze("claude");
     assert.equal(copies[2], copies[0]);
+    assert.equal(elementFor("#repeat-nudge").hidden, false);
+    globalThis.sessionStorage.getItem = () => { throw new Error("blocked storage"); };
+    globalThis.sessionStorage.setItem = () => { throw new Error("blocked storage"); };
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#state-done").hidden, false);
 
   } finally {
     for (const [name, descriptor] of previousDescriptors) {
