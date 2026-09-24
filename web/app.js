@@ -10,6 +10,7 @@ import {
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
 const VALIDATION_MESSAGE = "that doesn't look like a store link";
+const PICK_APP_MESSAGE = "pick an app from the list";
 const NETWORK_MESSAGE = "couldn't reach the store — try again in a minute";
 const EXTRACT_LABEL = "Get the reviews";
 const LOADING_LABEL = "Getting the reviews…";
@@ -18,6 +19,7 @@ const idle = document.querySelector("#state-idle");
 const done = document.querySelector("#state-done");
 const form = document.querySelector("#extract-form");
 const appUrl = document.querySelector("#app-url");
+const searchResultsElement = document.querySelector("#search-results");
 const country = document.querySelector("#country");
 const error = document.querySelector("#form-error");
 const retrievalStatus = document.querySelector("#retrieval-status");
@@ -61,6 +63,11 @@ const originalCluster = queryCluster || sessionStorage.getItem("dd_review_cluste
 let markdown = "";
 let currentFilename = "reviews.md";
 let isLoading = false;
+let searchTimer = null;
+let searchController = null;
+let searchSequence = 0;
+let searchResults = [];
+let activeSearchResult = -1;
 
 renderCountryOptions();
 renderQuestionOptions();
@@ -83,6 +90,8 @@ track("review_tool_open", {
 });
 
 appUrl.addEventListener("input", handleUrlInput);
+appUrl.addEventListener("keydown", handleSearchKeydown);
+searchResultsElement.addEventListener("click", handleSearchPick);
 form.addEventListener("submit", handleExtract);
 for (const chip of demoChips) {
   chip.addEventListener("click", () => startDemo(chip));
@@ -108,6 +117,134 @@ claudeSkillsLink.addEventListener("click", () => {
 function handleUrlInput() {
   clearError();
   syncCountryFromLink();
+  const value = appUrl.value.trim();
+  cancelSearch();
+  closeSearchResults();
+  if (looksLikeStoreLink(value) || value.length < 2) return;
+
+  const sequence = ++searchSequence;
+  searchTimer = window.setTimeout(() => {
+    searchTimer = null;
+    void searchForApps(value, sequence);
+  }, 400);
+}
+
+async function searchForApps(term, sequence) {
+  searchController = new AbortController();
+  try {
+    const response = await fetch(`/api/search?${new URLSearchParams({ term, country: country.value })}`, {
+      signal: searchController.signal
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "search failed");
+    if (sequence !== searchSequence || appUrl.value.trim() !== term) return;
+    searchResults = Array.isArray(payload.results) ? payload.results : [];
+    activeSearchResult = -1;
+    renderSearchResults();
+    track("review_search", { result_count: searchResults.length });
+  } catch (searchError) {
+    if (searchError?.name !== "AbortError" && sequence === searchSequence) closeSearchResults();
+  } finally {
+    if (sequence === searchSequence) searchController = null;
+  }
+}
+
+function cancelSearch() {
+  if (searchTimer) window.clearTimeout(searchTimer);
+  searchTimer = null;
+  searchSequence += 1;
+  searchController?.abort();
+  searchController = null;
+}
+
+function renderSearchResults() {
+  const fragment = document.createDocumentFragment();
+  searchResults.forEach((result, index) => {
+    const item = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "search-result";
+    button.dataset.index = String(index);
+    button.id = `search-result-${index}`;
+    button.setAttribute("role", "option");
+    button.setAttribute("aria-selected", String(index === activeSearchResult));
+
+    if (result.iconUrl) {
+      const icon = document.createElement("img");
+      icon.className = "search-result__icon";
+      icon.src = result.iconUrl;
+      icon.alt = "";
+      button.append(icon);
+    }
+
+    const copy = document.createElement("span");
+    copy.className = "search-result__copy";
+    const name = document.createElement("span");
+    name.className = "search-result__name";
+    name.textContent = result.name;
+    const developer = document.createElement("span");
+    developer.className = "search-result__developer";
+    developer.textContent = result.developer || "Developer unavailable";
+    copy.append(name, developer);
+    const store = document.createElement("span");
+    store.className = "search-result__store";
+    store.textContent = result.store === "app_store" ? "App Store" : "Google Play";
+    button.append(copy, store);
+    item.append(button);
+    fragment.append(item);
+  });
+  searchResultsElement.replaceChildren(fragment);
+  const expanded = searchResults.length > 0;
+  searchResultsElement.hidden = !expanded;
+  appUrl.setAttribute("aria-expanded", String(expanded));
+  if (activeSearchResult >= 0) appUrl.setAttribute("aria-activedescendant", `search-result-${activeSearchResult}`);
+  else appUrl.removeAttribute("aria-activedescendant");
+}
+
+function closeSearchResults() {
+  searchResults = [];
+  activeSearchResult = -1;
+  searchResultsElement.replaceChildren();
+  searchResultsElement.hidden = true;
+  appUrl.setAttribute("aria-expanded", "false");
+  appUrl.removeAttribute("aria-activedescendant");
+}
+
+function handleSearchKeydown(event) {
+  if (!searchResults.length) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeSearchResults();
+    return;
+  }
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault();
+    const direction = event.key === "ArrowDown" ? 1 : -1;
+    activeSearchResult = (activeSearchResult + direction + searchResults.length) % searchResults.length;
+    renderSearchResults();
+    return;
+  }
+  if (event.key === "Enter" && activeSearchResult >= 0) {
+    event.preventDefault();
+    pickSearchResult(activeSearchResult);
+  }
+}
+
+function handleSearchPick(event) {
+  const button = event.target.closest?.("button[data-index]");
+  if (!button) return;
+  pickSearchResult(Number(button.dataset.index));
+}
+
+function pickSearchResult(index) {
+  const result = searchResults[index];
+  if (!result || isLoading) return;
+  cancelSearch();
+  appUrl.value = result.url;
+  syncCountryFromLink();
+  closeSearchResults();
+  track("review_search_pick", { store: result.store });
+  startExtraction();
 }
 
 function handleExtract(event) {
@@ -128,7 +265,7 @@ async function startExtraction() {
 
   const link = appUrl.value.trim();
   if (!looksLikeStoreLink(link)) {
-    showError(VALIDATION_MESSAGE);
+    showError(link ? PICK_APP_MESSAGE : VALIDATION_MESSAGE);
     appUrl.focus();
     return;
   }
@@ -249,10 +386,15 @@ function renderCountryOptions() {
     const optionElement = document.createElement("option");
     optionElement.value = option.value;
     optionElement.textContent = option.label;
-    optionElement.selected = option.value === "us";
+    optionElement.selected = option.value === defaultCountryFromNavigator();
     fragment.append(optionElement);
   }
   country.replaceChildren(fragment);
+}
+
+function defaultCountryFromNavigator() {
+  const region = String(navigator.language || "").match(/-([a-z]{2})\b/i)?.[1]?.toLowerCase();
+  return COUNTRY_OPTIONS.some((option) => option.value === region) ? region : "us";
 }
 
 function renderQuestionOptions() {

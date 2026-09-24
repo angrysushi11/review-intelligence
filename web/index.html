@@ -85,9 +85,10 @@
         <form class="tool-frame" id="extract-form" novalidate>
           <div class="fields">
             <div>
-              <label class="field-label" for="app-url">App Store or Google Play link</label>
+              <label class="field-label" for="app-url">App link or name</label>
               <div class="field-wrap">
-                <input class="fld" id="app-url" name="url" type="url" autocomplete="off" spellcheck="false" autofocus placeholder="apps.apple.com/… or play.google.com/…" aria-describedby="form-error">
+                <input class="fld" id="app-url" name="url" type="text" autocomplete="off" spellcheck="false" autofocus placeholder="Paste a store link or type an app name" aria-describedby="form-error" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false">
+                <ul class="search-results" id="search-results" role="listbox" aria-label="App search results" hidden></ul>
                 <svg class="baseline" viewBox="0 0 400 9" preserveAspectRatio="none" aria-hidden="true">
                   <path d="M2 5 C 70 2, 150 8, 230 4 S 340 3, 398 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
                 </svg>
