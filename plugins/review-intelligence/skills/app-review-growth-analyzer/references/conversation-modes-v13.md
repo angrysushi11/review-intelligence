@@ -10,12 +10,12 @@ Start with:
 
 > Here's the first useful read.
 
-Then provide:
+Follow it with one line naming the distinction most worth acting on, and why, when the evidence supports prioritization. Then provide:
 
-1. Two or three distinct, high-signal findings. Use fewer if evidence is thin.
-2. For each finding: the reframe, what reviewers actually describe, short Review-ID evidence, one compact status/strength line, and the strategic implication.
-3. The most actionable distinction, when the evidence supports prioritization.
-4. A concise coverage note. Put a mismatch warning near the beginning; otherwise the note may sit after the findings.
+1. A coverage warning directly under that line when one applies, including a partial-export note.
+2. Two or three distinct, high-signal findings. Use fewer if evidence is thin.
+3. For each finding: a headline that carries the insight and its scope, what reviewers actually describe, two to four short quotes with Review IDs, one compact evidence line, and the strategic implication.
+4. A concise coverage note after the findings when no warning was needed.
 5. A short branch-hub return: one or two genuinely distinct paths still supported by the evidence. Mention the full boring version only when useful.
 
 Do not start with app metadata, methodology, a generic sentiment summary, or a complete capability menu.
@@ -25,15 +25,15 @@ Suggested shape, not a rigid template:
 ```markdown
 Here's the first useful read.
 
-**1. [Reframing headline]**
-[Pattern, evidence, implication.]
-> **Evidence:** [count/recurrence and IDs]. **Status:** [...]. **Strength:** [...].
+[One line: the distinction most worth acting on, and why.]
 
-**2. [Reframing headline]**
-[Pattern, evidence, implication.]
-> **Evidence:** [...]. **Status:** [...]. **Strength:** [...].
+**1. [Headline: the insight and its scope]**
+[Pattern, two to four quotes with IDs, implication.]
+> **Evidence:** [n of N, denominator named (x%)] · e.g. [up to four IDs] · **Status:** [...] · **Strength:** [...].
 
-[One crystallized prioritization line.]
+**2. [Headline: the insight and its scope]**
+[Pattern, quotes, implication.]
+> **Evidence:** [...] · **Status:** [...] · **Strength:** [...].
 
 Coverage: [analyzed denominator and compact limitation].
 
@@ -44,11 +44,18 @@ Coverage: [analyzed denominator and compact limitation].
 
 Use when the user selects product, monetization, customer language, creative/ASO, support/trust, competitor, segment, or another evidence-backed branch.
 
-1. Answer the selected branch directly.
+1. Open with a one-to-three-line answer to the branch question.
 2. Go one useful layer deeper than the first read, not five.
 3. Distinguish subpatterns when their cause, audience, severity, or response differs.
 4. Include two to four review-backed hypotheses or directions when useful.
 5. Close the branch cleanly and, when useful, return to one distinct unexplored branch from the hub.
+
+For customer-language and positioning questions, follow the opening answer with a table of language worth testing, ranked by how distinctive and reusable it is, not by frequency alone:
+
+| Territory | Customers' words [IDs] | How common | Watch-outs |
+|---|---|---|---|
+
+Then give one line of generic language set aside, with IDs, and a **Don't claim without proof** list that follows the core's claim-safety rules.
 
 Example branch return:
 
@@ -66,10 +73,25 @@ Use for requests such as:
 
 Provide evidence-backed territories, tensions, messages, opportunities, test hypotheses, and claim boundaries. Apply the core's direction-versus-execution boundary.
 
-Useful table fields:
+Open with the answer before any finding. For what screenshots, ads, or store listings should say, use this block:
 
-| Direction | Review-backed tension/value | Evidence | Message or test territory | What not to claim |
-|---|---|---|---|---|
+- **Say:** [the one or two directions the evidence supports best, in customers' words where possible]
+- **Test:** [the open question worth an experiment, such as two competing angles]
+- **Avoid:** [phrases and claims to keep out, with IDs]
+
+For which claims are safe, use **Safe / Needs proof / Avoid** instead. For product, paywall, or other directions, open with a one-to-three-line answer.
+
+Then give the direction table, one row per direction. For message questions:
+
+| Direction | Customers' words [IDs] | How common | What not to claim |
+|---|---|---|---|
+
+For product, paywall, or other directions:
+
+| Direction | Review-backed tension or value | Evidence | What needs analytics |
+|---|---|---|---|
+
+Add short findings only where a tension behind the table needs explaining. For screenshot questions, order the directions by slot when the evidence supports it: what the first screenshot must establish, and what the next ones prove. The answer block and table are directions, not final copy.
 
 If a branch has several possible destinations, show that choice inside the branch, then return to the broader review hub after the chosen direction is explored.
 

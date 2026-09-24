@@ -17,7 +17,7 @@ test("the DoubleDash marketplace resolves the public Review Intelligence plugin"
   assert.equal(marketplace.plugins[0].source.path, "./plugins/review-intelligence");
   assert.equal(plugin.$schema, "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json");
   assert.equal(plugin.name, "review-intelligence");
-  assert.equal(plugin.version, "0.2.0");
+  assert.equal(plugin.version, "0.3.0");
   assert.equal(plugin.repository, "https://github.com/angrysushi11/review-intelligence");
   assert.equal(portableMcp.$schema, "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json");
   assert.equal(portableMcp.mcpServers["review-intelligence"].type, "streamable-http");

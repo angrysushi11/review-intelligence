@@ -159,7 +159,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(appJs, /claudeSteps\.hidden = !willOpen/);
 
   // New behaviour: demo apps, question picker, one-tap analysis.
-  assert.match(appJs, /from "\.\/analysis-prompt\.js\?v=20260924-handoff"/);
+  assert.match(appJs, /from "\.\/analysis-prompt\.js\?v=20260925-output"/);
   assert.match(appJs, /track\("review_demo_pick"/);
   assert.match(appJs, /track\("review_question_pick"/);
   assert.match(appJs, /tool: isChatGpt \? "chatgpt_oneclick" : "claude_oneclick"/);
@@ -176,7 +176,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       'import { COUNTRY_OPTIONS } from "./markets.js";',
       'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
     )
-    .replace('from "./analysis-prompt.js?v=20260924-handoff";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
+    .replace('from "./analysis-prompt.js?v=20260925-output";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
   assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
   assert.ok(executableAppJs.includes(new URL("analysis-prompt.js", webUrl).href), "the analysis module should resolve by absolute URL");
 
