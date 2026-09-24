@@ -23,6 +23,8 @@ const error = document.querySelector("#form-error");
 const retrievalStatus = document.querySelector("#retrieval-status");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
+const connectorLinks = document.querySelectorAll("[data-connect-placement]");
+const repeatNudge = document.querySelector("#repeat-nudge");
 const demoChips = document.querySelectorAll(".demo-chip");
 const appIcon = document.querySelector("#app-icon");
 const packetTitle = document.querySelector("#packet-title");
@@ -50,17 +52,18 @@ const queryRoute = query.get("route") || "";
 const queryCluster = query.get("content_cluster") || "";
 const queryAppUrl = fragment.get("app_url") || query.get("app_url") || "";
 
-if (querySource) sessionStorage.setItem("dd_review_source", querySource);
-if (queryRoute) sessionStorage.setItem("dd_review_route", queryRoute);
-if (queryCluster) sessionStorage.setItem("dd_review_cluster", queryCluster);
+if (querySource) safeSessionSet("dd_review_source", querySource);
+if (queryRoute) safeSessionSet("dd_review_route", queryRoute);
+if (queryCluster) safeSessionSet("dd_review_cluster", queryCluster);
 
-const originalSource = querySource || sessionStorage.getItem("dd_review_source") || document.referrer || "/review-retriever/";
-const originalRoute = queryRoute || sessionStorage.getItem("dd_review_route") || "review-intelligence";
-const originalCluster = queryCluster || sessionStorage.getItem("dd_review_cluster") || "review-aso";
+const originalSource = querySource || safeSessionGet("dd_review_source") || document.referrer || "/review-retriever/";
+const originalRoute = queryRoute || safeSessionGet("dd_review_route") || "review-intelligence";
+const originalCluster = queryCluster || safeSessionGet("dd_review_cluster") || "review-aso";
 
 let markdown = "";
 let currentFilename = "reviews.md";
 let isLoading = false;
+let successfulExtractions = Math.max(0, Number(safeSessionGet("rr_successful_extractions")) || 0);
 
 renderCountryOptions();
 renderQuestionOptions();
@@ -86,6 +89,9 @@ appUrl.addEventListener("input", handleUrlInput);
 form.addEventListener("submit", handleExtract);
 for (const chip of demoChips) {
   chip.addEventListener("click", () => startDemo(chip));
+}
+for (const link of connectorLinks) {
+  link.addEventListener("click", () => track("review_connect_click", { placement: link.dataset.connectPlacement }));
 }
 startOver.addEventListener("click", resetRetriever);
 questionSelect.addEventListener("change", () => {
@@ -146,6 +152,11 @@ async function startExtraction() {
     currentFilename = result.filename;
     renderPacket(result);
     renderSamples(result.samples);
+    if (result.count > 0) {
+      successfulExtractions += 1;
+      safeSessionSet("rr_successful_extractions", String(successfulExtractions));
+    }
+    repeatNudge.hidden = result.count === 0 || successfulExtractions < 2;
     prepareAnalyze(result);
 
     track(result.count > 0 ? "review_extract_success" : "review_extract_empty", {
@@ -614,4 +625,13 @@ function track(eventName, parameters = {}) {
     content_cluster: originalCluster,
     ...parameters,
   });
+}
+
+
+function safeSessionGet(key) {
+  try { return sessionStorage.getItem(key); } catch { return null; }
+}
+
+function safeSessionSet(key, value) {
+  try { sessionStorage.setItem(key, value); } catch { /* Continue without persistence. */ }
 }
