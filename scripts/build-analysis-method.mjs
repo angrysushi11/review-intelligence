@@ -1,0 +1,31 @@
+import { readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+
+const skillRoot = new URL("../plugins/review-intelligence/skills/app-review-growth-analyzer/", import.meta.url);
+export const METHOD_SOURCES = [
+  "SKILL.md",
+  "references/review-intelligence-core-v13.md",
+  "references/review-evidence-protocol-v13.md",
+  "references/conversation-modes-v13.md",
+  "references/full-boring-version-v13.md",
+  "references/example-first-read-v13.md",
+];
+
+export async function buildAnalysisMethod() {
+  const parts = await Promise.all(METHOD_SOURCES.map(async (source) => {
+    let text = (await readFile(new URL(source, skillRoot), "utf8")).replace(/\r\n/g, "\n").trim();
+    if (source === "SKILL.md") {
+      text = text.replace(/^---\n[\s\S]*?\n---\n+/, "");
+      const section = /^## Load the right instructions\n[\s\S]*?(?=^## |$(?![\s\S]))/m;
+      if (!section.test(text)) throw new Error("Missing instruction-loading section in SKILL.md");
+      text = text.replace(section, "All references are included below, in order.\n\n");
+    }
+    return `---\nSource: ${source}\n---\n\n${text}`;
+  }));
+  return parts.join("\n\n") + "\n";
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  await writeFile(new URL("../web/review-intelligence-method.md", import.meta.url), await buildAnalysisMethod());
+}

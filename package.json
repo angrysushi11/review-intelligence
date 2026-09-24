@@ -16,6 +16,7 @@
   "scripts": {
     "start": "node ./src/server.js",
     "test": "node --test",
+    "build:method": "node ./scripts/build-analysis-method.mjs",
     "check:package": "npm pack --dry-run --json | node ./scripts/check-public-package.mjs"
   },
   "files": [

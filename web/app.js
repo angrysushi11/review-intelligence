@@ -61,6 +61,8 @@ const originalCluster = queryCluster || sessionStorage.getItem("dd_review_cluste
 let markdown = "";
 let currentFilename = "reviews.md";
 let isLoading = false;
+let analysisMethod = "";
+let methodRequested = false;
 
 renderCountryOptions();
 renderQuestionOptions();
@@ -147,6 +149,7 @@ async function startExtraction() {
     renderPacket(result);
     renderSamples(result.samples);
     prepareAnalyze(result);
+    if (result.count > 0) preloadAnalysisMethod();
 
     track(result.count > 0 ? "review_extract_success" : "review_extract_empty", {
       platform: platformFromUrl(link),
@@ -358,6 +361,16 @@ function renderPacket(result) {
   }));
 }
 
+// Start once after retrieval; never await network work inside the Analyze click.
+function preloadAnalysisMethod() {
+  if (methodRequested) return;
+  methodRequested = true;
+  fetch("/review-intelligence-method.md")
+    .then((response) => response.ok ? response.text() : "")
+    .then((text) => { analysisMethod = text; })
+    .catch(() => {}); // Slow/offline requests keep the evidence-first fallback.
+}
+
 function prepareAnalyze(result) {
   analyzeSection.hidden = result.count === 0;
   hideAnalyzeToast();
@@ -373,6 +386,8 @@ function handleAnalyze(tool) {
   const destination = isChatGpt ? "ChatGPT" : "Claude";
   const payload = buildAnalysisPayload({
     markdown,
+    method: analysisMethod,
+    target: tool,
     questionId: questionSelect.value,
     maxReviews: isChatGpt ? CHATGPT_REVIEW_CAP : Infinity,
   });

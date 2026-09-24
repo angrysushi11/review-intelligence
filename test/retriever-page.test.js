@@ -249,6 +249,49 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.ok(cleanLocation instanceof URL);
     assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
     assert.equal(cleanLocation.hash, "");
+
+    // A pending method download must not block results or consume the clipboard gesture.
+    const copies = [];
+    let methodFetches = 0;
+    let finishMethod;
+    const method = "# Full method fixture\nThe branch hub";
+    const reviewMarkdown = "# App Reviews\n\n### Review 1\n\n- Rating: 5\n\n```text\nHelpful app\n```";
+    globalThis.navigator.clipboard.writeText = (text) => {
+      copies.push(text);
+      return Promise.resolve();
+    };
+    globalThis.fetch = async (url) => {
+      if (url === "/review-intelligence-method.md") {
+        methodFetches += 1;
+        return new Promise((resolve) => { finishMethod = resolve; });
+      }
+      assert.equal(url, "/api/extract");
+      return { ok: true, text: async () => JSON.stringify({
+        dataset: { reviews_exported: 1, app_name: "Example", platform: "google_play", country: "us" },
+        markdown: reviewMarkdown,
+      }) };
+    };
+    const submit = listeners.get("#extract-form").get("submit");
+    const analyze = (target) => listeners.get(`#analyze-${target}`).get("click")();
+    const settle = () => new Promise((resolve) => setImmediate(resolve));
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#state-done").hidden, false);
+    assert.equal(methodFetches, 1);
+    analyze("claude");
+    assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
+    assert.ok(copies[0].startsWith("You are analyzing public app reviews"));
+    finishMethod({ ok: true, text: async () => method });
+    await settle();
+    analyze("claude");
+    assert.ok(copies[1].startsWith(method));
+    analyze("chatgpt");
+    assert.ok(copies[2].startsWith("Reviews exported by Review Retriever."));
+    assert.ok(!copies[2].includes(method));
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(methodFetches, 1, "repeat extraction reuses the loaded method");
+
   } finally {
     for (const [name, descriptor] of previousDescriptors) {
       if (descriptor) Object.defineProperty(globalThis, name, descriptor);
@@ -303,6 +346,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");
+  assert.equal(routes.get("/review-intelligence-method.md"), "/web/review-intelligence-method.md");
   assert.equal(routes.get("/analysis-prompt.js"), "/web/analysis-prompt.js");
   assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");
