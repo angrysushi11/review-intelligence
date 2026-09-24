@@ -68,33 +68,24 @@
     <main class="wrap">
       <p class="sr-only" id="retrieval-status" role="status" aria-live="polite"></p>
       <section id="state-idle">
+        <div class="masthead">
+          <span class="wordmark">Review Retriever</span>
+          <span class="pencil masthead-note">free · no signup</span>
+        </div>
+
         <header class="hero">
-          <p class="pencil hero-kicker">Review Retriever</p>
-          <h1 class="title title--hero">Export app reviews. Find what users really think.</h1>
+          <p class="hand hero-kicker">for indie devs &amp; app makers</p>
+          <h1 class="title title--hero">Your competitors’ users already told you what to build.</h1>
           <svg class="title-mark title-mark--hero" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
             <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
           </svg>
-          <p class="hero-lede">Paste an App Store or Google Play link. Get up to 500 public reviews—no store login needed—then uncover what people love, what frustrates them, and what they expected instead.</p>
+          <p class="hero-lede">Paste an App Store or Google Play link. Get up to 500 public reviews, then ask Claude or ChatGPT what people love, hate and wish existed, with quotes you can check.</p>
         </header>
 
         <form class="tool-frame" id="extract-form" novalidate>
-          <div class="form-nudge form-nudge--url" aria-hidden="true">
-            <span>paste the app URL here</span>
-            <svg viewBox="0 0 96 78">
-              <path d="M12 5 C 49 7, 70 30, 70 67" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-              <path d="M70 67 l -6 -11 M70 67 l 8 -9" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-            </svg>
-          </div>
-          <div class="form-nudge form-nudge--country" aria-hidden="true">
-            <span>choose the country here</span>
-            <svg viewBox="0 0 70 78">
-              <path d="M50 4 C 27 18, 24 42, 34 68" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-              <path d="M34 68 l -6 -11 M34 68 l 10 -7" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-            </svg>
-          </div>
           <div class="fields">
             <div>
-              <label class="field-label" for="app-url">app url</label>
+              <label class="field-label" for="app-url">App Store or Google Play link</label>
               <div class="field-wrap">
                 <input class="fld" id="app-url" name="url" type="url" autocomplete="off" spellcheck="false" autofocus placeholder="apps.apple.com/… or play.google.com/…" aria-describedby="form-error">
                 <svg class="baseline" viewBox="0 0 400 9" preserveAspectRatio="none" aria-hidden="true">
@@ -103,7 +94,7 @@
               </div>
             </div>
             <div class="picker">
-              <label class="field-label" for="country">country</label>
+              <label class="field-label" for="country">Country</label>
               <div class="field-wrap">
                 <select class="fld" id="country" name="country">
                   <option value="us" selected>United States</option>
@@ -123,182 +114,173 @@
               <svg viewBox="0 0 190 52" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M6 8 C 50 3, 140 4, 184 7 C 187 20, 186 34, 183 45 C 130 49, 55 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               </svg>
-              <span id="extract-label">Extract reviews</span>
+              <span id="extract-label">Get the reviews</span>
             </button>
-
-            <div class="submit-nudge" aria-hidden="true">
-              <svg class="submit-arrow" viewBox="0 0 70 40">
-                <path d="M64 30 C 48 33, 30 28, 16 20" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-                <path d="M16 20 l 11 1 M16 20 l 4 9" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-              </svg>
-              <span class="hand tilt">press here to extract<br>the reviews</span>
-            </div>
           </div>
 
           <p class="error" id="form-error" role="alert" aria-live="assertive" hidden>that doesn't look like a store link</p>
 
-          <p class="notice">Apple's public review feed can be flaky. If an App Store export comes back with 0 or only 10 reviews, try again in a minute.</p>
+          <div class="demo">
+            <p class="hand demo-nudge" id="demo-label">no link handy? try one</p>
+            <div class="demo-chips" role="group" aria-labelledby="demo-label">
+              <button class="demo-chip" type="button" data-demo-name="calm" data-demo-url="https://play.google.com/store/apps/details?id=com.calm.android">Calm</button>
+              <button class="demo-chip" type="button" data-demo-name="duolingo" data-demo-url="https://play.google.com/store/apps/details?id=com.duolingo">Duolingo</button>
+              <button class="demo-chip" type="button" data-demo-name="strava" data-demo-url="https://play.google.com/store/apps/details?id=com.strava">Strava</button>
+            </div>
+          </div>
+
+          <p class="form-meta">Free · No signup · Public reviews only · Open source</p>
         </form>
 
-        <ol class="steps">
-          <li><span class="n">1</span>Retrieve the reviews.</li>
-          <li><span class="n">2</span>Ask what users love, hate, or expected.</li>
-          <li><span class="n">3</span>Turn the evidence into a product or growth decision.</li>
-        </ol>
+        <section class="sample" aria-labelledby="sample-title">
+          <p class="hand section-kicker">what you get, for real</p>
+          <h2 class="section-title" id="sample-title">What 40 recent Calm reviews said</h2>
+          <p class="sample-meta">Google Play US · the 40 newest reviews, Sep 16–23, 2026 · one question in Claude</p>
 
-        <a class="power-user-jump" href="#power-users">
-          <span class="hand">for power users</span>
-          <span>See the Claude Cowork or Codex setup</span>
-          <span class="power-user-jump__arrow" aria-hidden="true">↓</span>
-        </a>
-
-        <article class="retrieval-guide" aria-labelledby="retrieval-guide-title">
-          <header class="guide-header">
-            <p class="pencil guide-kicker">the export is only the start</p>
-            <h2 id="retrieval-guide-title">Turn app reviews into answers you can use</h2>
-            <p class="guide-lede">Review Retriever collects the public evidence. Review Intelligence helps you question it: what users love, what they hate, what they expected, where a product breaks trust, and which exact phrases should shape the next product or growth decision.</p>
-          </header>
-
-          <section class="guide-section" aria-labelledby="guide-questions-title">
-            <h3 id="guide-questions-title">Ask questions that reviews can answer</h3>
-            <div class="guide-question-grid">
-              <div class="guide-question">
-                <h4>What do users hate most?</h4>
-                <p>Find recurring friction, broken promises, pricing surprises, support failures, and trust breaks.</p>
-              </div>
-              <div class="guide-question">
-                <h4>What do they love enough to repeat?</h4>
-                <p>Pull out the moments of value and the exact language users choose when the product works.</p>
-              </div>
-              <div class="guide-question">
-                <h4>What did they expect instead?</h4>
-                <p>Compare the promise with the experience across onboarding, payment, features, cancellation, and support.</p>
-              </div>
-              <div class="guide-question">
-                <h4>Where is the competitor gap?</h4>
-                <p>Question another app’s public reviews to find unmet needs, weak claims, and credible positioning openings.</p>
-              </div>
+          <article class="sample-card">
+            <div class="sample-block">
+              <p class="sample-label" id="sample-mix-label">Rating mix</p>
+              <dl class="mix" aria-labelledby="sample-mix-label">
+                <div class="mix-row"><dt>5★</dt><dd><span class="mix-bar" style="--share: 88%"></span><span class="mix-count">15</span></dd></div>
+                <div class="mix-row"><dt>4★</dt><dd><span class="mix-bar" style="--share: 24%"></span><span class="mix-count">4</span></dd></div>
+                <div class="mix-row"><dt>3★</dt><dd><span class="mix-bar" style="--share: 12%"></span><span class="mix-count">2</span></dd></div>
+                <div class="mix-row"><dt>2★</dt><dd><span class="mix-bar" style="--share: 12%"></span><span class="mix-count">2</span></dd></div>
+                <div class="mix-row mix-row--low"><dt>1★</dt><dd><span class="mix-bar" style="--share: 100%"></span><span class="mix-count">17</span></dd></div>
+              </dl>
             </div>
-          </section>
 
-          <section class="guide-proof" aria-labelledby="guide-proof-title">
-            <header>
-              <p class="pencil guide-kicker">one theme, fully resolved</p>
-              <h3 id="guide-proof-title">What a finished theme looks like</h3>
-            </header>
-            <dl class="guide-proof-list">
-              <div>
-                <dt>Theme</dt>
-                <dd><strong>Cancellation trust gap</strong><span>Users say the trial is easy to start and weirdly hard to stop. Twenty-three reviews, four different phrasings, one problem.</span></dd>
-              </div>
-              <div>
-                <dt>Growth impact</dt>
-                <dd><strong>High</strong><span>It poisons store-page trust, wastes paid traffic on users who read the reviews before installing, drags rating quality, and closes the door on subscription recovery. In that order.</span></dd>
-              </div>
-              <div>
-                <dt>Fix order</dt>
-                <dd><strong>Before the next creative test</strong><span>No screenshot compensates for users publicly warning each other that billing feels unsafe. Fix the flow, then spend on the funnel.</span></dd>
-              </div>
-              <div>
-                <dt>Evidence</dt>
-                <dd><strong>Quoted, with IDs</strong><span>Every theme cites the reviews it came from, so the product team can read the actual sentences instead of arguing with your summary.</span></dd>
-              </div>
-            </dl>
-            <a class="guide-proof-link" href="https://www.doubledash.me/tools/review-intelligence/#example">See the full worked example</a>
-          </section>
+            <div class="sample-block">
+              <p class="sample-label">Finding 1 · strong in this sample</p>
+              <h3>Most 1★ reviews are about money, not meditation.</h3>
+              <p>10 of 17 one-star reviews: charges people didn’t expect, content locked behind the paywall, the price itself.</p>
+              <blockquote>“Charged for a free trial $85, refused refund.” <span class="sample-id">rr_c205…</span></blockquote>
+            </div>
 
-          <section class="guide-power" id="power-users" aria-labelledby="guide-power-title">
-            <div class="guide-power-copy">
-              <p class="pencil guide-kicker">for power users</p>
-              <h3 id="guide-power-title">Connect Review Intelligence to Claude Cowork or Codex</h3>
-              <p>The page above is the quick version. The read-only MCP brings Review Retriever into the conversation: ask the agent to pull a public app’s reviews, use the Review Intelligence skill to find the commercial meaning, and keep asking follow-up questions without downloading and re-uploading the file.</p>
-              <ul class="guide-power-list">
-                <li>Keep retrieving the next Google Play batch until the public source runs out of pages.</li>
-                <li>Run a new retrieval for another app, country, storefront, or Google Play language.</li>
-                <li>Move from the first useful read into ASO, creative, monetization, product, support, or positioning.</li>
-                <li>Trace the answer back to exact review evidence instead of a generic sentiment summary.</li>
+            <div class="sample-block">
+              <p class="sample-label">Finding 2 · early signal, 2 reviews</p>
+              <h3>The ad and the app tell different stories.</h3>
+              <p>Two reviewers say the ad didn’t match what they found. Too few to call a theme, but worth checking against the creatives.</p>
+              <blockquote>“Not at all what was described in the ad.” <span class="sample-id">rr_a0e7…</span></blockquote>
+            </div>
+
+            <div class="sample-block">
+              <p class="sample-label">Words happy users choose</p>
+              <ul class="phrases">
+                <li>“A mini spa date in your pocket.”</li>
+                <li>“puts my over thinking mind to rest”</li>
+                <li>“listen every night”</li>
               </ul>
-              <p class="guide-limit">The web export returns up to 500 public written reviews. The MCP returns up to 500 per response and provides a continuation cursor for Google Play, so the agent can keep retrieving the next batch. Apple remains limited by each storefront’s public feed. No public-source route can promise every review ever posted.</p>
             </div>
-            <div class="guide-actions">
-              <a class="guide-button guide-button--primary" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Connect Review Intelligence</a>
-              <a class="guide-button" href="https://www.doubledash.me/tools/review-intelligence/#example">See a worked example</a>
+
+            <a class="lnk sample-link" href="https://www.doubledash.me/tools/review-intelligence/#example">See a full worked example</a>
+          </article>
+        </section>
+
+        <section class="questions" aria-labelledby="questions-title">
+          <p class="hand section-kicker">reviews answer more than you think</p>
+          <h2 class="section-title" id="questions-title">What reviews can tell you</h2>
+          <div class="question-groups">
+            <div class="question-group">
+              <h3>Before you build</h3>
+              <ul>
+                <li>What do users of a competitor wish it did?</li>
+                <li>Why do people switch apps?</li>
+                <li>Which users does nobody serve well?</li>
+              </ul>
             </div>
-          </section>
-
-          <aside class="guide-note" aria-labelledby="guide-limit-title">
-            <h3 id="guide-limit-title">Question the evidence like a conversation</h3>
-            <p>Reviews are not a live user interview, and they cannot answer a follow-up. They are public, first-person evidence from people who tried the product. A connected analysis workflow lets you question that corpus and trace each answer back to the language users actually chose.</p>
-          </aside>
-
-          <section class="guide-section" aria-labelledby="guide-how-title">
-            <h3 id="guide-how-title">Start with a public review packet</h3>
-            <ol class="guide-process">
-              <li><strong>Paste the public listing.</strong> Use an Apple App Store or Google Play URL.</li>
-              <li><strong>Choose the country.</strong> Reviews differ by storefront, so select the market you actually want to inspect.</li>
-              <li><strong>Retrieve and continue.</strong> Copy or download the Markdown, or connect the MCP and analyze inside the conversation.</li>
-            </ol>
-          </section>
-
-          <section class="guide-section guide-columns" aria-label="Review packet contents and analysis boundary">
-            <div>
-              <h3>What the review packet includes</h3>
-              <p>The packet records the app, platform, selected country, source, pages fetched, requested limit, review count, available date range, and rating mix. Individual entries include the public fields the store supplies, such as rating, date, title, text, version, language, and reviewer name.</p>
+            <div class="question-group">
+              <h3>Product</h3>
+              <ul>
+                <li>What keeps people coming back?</li>
+                <li>What breaks, and when do people give up?</li>
+                <li>Where does onboarding lose people?</li>
+              </ul>
             </div>
-            <div>
-              <h3>What analysis can and cannot tell you</h3>
-              <p>Review evidence can expose patterns, exact customer language, and questions worth testing. It cannot prove revenue, retention, conversion impact, or the views of every user without other data.</p>
+            <div class="question-group">
+              <h3>Money</h3>
+              <ul>
+                <li>Is it the price, or when the price appears?</li>
+                <li>What turns a trial into a refund request?</li>
+                <li>What makes people feel unsafe paying?</li>
+              </ul>
             </div>
-          </section>
+            <div class="question-group">
+              <h3>Marketing</h3>
+              <ul>
+                <li>Which exact words do happy users use?</li>
+                <li>What should the screenshots and ads say?</li>
+                <li>Which claims are safe to make?</li>
+              </ul>
+            </div>
+          </div>
+          <p class="questions-more">Also: where support fails, what changed between versions or countries, UGC angles, PRDs and the full report. Pick your question after the reviews load.</p>
+        </section>
 
-          <section class="guide-section guide-faq" aria-labelledby="guide-faq-title">
-            <h3 id="guide-faq-title">Review Intelligence FAQ</h3>
-            <details>
-              <summary>Do I need App Store Connect or Google Play Console?</summary>
-              <p>No. Review Retriever uses public store listings, so it does not need a developer account, store-console access, or an API key.</p>
-            </details>
-            <details>
-              <summary>Can I retrieve more than 500 reviews?</summary>
-              <p>Yes, through the connected Google Play workflow. The MCP returns up to 500 reviews per response, then supplies a continuation cursor so Claude Cowork or Codex can request the next batch until Google Play returns no further page. Apple can be queried across storefronts, but its public feeds do not expose the same continuation. Store availability still controls coverage, so this is not a promise of every review ever posted.</p>
-            </details>
-            <details>
-              <summary>What file format do I get?</summary>
-              <p>The web tool exports Markdown. You can copy the result or download a <code>.md</code> file. It does not currently export CSV, Excel, or JSON from this page.</p>
-            </details>
-            <details>
-              <summary>Can I analyze reviews for a competitor’s app?</summary>
-              <p>Yes, if the app has a supported public App Store or Google Play listing. The same limits and storefront boundaries apply.</p>
-            </details>
-            <details>
-              <summary>Is this an app review scraper?</summary>
-              <p>People often use that phrase for a public review exporter. Review Retriever retrieves public written reviews from supported store listings; it does not sign in to or extract private developer-console data.</p>
-            </details>
-            <details>
-              <summary>What changes when I connect the MCP?</summary>
-              <p>The web page gives you a Markdown export. The MCP lets Claude Cowork or Codex retrieve structured review records inside the conversation, continue through additional Google Play batches, and use the Review Intelligence skill for specific follow-up questions.</p>
-            </details>
-            <details>
-              <summary>What can I ask Review Intelligence?</summary>
-              <p>Ask what users love or hate, where expectations break, which phrases repeat, what creates trust or payment friction, and where a competitor leaves an opening. The useful answer should show the review evidence and label inference rather than pretending the sample proves everything.</p>
-            </details>
-          </section>
-        </article>
+        <section class="how" aria-labelledby="how-title">
+          <h2 class="section-title" id="how-title">How it works</h2>
+          <ol class="steps">
+            <li><span class="n">1</span>Paste an App Store or Google Play link.</li>
+            <li><span class="n">2</span>Get the public reviews as one clean file.</li>
+            <li><span class="n">3</span>Pick a question and tap Analyze. The reviews and the prompt are copied, and Claude or ChatGPT opens.</li>
+          </ol>
+        </section>
+
+        <section class="connect" id="connect" aria-labelledby="connect-title">
+          <p class="hand connect-kicker">skip the copy-paste</p>
+          <h2 id="connect-title">Ask inside Claude or Codex</h2>
+          <p>Connect once. Then paste any app link in a chat and keep asking follow-ups. On Google Play it keeps pulling more reviews, batch by batch.</p>
+          <div class="connect-actions">
+            <a class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
+            <a class="connect-button" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Codex and other clients<span>setup guide</span></a>
+          </div>
+          <p class="connect-code-label">Claude Code</p>
+          <code class="connect-code">claude mcp add --transport http review-retriever https://reviews.doubledash.me/mcp</code>
+        </section>
+
+        <section class="trust" aria-label="About Review Retriever">
+          <ul class="trust-chips">
+            <li>Public reviews only</li>
+            <li>Nothing stored</li>
+            <li>Open source, Apache-2.0</li>
+            <li>No store login</li>
+          </ul>
+          <p class="made-by">Made by <a href="https://www.doubledash.me/">Dasha at DoubleDash</a>.</p>
+        </section>
+
+        <section class="faq" aria-labelledby="faq-title">
+          <h2 class="section-title" id="faq-title">Questions</h2>
+          <details>
+            <summary>Do I need App Store Connect or Google Play Console?</summary>
+            <p>No. Review Retriever reads public store listings, so it doesn’t need a developer account, store-console access or an API key.</p>
+          </details>
+          <details>
+            <summary>Can I get more than 500 reviews?</summary>
+            <p>For Google Play, yes: connect Claude or Codex and it keeps pulling the next batch until the store has no more pages. Apple’s public feed stops earlier. No public source can promise every review ever posted.</p>
+          </details>
+          <details>
+            <summary>Does it work on a competitor’s app?</summary>
+            <p>Yes, for any app with a public App Store or Google Play listing.</p>
+          </details>
+          <details>
+            <summary>The App Store gave me only a few reviews. Why?</summary>
+            <p>Apple’s public review feed can be flaky. If an export comes back with 0 or only 10 reviews, try again in a minute or pick another country.</p>
+          </details>
+          <details>
+            <summary>What file format do I get?</summary>
+            <p>Markdown. Analyze copies it for you together with the prompt, or you can copy it yourself or download a <code>.md</code> file. There’s no CSV, Excel or JSON export on this page.</p>
+          </details>
+          <details>
+            <summary>Is this an app review scraper?</summary>
+            <p>People often call a public review exporter that. Review Retriever reads public written reviews from supported store listings. It doesn’t sign in anywhere or touch private developer-console data.</p>
+          </details>
+        </section>
 
         <hr class="rule">
 
         <footer class="foot">
           <span class="pencil">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <span class="power-user-link">
-              <span class="power-user-nudge" aria-hidden="true">
-                <span class="hand">for power users</span>
-                <svg viewBox="0 0 58 38">
-                  <path d="M4 7 C 23 5, 38 14, 43 30" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-                  <path d="M43 30 l -8 -6 M43 30 l 2 -10" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-                </svg>
-              </span>
-              <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude Cowork or Codex</a>
-            </span>
+            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="/extension/privacy/">Extension privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
@@ -324,99 +306,93 @@
               <p class="receipt-meta" id="receipt-meta" hidden></p>
             </div>
           </div>
-          <div class="receipt-actions-block">
-            <div class="export-nudge" aria-hidden="true">
-              <span class="hand">copy or download the<br>extracted reviews here</span>
-              <svg viewBox="0 0 64 78">
-                <path d="M35 4 C 40 24, 35 45, 25 67" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-                <path d="M25 67 l 1 -12 M25 67 l 11 -5" fill="none" stroke="var(--pen)" stroke-width="1.7" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <div class="receipt-actions">
-              <button class="lnk" id="copy-btn" type="button">Copy</button>
-              <button class="lnk" id="download-btn" type="button">Download.md</button>
-            </div>
-          </div>
           <dl class="packet-ledger" id="packet-ledger"></dl>
-          <section class="evidence" aria-labelledby="evidence-title">
-            <div class="evidence-head">
-              <h2 class="pencil evidence-title" id="evidence-title">evidence preview</h2>
+        </div>
+
+        <section class="analyze" id="analyze" aria-labelledby="analyze-title">
+          <p class="hand analyze-kicker">the reviews are the easy part</p>
+          <h2 class="section-title" id="analyze-title">Now ask what it means</h2>
+
+          <div class="analyze-question picker">
+            <label class="field-label" for="question-select">What do you want to know?</label>
+            <div class="field-wrap">
+              <select class="fld" id="question-select"></select>
+              <svg class="chev" viewBox="0 0 15 10" aria-hidden="true">
+                <path d="M1.5 2 L 7.5 8 L 13.5 2" fill="none" stroke="var(--ink-faint)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
             </div>
-            <div class="peek" id="peek" aria-label="Review sample"></div>
-          </section>
-        </div>
+          </div>
 
-        <div class="handoff-note">
-          <span class="hand tilt">the reviews are the easy part —<br>here's where you get the answer</span>
-          <svg width="60" height="44" viewBox="0 0 60 44" aria-hidden="true">
-            <path d="M6 8 C 22 6, 34 16, 32 34" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-            <path d="M32 34 l 8 -7 M32 34 l -8 -5" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-          </svg>
-        </div>
-
-        <div class="handoff">
-          <a class="card card--primary" id="gpt-analysis-link" href="https://chatgpt.com/g/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener">
-            <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M7 9 C 70 3, 190 5, 253 8 C 257 32, 256 58, 252 74 C 180 79, 74 78, 8 73 C 4 52, 3 27, 7 9 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-            </svg>
-            <span class="inner">
-              <span class="h">Analyze with ChatGPT</span>
-              <span class="s">No setup. Opens ready to go.</span>
-            </span>
-          </a>
-
-          <button class="card" id="claude-btn" type="button" aria-expanded="false" aria-controls="claude-steps">
-            <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M8 10 C 72 5, 188 4, 252 9 C 256 34, 255 56, 251 73 C 178 78, 72 77, 7 72 C 3 50, 4 28, 8 10 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-            </svg>
-            <span class="inner">
-              <span class="h">Analyze in Claude</span>
-              <span class="s">One-time skill install, then it's instant.</span>
-            </span>
-          </button>
-        </div>
-
-        <p class="worked-example"><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/#example" target="_blank" rel="noopener">See a worked example — no model required</a></p>
-
-        <div id="claude-steps" hidden>
-          <hr class="rule">
-          <div class="pencil">installing the claude skill</div>
-          <ol class="steps claude-install-steps">
-            <li><span class="n">1</span>Download the skill file.</li>
-            <li><span class="n">2</span>Open Claude Skills, click <strong>Add</strong>, choose <strong>Upload a skill</strong>, and select the downloaded file.</li>
-            <li><span class="n">3</span>Turn it on. Then paste any export and say “analyze reviews.”</li>
-          </ol>
-          <div class="claude-links">
-            <a class="card claude-action" id="claude-skill-download" href="/app-review-growth-analyzer-skill.zip" download>
-              <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M7 8 C 55 3, 165 4, 213 8 C 217 23, 216 42, 212 51 C 156 56, 62 55, 8 51 C 4 39, 4 20, 7 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+          <div class="handoff">
+            <a class="card card--primary" id="analyze-claude" href="https://claude.ai/new?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below.%20The%20instructions%20and%20my%20question%20are%20at%20the%20top%20of%20the%20paste." target="_blank" rel="noopener">
+              <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M7 9 C 70 3, 190 5, 253 8 C 257 32, 256 58, 252 74 C 180 79, 74 78, 8 73 C 4 52, 3 27, 7 9 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               </svg>
-              <span class="inner"><span class="h">Download skill</span></span>
+              <span class="inner">
+                <span class="h">Analyze in Claude</span>
+                <span class="s">Copies the reviews and the prompt, then opens a new chat.</span>
+              </span>
             </a>
-            <a class="card claude-action" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">
-              <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M8 9 C 57 4, 164 4, 212 8 C 216 24, 215 41, 211 50 C 155 55, 61 55, 7 50 C 4 37, 4 21, 8 9 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+            <a class="card card--primary" id="analyze-chatgpt" href="https://chatgpt.com/g/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener">
+              <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M8 10 C 72 5, 188 4, 252 9 C 256 34, 255 56, 251 73 C 178 78, 72 77, 7 72 C 3 50, 4 28, 8 10 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
               </svg>
-              <span class="inner"><span class="h">Open Claude Skills</span></span>
+              <span class="inner">
+                <span class="h">Analyze in ChatGPT</span>
+                <span class="s" id="analyze-chatgpt-note">Copies the newest 150 reviews and the prompt, then opens the GPT.</span>
+              </span>
             </a>
           </div>
-        </div>
+
+          <p class="analyze-toast" id="analyze-toast" role="status" aria-live="polite" hidden></p>
+
+          <div class="file-actions">
+            <span class="pencil">or take the file</span>
+            <button class="lnk" id="copy-btn" type="button">Copy</button>
+            <button class="lnk" id="download-btn" type="button">Download .md</button>
+          </div>
+
+          <ul class="analyze-more">
+            <li><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Follow-ups without pasting: connect Claude or Codex</a></li>
+            <li><button class="lnk" id="claude-btn" type="button" aria-expanded="false" aria-controls="claude-steps">The full method in Claude: install the skill</button></li>
+          </ul>
+
+          <div id="claude-steps" hidden>
+            <ol class="steps claude-install-steps">
+              <li><span class="n">1</span>Download the skill file.</li>
+              <li><span class="n">2</span>Open Claude Skills, click <strong>Add</strong>, choose <strong>Upload a skill</strong>, and select the downloaded file.</li>
+              <li><span class="n">3</span>Turn it on. Then paste any export and say “analyze reviews.”</li>
+            </ol>
+            <div class="claude-links">
+              <a class="card claude-action" id="claude-skill-download" href="/app-review-growth-analyzer-skill.zip" download>
+                <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M7 8 C 55 3, 165 4, 213 8 C 217 23, 216 42, 212 51 C 156 56, 62 55, 8 51 C 4 39, 4 20, 7 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <span class="inner"><span class="h">Download skill</span></span>
+              </a>
+              <a class="card claude-action" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">
+                <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M8 9 C 57 4, 164 4, 212 8 C 216 24, 215 41, 211 50 C 155 55, 61 55, 7 50 C 4 37, 4 21, 8 9 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <span class="inner"><span class="h">Open Claude Skills</span></span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="evidence" aria-labelledby="evidence-title">
+          <div class="evidence-head">
+            <h2 class="pencil evidence-title" id="evidence-title">evidence preview</h2>
+          </div>
+          <div class="peek" id="peek" aria-label="Review sample"></div>
+        </section>
 
         <hr class="rule">
 
         <footer class="foot">
           <span class="pencil">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <span class="power-user-link">
-              <span class="power-user-nudge" aria-hidden="true">
-                <span class="hand">for power users</span>
-                <svg viewBox="0 0 58 38">
-                  <path d="M4 7 C 23 5, 38 14, 43 30" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-                  <path d="M43 30 l -8 -6 M43 30 l 2 -10" fill="none" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round"></path>
-                </svg>
-              </span>
-              <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude Cowork or Codex</a>
-            </span>
+            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
             <a class="lnk" href="/extension/privacy/">Extension privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>

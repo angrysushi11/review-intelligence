@@ -1,8 +1,18 @@
 import { COUNTRY_OPTIONS } from "./markets.js";
+import {
+  CHATGPT_GPT_URL,
+  CHATGPT_REVIEW_CAP,
+  CLAUDE_NEW_CHAT_URL,
+  DEFAULT_QUESTION_ID,
+  QUESTION_GROUPS,
+  buildAnalysisPayload
+} from "./analysis-prompt.js";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
 const VALIDATION_MESSAGE = "that doesn't look like a store link";
 const NETWORK_MESSAGE = "couldn't reach the store — try again in a minute";
+const EXTRACT_LABEL = "Get the reviews";
+const LOADING_LABEL = "Getting the reviews…";
 
 const idle = document.querySelector("#state-idle");
 const done = document.querySelector("#state-done");
@@ -13,15 +23,21 @@ const error = document.querySelector("#form-error");
 const retrievalStatus = document.querySelector("#retrieval-status");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
+const demoChips = document.querySelectorAll(".demo-chip");
 const appIcon = document.querySelector("#app-icon");
 const packetTitle = document.querySelector("#packet-title");
 const receiptMeta = document.querySelector("#receipt-meta");
 const packetLedger = document.querySelector("#packet-ledger");
 const peek = document.querySelector("#peek");
 const startOver = document.querySelector("#start-over");
+const analyzeSection = document.querySelector("#analyze");
+const questionSelect = document.querySelector("#question-select");
+const analyzeClaude = document.querySelector("#analyze-claude");
+const analyzeChatGpt = document.querySelector("#analyze-chatgpt");
+const analyzeChatGptNote = document.querySelector("#analyze-chatgpt-note");
+const analyzeToast = document.querySelector("#analyze-toast");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
-const gptAnalysisLink = document.querySelector("#gpt-analysis-link");
 const claudeButton = document.querySelector("#claude-btn");
 const claudeSteps = document.querySelector("#claude-steps");
 const claudeSkillDownload = document.querySelector("#claude-skill-download");
@@ -47,8 +63,13 @@ let currentFilename = "reviews.md";
 let isLoading = false;
 
 renderCountryOptions();
+renderQuestionOptions();
+analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
+analyzeChatGpt.href = CHATGPT_GPT_URL;
+
 if (looksLikeStoreLink(queryAppUrl)) {
   appUrl.value = queryAppUrl;
+  syncCountryFromLink();
   if (window.location.hash) {
     const cleanLocation = new URL(window.location.href);
     cleanLocation.hash = "";
@@ -61,17 +82,22 @@ track("review_tool_open", {
   content_cluster: originalCluster,
 });
 
-appUrl.addEventListener("input", clearError);
+appUrl.addEventListener("input", handleUrlInput);
 form.addEventListener("submit", handleExtract);
+for (const chip of demoChips) {
+  chip.addEventListener("click", () => startDemo(chip));
+}
 startOver.addEventListener("click", resetRetriever);
+questionSelect.addEventListener("change", () => {
+  track("review_question_pick", { question_id: questionSelect.value });
+});
+analyzeClaude.addEventListener("click", () => handleAnalyze("claude"));
+analyzeChatGpt.addEventListener("click", () => handleAnalyze("chatgpt"));
 copyButton.addEventListener("click", copyMarkdown);
 downloadButton.addEventListener("click", downloadMarkdown);
 claudeButton.addEventListener("click", toggleClaudeSteps);
 appIcon.addEventListener("error", hideAppIcon);
 
-gptAnalysisLink.addEventListener("click", () => {
-  track("review_analysis_open", { tool: "gpt", cta_id: "review_retriever_gpt" });
-});
 claudeSkillDownload.addEventListener("click", () => {
   track("review_analysis_open", { tool: "claude_skill_download", cta_id: "review_retriever_claude_download" });
 });
@@ -79,8 +105,25 @@ claudeSkillsLink.addEventListener("click", () => {
   track("review_analysis_open", { tool: "claude_skills", cta_id: "review_retriever_claude_open" });
 });
 
-async function handleExtract(event) {
+function handleUrlInput() {
+  clearError();
+  syncCountryFromLink();
+}
+
+function handleExtract(event) {
   event.preventDefault();
+  startExtraction();
+}
+
+function startDemo(chip) {
+  if (isLoading) return;
+  appUrl.value = chip.dataset.demoUrl || "";
+  setCountry("us");
+  track("review_demo_pick", { demo_app: chip.dataset.demoName || "unknown" });
+  startExtraction();
+}
+
+async function startExtraction() {
   if (isLoading) return;
 
   const link = appUrl.value.trim();
@@ -103,6 +146,7 @@ async function handleExtract(event) {
     currentFilename = result.filename;
     renderPacket(result);
     renderSamples(result.samples);
+    prepareAnalyze(result);
 
     track(result.count > 0 ? "review_extract_success" : "review_extract_empty", {
       platform: platformFromUrl(link),
@@ -173,6 +217,32 @@ function looksLikeStoreLink(value) {
   return STORE_LINK_PATTERN.test(value);
 }
 
+// Apple links carry the storefront in the path (/gb/app/…); Play links may carry ?gl=gb.
+function countryFromStoreUrl(value) {
+  try {
+    const url = new URL(String(value || "").trim());
+    if (/(^|\.)apple\.com$/i.test(url.hostname)) {
+      return url.pathname.match(/^\/([a-z]{2})\/app\//i)?.[1]?.toLowerCase() || "";
+    }
+    if (url.hostname === "play.google.com") {
+      return (url.searchParams.get("gl") || "").toLowerCase();
+    }
+  } catch {
+    return "";
+  }
+  return "";
+}
+
+function syncCountryFromLink() {
+  const code = countryFromStoreUrl(appUrl.value);
+  if (code) setCountry(code);
+}
+
+function setCountry(code) {
+  const available = Array.from(country.options || []).some((option) => option.value === code);
+  if (available) country.value = code;
+}
+
 function renderCountryOptions() {
   const fragment = document.createDocumentFragment();
   for (const option of COUNTRY_OPTIONS) {
@@ -183,6 +253,23 @@ function renderCountryOptions() {
     fragment.append(optionElement);
   }
   country.replaceChildren(fragment);
+}
+
+function renderQuestionOptions() {
+  const fragment = document.createDocumentFragment();
+  for (const group of QUESTION_GROUPS) {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.label;
+    for (const question of group.questions) {
+      const option = document.createElement("option");
+      option.value = question.id;
+      option.textContent = question.label;
+      optgroup.append(option);
+    }
+    fragment.append(optgroup);
+  }
+  questionSelect.replaceChildren(fragment);
+  questionSelect.value = DEFAULT_QUESTION_ID;
 }
 
 function samplesFromMarkdown(value) {
@@ -271,6 +358,80 @@ function renderPacket(result) {
   }));
 }
 
+function prepareAnalyze(result) {
+  analyzeSection.hidden = result.count === 0;
+  hideAnalyzeToast();
+  questionSelect.value = DEFAULT_QUESTION_ID;
+  analyzeChatGptNote.textContent = result.count > CHATGPT_REVIEW_CAP
+    ? `Copies the newest ${CHATGPT_REVIEW_CAP} reviews and the prompt, then opens the GPT.`
+    : "Copies the reviews and the prompt, then opens the GPT.";
+}
+
+// The link opens the chat in a new tab; the click copies the reviews and the prompt first.
+function handleAnalyze(tool) {
+  const isChatGpt = tool === "chatgpt";
+  const destination = isChatGpt ? "ChatGPT" : "Claude";
+  const payload = buildAnalysisPayload({
+    markdown,
+    questionId: questionSelect.value,
+    maxReviews: isChatGpt ? CHATGPT_REVIEW_CAP : Infinity,
+  });
+  const copied = payload.included < payload.total
+    ? `the newest ${payload.included} of ${payload.total} reviews`
+    : `${payload.included} ${pluralize("review", payload.included)}`;
+
+  copyText(payload.text)
+    .then(() => showAnalyzeToast(`Copied ${copied} and the prompt. In ${destination}, ${pasteInstruction()} and send.`))
+    .catch(() => showAnalyzeToast(`Couldn't copy automatically. Use Copy below, then paste it into ${destination}.`, true));
+
+  track("review_analysis_open", {
+    tool: isChatGpt ? "chatgpt_oneclick" : "claude_oneclick",
+    cta_id: isChatGpt ? "review_retriever_chatgpt_oneclick" : "review_retriever_claude_oneclick",
+    question_id: payload.question.id,
+    review_count_bucket: reviewCountBucket(payload.included),
+  });
+}
+
+function pasteInstruction() {
+  if (window.matchMedia?.("(pointer: coarse)")?.matches) return "long-press the message box, tap Paste";
+  const platform = navigator.userAgentData?.platform || navigator.platform || "";
+  return /mac|iphone|ipad/i.test(platform) ? "press ⌘V" : "press Ctrl+V";
+}
+
+function showAnalyzeToast(message, isError = false) {
+  analyzeToast.textContent = message;
+  analyzeToast.classList.toggle("analyze-toast--error", isError);
+  analyzeToast.hidden = false;
+}
+
+function hideAnalyzeToast() {
+  analyzeToast.hidden = true;
+  analyzeToast.textContent = "";
+}
+
+function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+  }
+  return legacyCopy(text);
+}
+
+function legacyCopy(text) {
+  return new Promise((resolve, reject) => {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.append(area);
+    area.select();
+    const copied = document.execCommand("copy");
+    area.remove();
+    if (copied) resolve();
+    else reject(new Error("copy failed"));
+  });
+}
+
 function renderAppIcon(result) {
   if (!result.iconUrl) {
     hideAppIcon();
@@ -298,9 +459,17 @@ function safeImageUrl(value) {
 }
 
 function packetNote(result) {
-  if (!result.count) return "The public source returned no written reviews for this request.";
-  if (result.store === "App Store" && /Visible App Store review cards/i.test(result.source)) {
-    return "Apple's full public review feed was unavailable, so this packet uses the visible review cards Apple exposed.";
+  const isAppStore = result.store === "App Store";
+  if (!result.count) {
+    return isAppStore
+      ? "Apple's public review feed returned no written reviews. It can be flaky, so try again in a minute or pick another country."
+      : "The public source returned no written reviews for this request.";
+  }
+  if (isAppStore && /Visible App Store review cards/i.test(result.source)) {
+    return "Apple's full public review feed was unavailable, so this packet uses the visible review cards Apple exposed. Try again in a minute for more.";
+  }
+  if (isAppStore && result.count <= 10) {
+    return "Only a few reviews came back. Apple's public feed can be flaky, so try again in a minute or pick another country.";
   }
   return "";
 }
@@ -321,7 +490,7 @@ function setLoading(loading) {
   isLoading = loading;
   extractButton.classList.toggle("busy", loading);
   extractButton.setAttribute("aria-busy", String(loading));
-  extractLabel.textContent = loading ? "Extracting…" : "Extract reviews";
+  extractLabel.textContent = loading ? LOADING_LABEL : EXTRACT_LABEL;
   if (loading) retrievalStatus.textContent = "Retrieving public app reviews…";
 }
 
@@ -330,6 +499,7 @@ function resetRetriever() {
   idle.hidden = false;
   claudeSteps.hidden = true;
   claudeButton.setAttribute("aria-expanded", "false");
+  hideAnalyzeToast();
   appUrl.value = "";
   markdown = "";
   currentFilename = "reviews.md";
@@ -347,9 +517,13 @@ function resetRetriever() {
 }
 
 async function copyMarkdown() {
-  await navigator.clipboard.writeText(markdown);
+  try {
+    await copyText(markdown);
+    copyButton.textContent = "Copied";
+  } catch {
+    copyButton.textContent = "Couldn't copy";
+  }
   track("review_export_action", { action: "copy" });
-  copyButton.textContent = "Copied";
   window.setTimeout(() => {
     copyButton.textContent = "Copy";
   }, 1600);

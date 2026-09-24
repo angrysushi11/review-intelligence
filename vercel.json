@@ -12,6 +12,7 @@
     { "src": "/styles.css", "dest": "/web/styles.css" },
     { "src": "/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/app.js", "dest": "/web/app.js" },
+    { "src": "/analysis-prompt.js", "dest": "/web/analysis-prompt.js" },
     { "src": "/markets.js", "dest": "/web/markets.js" },
     { "src": "/storefronts.js", "dest": "/web/storefronts.js" },
     { "src": "/review-retriever-og.png", "dest": "/web/review-retriever-og.png" },

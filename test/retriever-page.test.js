@@ -6,187 +6,162 @@ import { buildDataset } from "../src/app-store.js";
 
 const webUrl = new URL("../web/", import.meta.url);
 
-test("the homepage uses the approved paper-and-ink retriever flow", async () => {
+test("the homepage leads with the job, a real example, and one-tap analysis", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const styles = await readFile(new URL("styles.css", webUrl), "utf8");
   const tokens = await readFile(new URL("tokens.css", webUrl), "utf8");
   const appJs = await readFile(new URL("app.js", webUrl), "utf8");
+  const idleState = html.match(/<section id="state-idle">([\s\S]*?)<section id="state-done" hidden>/)?.[1] ?? "";
+  const doneState = html.match(/<section id="state-done" hidden>([\s\S]*?)<\/main>/)?.[1] ?? "";
+  assert.ok(idleState && doneState, "both page states should exist");
 
-  assert.match(html, /id="state-idle"/);
-  assert.match(html, /id="state-done" hidden/);
-  assert.doesNotMatch(html, /<div class="pencil">app review export<\/div>/);
-  assert.doesNotMatch(html, /class="lede"/);
-  assert.match(html, /Retrieve the reviews\./);
-  assert.match(html, /Ask what users love, hate, or expected\./);
-  assert.match(html, /Turn the evidence into a product or growth decision\./);
-  assert.ok(html.indexOf('<form class="tool-frame" id="extract-form"') < html.indexOf('<ol class="steps">'));
+  // Search metadata stays stable while the page copy changes.
   assert.match(html, /<title>Export &amp; Analyze App Reviews \| Review Retriever<\/title>/);
   assert.match(html, /name="description" content="Export public App Store and Google Play reviews, discover what users love and hate, and capture the exact language they use\."/);
-  assert.match(html, /<article class="retrieval-guide" aria-labelledby="retrieval-guide-title">/);
-  assert.match(html, /<p class="pencil hero-kicker">Review Retriever<\/p>/);
-  assert.match(html, /<h1 class="title title--hero">Export app reviews\. Find what users really think\.<\/h1>/);
-  assert.match(html, /Paste an App Store or Google Play link\. Get up to 500 public reviews—no store login needed—then uncover what people love, what frustrates them, and what they expected instead\./);
-  const hero = html.match(/<header class="hero">([\s\S]*?)<\/header>/)?.[1] ?? "";
-  assert.doesNotMatch(hero, /\b(?:MCP|Claude|Codex|batches|continuation cursor)\b/i);
+  assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
-  assert.ok(html.indexOf('<ol class="steps">') < html.indexOf('<article class="retrieval-guide"'));
-  assert.match(html, /<a class="power-user-jump" href="#power-users">[\s\S]*?for power users[\s\S]*?See the Claude Cowork or Codex setup[\s\S]*?↓/);
-  assert.match(html, /<section class="guide-power" id="power-users" aria-labelledby="guide-power-title">/);
-  assert.ok(html.indexOf('class="power-user-jump"') < html.indexOf('<article class="retrieval-guide"'));
-  assert.ok(html.indexOf('<article class="retrieval-guide"') < html.indexOf('<hr class="rule">'));
-  assert.match(html, /Turn app reviews into answers you can use/);
-  assert.match(html, /Review Retriever collects the public evidence\. Review Intelligence helps you question it/);
-  assert.match(html, /Ask questions that reviews can answer/);
-  assert.match(html, /What do users hate most\?/);
-  assert.match(html, /<section class="guide-proof" aria-labelledby="guide-proof-title">/);
-  assert.match(html, /What a finished theme looks like/);
-  assert.match(html, /Cancellation trust gap/);
-  assert.match(html, /Twenty-three reviews, four different phrasings, one problem/);
-  assert.match(html, /Every theme cites the reviews it came from/);
-  assert.match(html, /See the full worked example/);
-  assert.match(html, /Connect Review Intelligence to Claude Cowork or Codex/);
-  assert.match(html, /The MCP returns up to 500 per response and provides a continuation cursor for Google Play/);
-  assert.match(html, /No public-source route can promise every review ever posted/);
-  assert.match(html, /Reviews are not a live user interview/);
-  assert.match(html, /It does not currently export CSV, Excel, or JSON from this page/);
-  assert.match(html, /href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Connect Review Intelligence<\/a>/);
-  assert.match(html, /href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/#example">See a worked example<\/a>/);
-  assert.match(html, /Can I retrieve more than 500 reviews\?/);
-  assert.match(html, /Is this an app review scraper\?/);
-  assert.match(html, /The MCP lets Claude Cowork or Codex retrieve structured review records inside the conversation, continue through additional Google Play batches/);
-  assert.match(html, /What can I ask Review Intelligence\?/);
-  assert.match(html, /It cannot prove revenue, retention, conversion impact, or the views of every user/);
-  assert.match(html, /id="app-url"[^>]*autofocus/);
-  assert.match(html, /class="field-wrap"/);
-  assert.match(html, /class="form-nudge form-nudge--url"[^>]*>[\s\S]*?paste the app URL here/);
-  assert.match(html, /class="form-nudge form-nudge--country"[^>]*>[\s\S]*?choose the country here/);
-  assert.match(html, /press here to extract<br>the reviews/);
-  assert.match(html, /class="baseline"[^>]*preserveAspectRatio="none"/);
-  assert.match(html, /class="baseline"[\s\S]*?vector-effect="non-scaling-stroke"/);
-  assert.match(html, /id="form-error"[^>]*hidden>that doesn't look like a store link/);
-  assert.match(html, /the reviews are the easy part —/);
-  assert.match(html, /<header class="result-masthead">[\s\S]*?<h1 class="title">Review Retriever<\/h1>/);
-  assert.match(html, /review packet ready/);
-  assert.match(html, /id="app-icon"[^>]*referrerpolicy="no-referrer"[^>]*hidden/);
-  assert.match(html, /id="packet-title" tabindex="-1"/);
-  assert.match(html, /copy or download the<br>extracted reviews here/);
-  assert.match(html, /id="packet-ledger"/);
-  assert.match(html, /id="download-btn"[^>]*>Download\.md<\/button>/);
-  assert.match(html, /id="evidence-title">evidence preview<\/h2>/);
-  assert.match(html, /id="packet-ledger"><\/dl>\s*<section class="evidence"/);
-  assert.doesNotMatch(html, /Actual review text pulled/);
-  assert.doesNotMatch(html, /not analysis yet/);
-  assert.match(html, /class="card card--primary" id="gpt-analysis-link"/);
-  assert.match(html, />Analyze with ChatGPT<\/span>/);
-  assert.match(html, />Analyze in Claude<\/span>/);
-  assert.match(html, /See a worked example — no model required/);
-  assert.match(html, /href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/#example"/);
-  assert.match(html, /id="claude-steps" hidden/);
-  assert.match(html, /Open Claude Skills, click <strong>Add<\/strong>, choose <strong>Upload a skill<\/strong>/);
-  assert.match(html, /class="card claude-action" id="claude-skill-download"/);
-  assert.match(html, /class="card claude-action" id="claude-skills-link"/);
-  assert.match(html, /public reviews only · nothing stored/);
-  assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Use it in Claude Cowork or Codex<\/a>/g) ?? []).length, 2);
+
+  // Hero: the job first, no connector jargon.
+  assert.match(idleState, /<span class="wordmark">Review Retriever<\/span>/);
+  assert.match(idleState, /<p class="hand hero-kicker">for indie devs &amp; app makers<\/p>/);
+  assert.match(idleState, /<h1 class="title title--hero">Your competitors’ users already told you what to build\.<\/h1>/);
+  assert.match(idleState, /Paste an App Store or Google Play link\. Get up to 500 public reviews, then ask Claude or ChatGPT what people love, hate and wish existed, with quotes you can check\./);
+  const hero = html.match(/<header class="hero">([\s\S]*?)<\/header>/)?.[1] ?? "";
+  assert.doesNotMatch(hero, /\b(?:MCP|Codex|batches|continuation cursor|power users)\b/i);
+
+  // Extractor: one field, one button, one hand-drawn note, demo apps, no warning under the button.
+  assert.match(idleState, /id="app-url"[^>]*autofocus/);
+  assert.match(idleState, /<label class="field-label" for="app-url">App Store or Google Play link<\/label>/);
+  assert.match(idleState, /id="extract-label">Get the reviews<\/span>/);
+  assert.match(idleState, /id="form-error"[^>]*hidden>that doesn't look like a store link/);
+  assert.equal((idleState.match(/class="hand demo-nudge"/g) ?? []).length, 1);
+  assert.doesNotMatch(html, /form-nudge|submit-nudge|power-user-jump|export-nudge|class="notice"/);
+  const demoUrls = [...idleState.matchAll(/class="demo-chip" type="button" data-demo-name="([a-z]+)" data-demo-url="([^"]+)"/g)];
+  assert.deepEqual(demoUrls.map(([, name]) => name), ["calm", "duolingo", "strava"]);
+  for (const [, , url] of demoUrls) assert.match(url, /^https:\/\/play\.google\.com\/store\/apps\/details\?id=[\w.]+$/);
+
+  // Section order: form → real example → questions → how it works → connect → FAQ.
+  const order = ['id="extract-form"', 'class="sample"', 'class="questions"', 'class="how"', 'class="connect"', 'class="faq"'];
+  const positions = order.map((marker) => idleState.indexOf(marker));
+  assert.ok(positions.every((position) => position > -1), "every idle section should exist");
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
+
+  // The example is real, dated, and quotes reviews verbatim.
+  assert.match(idleState, /What 40 recent Calm reviews said/);
+  assert.match(idleState, /Google Play US · the 40 newest reviews, Sep 16–23, 2026/);
+  assert.match(idleState, /10 of 17 one-star reviews/);
+  assert.match(idleState, /“Charged for a free trial \$85, refused refund\.”/);
+  assert.match(idleState, /“Not at all what was described in the ad\.”/);
+  assert.match(idleState, /“A mini spa date in your pocket\.”/);
+
+  // The question map shows how much reviews can answer.
+  const questionMap = idleState.match(/<div class="question-groups">([\s\S]*?)<p class="questions-more">/)?.[1] ?? "";
+  assert.equal((questionMap.match(/<h3>/g) ?? []).length, 4);
+  assert.equal((questionMap.match(/<li>/g) ?? []).length, 12);
+  assert.match(idleState, /Is it the price, or when the price appears\?/);
+
+  // Connect: direct connector link, setup guide, Claude Code one-liner.
+  assert.match(idleState, /href="https:\/\/claude\.ai\/customize\/connectors\?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews\.doubledash\.me%2Fmcp"/);
+  assert.match(idleState, /works on the free plan/);
+  assert.match(idleState, /claude mcp add --transport http review-retriever https:\/\/reviews\.doubledash\.me\/mcp/);
+
+  // "500" is stated where it matters, not everywhere.
+  assert.ok((idleState.match(/500/g) ?? []).length <= 3);
+
+  // FAQ keeps the Apple caveat and the search-relevant questions.
+  assert.equal((idleState.match(/<details>/g) ?? []).length, 6);
+  assert.match(idleState, /Apple’s public review feed can be flaky/);
+  assert.match(idleState, /Can I get more than 500 reviews\?/);
+  assert.match(idleState, /Is this an app review scraper\?/);
+  assert.match(idleState, /There’s no CSV, Excel or JSON export on this page/);
+
+  // Footers link the guide, source, extension privacy and support.
+  assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="\/extension\/privacy\/">Extension privacy<\/a>/g) ?? []).length, 2);
-  assert.equal((html.match(/<span class="hand">for power users<\/span>/g) ?? []).length, 3);
-  assert.match(html, /family=Caveat:wght@400\.\.700/);
-  assert.doesNotMatch(html, /class="action-dock"/);
-  assert.doesNotMatch(html, /id="claude-skill-modal"/);
-  assert.doesNotMatch(html, /Three ways to use it/);
-  assert.doesNotMatch(html, /Codex \/ Work/);
+  assert.match(html, /public reviews only · nothing stored/);
 
-  const extensionPrivacy = await readFile(new URL("extension-privacy.html", webUrl), "utf8");
-  assert.match(extensionPrivacy, /mailto:tools@doubledash\.me/);
-  assert.doesNotMatch(extensionPrivacy, /mailto:dash@doubledash\.me/);
+  // Results: packet, then the analysis step, then the evidence preview.
+  assert.match(doneState, /<header class="result-masthead">[\s\S]*?<h1 class="title">Review Retriever<\/h1>/);
+  assert.match(doneState, /review packet ready/);
+  assert.match(doneState, /id="app-icon"[^>]*referrerpolicy="no-referrer"[^>]*hidden/);
+  assert.match(doneState, /id="packet-title" tabindex="-1"/);
+  assert.match(doneState, /id="packet-ledger"><\/dl>/);
+  assert.ok(doneState.indexOf('id="packet-ledger"') < doneState.indexOf('id="analyze"'));
+  assert.ok(doneState.indexOf('id="analyze"') < doneState.indexOf('id="evidence-title"'));
+  assert.match(doneState, /<label class="field-label" for="question-select">What do you want to know\?<\/label>/);
+  assert.match(doneState, /id="analyze-claude" href="https:\/\/claude\.ai\/new\?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below\.[^"]*" target="_blank" rel="noopener"/);
+  assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/g\/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener"/);
+  assert.match(doneState, />Analyze in Claude<\/span>/);
+  assert.match(doneState, />Analyze in ChatGPT<\/span>/);
+  assert.match(doneState, /id="analyze-toast" role="status" aria-live="polite" hidden/);
+  assert.match(doneState, /id="copy-btn"[^>]*>Copy<\/button>/);
+  assert.match(doneState, /id="download-btn"[^>]*>Download \.md<\/button>/);
+  assert.match(doneState, /id="claude-btn"[^>]*aria-controls="claude-steps"/);
+  assert.match(doneState, /id="claude-steps" hidden/);
+  assert.match(doneState, /Open Claude Skills, click <strong>Add<\/strong>, choose <strong>Upload a skill<\/strong>/);
+  assert.match(doneState, /class="card claude-action" id="claude-skill-download"/);
+  assert.match(doneState, /id="evidence-title">evidence preview<\/h2>/);
 
+  // Design system tokens and the new components.
+  assert.match(styles, /@import url\("\/tokens\.css"\)/);
+  assert.match(tokens, /--paper:\s*#f7f4ec/);
+  assert.match(tokens, /--well:\s*#efe9da/);
+  assert.match(tokens, /--pen:\s*#3a6b5c/);
+  assert.match(tokens, /--font-ui:\s*-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif/);
+  assert.match(styles, /font-family:\s*var\(--font-display\)/);
+  assert.match(styles, /\.tool-frame::before\s*\{/);
+  assert.match(styles, /\.demo-chip\s*\{[^}]*min-height:\s*44px[^}]*border:\s*1\.5px dashed var\(--pen\)/s);
+  assert.match(styles, /\.sample-card\s*\{/);
+  assert.match(styles, /\.mix-row--low \.mix-bar\s*\{[^}]*background:\s*var\(--error\)/s);
+  assert.match(styles, /\.question-groups\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
+  assert.match(styles, /\.connect\s*\{[^}]*background:\s*var\(--ink\)/s);
+  assert.match(styles, /\.analyze-toast\s*\{/);
+  assert.match(styles, /\.card \.s\s*\{[\s\S]*?\.card--primary \.s\s*\{[^}]*color:\s*var\(--rule\)/);
+  assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
+  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.question-groups,\s*\.connect-actions\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /\.sr-only\s*\{/);
+  assert.doesNotMatch(styles, /\.form-nudge|\.power-user-jump|\.guide-power|\.export-nudge/);
+
+  // Behaviour kept from the previous flow.
+  assert.ok(appJs.includes("const STORE_LINK_PATTERN = /apps\\.apple\\.com|itunes\\.apple\\.com|play\\.google\\.com/i;"));
   assert.match(appJs, /const fragment = new URLSearchParams\(window\.location\.hash\.slice\(1\)\)/);
   assert.match(appJs, /const queryAppUrl = fragment\.get\("app_url"\) \|\| query\.get\("app_url"\) \|\| ""/);
   assert.match(appJs, /appUrl\.value = queryAppUrl/);
   assert.match(appJs, /window\.history\.replaceState\(null, "", cleanLocation\)/);
-  assert.match(html, /page_location: `\$\{window\.location\.origin\}\$\{window\.location\.pathname\}`/);
-  assert.match(html, /gtag\("event", "ai_referral_landing"/);
-  assert.match(html, /ai_source: aiSource/);
-  assert.match(html, /landing_path: window\.location\.pathname/);
-
-  assert.match(styles, /@import url\("\/tokens\.css"\)/);
-  assert.match(tokens, /--paper:\s*#f7f4ec/);
-  assert.match(tokens, /--well:\s*#efe9da/);
-  assert.match(tokens, /--well-focus:\s*#fbf9f3/);
-  assert.match(tokens, /--pen:\s*#3a6b5c/);
-  assert.match(styles, /font-family:\s*var\(--font-display\)/);
-  assert.match(styles, /\.tool-frame::before\s*\{/);
-  assert.match(styles, /\.tool-frame\s*\{[^}]*padding:\s*22px 16px 18px/s);
-  assert.match(styles, /\.tool-frame\s*\{[^}]*margin-top:\s*68px/s);
-  assert.match(styles, /\.title--hero\s*\{[^}]*max-width:\s*none[^}]*overflow-wrap:\s*normal[^}]*font-size:\s*clamp\(36px, 5\.2vw, 50px\)[^}]*text-wrap:\s*balance/s);
-  assert.match(styles, /\.hero-lede\s*\{[^}]*margin:\s*14px 0 0[^}]*font-size:\s*18px[^}]*line-height:\s*1\.5/s);
-  assert.match(styles, /\.power-user-jump\s*\{[^}]*border:\s*1px solid var\(--outline-soft\)[^}]*background:\s*color-mix\(in srgb, var\(--well\) 64%, var\(--paper\)\)[^}]*transition:\s*transform 140ms ease-out/s);
-  assert.match(styles, /\.power-user-jump__arrow\s*\{[^}]*width:\s*44px[^}]*height:\s*44px[^}]*border:\s*1px solid var\(--pen\)[^}]*border-radius:\s*999px/s);
-  assert.match(styles, /\.form-nudge\s*\{[^}]*flex-direction:\s*column[^}]*font-size:\s*35px/s);
-  assert.match(styles, /\.form-nudge span\s*\{[^}]*background:\s*var\(--paper\)/s);
-  assert.match(styles, /label\.field-label\s*\{[^}]*font-family:\s*var\(--font-ui\)[^}]*font-style:\s*normal/s);
-  assert.match(styles, /\.fld\s*\{[^}]*background:\s*color-mix\(in srgb, var\(--well\) 88%, var\(--paper\)\)[^}]*font-size:\s*18px/s);
-  assert.match(styles, /\.field-wrap:focus-within \.baseline path\s*\{[^}]*stroke:\s*var\(--pen\)[^}]*stroke-width:\s*2\.8/s);
-  assert.match(styles, /\.drawn svg path\s*\{[^}]*fill:\s*var\(--ink\)[^}]*stroke:\s*var\(--ink\)/s);
-  assert.match(styles, /\.packet-ledger\s*\{/);
-  assert.match(styles, /\.packet::before\s*\{/);
-  assert.match(tokens, /--font-ui:\s*-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif/);
-  assert.doesNotMatch(tokens, /--font-mono/);
-  assert.match(styles, /\.app-icon\s*\{[^}]*object-fit:\s*cover/s);
-  assert.match(styles, /\.export-nudge\s*\{[^}]*flex-direction:\s*column/s);
-  assert.match(styles, /\.packet-title\s*\{[^}]*font-family:\s*var\(--font-ui\)[^}]*font-size:\s*clamp\(23px, 4\.2vw, 29px\)/s);
-  assert.match(styles, /\.packet-ledger dd\s*\{[^}]*font-family:\s*var\(--font-ui\)[^}]*font-size:\s*15\.5px/s);
-  assert.match(styles, /\.evidence\s*\{[^}]*grid-column:\s*1 \/ -1[^}]*border-top:\s*1px solid var\(--rule\)/s);
-  assert.match(styles, /\.review-card__text\s*\{[^}]*font-size:\s*16\.5px/s);
-  assert.match(styles, /\.card--primary svg path\s*\{[^}]*fill:\s*var\(--ink\)[^}]*stroke:\s*var\(--ink\)/s);
-  assert.match(styles, /\.claude-action\s*\{[^}]*min-height:\s*58px/s);
-  assert.match(styles, /\.packet-ledger\s*\{\s*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
-  assert.match(styles, /\.review-card\s*\{/);
-  assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)/);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.wrap\s*\{[^}]*padding:\s*30px/s);
-  assert.match(styles, /\.retrieval-guide\s*\{[^}]*margin-top:\s*30px[^}]*padding-top:\s*32px[^}]*border-top:\s*1px solid var\(--rule\)/s);
-  assert.match(styles, /\.guide-columns\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
-  assert.match(styles, /\.guide-question-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
-  assert.match(styles, /\.guide-proof\s*\{/);
-  assert.match(styles, /\.guide-proof-list\s*\{/);
-  assert.match(styles, /\.sr-only\s*\{/);
-  assert.match(styles, /\.guide-power\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*border:\s*2px solid/s);
-  assert.match(styles, /\.guide-button--primary\s*\{[^}]*background:\s*var\(--ink\)[^}]*color:\s*var\(--paper\)/s);
-  assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.retrieval-guide\s*\{[^}]*margin-top:\s*28px[^}]*padding-top:\s*30px/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-columns\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-question-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-power\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-power-copy,[\s\S]*?\.guide-actions\s*\{[^}]*grid-column:\s*1 \/ -1/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.guide-actions\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
-
-  assert.ok(appJs.includes("const STORE_LINK_PATTERN = /apps\\.apple\\.com|itunes\\.apple\\.com|play\\.google\\.com/i;"));
   assert.match(appJs, /fetch\("\/api\/extract"/);
   assert.match(appJs, /limit:\s*500/);
-  assert.match(appJs, /Extracting…/);
+  assert.match(appJs, /Getting the reviews…/);
   assert.match(appJs, /couldn't reach the store — try again in a minute/);
   assert.match(appJs, /link\.download = currentFilename/);
-  assert.match(appJs, /function renderPacket/);
   assert.match(appJs, /review packet ready with \$\{result\.count\}/);
   assert.match(appJs, /packetTitle\.focus\(\)/);
   assert.match(appJs, /iconUrl:\s*safeImageUrl\(dataset\.app_icon_url\)/);
-  assert.match(appJs, /function renderAppIcon/);
   assert.match(appJs, /url\.protocol === "https:"/);
-  assert.doesNotMatch(appJs, /The Markdown packet is ready for GPT, Claude, Codex, or your own analysis/);
   assert.match(appJs, /Visible App Store review cards/i);
-  assert.match(appJs, /function ratingMix/);
-  assert.match(appJs, /1600/);
   assert.match(appJs, /claudeSteps\.hidden = !willOpen/);
-  assert.doesNotMatch(appJs, /extractButton\.disabled/);
+
+  // New behaviour: demo apps, question picker, one-tap analysis.
+  assert.match(appJs, /from "\.\/analysis-prompt\.js"/);
+  assert.match(appJs, /track\("review_demo_pick"/);
+  assert.match(appJs, /track\("review_question_pick"/);
+  assert.match(appJs, /tool: isChatGpt \? "chatgpt_oneclick" : "claude_oneclick"/);
+  assert.match(appJs, /maxReviews: isChatGpt \? CHATGPT_REVIEW_CAP : Infinity/);
+  assert.match(appJs, /navigator\.clipboard\?\.writeText/);
+  assert.match(appJs, /function countryFromStoreUrl/);
+  assert.doesNotMatch(appJs, /event\.preventDefault\(\);\s*\n\s*const payload/);
 });
 
 test("the extension handoff prefills locally, clears the fragment, and waits for user action", async () => {
   const appJs = await readFile(new URL("app.js", webUrl), "utf8");
-  const executableAppJs = appJs.replace(
-    'import { COUNTRY_OPTIONS } from "./markets.js";',
-    'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
-  );
+  const executableAppJs = appJs
+    .replace(
+      'import { COUNTRY_OPTIONS } from "./markets.js";',
+      'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
+    )
+    .replace('from "./analysis-prompt.js";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
   assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
+  assert.ok(executableAppJs.includes(new URL("analysis-prompt.js", webUrl).href), "the analysis module should resolve by absolute URL");
 
   const storeUrl = "https://apps.apple.com/us/app/example/id123456789";
   const location = {
@@ -228,6 +203,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     document: {
       referrer: "",
       querySelector: elementFor,
+      querySelectorAll: () => [],
       createDocumentFragment: () => ({ append() {} }),
       createElement: () => elementFor(`created-${elements.size}`),
     },
@@ -266,6 +242,9 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
 
     assert.equal(elementFor("#app-url").value, storeUrl);
     assert.equal(fetchCalls, 0, "loading a handed-off URL must not start retrieval");
+    assert.match(elementFor("#analyze-claude").href, /^https:\/\/claude\.ai\/new\?q=/);
+    assert.match(elementFor("#analyze-chatgpt").href, /^https:\/\/chatgpt\.com\/g\//);
+    assert.equal(elementFor("#question-select").value, "first-read");
     assert.equal(listeners.get("#extract-form").has("submit"), true);
     assert.ok(cleanLocation instanceof URL);
     assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
@@ -324,6 +303,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");
+  assert.equal(routes.get("/analysis-prompt.js"), "/web/analysis-prompt.js");
   assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");
 });
