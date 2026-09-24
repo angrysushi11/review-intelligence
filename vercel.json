@@ -12,6 +12,7 @@
     { "src": "/styles.css", "dest": "/web/styles.css" },
     { "src": "/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/app.js", "dest": "/web/app.js" },
+    { "src": "/review-intelligence-method.js", "dest": "/web/review-intelligence-method.js" },
     { "src": "/review-intelligence-method.md", "dest": "/web/review-intelligence-method.md" },
     { "src": "/analysis-prompt.js", "dest": "/web/analysis-prompt.js" },
     { "src": "/markets.js", "dest": "/web/markets.js" },

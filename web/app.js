@@ -1,6 +1,6 @@
 import { COUNTRY_OPTIONS } from "./markets.js";
 import {
-  CHATGPT_GPT_URL,
+  CHATGPT_NEW_CHAT_URL,
   CHATGPT_REVIEW_CAP,
   CLAUDE_NEW_CHAT_URL,
   DEFAULT_QUESTION_ID,
@@ -61,13 +61,11 @@ const originalCluster = queryCluster || sessionStorage.getItem("dd_review_cluste
 let markdown = "";
 let currentFilename = "reviews.md";
 let isLoading = false;
-let analysisMethod = "";
-let methodRequested = false;
 
 renderCountryOptions();
 renderQuestionOptions();
 analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
-analyzeChatGpt.href = CHATGPT_GPT_URL;
+analyzeChatGpt.href = CHATGPT_NEW_CHAT_URL;
 
 if (looksLikeStoreLink(queryAppUrl)) {
   appUrl.value = queryAppUrl;
@@ -149,7 +147,6 @@ async function startExtraction() {
     renderPacket(result);
     renderSamples(result.samples);
     prepareAnalyze(result);
-    if (result.count > 0) preloadAnalysisMethod();
 
     track(result.count > 0 ? "review_extract_success" : "review_extract_empty", {
       platform: platformFromUrl(link),
@@ -361,23 +358,13 @@ function renderPacket(result) {
   }));
 }
 
-// Start once after retrieval; never await network work inside the Analyze click.
-function preloadAnalysisMethod() {
-  if (methodRequested) return;
-  methodRequested = true;
-  fetch("/review-intelligence-method.md")
-    .then((response) => response.ok ? response.text() : "")
-    .then((text) => { analysisMethod = text; })
-    .catch(() => {}); // Slow/offline requests keep the evidence-first fallback.
-}
-
 function prepareAnalyze(result) {
   analyzeSection.hidden = result.count === 0;
   hideAnalyzeToast();
   questionSelect.value = DEFAULT_QUESTION_ID;
   analyzeChatGptNote.textContent = result.count > CHATGPT_REVIEW_CAP
-    ? `Copies the newest ${CHATGPT_REVIEW_CAP} reviews and the prompt, then opens the GPT.`
-    : "Copies the reviews and the prompt, then opens the GPT.";
+    ? `Copies the newest ${CHATGPT_REVIEW_CAP} reviews and the prompt, then opens a new chat.`
+    : "Copies the reviews and the prompt, then opens a new chat.";
 }
 
 // The link opens the chat in a new tab; the click copies the reviews and the prompt first.
@@ -386,8 +373,6 @@ function handleAnalyze(tool) {
   const destination = isChatGpt ? "ChatGPT" : "Claude";
   const payload = buildAnalysisPayload({
     markdown,
-    method: analysisMethod,
-    target: tool,
     questionId: questionSelect.value,
     maxReviews: isChatGpt ? CHATGPT_REVIEW_CAP : Infinity,
   });
