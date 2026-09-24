@@ -31,7 +31,10 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
 
   // Extractor: one field, one button, one hand-drawn note, demo apps, no warning under the button.
   assert.match(idleState, /id="app-url"[^>]*autofocus/);
-  assert.match(idleState, /<label class="field-label" for="app-url">App Store or Google Play link<\/label>/);
+  assert.match(idleState, /<label class="field-label" for="app-url">App link or name<\/label>/);
+  assert.match(idleState, /placeholder="Paste a store link or type an app name"/);
+  assert.match(idleState, /role="combobox"[^>]*aria-autocomplete="list"[^>]*aria-controls="search-results"/);
+  assert.match(idleState, /id="search-results" role="listbox"/);
   assert.match(idleState, /id="extract-label">Get the reviews<\/span>/);
   assert.match(idleState, /id="form-error"[^>]*hidden>that doesn't look like a store link/);
   assert.equal((idleState.match(/class="hand demo-nudge"/g) ?? []).length, 1);
@@ -139,6 +142,11 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(appJs, /appUrl\.value = queryAppUrl/);
   assert.match(appJs, /window\.history\.replaceState\(null, "", cleanLocation\)/);
   assert.match(appJs, /fetch\("\/api\/extract"/);
+  assert.match(appJs, /\/api\/search\?/);
+  assert.match(appJs, /review_search", \{ result_count: searchResults\.length \}/);
+  assert.match(appJs, /review_search_pick", \{ store: result\.store \}/);
+  assert.match(appJs, /AbortController/);
+  assert.match(appJs, /event\.key === "ArrowDown"/);
   assert.match(appJs, /limit:\s*500/);
   assert.match(appJs, /Getting the reviews…/);
   assert.match(appJs, /couldn't reach the store — try again in a minute/);
@@ -188,6 +196,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       listeners.set(selector, elementListeners);
       elements.set(selector, {
         value: "",
+        dataset: {},
         hidden: false,
         textContent: "",
         className: "",
@@ -309,6 +318,47 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
 
+    // Name search waits for a pause, supports keyboard selection, and ignores an older response.
+    const waitForSearch = () => new Promise((resolve) => setTimeout(resolve, 430));
+    let firstSearchResponse;
+    elementFor("#country").value = "us";
+    globalThis.fetch = (url) => {
+      if (String(url).startsWith("/api/search?term=Slow")) {
+        return new Promise((resolve) => { firstSearchResponse = resolve; });
+      }
+      if (String(url).startsWith("/api/search?term=Fresh")) {
+        return Promise.resolve({ ok: true, json: async () => ({ results: [{
+          store: "google_play", id: "com.fresh", name: "Fresh", developer: "Example", iconUrl: "", url: "https://play.google.com/store/apps/details?id=com.fresh&gl=us"
+        }] }) });
+      }
+      if (String(url) === "/api/extract") {
+        return Promise.resolve({ ok: true, text: async () => JSON.stringify({
+          dataset: { reviews_exported: 1, app_name: "Fresh", platform: "google_play", country: "us" }, markdown: reviewMarkdown
+        }) });
+      }
+      throw new Error(`Unexpected fetch ${url}`);
+    };
+    const input = listeners.get("#app-url").get("input");
+    const keydown = listeners.get("#app-url").get("keydown");
+    elementFor("#app-url").value = "Slow";
+    input();
+    await waitForSearch();
+    elementFor("#app-url").value = "Fresh";
+    input();
+    await waitForSearch();
+    assert.equal(elementFor("#search-results").hidden, false);
+    assert.equal(elementFor("#app-url").value, "Fresh");
+    firstSearchResponse({ ok: true, json: async () => ({ results: [{
+      store: "app_store", id: "1", name: "Stale", developer: "Example", iconUrl: "", url: "https://apps.apple.com/us/app/id1"
+    }] }) });
+    await settle();
+    assert.equal(elementFor("#app-url").value, "Fresh", "a late search response must not replace the current query");
+    keydown({ key: "ArrowDown", preventDefault() {} });
+    assert.equal(elementFor("#app-url").value, "Fresh");
+    keydown({ key: "Enter", preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#app-url").value, "https://play.google.com/store/apps/details?id=com.fresh&gl=us");
+
   } finally {
     for (const [name, descriptor] of previousDescriptors) {
       if (descriptor) Object.defineProperty(globalThis, name, descriptor);
@@ -359,6 +409,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   const routes = new Map(config.routes.map(({ src, dest }) => [src, dest]));
 
   assert.equal(routes.get("/setup/?"), "/web/setup.html");
+  assert.equal(routes.get("/api/search"), "/api/search.js");
   assert.equal(routes.get("/extension/privacy/?"), "/web/extension-privacy.html");
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);

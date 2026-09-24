@@ -336,7 +336,7 @@ function normalizedSortKey(value) {
   return "newest";
 }
 
-async function loadGooglePlayScraper() {
+export async function loadGooglePlayScraper() {
   try {
     const module = await import("google-play-scraper");
     return module.default || module;
