@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 import { renderReviewsMarkdown } from "./markdown.js";
 import { retrieveReviews } from "./retrieve.js";
 import { COUNTRY_LANGUAGE_OPTIONS, COUNTRY_OPTIONS } from "./storefronts.js";
+import { loadGooglePlayScraper } from "./google-play.js";
+import { searchApps, validateSearchInput } from "./app-search.js";
 import { createReviewLinkHandler } from "./review-link.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +43,19 @@ const server = createServer(async (request, response) => {
       });
       response.writeHead(result.status, result.headers);
       return response.end(result.body);
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/search") {
+      let input;
+      try {
+        input = validateSearchInput(Object.fromEntries(url.searchParams));
+      } catch (error) {
+        return sendJson(response, { error: error.message }, 400);
+      }
+      const gplayClient = await loadGooglePlayScraper();
+      const payload = await searchApps({ ...input, gplayClient });
+      response.setHeader("cache-control", "public, s-maxage=3600");
+      return sendJson(response, payload);
     }
 
     if (request.method === "POST" && url.pathname === "/api/extract") {
