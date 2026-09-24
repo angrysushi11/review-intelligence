@@ -1,6 +1,6 @@
 import { COUNTRY_OPTIONS } from "./markets.js";
 import {
-  CHATGPT_GPT_URL,
+  CHATGPT_NEW_CHAT_URL,
   CHATGPT_REVIEW_CAP,
   CLAUDE_NEW_CHAT_URL,
   DEFAULT_QUESTION_ID,
@@ -65,7 +65,7 @@ let isLoading = false;
 renderCountryOptions();
 renderQuestionOptions();
 analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
-analyzeChatGpt.href = CHATGPT_GPT_URL;
+analyzeChatGpt.href = CHATGPT_NEW_CHAT_URL;
 
 if (looksLikeStoreLink(queryAppUrl)) {
   appUrl.value = queryAppUrl;
@@ -363,8 +363,8 @@ function prepareAnalyze(result) {
   hideAnalyzeToast();
   questionSelect.value = DEFAULT_QUESTION_ID;
   analyzeChatGptNote.textContent = result.count > CHATGPT_REVIEW_CAP
-    ? `Copies the newest ${CHATGPT_REVIEW_CAP} reviews and the prompt, then opens the GPT.`
-    : "Copies the reviews and the prompt, then opens the GPT.";
+    ? `Copies the newest ${CHATGPT_REVIEW_CAP} reviews and the prompt, then opens a new chat.`
+    : "Copies the reviews and the prompt, then opens a new chat.";
 }
 
 // The link opens the chat in a new tab; the click copies the reviews and the prompt first.

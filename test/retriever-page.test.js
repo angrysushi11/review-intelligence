@@ -91,7 +91,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.ok(doneState.indexOf('id="analyze"') < doneState.indexOf('id="evidence-title"'));
   assert.match(doneState, /<label class="field-label" for="question-select">What do you want to know\?<\/label>/);
   assert.match(doneState, /id="analyze-claude" href="https:\/\/claude\.ai\/new\?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below\.[^"]*" target="_blank" rel="noopener"/);
-  assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/g\/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener"/);
+  assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/" target="_blank" rel="noopener"/);
   assert.match(doneState, />Analyze in Claude<\/span>/);
   assert.match(doneState, />Analyze in ChatGPT<\/span>/);
   assert.match(doneState, /id="analyze-toast" role="status" aria-live="polite" hidden/);
@@ -243,12 +243,45 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.equal(elementFor("#app-url").value, storeUrl);
     assert.equal(fetchCalls, 0, "loading a handed-off URL must not start retrieval");
     assert.match(elementFor("#analyze-claude").href, /^https:\/\/claude\.ai\/new\?q=/);
-    assert.match(elementFor("#analyze-chatgpt").href, /^https:\/\/chatgpt\.com\/g\//);
+    assert.match(elementFor("#analyze-chatgpt").href, /^https:\/\/chatgpt\.com\/$/);
     assert.equal(elementFor("#question-select").value, "first-read");
     assert.equal(listeners.get("#extract-form").has("submit"), true);
     assert.ok(cleanLocation instanceof URL);
     assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
     assert.equal(cleanLocation.hash, "");
+
+    // Both paths carry the complete method on the first click, without another fetch.
+    const copies = [];
+    const method = await readFile(new URL("review-intelligence-method.md", webUrl), "utf8");
+    const reviewMarkdown = "# App Reviews\n\n### Review 1\n\n- Rating: 5\n\n```text\nHelpful app\n```";
+    globalThis.navigator.clipboard.writeText = (text) => {
+      copies.push(text);
+      return Promise.resolve();
+    };
+    globalThis.fetch = async (url) => {
+      assert.equal(url, "/api/extract");
+      return { ok: true, text: async () => JSON.stringify({
+        dataset: { reviews_exported: 1, app_name: "Example", platform: "google_play", country: "us" },
+        markdown: reviewMarkdown,
+      }) };
+    };
+    const submit = listeners.get("#extract-form").get("submit");
+    const analyze = (target) => listeners.get(`#analyze-${target}`).get("click")();
+    const settle = () => new Promise((resolve) => setImmediate(resolve));
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#state-done").hidden, false);
+    analyze("claude");
+    assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
+    assert.ok(copies[0].startsWith(method.trim()));
+    analyze("chatgpt");
+    assert.ok(copies[1].startsWith(method.trim()));
+    assert.equal(copies[0], copies[1], "the same sample and question receive identical instructions");
+    submit({ preventDefault() {} });
+    await settle();
+    analyze("claude");
+    assert.equal(copies[2], copies[0]);
+
   } finally {
     for (const [name, descriptor] of previousDescriptors) {
       if (descriptor) Object.defineProperty(globalThis, name, descriptor);
@@ -303,6 +336,8 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");
+  assert.equal(routes.get("/review-intelligence-method.js"), "/web/review-intelligence-method.js");
+  assert.equal(routes.get("/review-intelligence-method.md"), "/web/review-intelligence-method.md");
   assert.equal(routes.get("/analysis-prompt.js"), "/web/analysis-prompt.js");
   assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");
