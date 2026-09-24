@@ -338,6 +338,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/tokens.css"), "/web/tokens.css");
   assert.equal(routes.get("/review-intelligence-method.js"), "/web/review-intelligence-method.js");
   assert.equal(routes.get("/review-intelligence-method.md"), "/web/review-intelligence-method.md");
+  assert.equal(routes.get("/r/(app_store|google_play)/([^/]+)\\.md"), "/api/review-link.js");
   assert.equal(routes.get("/analysis-prompt.js"), "/web/analysis-prompt.js");
   assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");

@@ -128,6 +128,10 @@ export function findQuestion(id) {
     || ALL_QUESTIONS.find((question) => question.id === DEFAULT_QUESTION_ID);
 }
 
+export function isQuestionId(id) {
+  return ALL_QUESTIONS.some((question) => question.id === id);
+}
+
 // Keeps the export header and the first `maxReviews` review blocks (the export is newest first).
 export function limitReviews(markdown, maxReviews = Infinity) {
   const text = String(markdown || "").trim();

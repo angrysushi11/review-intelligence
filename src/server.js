@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { renderReviewsMarkdown } from "./markdown.js";
 import { retrieveReviews } from "./retrieve.js";
 import { COUNTRY_LANGUAGE_OPTIONS, COUNTRY_OPTIONS } from "./storefronts.js";
+import { createReviewLinkHandler } from "./review-link.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -12,6 +13,7 @@ const webDir = path.join(rootDir, "web");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
 const powerUserSetupUrl = "https://www.doubledash.me/tools/review-intelligence/mcp/";
+const handleReviewLink = createReviewLinkHandler();
 
 const server = createServer(async (request, response) => {
   try {
@@ -28,6 +30,17 @@ const server = createServer(async (request, response) => {
 
     if (request.method === "GET" && url.pathname === "/api/countries") {
       return sendJson(response, { countries: COUNTRY_OPTIONS, markets: COUNTRY_LANGUAGE_OPTIONS });
+    }
+
+    if (url.pathname.startsWith("/r/")) {
+      const result = await handleReviewLink({
+        method: request.method,
+        pathname: url.pathname,
+        searchParams: url.searchParams,
+        headers: request.headers
+      });
+      response.writeHead(result.status, result.headers);
+      return response.end(result.body);
     }
 
     if (request.method === "POST" && url.pathname === "/api/extract") {
