@@ -14,7 +14,7 @@ Review Retriever gets the evidence. Review Intelligence analyzes it.
 - Review Intelligence guide: <https://www.doubledash.me/tools/review-intelligence/>
 - MCP setup: <https://www.doubledash.me/tools/review-intelligence/mcp/>
 
-The hosted web retriever accepts an App Store or Google Play URL and exports up to 500 public written reviews as Markdown. The MCP returns bounded batches of up to 500 records and exposes an opaque `continuation.next_cursor` for further Google Play batches. Keep calling with the same app, market, sort order, and a limit of at least 150 until `continuation.has_more` is false. Apple coverage remains limited by the public feed for each storefront. Neither route requires an App Store Connect account, Play Console account, API key, or OAuth client.
+The hosted web retriever accepts an App Store or Google Play URL and exports up to 500 public written reviews as Markdown. After an export, **Analyze** copies the reviews with a short evidence-first prompt ([`web/analysis-prompt.js`](./web/analysis-prompt.js)) and opens Claude or the Review Retriever GPT; the ChatGPT hand-off sends the newest 150 reviews so it fits smaller context windows. The MCP returns bounded batches of up to 500 records and exposes an opaque `continuation.next_cursor` for further Google Play batches. Keep calling with the same app, market, sort order, and a limit of at least 150 until `continuation.has_more` is false. Apple coverage remains limited by the public feed for each storefront. Neither route requires an App Store Connect account, Play Console account, API key, or OAuth client.
 
 ## Install the Codex plugin
 

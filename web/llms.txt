@@ -7,6 +7,7 @@ This file is an optional content map for systems that choose to read llms.txt. I
 ## Use the product
 
 - [Review Retriever](https://reviews.doubledash.me/): Retrieve up to 500 public written reviews as a Markdown packet.
+  After retrieval, Analyze copies the packet with an evidence-first prompt and opens Claude or ChatGPT.
 - [Review Intelligence](https://www.doubledash.me/tools/review-intelligence/): Understand the analysis method, decisions it supports, and its limits.
 - [MCP setup](https://www.doubledash.me/tools/review-intelligence/mcp/): Connect the read-only Review Retriever MCP server to Claude Cowork, Codex, or another remote HTTP MCP client.
 - [Worked analysis example](https://www.doubledash.me/tools/review-intelligence/#example): See how a review theme is named, prioritized, and traced to evidence.
