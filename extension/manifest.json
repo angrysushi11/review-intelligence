@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Review Intel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Open an App Store or Google Play listing in Review Intel with the URL ready to use.",
   "icons": {
     "16": "icons/icon16.png",

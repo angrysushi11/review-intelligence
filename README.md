@@ -73,7 +73,7 @@ node ./bin/review-retriever.js markets
 
 The Chrome extension in [`extension`](./extension) opens the current App Store or Google Play listing in hosted Review Intel with its URL prefilled. It uses only `activeTab`, has no host permissions or content scripts, and does not extract anything until the user presses **Extract reviews** in the web tool.
 
-Version 0.1.0 is published under the former Review Retriever name. The 0.1.1 source updates the name and destination to Review Intel; it reaches installed users only after the Chrome Web Store update is uploaded, reviewed, and published. See the [extension README](./extension/README.md) for loading steps and the full data boundary.
+Version 0.1.1 is published under the former Review Retriever name. The 0.1.2 source updates the name and destination to Review Intel; it reaches installed users only after the Chrome Web Store update is uploaded, reviewed, and published. See the [extension README](./extension/README.md) for loading steps and the full data boundary.
 
 ## Repository map
 

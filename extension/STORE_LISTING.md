@@ -1,6 +1,6 @@
 # Review Intel Chrome Web Store packet
 
-Status: version 0.1.0 is currently published under the former Review Retriever name. This file is the 0.1.1 Review Intel update packet; that update has not yet been uploaded or submitted.
+Status: version 0.1.1 is currently published under the former Review Retriever name. This file is the 0.1.2 Review Intel update packet; that update has not yet been uploaded or submitted.
 
 ## Commitment diagnosis
 
@@ -89,7 +89,7 @@ Prepared outside the extension ZIP:
 
 ## Remaining publication gates
 
-- Finish the production click-through readback for one supported Apple listing and one supported Google Play listing.
-- Choose distribution and category in the Chrome Web Store dashboard.
+- Production retrieval was verified on September 25, 2026 with one supported Apple listing and one supported Google Play listing.
+- Preserve the existing distribution and **Tools** category unless the live dashboard shows a required change.
 - Review the final listing and privacy disclosures against the uploaded ZIP.
-- Upload and submit the verified 0.1.1 package. That Store update is what delivers the new destination and name to existing users; installed 0.1.0 versions continue using `reviews.doubledash.me` until then.
+- Upload and submit the verified 0.1.2 package. That Store update is what delivers the new destination and name to existing users; installed versions through 0.1.1 continue using `reviews.doubledash.me` until then.
