@@ -520,6 +520,8 @@ test("the extension privacy page publishes the exact handoff and data boundary",
 test("the setup bridge and retriever assets are published explicitly", async () => {
   const config = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8"));
   const routes = new Map(config.routes.map(({ src, dest }) => [src, dest]));
+  const legacyRedirects = new Map(config.redirects.map((redirect) => [redirect.source, redirect]));
+  const legacyHostCondition = [{ type: "host", value: "^reviews\\.doubledash\\.me$" }];
 
   assert.deepEqual(config.routes[0], {
     src: "/",
@@ -566,6 +568,34 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/"), "/web/index.html");
   assert.equal(routes.has("/review/?"), false);
   assert.equal(routes.get("/mcp"), "/api/mcp.js");
+
+  for (const [source, destination] of [
+    ["/review-intel/", "https://www.willthiseverwork.com/review-intel/"],
+    ["/review-intel/setup/", "https://www.willthiseverwork.com/review-intel/setup/"],
+    ["/review-intel/privacy/", "https://www.willthiseverwork.com/review-intel/privacy/"],
+    ["/review-intel/extension/privacy/", "https://www.willthiseverwork.com/review-intel/extension/privacy/"],
+    ["/extension/privacy", "https://www.willthiseverwork.com/review-intel/extension/privacy/"],
+    ["/extension/privacy/", "https://www.willthiseverwork.com/review-intel/extension/privacy/"],
+    ["/review-intel/review-intelligence-method.md", "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md"],
+    ["/review-intelligence-method.md", "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md"],
+    ["/review-intel/app-review-growth-analyzer-skill.zip", "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip"],
+    ["/app-review-growth-analyzer-skill.zip", "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip"],
+    ["/review-intel/llms.txt", "https://www.willthiseverwork.com/review-intel/llms.txt"],
+    ["/llms.txt", "https://www.willthiseverwork.com/review-intel/llms.txt"],
+    ["/review-intel/robots.txt", "https://www.willthiseverwork.com/review-intel/robots.txt"],
+    ["/robots.txt", "https://www.willthiseverwork.com/review-intel/robots.txt"],
+    ["/review-intel/sitemap.xml", "https://www.willthiseverwork.com/review-intel/sitemap.xml"],
+    ["/sitemap.xml", "https://www.willthiseverwork.com/review-intel/sitemap.xml"],
+  ]) {
+    const redirect = legacyRedirects.get(source);
+    assert.equal(redirect.destination, destination);
+    assert.equal(redirect.permanent, true);
+    assert.deepEqual(redirect.has, legacyHostCondition);
+  }
+  assert.equal(legacyRedirects.has("/mcp"), false);
+  assert.equal(legacyRedirects.has("/review-intel/mcp"), false);
+  assert.equal(legacyRedirects.has("/api/search"), false);
+  assert.equal(legacyRedirects.has("/api/extract"), false);
 });
 
 test("the crawler files publish an accurate sitemap and optional llms content map", async () => {
