@@ -1,15 +1,16 @@
-# Review Intelligence
+# Review Intel + Review Intelligence
 
 This repository contains two connected parts:
 
-- **Review Retriever** gets public written reviews from the Apple App Store or Google Play. It is available as a web tool, a command-line tool, and a read-only MCP server.
+- **Review Intel** gets public written reviews from the Apple App Store or Google Play. It is available as a web tool, a Chrome extension, a command-line tool, and a read-only MCP server.
 - **Review Intelligence** is the Codex plugin that analyzes those reviews while keeping evidence, inference, and business outcomes separate.
 
-Review Retriever gets the evidence. Review Intelligence analyzes it.
+Review Intel gets the evidence. Review Intelligence analyzes it. The legacy `review-retriever` command, package, schema, and MCP server identifiers remain unchanged for compatibility.
 
 ## Use it
 
-- Review Retriever: <https://reviews.doubledash.me/>
+- Review Intel: <https://www.willthiseverwork.com/review-intel>
+- Legacy web address, kept working: <https://reviews.doubledash.me/>
 - Worked analysis example (no model required): <https://www.doubledash.me/tools/review-intelligence/#example>
 - Review Intelligence guide: <https://www.doubledash.me/tools/review-intelligence/>
 - MCP setup: <https://www.doubledash.me/tools/review-intelligence/mcp/>
@@ -40,9 +41,9 @@ The plugin lives in [`plugins/review-intelligence`](./plugins/review-intelligenc
 }
 ```
 
-## Run Review Retriever locally
+## Run Review Intel locally
 
-Review Retriever supports Node.js 20 through 24.
+Review Intel supports Node.js 20 through 24. Its existing command name remains `review-retriever`.
 
 ```bash
 npm ci
@@ -70,16 +71,16 @@ node ./bin/review-retriever.js markets
 
 ## Chrome extension MVP
 
-The source-only Chrome extension in [`extension`](./extension) opens the current App Store or Google Play listing in the hosted Review Retriever with its URL prefilled. It uses only `activeTab`, has no host permissions or content scripts, and does not extract anything until the user presses **Extract reviews** in the web tool.
+The Chrome extension in [`extension`](./extension) opens the current App Store or Google Play listing in hosted Review Intel with its URL prefilled. It uses only `activeTab`, has no host permissions or content scripts, and does not extract anything until the user presses **Extract reviews** in the web tool.
 
-It is ready for unpacked local testing but has not been submitted to or published in the Chrome Web Store. See the [extension README](./extension/README.md) for loading steps and the full data boundary.
+Version 0.1.0 is published under the former Review Retriever name. The 0.1.1 source updates the name and destination to Review Intel; it reaches installed users only after the Chrome Web Store update is uploaded, reviewed, and published. See the [extension README](./extension/README.md) for loading steps and the full data boundary.
 
 ## Repository map
 
 - `api/` — Vercel functions for extraction and the MCP endpoint
 - `src/` — store retrieval, normalization, Markdown export, CLI, and MCP logic
-- `web/` — hosted Review Retriever and setup pages
-- `extension/` — source-only Chrome extension MVP for opening a store listing in Review Retriever
+- `web/` — hosted Review Intel and setup pages
+- `extension/` — Chrome extension source for opening a store listing in Review Intel
 - `plugins/review-intelligence/` — Codex plugin and analysis skill
 - `.agents/plugins/marketplace.json` — DoubleDash marketplace manifest
 - `test/` — retriever, MCP, page, and request-boundary tests
@@ -96,7 +97,7 @@ Local exports, browser traces, screenshots, deployment metadata, and environment
 
 Public endpoints enforce request-size and per-response review-count limits. Google Play MCP retrieval can continue across multiple responses; Apple can be queried by storefront, but its public feeds do not expose a compatible continuation cursor. Store availability and the number of reviews returned can change because Apple and Google control the upstream sources. No public-source retrieval should be described as every review ever posted.
 
-Review Retriever and Review Intelligence are not affiliated with or endorsed by Apple or Google.
+Review Intel and Review Intelligence are not affiliated with or endorsed by Apple or Google.
 
 ## Deployment
 

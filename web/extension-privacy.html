@@ -3,25 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Review Retriever extension privacy</title>
-    <meta name="description" content="How the Review Retriever Chrome extension handles the current supported app-listing URL.">
-    <link rel="canonical" href="https://reviews.doubledash.me/extension/privacy/">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <title>Review Intel extension privacy</title>
+    <meta name="description" content="How the Review Intel Chrome extension handles the current supported app-listing URL.">
+    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/extension/privacy/">
+    <base href="/review-intel/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="wrap privacy-page">
       <header class="privacy-masthead">
-        <a class="lnk privacy-back" href="/">Back to Review Retriever</a>
-        <p class="pencil privacy-kicker">Chrome extension · last updated 25 August 2026</p>
+        <a class="lnk privacy-back" href="/review-intel">Back to Review Intel</a>
+        <p class="pencil privacy-kicker">Chrome extension · last updated 25 September 2026</p>
         <h1 class="title">Privacy, without the fog.</h1>
         <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
           <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
         </svg>
-        <p class="privacy-lede">The extension does one thing: when you click it on a public App Store or Google Play app page, it opens Review Retriever with that listing URL ready in the form.</p>
+        <p class="privacy-lede">The extension does one thing: when you click it on a public App Store or Google Play app page, it opens Review Intel with that listing URL ready in the form.</p>
       </header>
 
       <section class="privacy-summary" aria-labelledby="privacy-summary-title">
@@ -37,13 +38,13 @@
       <div class="privacy-sections">
         <section>
           <h2>What the extension can access</h2>
-          <p>Review Retriever uses Chrome's <code>activeTab</code> permission. It can read the current tab URL only after you click the toolbar action.</p>
+          <p>Review Intel uses Chrome's <code>activeTab</code> permission. It can read the current tab URL only after you click the toolbar action.</p>
           <p>If that URL is a supported App Store or Google Play app-detail page, the extension keeps only the canonical public listing URL. It removes fragments and nonessential tracking parameters. It does not handle unrelated pages, other store pages, or privileged Chrome pages.</p>
         </section>
 
         <section>
           <h2>What gets sent</h2>
-          <p>The extension opens <a href="https://reviews.doubledash.me/">reviews.doubledash.me</a> in a new tab. The supported listing URL is placed in the new tab's URL fragment so the form can be prefilled. URL fragments are not sent in the page request, and Review Retriever clears the fragment after prefilling.</p>
+          <p>The current extension opens <a href="https://www.willthiseverwork.com/review-intel">Review Intel</a> in a new tab. The supported listing URL is placed in the new tab's URL fragment so the form can be prefilled. URL fragments are not sent in the page request, and Review Intel clears the fragment after prefilling. Previously installed 0.1.0 builds may continue to open <a href="https://reviews.doubledash.me/">reviews.doubledash.me</a> until they update.</p>
           <p>The listing URL reaches the extraction service only if you press <strong>Extract reviews</strong>. The extension does not retrieve reviews itself. It does not send page content, form data, credentials, browsing history, or the URL of an unsupported page.</p>
         </section>
 
@@ -54,9 +55,9 @@
         </section>
 
         <section>
-          <h2>The hosted Retriever</h2>
-          <p>The hosted Review Retriever uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location without the app URL, query parameters, or fragment. When a visit arrives from a recognized AI assistant, Analytics also receives a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Those providers may still process ordinary request or page metadata under their own policies.</p>
-          <p>If you start retrieval, Review Retriever processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.</p>
+          <h2>The hosted Review Intel tool</h2>
+          <p>The hosted Review Intel tool uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location without the app URL, query parameters, or fragment. When a visit arrives from a recognized AI assistant, Analytics also receives a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Those providers may still process ordinary request or page metadata under their own policies.</p>
+          <p>If you start retrieval, Review Intel processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.</p>
         </section>
 
         <section>
@@ -74,11 +75,11 @@
 
       <hr class="rule">
       <footer class="privacy-footer">
-        <a class="drawn privacy-return" href="/">
+        <a class="drawn privacy-return" href="/review-intel">
           <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
             <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
           </svg>
-          <span>Open Review Retriever</span>
+          <span>Open Review Intel</span>
         </a>
         <a class="lnk" href="https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md" target="_blank" rel="noreferrer">Policy source</a>
       </footer>

@@ -1,6 +1,6 @@
-# Review Retriever Chrome Web Store packet
+# Review Intel Chrome Web Store packet
 
-Status: Chrome Web Store submission candidate. The extension MVP and hosted Review Retriever handoff are live; the Store listing has not been submitted.
+Status: version 0.1.0 is currently published under the former Review Retriever name. This file is the 0.1.1 Review Intel update packet; that update has not yet been uploaded or submitted.
 
 ## Commitment diagnosis
 
@@ -13,17 +13,17 @@ Status: Chrome Web Store submission candidate. The extension MVP and hosted Revi
 
 ### Name
 
-Review Retriever
+Review Intel
 
 ### Summary
 
-Open an App Store or Google Play listing in Review Retriever, ready to extract and analyze its public reviews.
+Open an App Store or Google Play listing in Review Intel, ready to extract and analyze its public reviews.
 
 ### Detailed description
 
 Get public App Store and Google Play reviews out of the storefront and into your analysis.
 
-Open an app listing and click Review Retriever. The extension opens the tool with the app URL already filled in. One more click retrieves the public written reviews, ready to copy into ChatGPT, Claude, Codex, or another analysis workflow. You can also download the same content as a Markdown file.
+Open an app listing and click Review Intel. The extension opens the tool with the app URL already filled in. One more click retrieves the public written reviews, ready to copy into ChatGPT, Claude, Codex, or another analysis workflow. You can also download the same content as a Markdown file.
 
 No App Store Connect account, Play Console account, API key, or sign-up is required.
 
@@ -31,7 +31,7 @@ The extension runs only when you click it. It reads only the URL of a supported 
 
 ### Data disclosure — keep this prominent in the listing
 
-When you click the toolbar action on a supported public app listing, the extension reads that tab's URL using `activeTab`. It removes fragments and nonessential tracking parameters, then places the canonical public listing URL in the new Review Retriever tab's URL fragment so the form can be prefilled. The fragment is cleared after prefilling and is not sent in the page request. The listing URL reaches the extraction service only if you press **Extract reviews**.
+When you click the toolbar action on a supported public app listing, the extension reads that tab's URL using `activeTab`. It removes fragments and nonessential tracking parameters, then places the canonical public listing URL in the new Review Intel tab's URL fragment so the form can be prefilled. The fragment is cleared after prefilling and is not sent in the page request. The listing URL reaches the extraction service only if you press **Extract reviews**.
 
 The extension does not read page content, scrape reviews in the background, retain browsing history, run advertising, or send the URL of an unsupported page. See the [privacy disclosure](./PRIVACY.md).
 
@@ -39,15 +39,15 @@ The extension does not read page content, scrape reviews in the background, reta
 
 ### Single purpose
 
-Open the current supported App Store or Google Play app listing in Review Retriever with its canonical public URL ready in the form.
+Open the current supported App Store or Google Play app listing in Review Intel with its canonical public URL ready in the form.
 
 ### `activeTab` justification
 
-The extension uses `activeTab` only after the user clicks its toolbar action. It reads the current tab URL to confirm that the page is a supported public app-detail page and to prefill Review Retriever with the canonical public listing URL. It does not read page content and has no host permissions or content scripts.
+The extension uses `activeTab` only after the user clicks its toolbar action. It reads the current tab URL to confirm that the page is a supported public app-detail page and to prefill Review Intel with the canonical public listing URL. It does not read page content and has no host permissions or content scripts.
 
 ### Remote code
 
-Select: **No, I am not using remote code.** All extension code is packaged. The extension opens the separately hosted Review Retriever web application but does not download or execute remote extension code.
+Select: **No, I am not using remote code.** All extension code is packaged. The extension opens the separately hosted Review Intel web application but does not download or execute remote extension code.
 
 ### Data type
 
@@ -68,7 +68,7 @@ Certify only after confirming the uploaded package matches this repository state
 
 Use the hosted, branded policy page:
 
-`https://reviews.doubledash.me/extension/privacy/`
+`https://www.willthiseverwork.com/review-intel/extension/privacy/`
 
 The same policy remains reviewable in source at:
 
@@ -84,7 +84,7 @@ The package includes 16, 32, 48, and 128px official Double Dash icons. The 128px
 
 Prepared outside the extension ZIP:
 
-- one 1280×800 screenshot from the verified live Review Retriever flow;
+- one 1280×800 screenshot from the verified live Review Intel flow;
 - one 440×280 small promotional tile using the official Double Dash extension mark.
 
 ## Remaining publication gates
@@ -92,4 +92,4 @@ Prepared outside the extension ZIP:
 - Finish the production click-through readback for one supported Apple listing and one supported Google Play listing.
 - Choose distribution and category in the Chrome Web Store dashboard.
 - Review the final listing and privacy disclosures against the uploaded ZIP.
-- Obtain explicit extension-submission authority before registration or publication.
+- Upload and submit the verified 0.1.1 package. That Store update is what delivers the new destination and name to existing users; installed 0.1.0 versions continue using `reviews.doubledash.me` until then.
