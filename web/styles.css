@@ -1061,8 +1061,7 @@ select.fld {
   line-height: 1.1;
 }
 
-.paste-note__text,
-.paste-note__hint {
+.paste-note__text {
   margin: 0;
   font-family: var(--font-ui);
 }
@@ -1071,13 +1070,6 @@ select.fld {
   color: var(--ink);
   font-size: 16px;
   line-height: 1.6;
-}
-
-.paste-note__hint {
-  margin-top: 6px;
-  color: var(--ink-faint);
-  font-size: 14px;
-  line-height: 1.45;
 }
 
 .handoff {

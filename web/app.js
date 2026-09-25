@@ -41,7 +41,6 @@ const analyzeClaudeNote = document.querySelector("#analyze-claude-note");
 const analyzeChatGpt = document.querySelector("#analyze-chatgpt");
 const analyzeChatGptNote = document.querySelector("#analyze-chatgpt-note");
 const analyzeToast = document.querySelector("#analyze-toast");
-const pasteHow = document.querySelector("#paste-how");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
 const claudeButton = document.querySelector("#claude-btn");
@@ -76,7 +75,6 @@ let successfulExtractions = Math.max(0, Number(safeSessionGet("rr_successful_ext
 
 renderCountryOptions();
 renderQuestionOptions();
-renderPasteHint();
 analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
 analyzeChatGpt.href = CHATGPT_NEW_CHAT_URL;
 
@@ -518,10 +516,10 @@ function prepareAnalyze(result) {
   analyzeSection.hidden = result.count === 0;
   hideAnalyzeToast();
   questionSelect.value = DEFAULT_QUESTION_ID;
-  analyzeClaudeNote.textContent = `Copies all ${result.count} ${pluralize("review", result.count)}, your question, and the method.`;
+  analyzeClaudeNote.textContent = `All ${result.count} ${pluralize("review", result.count)}.`;
   analyzeChatGptNote.textContent = result.count > CHATGPT_REVIEW_CAP
-    ? `Copies the newest ${CHATGPT_REVIEW_CAP} of ${result.count} reviews, your question, and the method.`
-    : `Copies all ${result.count} ${pluralize("review", result.count)}, your question, and the method.`;
+    ? `Newest ${CHATGPT_REVIEW_CAP} of ${result.count} reviews.`
+    : `All ${result.count} ${pluralize("review", result.count)}.`;
 }
 
 // The link opens the chat in a new tab; the click copies the reviews and the prompt first.
@@ -538,7 +536,7 @@ function handleAnalyze(tool) {
     : `${payload.included} ${pluralize("review", payload.included)}`;
 
   copyText(payload.text)
-    .then(() => showAnalyzeToast(`Copied ${copied}, your question, and the analysis method. In ${destination}, ${pasteInstruction()} and send.`))
+    .then(() => showAnalyzeToast(`Copied. In ${destination}, ${pasteInstruction()} and send.`))
     .catch(() => showAnalyzeToast(`Couldn't copy automatically. Use Copy below, then paste it into ${destination}.`, true));
 
   track("review_analysis_open", {
@@ -553,10 +551,6 @@ function pasteInstruction() {
   if (window.matchMedia?.("(pointer: coarse)")?.matches) return "long-press the message box, tap Paste";
   const platform = navigator.userAgentData?.platform || navigator.platform || "";
   return /mac|iphone|ipad/i.test(platform) ? "press ⌘V" : "press Ctrl+V";
-}
-
-function renderPasteHint() {
-  pasteHow.textContent = `Tip: ${pasteInstruction()}.`;
 }
 
 function showAnalyzeToast(message, isError = false) {
