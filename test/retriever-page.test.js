@@ -104,8 +104,16 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(doneState, /<label class="field-label" for="question-select">What do you want to know\?<\/label>/);
   assert.match(doneState, /id="analyze-claude" href="https:\/\/claude\.ai\/new\?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below\.[^"]*" target="_blank" rel="noopener"/);
   assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/" target="_blank" rel="noopener"/);
-  assert.match(doneState, />Analyze in Claude<\/span>/);
-  assert.match(doneState, />Analyze in ChatGPT<\/span>/);
+  // The paste step is visible before the click because the new tab takes focus immediately.
+  assert.ok(doneState.indexOf('id="question-select"') < doneState.indexOf('id="paste-note"'));
+  assert.ok(doneState.indexOf('id="paste-note"') < doneState.indexOf('class="handoff"'));
+  assert.match(doneState, /<p class="hand paste-note__kicker">we’ll copy it for you<\/p>/);
+  assert.match(doneState, /Choose Claude or ChatGPT\. We’ll copy the reviews, your question, and the analysis method, then open a new chat\. Paste into the message box, then send\./);
+  assert.match(idleState, /Pick a question, then choose Claude or ChatGPT\. Paste and send in the new chat\./);
+  assert.match(doneState, />Copy &amp; open Claude<\/span>/);
+  assert.match(doneState, />Copy &amp; open ChatGPT<\/span>/);
+  assert.match(doneState, /id="analyze-claude-note">Copies all reviews, your question, and the method\.<\/span>/);
+  assert.match(doneState, /id="analyze-chatgpt-note">Copies up to the newest 150 reviews, your question, and the method\.<\/span>/);
   assert.match(doneState, /id="analyze-toast" role="status" aria-live="polite" hidden/);
   assert.match(doneState, /id="copy-btn"[^>]*>Copy<\/button>/);
   assert.match(doneState, /id="download-btn"[^>]*>Download \.md<\/button>/);
@@ -129,6 +137,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(styles, /\.question-groups\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   assert.match(styles, /\.connect\s*\{[^}]*background:\s*var\(--ink\)/s);
   assert.match(styles, /\.analyze-toast\s*\{/);
+  assert.match(styles, /\.paste-note__hint\s*\{/);
   assert.match(styles, /\.card \.s\s*\{[\s\S]*?\.card--primary \.s\s*\{[^}]*color:\s*var\(--rule\)/);
   assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
   assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.question-groups,\s*\.connect-actions\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
@@ -267,6 +276,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.equal(fetchCalls, 0, "loading a handed-off URL must not start retrieval");
     assert.match(elementFor("#analyze-claude").href, /^https:\/\/claude\.ai\/new\?q=/);
     assert.match(elementFor("#analyze-chatgpt").href, /^https:\/\/chatgpt\.com\/\?q=/);
+    assert.equal(elementFor("#paste-how").textContent, "Tip: long-press the message box, tap Paste.");
     assert.equal(elementFor("#question-select").value, "first-read");
     assert.equal(listeners.get("#extract-form").has("submit"), true);
     assert.ok(cleanLocation instanceof URL);
@@ -304,6 +314,10 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     analyze("claude");
     assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
     assert.ok(copies[0].startsWith(method.trim()));
+    await settle();
+    assert.equal(elementFor("#analyze-claude-note").textContent, "Copies all 1 review, your question, and the method.");
+    assert.equal(elementFor("#analyze-chatgpt-note").textContent, "Copies all 1 review, your question, and the method.");
+    assert.equal(elementFor("#analyze-toast").textContent, "Copied 1 review, your question, and the analysis method. In Claude, long-press the message box, tap Paste and send.");
     analyze("chatgpt");
     assert.ok(copies[1].startsWith(method.trim()));
     assert.equal(copies[0], copies[1], "the same sample and question receive identical instructions");
