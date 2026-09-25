@@ -291,106 +291,138 @@
 
       <section id="state-done" hidden>
         <header class="result-masthead">
-          <h1 class="title">Review Retriever</h1>
-          <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-            <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-          </svg>
-          <button class="lnk pencil start-over" id="start-over" type="button">start over</button>
+          <span class="result-wordmark">Review Retriever</span>
+          <button class="lnk start-over" id="start-over" type="button">Try another app</button>
         </header>
 
         <div class="receipt packet">
           <div class="packet-head">
-            <img class="app-icon" id="app-icon" alt="" width="72" height="72" decoding="async" referrerpolicy="no-referrer" hidden>
+            <div class="app-icon-shell">
+              <span class="app-icon-placeholder" aria-hidden="true"></span>
+              <img class="app-icon" id="app-icon" alt="" width="72" height="72" decoding="async" referrerpolicy="no-referrer" hidden>
+            </div>
             <div class="packet-identity">
-              <div class="pencil">review packet ready</div>
-              <h2 class="packet-title" id="packet-title" tabindex="-1">Reviews exported</h2>
-              <p class="receipt-meta" id="receipt-meta" hidden></p>
+              <h1 class="packet-title" id="packet-title" tabindex="-1">Reviews exported</h1>
+              <p class="packet-meta" id="packet-meta">Store · Country · Language</p>
             </div>
           </div>
-          <dl class="packet-ledger" id="packet-ledger"></dl>
+          <div class="packet-body">
+            <div class="packet-count">
+              <strong id="packet-count">0</strong>
+              <span>written reviews</span>
+              <span class="packet-date packet-date--full" id="packet-date">Date unavailable</span>
+              <span class="packet-date packet-date--short" id="packet-date-short">Date unavailable</span>
+            </div>
+            <div class="rating-chart" id="rating-chart" role="img" aria-label="Rating distribution"></div>
+          </div>
+          <p class="receipt-meta" id="receipt-meta" hidden></p>
         </div>
 
         <section class="analyze" id="analyze" aria-labelledby="analyze-title">
-          <p class="hand analyze-kicker">the reviews are the easy part</p>
-          <h2 class="section-title" id="analyze-title">Now ask what it means</h2>
+          <header class="analyze-head">
+            <h2 class="section-title" id="analyze-title">Now ask what it means</h2>
+            <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+              <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+            </svg>
+          </header>
 
-          <div class="analyze-question picker">
-            <label class="field-label" for="question-select">What do you want to know?</label>
-            <div class="field-wrap">
-              <select class="fld" id="question-select"></select>
-              <svg class="chev" viewBox="0 0 15 10" aria-hidden="true">
-                <path d="M1.5 2 L 7.5 8 L 13.5 2" fill="none" stroke="var(--ink-faint)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
+          <div class="question-picker">
+            <select id="question-select" hidden></select>
+            <div class="question-card" id="selected-question" aria-live="polite">
+              <span class="question-radio question-radio--selected" aria-hidden="true"></span>
+              <div class="question-card__copy">
+                <h3 id="selected-question-title">First useful read</h3>
+                <p id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
+              </div>
+              <span class="question-card__tag" id="selected-question-tag">Best start</span>
+            </div>
+            <p class="question-groups-label" id="question-groups-label">Or ask about</p>
+            <div class="question-group-chips" id="question-group-chips" role="group" aria-labelledby="question-groups-label"></div>
+            <div class="question-options-panel" id="question-options-panel" hidden>
+              <div class="question-options" id="question-options" role="group" aria-label="Questions"></div>
+              <button class="lnk question-reset" id="question-reset" type="button">Back to First useful read</button>
             </div>
           </div>
 
-          <div class="paste-note" id="paste-note">
-            <p class="hand paste-note__kicker">one click, one paste</p>
-            <p class="paste-note__text">Tap a button. We’ll copy everything and open a new chat. Paste and send.</p>
+          <div class="analysis-actions" id="analysis-actions">
+            <div class="handoff">
+              <a class="card card--primary" id="analyze-claude" href="https://claude.ai/new?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below.%20The%20instructions%20and%20my%20question%20are%20at%20the%20top%20of%20the%20paste." target="_blank" rel="noopener">
+                <svg viewBox="0 0 260 64" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M7 8 C 70 3, 190 4, 253 8 C 257 25, 256 45, 252 57 C 180 62, 74 61, 8 57 C 4 42, 3 22, 7 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <span class="inner"><span class="h">Copy &amp; open Claude</span></span>
+              </a>
+              <a class="card" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 260 64" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M8 9 C 72 4, 188 3, 252 8 C 256 26, 255 44, 251 56 C 178 61, 72 60, 7 56 C 3 40, 4 23, 8 9 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <span class="inner"><span class="h">Copy &amp; open ChatGPT</span></span>
+              </a>
+            </div>
+            <p class="handoff-scope" id="handoff-scope">Claude reads all reviews. ChatGPT gets the newest 150, so it has room to answer.</p>
+            <ol class="paste-steps" id="paste-steps" aria-label="What happens next">
+              <li><span class="step-number">1</span><span>We copy everything</span></li>
+              <li><span class="step-number">2</span><span>A new chat opens</span></li>
+              <li><span class="step-number">3</span><span id="paste-step-text">You paste and send</span></li>
+            </ol>
+            <p class="hand paste-callout">paste before you hit send</p>
           </div>
 
-          <div class="handoff">
-            <a class="card card--primary" id="analyze-claude" href="https://claude.ai/new?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below.%20The%20instructions%20and%20my%20question%20are%20at%20the%20top%20of%20the%20paste." target="_blank" rel="noopener">
-              <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M7 9 C 70 3, 190 5, 253 8 C 257 32, 256 58, 252 74 C 180 79, 74 78, 8 73 C 4 52, 3 27, 7 9 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              </svg>
-              <span class="inner">
-                <span class="h">Copy &amp; open Claude</span>
-                <span class="s" id="analyze-claude-note">All reviews.</span>
-              </span>
-            </a>
-            <a class="card card--primary" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 260 82" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M8 10 C 72 5, 188 4, 252 9 C 256 34, 255 56, 251 73 C 178 78, 72 77, 7 72 C 3 50, 4 28, 8 10 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              </svg>
-              <span class="inner">
-                <span class="h">Copy &amp; open ChatGPT</span>
-                <span class="s" id="analyze-chatgpt-note">Up to the newest 150 reviews.</span>
-              </span>
-            </a>
+          <div class="analysis-status" id="analysis-status" role="status" aria-live="polite" hidden>
+            <div class="analysis-status__success" id="analysis-status-success">
+              <p class="analysis-status__title"><span class="status-check" aria-hidden="true">✓</span><span id="analysis-status-title">Copied. One step left, in the Claude tab.</span></p>
+              <ol class="analysis-progress" aria-label="Copy and paste progress">
+                <li class="is-done"><span aria-hidden="true">✓</span>Copied</li>
+                <li class="is-done"><span aria-hidden="true">✓</span><span id="analysis-opened-label">Claude opened</span></li>
+                <li class="is-current"><span aria-hidden="true">3</span><span id="analysis-status-step">Paste, then send</span></li>
+              </ol>
+              <div class="analysis-recovery">
+                <span id="analysis-open-question">Claude didn’t open?</span>
+                <a class="lnk" id="reopen-analysis" href="https://claude.ai/new" target="_blank" rel="noopener">Open it again</a>
+                <button class="lnk" id="copy-again" type="button">Copy again</button>
+                <a class="lnk" id="switch-analysis" href="https://chatgpt.com/" target="_blank" rel="noopener">Use ChatGPT instead</a>
+              </div>
+            </div>
+            <div class="analysis-status__error" id="analysis-status-error" hidden>
+              <div class="analysis-status__error-copy">
+                <p class="analysis-status__error-title">Copy failed <span>(browser blocked the clipboard)</span></p>
+                <p>Couldn’t copy automatically. Copy it here, then paste it into <span id="analysis-error-destination">Claude</span>.</p>
+              </div>
+              <button class="analysis-error-copy" id="analysis-error-copy" type="button">Copy</button>
+            </div>
           </div>
-
-          <p id="repeat-nudge" hidden><a class="lnk" data-connect-placement="repeat_nudge" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Another app? Connected, you'd just ask Claude for it.</a></p>
-
-          <p class="analyze-toast" id="analyze-toast" role="status" aria-live="polite" hidden></p>
 
           <div class="file-actions">
-            <span class="pencil">or take the file</span>
+            <span>Prefer the raw file?</span>
             <button class="lnk" id="copy-btn" type="button">Copy</button>
             <button class="lnk" id="download-btn" type="button">Download .md</button>
           </div>
+        </section>
 
-          <ul class="analyze-more">
-            <li><a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="results_nudge">Comparing competitors or need more than 500 reviews? Connect it once and ask inside Claude or Codex.</a></li>
-            <li><button class="lnk" id="claude-btn" type="button" aria-expanded="false" aria-controls="claude-steps">The full method in Claude: install the skill</button></li>
-          </ul>
-
-          <div id="claude-steps" hidden>
-            <ol class="steps claude-install-steps">
-              <li><span class="n">1</span>Download the skill file.</li>
-              <li><span class="n">2</span>Open Claude Skills, click <strong>Add</strong>, choose <strong>Upload a skill</strong>, and select the downloaded file.</li>
-              <li><span class="n">3</span>Turn it on. Then paste any export and say “analyze reviews.”</li>
-            </ol>
-            <div class="claude-links">
-              <a class="card claude-action" id="claude-skill-download" href="/app-review-growth-analyzer-skill.zip" download>
-                <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M7 8 C 55 3, 165 4, 213 8 C 217 23, 216 42, 212 51 C 156 56, 62 55, 8 51 C 4 39, 4 20, 7 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-                <span class="inner"><span class="h">Download skill</span></span>
-              </a>
-              <a class="card claude-action" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">
-                <svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M8 9 C 57 4, 164 4, 212 8 C 216 24, 215 41, 211 50 C 155 55, 61 55, 7 50 C 4 37, 4 21, 8 9 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-                <span class="inner"><span class="h">Open Claude Skills</span></span>
-              </a>
-            </div>
+        <section class="results-upgrade" id="results-upgrade" aria-labelledby="results-upgrade-title">
+          <p class="hand results-upgrade__kicker" id="results-upgrade-kicker">skip the copy-paste</p>
+          <h2 id="results-upgrade-title">Next time, just ask Claude</h2>
+          <p class="results-upgrade__lede">Set it up once. Then paste any app link into Claude, pull more than 500 Google Play reviews, and compare competitors in one chat.</p>
+          <div class="upgrade-grid">
+            <article class="upgrade-card">
+              <p class="upgrade-step">1 · One click</p>
+              <h3>Connect Review Retriever</h3>
+              <p>Claude fetches the reviews itself, for any app.<br>Works on the free plan.</p>
+              <a class="upgrade-button upgrade-button--primary" data-connect-placement="results_connector" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Retriever&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude</a>
+            </article>
+            <article class="upgrade-card">
+              <p class="upgrade-step">2 · Three quick steps</p>
+              <h3>Add the analysis skill</h3>
+              <p>Every Claude chat gets the full method.<br>Download it, then upload it in <a class="upgrade-inline-link" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">Claude Skills</a>.</p>
+              <a class="upgrade-button" id="claude-skill-download" href="/app-review-growth-analyzer-skill.zip" download>Download skill</a>
+            </article>
           </div>
+          <p class="upgrade-guide">Codex, Claude Code or another client? <a data-connect-placement="results_guide" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Setup guide</a></p>
         </section>
 
         <section class="evidence" aria-labelledby="evidence-title">
           <div class="evidence-head">
-            <h2 class="pencil evidence-title" id="evidence-title">evidence preview</h2>
+            <h2 class="evidence-title" id="evidence-title">Newest in the packet</h2>
           </div>
           <div class="peek" id="peek" aria-label="Review sample"></div>
         </section>
@@ -398,7 +430,7 @@
         <hr class="rule">
 
         <footer class="foot">
-          <span class="pencil">public reviews only · nothing stored</span>
+          <span class="hand privacy-note">public reviews only · nothing stored</span>
           <span class="foot-links">
             <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
@@ -409,6 +441,6 @@
       </section>
     </main>
 
-    <script type="module" src="/app.js?v=20260925-paste-clarity"></script>
+    <script type="module" src="/app.js?v=20260925-results-redesign"></script>
   </body>
 </html>

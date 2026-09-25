@@ -47,8 +47,11 @@ test("the question map has unique ids and a default first read", () => {
   assert.equal(findQuestion("not-a-question").id, "first-read");
   for (const question of questions) {
     assert.ok(question.label.length > 0 && question.label.length <= 60, `${question.id} label should fit a select`);
+    assert.ok(question.description.length > 0 && question.description.length <= 100, `${question.id} description should fit the visible question card`);
     assert.match(question.prompt, /\?|:/);
   }
+  assert.equal(QUESTION_GROUPS.at(-1).label, "Support");
+  assert.equal(findQuestion("price").description, "Whether people mind the price itself, or when and how the paywall shows up.");
 });
 
 test("the Claude payload keeps every review and the chosen question", () => {

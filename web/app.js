@@ -5,8 +5,9 @@ import {
   CLAUDE_NEW_CHAT_URL,
   DEFAULT_QUESTION_ID,
   QUESTION_GROUPS,
-  buildAnalysisPayload
-} from "./analysis-prompt.js?v=20260925-output";
+  buildAnalysisPayload,
+  findQuestion
+} from "./analysis-prompt.js?v=20260925-results-redesign";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
 const VALIDATION_MESSAGE = "that doesn't look like a store link";
@@ -26,25 +27,47 @@ const retrievalStatus = document.querySelector("#retrieval-status");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
 const connectorLinks = document.querySelectorAll("[data-connect-placement]");
-const repeatNudge = document.querySelector("#repeat-nudge");
 const demoChips = document.querySelectorAll(".demo-chip");
 const appIcon = document.querySelector("#app-icon");
 const packetTitle = document.querySelector("#packet-title");
+const packetMeta = document.querySelector("#packet-meta");
+const packetCount = document.querySelector("#packet-count");
+const packetDate = document.querySelector("#packet-date");
+const packetDateShort = document.querySelector("#packet-date-short");
+const ratingChart = document.querySelector("#rating-chart");
 const receiptMeta = document.querySelector("#receipt-meta");
-const packetLedger = document.querySelector("#packet-ledger");
+const evidenceSection = document.querySelector(".evidence");
 const peek = document.querySelector("#peek");
 const startOver = document.querySelector("#start-over");
 const analyzeSection = document.querySelector("#analyze");
 const questionSelect = document.querySelector("#question-select");
+const questionGroupChips = document.querySelector("#question-group-chips");
+const questionOptionsPanel = document.querySelector("#question-options-panel");
+const questionOptions = document.querySelector("#question-options");
+const questionReset = document.querySelector("#question-reset");
+const selectedQuestionTitle = document.querySelector("#selected-question-title");
+const selectedQuestionDescription = document.querySelector("#selected-question-description");
+const selectedQuestionTag = document.querySelector("#selected-question-tag");
 const analyzeClaude = document.querySelector("#analyze-claude");
-const analyzeClaudeNote = document.querySelector("#analyze-claude-note");
 const analyzeChatGpt = document.querySelector("#analyze-chatgpt");
-const analyzeChatGptNote = document.querySelector("#analyze-chatgpt-note");
-const analyzeToast = document.querySelector("#analyze-toast");
+const handoffScope = document.querySelector("#handoff-scope");
+const pasteStepText = document.querySelector("#paste-step-text");
+const analysisActions = document.querySelector("#analysis-actions");
+const analysisStatus = document.querySelector("#analysis-status");
+const analysisStatusSuccess = document.querySelector("#analysis-status-success");
+const analysisStatusError = document.querySelector("#analysis-status-error");
+const analysisStatusTitle = document.querySelector("#analysis-status-title");
+const analysisOpenedLabel = document.querySelector("#analysis-opened-label");
+const analysisStatusStep = document.querySelector("#analysis-status-step");
+const analysisOpenQuestion = document.querySelector("#analysis-open-question");
+const analysisErrorDestination = document.querySelector("#analysis-error-destination");
+const reopenAnalysis = document.querySelector("#reopen-analysis");
+const copyAgainButton = document.querySelector("#copy-again");
+const switchAnalysis = document.querySelector("#switch-analysis");
+const analysisErrorCopy = document.querySelector("#analysis-error-copy");
+const resultsUpgradeKicker = document.querySelector("#results-upgrade-kicker");
 const copyButton = document.querySelector("#copy-btn");
 const downloadButton = document.querySelector("#download-btn");
-const claudeButton = document.querySelector("#claude-btn");
-const claudeSteps = document.querySelector("#claude-steps");
 const claudeSkillDownload = document.querySelector("#claude-skill-download");
 const claudeSkillsLink = document.querySelector("#claude-skills-link");
 
@@ -71,10 +94,15 @@ let searchController = null;
 let searchSequence = 0;
 let searchResults = [];
 let activeSearchResult = -1;
-let successfulExtractions = Math.max(0, Number(safeSessionGet("rr_successful_extractions")) || 0);
+let activeQuestionGroup = "";
+let lastAnalysisTool = "claude";
+let lastAnalysisPayload = null;
+let questionGroupButtons = [];
+let questionOptionButtons = [];
 
 renderCountryOptions();
 renderQuestionOptions();
+renderPasteInstructions();
 analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
 analyzeChatGpt.href = CHATGPT_NEW_CHAT_URL;
 
@@ -104,14 +132,17 @@ for (const link of connectorLinks) {
   link.addEventListener("click", () => track("review_connect_click", { placement: link.dataset.connectPlacement }));
 }
 startOver.addEventListener("click", resetRetriever);
-questionSelect.addEventListener("change", () => {
-  track("review_question_pick", { question_id: questionSelect.value });
-});
+questionGroupChips.addEventListener("click", handleQuestionGroupClick);
+questionOptions.addEventListener("click", handleQuestionPick);
+questionReset.addEventListener("click", () => resetQuestionPicker(true));
 analyzeClaude.addEventListener("click", () => handleAnalyze("claude"));
 analyzeChatGpt.addEventListener("click", () => handleAnalyze("chatgpt"));
+switchAnalysis.addEventListener("click", () => handleAnalyze(lastAnalysisTool === "claude" ? "chatgpt" : "claude"));
+reopenAnalysis.addEventListener("click", trackAnalysisReopen);
+copyAgainButton.addEventListener("click", retryAnalysisCopy);
+analysisErrorCopy.addEventListener("click", retryAnalysisCopy);
 copyButton.addEventListener("click", copyMarkdown);
 downloadButton.addEventListener("click", downloadMarkdown);
-claudeButton.addEventListener("click", toggleClaudeSteps);
 appIcon.addEventListener("error", hideAppIcon);
 
 claudeSkillDownload.addEventListener("click", () => {
@@ -290,11 +321,6 @@ async function startExtraction() {
     currentFilename = result.filename;
     renderPacket(result);
     renderSamples(result.samples);
-    if (result.count > 0) {
-      successfulExtractions += 1;
-      safeSessionSet("rr_successful_extractions", String(successfulExtractions));
-    }
-    repeatNudge.hidden = result.count === 0 || successfulExtractions < 2;
     prepareAnalyze(result);
 
     track(result.count > 0 ? "review_extract_success" : "review_extract_empty", {
@@ -410,7 +436,7 @@ function defaultCountryFromNavigator() {
 }
 
 function renderQuestionOptions() {
-  const fragment = document.createDocumentFragment();
+  const selectFragment = document.createDocumentFragment();
   for (const group of QUESTION_GROUPS) {
     const optgroup = document.createElement("optgroup");
     optgroup.label = group.label;
@@ -420,10 +446,126 @@ function renderQuestionOptions() {
       option.textContent = question.label;
       optgroup.append(option);
     }
-    fragment.append(optgroup);
+    selectFragment.append(optgroup);
   }
-  questionSelect.replaceChildren(fragment);
+  questionSelect.replaceChildren(selectFragment);
   questionSelect.value = DEFAULT_QUESTION_ID;
+
+  questionGroupButtons = QUESTION_GROUPS
+    .filter((group) => !group.questions.some((question) => question.id === DEFAULT_QUESTION_ID))
+    .map((group) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "question-group-chip";
+      button.dataset.questionGroup = group.label;
+      button.textContent = group.label;
+      button.setAttribute("aria-controls", "question-options-panel");
+      button.setAttribute("aria-expanded", "false");
+      return button;
+    });
+  questionGroupChips.replaceChildren(...questionGroupButtons);
+  renderSelectedQuestion();
+}
+
+function handleQuestionGroupClick(event) {
+  const button = event.target.closest("[data-question-group]");
+  if (!button || !questionGroupChips.contains(button)) return;
+
+  const label = button.dataset.questionGroup;
+  if (activeQuestionGroup === label && !questionOptionsPanel.hidden) {
+    closeQuestionGroup();
+    return;
+  }
+
+  openQuestionGroup(label);
+}
+
+function openQuestionGroup(label) {
+  const group = QUESTION_GROUPS.find((candidate) => candidate.label === label);
+  if (!group) return;
+
+  activeQuestionGroup = group.label;
+  questionOptionsPanel.hidden = false;
+  questionOptions.setAttribute("aria-label", `${group.label} questions`);
+  renderQuestionChoices(group);
+  syncQuestionChipStates();
+}
+
+function closeQuestionGroup() {
+  activeQuestionGroup = "";
+  questionOptionsPanel.hidden = true;
+  questionOptions.replaceChildren();
+  questionOptionButtons = [];
+  syncQuestionChipStates();
+}
+
+function renderQuestionChoices(group) {
+  questionOptionButtons = group.questions.map((question) => {
+    const button = document.createElement("button");
+    const radio = document.createElement("span");
+    const label = document.createElement("span");
+    const isSelected = question.id === questionSelect.value;
+
+    button.type = "button";
+    button.className = "question-option";
+    button.dataset.questionId = question.id;
+    button.setAttribute("aria-pressed", String(isSelected));
+    radio.className = `question-radio${isSelected ? " question-radio--selected" : ""}`;
+    radio.setAttribute("aria-hidden", "true");
+    label.textContent = question.label;
+    button.append(radio, label);
+    return button;
+  });
+  questionOptions.replaceChildren(...questionOptionButtons);
+}
+
+function handleQuestionPick(event) {
+  const button = event.target.closest("[data-question-id]");
+  if (!button || !questionOptions.contains(button)) return;
+  selectQuestion(button.dataset.questionId, true);
+}
+
+function selectQuestion(questionId, shouldTrack = false) {
+  const previousQuestionId = questionSelect.value;
+  const question = findQuestion(questionId);
+  questionSelect.value = question.id;
+  renderSelectedQuestion();
+
+  const group = groupForQuestion(question.id);
+  if (group && activeQuestionGroup === group.label) renderQuestionChoices(group);
+  syncQuestionChipStates();
+
+  if (lastAnalysisPayload && question.id !== previousQuestionId) resetAnalysisState();
+
+  if (shouldTrack) track("review_question_pick", { question_id: question.id });
+}
+
+function resetQuestionPicker(shouldTrack = true) {
+  selectQuestion(DEFAULT_QUESTION_ID, shouldTrack);
+  closeQuestionGroup();
+}
+
+function renderSelectedQuestion() {
+  const question = findQuestion(questionSelect.value);
+  selectedQuestionTitle.textContent = question.label.replace(/\s*\(best start\)$/i, "");
+  selectedQuestionDescription.textContent = question.description || question.prompt;
+  selectedQuestionTag.hidden = question.id !== DEFAULT_QUESTION_ID;
+  syncQuestionChipStates();
+}
+
+function syncQuestionChipStates() {
+  const selectedGroup = groupForQuestion(questionSelect.value)?.label || "";
+  for (const button of questionGroupButtons) {
+    const isOpen = activeQuestionGroup === button.dataset.questionGroup && !questionOptionsPanel.hidden;
+    const hasSelectedQuestion = selectedGroup === button.dataset.questionGroup;
+    button.setAttribute("aria-expanded", String(isOpen));
+    button.classList.toggle("is-open", isOpen);
+    button.classList.toggle("is-selected", hasSelectedQuestion);
+  }
+}
+
+function groupForQuestion(questionId) {
+  return QUESTION_GROUPS.find((group) => group.questions.some((question) => question.id === questionId));
 }
 
 function samplesFromMarkdown(value) {
@@ -462,7 +604,7 @@ function renderSamples(samples) {
     meta.append(rating);
 
     const date = document.createElement("span");
-    date.textContent = [sample.date, sample.language].filter(Boolean).join(" · ") || "date unavailable";
+    date.textContent = sample.date || "date unavailable";
     meta.append(date);
 
     card.append(meta);
@@ -483,43 +625,87 @@ function renderSamples(samples) {
   }
   peek.replaceChildren(fragment);
   peek.hidden = samples.length === 0;
+  evidenceSection.hidden = samples.length === 0;
 }
 
 function renderPacket(result) {
   packetTitle.textContent = result.appName;
   renderAppIcon(result);
+  packetMeta.textContent = [result.store, result.countryName, result.languages].filter(Boolean).join(" · ");
+  packetCount.textContent = String(result.count);
+  packetDate.textContent = compactDateRange(result.dateRange);
+  packetDateShort.textContent = compactDateRange(result.dateRange, false);
+  renderRatingChart(result.ratingDistribution);
+
   const note = packetNote(result);
   receiptMeta.textContent = note;
   receiptMeta.hidden = !note;
+}
 
-  const ledgerRows = [
-    ["Reviews", `${result.count} unique written ${pluralize("review", result.count)}`],
-    ["Storefront", `${result.store} · ${result.countryName}`],
-    ["Date range", result.dateRange],
-    ["Rating mix", ratingMix(result.ratingDistribution)],
-    ["Source", result.source],
-    ...(result.languages ? [["Languages", result.languages]] : [])
-  ];
-
-  packetLedger.replaceChildren(...ledgerRows.map(([label, value]) => {
-    const row = document.createElement("div");
-    const term = document.createElement("dt");
-    const detail = document.createElement("dd");
-    term.textContent = label;
-    detail.textContent = value;
-    row.append(term, detail);
-    return row;
+function renderRatingChart(distribution = {}) {
+  const rows = [5, 4, 3, 2, 1].map((rating) => ({
+    rating,
+    count: Number(distribution[String(rating)] || 0),
   }));
+  const denominator = rows.reduce((sum, row) => sum + row.count, 0);
+  const maxCount = Math.max(...rows.map((row) => row.count), 1);
+
+  const elements = rows.map(({ rating, count }) => {
+    const row = document.createElement("div");
+    const label = document.createElement("span");
+    const track = document.createElement("span");
+    const bar = document.createElement("span");
+    const value = document.createElement("span");
+    const countText = document.createElement("span");
+    const percentage = document.createElement("span");
+    const share = denominator ? Math.round((count / denominator) * 100) : 0;
+
+    row.className = `rating-row${rating === 1 ? " rating-row--low" : ""}`;
+    row.setAttribute("aria-hidden", "true");
+    label.className = "rating-label";
+    label.textContent = `${rating}★`;
+    track.className = "rating-track";
+    bar.className = "rating-bar";
+    bar.style.width = `${Math.round((count / maxCount) * 100)}%`;
+    value.className = "rating-value";
+    countText.textContent = String(count);
+    percentage.className = "rating-percentage";
+    percentage.textContent = ` · ${share}%`;
+    value.append(countText, percentage);
+    track.append(bar);
+    row.append(label, track, value);
+    return row;
+  });
+
+  const accessibleSummary = rows.map(({ rating, count }) => `${rating} star: ${count}`).join(", ");
+  ratingChart.setAttribute("aria-label", `Rating distribution. ${accessibleSummary}.`);
+  ratingChart.replaceChildren(...elements);
+}
+
+function compactDateRange(value, includeSameYear = true) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})\s+to\s+(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return value || "Date unavailable";
+
+  const [, startYear, startMonth, startDay, endYear, endMonth, endDay] = match;
+  const start = new Date(Date.UTC(Number(startYear), Number(startMonth) - 1, Number(startDay)));
+  const end = new Date(Date.UTC(Number(endYear), Number(endMonth) - 1, Number(endDay)));
+  const monthDay = new Intl.DateTimeFormat("en", { month: "short", day: "numeric", timeZone: "UTC" });
+  if (startYear === endYear) {
+    const range = `${monthDay.format(start)} – ${monthDay.format(end)}`;
+    return includeSameYear ? `${range}, ${endYear}` : range;
+  }
+  return `${monthDay.format(start)}, ${startYear} – ${monthDay.format(end)}, ${endYear}`;
 }
 
 function prepareAnalyze(result) {
   analyzeSection.hidden = result.count === 0;
-  hideAnalyzeToast();
   questionSelect.value = DEFAULT_QUESTION_ID;
-  analyzeClaudeNote.textContent = `All ${result.count} ${pluralize("review", result.count)}.`;
-  analyzeChatGptNote.textContent = result.count > CHATGPT_REVIEW_CAP
-    ? `Newest ${CHATGPT_REVIEW_CAP} of ${result.count} reviews.`
-    : `All ${result.count} ${pluralize("review", result.count)}.`;
+  renderSelectedQuestion();
+  closeQuestionGroup();
+  resetAnalysisState();
+  handoffScope.textContent = result.count > CHATGPT_REVIEW_CAP
+    ? `Claude reads all ${result.count} reviews. ChatGPT gets the newest ${CHATGPT_REVIEW_CAP}, so it has room to answer.`
+    : `Claude and ChatGPT both read all ${result.count} ${pluralize("review", result.count)}.`;
 }
 
 // The link opens the chat in a new tab; the click copies the reviews and the prompt first.
@@ -531,13 +717,12 @@ function handleAnalyze(tool) {
     questionId: questionSelect.value,
     maxReviews: isChatGpt ? CHATGPT_REVIEW_CAP : Infinity,
   });
-  const copied = payload.included < payload.total
-    ? `the newest ${payload.included} of ${payload.total} reviews`
-    : `${payload.included} ${pluralize("review", payload.included)}`;
+  lastAnalysisTool = tool;
+  lastAnalysisPayload = payload;
 
   copyText(payload.text)
-    .then(() => showAnalyzeToast(`Copied. In ${destination}, ${pasteInstruction()} and send.`))
-    .catch(() => showAnalyzeToast(`Couldn't copy automatically. Use Copy below, then paste it into ${destination}.`, true));
+    .then(() => showAnalysisSuccess(destination))
+    .catch(() => showAnalysisError(destination));
 
   track("review_analysis_open", {
     tool: isChatGpt ? "chatgpt_oneclick" : "claude_oneclick",
@@ -547,21 +732,84 @@ function handleAnalyze(tool) {
   });
 }
 
-function pasteInstruction() {
-  if (window.matchMedia?.("(pointer: coarse)")?.matches) return "long-press the message box, tap Paste";
+function renderPasteInstructions() {
+  pasteStepText.textContent = initialPasteInstruction();
+  analysisStatusStep.textContent = currentPasteInstruction();
+}
+
+function initialPasteInstruction() {
+  if (window.matchMedia?.("(pointer: coarse)")?.matches) return "Long-press, tap Paste, then send";
+  return `You paste (${pasteShortcut()}) and send`;
+}
+
+function currentPasteInstruction() {
+  if (window.matchMedia?.("(pointer: coarse)")?.matches) return "Long-press, tap Paste, then send";
+  return `Paste (${pasteShortcut()}), then send`;
+}
+
+function pasteShortcut() {
   const platform = navigator.userAgentData?.platform || navigator.platform || "";
-  return /mac|iphone|ipad/i.test(platform) ? "press ⌘V" : "press Ctrl+V";
+  return /mac|iphone|ipad/i.test(platform) ? "⌘V" : "Ctrl+V";
 }
 
-function showAnalyzeToast(message, isError = false) {
-  analyzeToast.textContent = message;
-  analyzeToast.classList.toggle("analyze-toast--error", isError);
-  analyzeToast.hidden = false;
+function showAnalysisSuccess(destination) {
+  const alternate = destination === "Claude" ? "ChatGPT" : "Claude";
+  const alternateUrl = destination === "Claude" ? CHATGPT_NEW_CHAT_URL : CLAUDE_NEW_CHAT_URL;
+  const reopenUrl = destination === "Claude" ? CLAUDE_NEW_CHAT_URL : CHATGPT_NEW_CHAT_URL;
+
+  analysisActions.hidden = true;
+  analysisStatus.hidden = false;
+  analysisStatusSuccess.hidden = false;
+  analysisStatusError.hidden = true;
+  analysisStatus.classList.remove("analysis-status--error");
+  analysisStatusTitle.textContent = `Copied. One step left, in the ${destination} tab.`;
+  analysisOpenedLabel.textContent = `${destination} opened`;
+  analysisOpenQuestion.textContent = `${destination} didn’t open?`;
+  analysisStatusStep.textContent = currentPasteInstruction();
+  reopenAnalysis.href = reopenUrl;
+  switchAnalysis.href = alternateUrl;
+  switchAnalysis.textContent = `Use ${alternate} instead`;
+  resultsUpgradeKicker.textContent = `while ${destination} reads…`;
 }
 
-function hideAnalyzeToast() {
-  analyzeToast.hidden = true;
-  analyzeToast.textContent = "";
+function showAnalysisError(destination) {
+  analysisActions.hidden = true;
+  analysisStatus.hidden = false;
+  analysisStatusSuccess.hidden = true;
+  analysisStatusError.hidden = false;
+  analysisStatus.classList.add("analysis-status--error");
+  analysisErrorDestination.textContent = destination;
+  resultsUpgradeKicker.textContent = "skip the copy-paste";
+}
+
+function resetAnalysisState() {
+  lastAnalysisTool = "claude";
+  lastAnalysisPayload = null;
+  analysisActions.hidden = false;
+  analysisStatus.hidden = true;
+  analysisStatusSuccess.hidden = false;
+  analysisStatusError.hidden = true;
+  analysisStatus.classList.remove("analysis-status--error");
+  resultsUpgradeKicker.textContent = "skip the copy-paste";
+  renderPasteInstructions();
+}
+
+function retryAnalysisCopy() {
+  if (!lastAnalysisPayload) return;
+  const destination = lastAnalysisTool === "chatgpt" ? "ChatGPT" : "Claude";
+  copyText(lastAnalysisPayload.text)
+    .then(() => showAnalysisSuccess(destination))
+    .catch(() => showAnalysisError(destination));
+}
+
+function trackAnalysisReopen() {
+  if (!lastAnalysisPayload) return;
+  track("review_analysis_open", {
+    tool: `${lastAnalysisTool}_reopen`,
+    cta_id: `review_retriever_${lastAnalysisTool}_reopen`,
+    question_id: lastAnalysisPayload.question.id,
+    review_count_bucket: reviewCountBucket(lastAnalysisPayload.included),
+  });
 }
 
 function copyText(text) {
@@ -652,17 +900,20 @@ function setLoading(loading) {
 function resetRetriever() {
   done.hidden = true;
   idle.hidden = false;
-  claudeSteps.hidden = true;
-  claudeButton.setAttribute("aria-expanded", "false");
-  hideAnalyzeToast();
+  resetQuestionPicker(false);
+  resetAnalysisState();
   appUrl.value = "";
   markdown = "";
   currentFilename = "reviews.md";
   packetTitle.textContent = "Reviews exported";
+  packetMeta.textContent = "Store · Country · Language";
+  packetCount.textContent = "0";
+  packetDate.textContent = "Date unavailable";
+  ratingChart.replaceChildren();
+  ratingChart.setAttribute("aria-label", "Rating distribution");
   hideAppIcon();
   receiptMeta.textContent = "";
   receiptMeta.hidden = true;
-  packetLedger.replaceChildren();
   peek.replaceChildren();
   peek.hidden = false;
   clearError();
@@ -713,29 +964,12 @@ function stars(rating) {
 function shortDate(value) {
   if (!value || value === "Unknown") return "";
   const parsed = new Date(value);
-  return Number.isNaN(parsed.valueOf()) ? value : parsed.toISOString().slice(0, 10);
-}
-
-function ratingMix(distribution = {}) {
-  return [1, 2, 3, 4, 5]
-    .map((rating) => `${rating}★ ${Number(distribution[String(rating)] || 0)}`)
-    .join(" · ");
+  if (Number.isNaN(parsed.valueOf())) return value;
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", timeZone: "UTC" }).format(parsed);
 }
 
 function pluralize(word, count) {
   return Number(count) === 1 ? word : `${word}s`;
-}
-
-function toggleClaudeSteps() {
-  const willOpen = claudeSteps.hidden;
-  claudeSteps.hidden = !willOpen;
-  claudeButton.setAttribute("aria-expanded", String(willOpen));
-  track("review_analysis_open", { tool: "claude_skill_steps", cta_id: "review_retriever_claude_steps" });
-
-  if (willOpen) {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    claudeSteps.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "nearest" });
-  }
 }
 
 function platformLabel(platform) {
