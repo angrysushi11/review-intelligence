@@ -65,11 +65,12 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
 
   assert.match(idleState, /Want it inside your chat\?/);
   assert.match(idleState, /pull more than 500 Google Play reviews, and compare apps and countries in one conversation/);
-  for (const placement of ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"]) {
+  for (const placement of ["landing_connector", "landing_guide", "results_connector", "results_guide", "footer"]) {
     assert.ok(html.includes(`data-connect-placement="${placement}"`));
   }
-  assert.match(html, /Comparing competitors or need more than 500 reviews\? Connect it once and ask inside Claude or Codex\./);
-  assert.match(html, /Another app\? Connected, you'd just ask Claude for it\./);
+  assert.match(html, /Next time, just ask Claude/);
+  assert.match(html, /Claude fetches the reviews itself, for any app/);
+  assert.match(html, /Every Claude chat gets the full method/);
   assert.match(appJs, /track\("review_connect_click", \{ placement: link\.dataset\.connectPlacement \}\)/);
 
   // Connect: direct connector link, setup guide, Claude Code one-liner.
@@ -93,41 +94,51 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.equal((html.match(/href="\/extension\/privacy\/">Extension privacy<\/a>/g) ?? []).length, 2);
   assert.match(html, /public reviews only · nothing stored/);
 
-  // Results: packet, then the analysis step, then the evidence preview.
-  assert.match(doneState, /<header class="result-masthead">[\s\S]*?<h1 class="title">Review Retriever<\/h1>/);
-  assert.match(doneState, /review packet ready/);
+  // Results: compact receipt, visible question, one primary action, setup block, then proof.
+  assert.match(doneState, /<header class="result-masthead">[\s\S]*?<span class="result-wordmark">Review Retriever<\/span>/);
+  assert.match(doneState, /id="start-over"[^>]*>Try another app<\/button>/);
   assert.match(doneState, /id="app-icon"[^>]*referrerpolicy="no-referrer"[^>]*hidden/);
   assert.match(doneState, /id="packet-title" tabindex="-1"/);
-  assert.match(doneState, /id="packet-ledger"><\/dl>/);
-  assert.ok(doneState.indexOf('id="packet-ledger"') < doneState.indexOf('id="analyze"'));
+  assert.match(doneState, /id="packet-meta">Store · Country · Language<\/p>/);
+  assert.match(doneState, /id="packet-count">0<\/strong>/);
+  assert.match(doneState, /id="packet-date">Date unavailable<\/span>/);
+  assert.match(doneState, /id="packet-date-short">Date unavailable<\/span>/);
+  assert.match(doneState, /id="rating-chart" role="img"/);
+  assert.ok(doneState.indexOf('id="rating-chart"') < doneState.indexOf('id="analyze"'));
   assert.ok(doneState.indexOf('id="analyze"') < doneState.indexOf('id="evidence-title"'));
-  assert.match(doneState, /<label class="field-label" for="question-select">What do you want to know\?<\/label>/);
+  assert.match(doneState, /id="selected-question-title">First useful read<\/h3>/);
+  assert.match(doneState, /id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter\.<\/p>/);
+  assert.match(doneState, /id="question-group-chips" role="group"/);
+  assert.match(doneState, /id="question-options" role="group"/);
+  assert.match(doneState, /id="question-reset"[^>]*>Back to First useful read<\/button>/);
   assert.match(doneState, /id="analyze-claude" href="https:\/\/claude\.ai\/new\?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below\.[^"]*" target="_blank" rel="noopener"/);
   assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/" target="_blank" rel="noopener"/);
-  // The paste step is visible before the click because the new tab takes focus immediately.
-  assert.ok(doneState.indexOf('id="question-select"') < doneState.indexOf('id="paste-note"'));
-  assert.ok(doneState.indexOf('id="paste-note"') < doneState.indexOf('class="handoff"'));
-  assert.match(doneState, /<p class="hand paste-note__kicker">one click, one paste<\/p>/);
-  assert.match(doneState, /Tap a button\. We’ll copy everything and open a new chat\. Paste and send\./);
+  assert.equal((doneState.match(/class="card card--primary"/g) ?? []).length, 1);
   assert.match(idleState, /Pick a question, then choose Claude or ChatGPT\. Paste and send in the new chat\./);
   assert.match(doneState, />Copy &amp; open Claude<\/span>/);
   assert.match(doneState, />Copy &amp; open ChatGPT<\/span>/);
-  assert.match(doneState, /id="analyze-claude-note">All reviews\.<\/span>/);
-  assert.match(doneState, /id="analyze-chatgpt-note">Up to the newest 150 reviews\.<\/span>/);
-  assert.match(doneState, /id="analyze-toast" role="status" aria-live="polite" hidden/);
+  assert.match(doneState, /Claude reads all reviews\. ChatGPT gets the newest 150, so it has room to answer\./);
+  assert.match(doneState, /id="paste-steps" aria-label="What happens next"/);
+  assert.match(doneState, /id="paste-step-text">You paste and send<\/span>/);
+  assert.match(doneState, /id="analysis-status" role="status" aria-live="polite" hidden/);
+  assert.match(doneState, /Copied\. One step left, in the Claude tab\./);
+  assert.match(doneState, /id="copy-again"[^>]*>Copy again<\/button>/);
+  assert.match(doneState, /id="switch-analysis"[^>]*>Use ChatGPT instead<\/a>/);
+  assert.match(doneState, /Couldn’t copy automatically\. Copy it here, then paste it into/);
+  assert.match(doneState, /id="analysis-error-copy"[^>]*>Copy<\/button>/);
   assert.match(doneState, /id="copy-btn"[^>]*>Copy<\/button>/);
   assert.match(doneState, /id="download-btn"[^>]*>Download \.md<\/button>/);
-  assert.match(doneState, /id="claude-btn"[^>]*aria-controls="claude-steps"/);
-  assert.match(doneState, /id="claude-steps" hidden/);
-  assert.match(doneState, /Open Claude Skills, click <strong>Add<\/strong>, choose <strong>Upload a skill<\/strong>/);
-  assert.match(doneState, /class="card claude-action" id="claude-skill-download"/);
-  assert.match(doneState, /id="evidence-title">evidence preview<\/h2>/);
+  assert.ok(doneState.indexOf('id="results-upgrade"') < doneState.indexOf('id="evidence-title"'));
+  assert.match(doneState, /id="results-upgrade-kicker">skip the copy-paste<\/p>/);
+  assert.match(doneState, /id="claude-skill-download" href="\/app-review-growth-analyzer-skill\.zip" download/);
+  assert.match(doneState, /id="evidence-title">Newest in the packet<\/h2>/);
 
   // Design system tokens and the new components.
   assert.match(styles, /@import url\("\/tokens\.css"\)/);
   assert.match(tokens, /--paper:\s*#f7f4ec/);
   assert.match(tokens, /--well:\s*#efe9da/);
   assert.match(tokens, /--pen:\s*#3a6b5c/);
+  assert.match(styles, /#state-done\s*\{[^}]*--pen:\s*#3f7568[^}]*--error:\s*#a33e2f/s);
   assert.match(tokens, /--font-ui:\s*-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif/);
   assert.match(styles, /font-family:\s*var\(--font-display\)/);
   assert.match(styles, /\.tool-frame::before\s*\{/);
@@ -136,11 +147,17 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(styles, /\.mix-row--low \.mix-bar\s*\{[^}]*background:\s*var\(--error\)/s);
   assert.match(styles, /\.question-groups\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   assert.match(styles, /\.connect\s*\{[^}]*background:\s*var\(--ink\)/s);
-  assert.match(styles, /\.analyze-toast\s*\{/);
-  assert.match(styles, /\.paste-note__text\s*\{/);
-  assert.match(styles, /\.card \.s\s*\{[\s\S]*?\.card--primary \.s\s*\{[^}]*color:\s*var\(--rule\)/);
+  assert.match(styles, /\.packet-body\s*\{[^}]*grid-template-columns:/s);
+  assert.match(styles, /\.rating-row--low \.rating-bar\s*\{[^}]*background:\s*var\(--error\)/s);
+  assert.match(styles, /\.question-group-chips\s*\{[^}]*overflow-x:\s*auto/s);
+  assert.match(styles, /\.question-card\s*\{[^}]*border:\s*2px solid var\(--pen\)/s);
+  assert.match(styles, /\.analysis-status--error\s*\{[^}]*border-color:\s*var\(--error\)/s);
+  assert.match(doneState, /Copy failed <span>\(browser blocked the clipboard\)<\/span>/);
+  assert.match(styles, /\.results-upgrade\s*\{[^}]*background:\s*var\(--ink\)/s);
+  assert.doesNotMatch(styles, /\.review-card::after/);
   assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.question-groups,\s*\.connect-actions\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.paste-steps\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/);
+  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.upgrade-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   assert.match(styles, /\.sr-only\s*\{/);
   assert.doesNotMatch(styles, /\.form-nudge|\.power-user-jump|\.guide-power|\.export-nudge/);
 
@@ -165,12 +182,17 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(appJs, /iconUrl:\s*safeImageUrl\(dataset\.app_icon_url\)/);
   assert.match(appJs, /url\.protocol === "https:"/);
   assert.match(appJs, /Visible App Store review cards/i);
-  assert.match(appJs, /claudeSteps\.hidden = !willOpen/);
+  assert.match(appJs, /function renderRatingChart/);
+  assert.match(appJs, /function compactDateRange/);
 
   // New behaviour: demo apps, question picker, one-tap analysis.
-  assert.match(appJs, /from "\.\/analysis-prompt\.js\?v=20260925-output"/);
+  assert.match(appJs, /from "\.\/analysis-prompt\.js\?v=20260925-results-redesign"/);
   assert.match(appJs, /track\("review_demo_pick"/);
   assert.match(appJs, /track\("review_question_pick"/);
+  assert.match(appJs, /function openQuestionGroup/);
+  assert.match(appJs, /button\.setAttribute\("aria-pressed", String\(isSelected\)\)/);
+  assert.match(appJs, /function showAnalysisSuccess/);
+  assert.match(appJs, /function showAnalysisError/);
   assert.match(appJs, /tool: isChatGpt \? "chatgpt_oneclick" : "claude_oneclick"/);
   assert.match(appJs, /maxReviews: isChatGpt \? CHATGPT_REVIEW_CAP : Infinity/);
   assert.match(appJs, /navigator\.clipboard\?\.writeText/);
@@ -185,7 +207,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       'import { COUNTRY_OPTIONS } from "./markets.js";',
       'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
     )
-    .replace('from "./analysis-prompt.js?v=20260925-output";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
+    .replace('from "./analysis-prompt.js?v=20260925-results-redesign";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
   assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
   assert.ok(executableAppJs.includes(new URL("analysis-prompt.js", webUrl).href), "the analysis module should resolve by absolute URL");
 
@@ -209,15 +231,21 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
         hidden: false,
         textContent: "",
         className: "",
-        classList: { toggle() {} },
+        style: {},
+        classList: { add() {}, remove() {}, toggle() {} },
         addEventListener(type, handler) {
           elementListeners.set(type, handler);
         },
         append() {},
         replaceChildren() {},
-        setAttribute() {},
+        setAttribute(name, value) {
+          this[name] = String(value);
+        },
         removeAttribute() {},
+        contains() { return true; },
         focus() {},
+        select() {},
+        remove() {},
         scrollIntoView() {},
       });
     }
@@ -229,9 +257,11 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
   const globals = {
     document: {
       referrer: "",
+      body: { append() {} },
+      execCommand: () => false,
       querySelector: elementFor,
       querySelectorAll: (selector) => selector === "[data-connect-placement]"
-        ? ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"].map((placement) => {
+        ? ["landing_connector", "landing_guide", "results_connector", "results_guide", "footer"].map((placement) => {
           const node = elementFor(`connector-${placement}`);
           node.dataset = { connectPlacement: placement };
           return node;
@@ -281,12 +311,24 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.ok(cleanLocation instanceof URL);
     assert.equal(cleanLocation.href, "https://reviews.doubledash.me/");
     assert.equal(cleanLocation.hash, "");
-    for (const placement of ["landing_connector", "landing_guide", "results_nudge", "repeat_nudge", "footer"]) {
+    for (const placement of ["landing_connector", "landing_guide", "results_connector", "results_guide", "footer"]) {
       listeners.get(`connector-${placement}`).get("click")();
       const event = window.dataLayer.at(-1);
       assert.equal(event[1], "review_connect_click");
       assert.equal(event[2].placement, placement);
     }
+
+    // The visible group picker updates the selected question and reports the choice.
+    const moneyButton = [...elements.values()].find((element) => element.dataset.questionGroup === "Money");
+    assert.ok(moneyButton, "the Money group chip should be rendered");
+    listeners.get("#question-group-chips").get("click")({ target: { closest: () => moneyButton } });
+    const priceButton = [...elements.values()].find((element) => element.dataset.questionId === "price");
+    assert.ok(priceButton, "opening Money should render its questions");
+    listeners.get("#question-options").get("click")({ target: { closest: () => priceButton } });
+    assert.equal(elementFor("#question-select").value, "price");
+    assert.equal(elementFor("#selected-question-title").textContent, "Is it the price, or when the price appears?");
+    assert.equal(window.dataLayer.at(-1)[1], "review_question_pick");
+    assert.equal(window.dataLayer.at(-1)[2].question_id, "price");
 
     // Both paths carry the complete method on the first click, without another fetch.
     const copies = [];
@@ -299,7 +341,16 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     globalThis.fetch = async (url) => {
       assert.equal(url, "/api/extract");
       return { ok: true, text: async () => JSON.stringify({
-        dataset: { reviews_exported: 1, app_name: "Example", platform: "google_play", country: "us" },
+        dataset: {
+          reviews_exported: 1,
+          app_name: "Example",
+          platform: "google_play",
+          country: "us",
+          country_name: "United States",
+          language_name: "English",
+          date_range: "2026-09-23 to 2026-09-24",
+          rating_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 1 },
+        },
         markdown: reviewMarkdown,
       }) };
     };
@@ -309,14 +360,23 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     submit({ preventDefault() {} });
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
-    assert.equal(elementFor("#repeat-nudge").hidden, true);
+    assert.equal(elementFor("#question-select").value, "first-read", "a new packet resets to the best-start question");
+    assert.equal(elementFor("#packet-title").textContent, "Example");
+    assert.equal(elementFor("#packet-meta").textContent, "Google Play · United States · English");
+    assert.equal(elementFor("#packet-count").textContent, "1");
+    assert.equal(elementFor("#packet-date").textContent, "Sep 23 – Sep 24, 2026");
+    assert.equal(elementFor("#packet-date-short").textContent, "Sep 23 – Sep 24");
+    assert.equal(elementFor("#handoff-scope").textContent, "Claude and ChatGPT both read all 1 review.");
+    assert.equal(elementFor("#paste-step-text").textContent, "Long-press, tap Paste, then send");
     analyze("claude");
     assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
     assert.ok(copies[0].startsWith(method.trim()));
     await settle();
-    assert.equal(elementFor("#analyze-claude-note").textContent, "All 1 review.");
-    assert.equal(elementFor("#analyze-chatgpt-note").textContent, "All 1 review.");
-    assert.equal(elementFor("#analyze-toast").textContent, "Copied. In Claude, long-press the message box, tap Paste and send.");
+    assert.equal(elementFor("#analysis-actions").hidden, true);
+    assert.equal(elementFor("#analysis-status").hidden, false);
+    assert.equal(elementFor("#analysis-status-title").textContent, "Copied. One step left, in the Claude tab.");
+    assert.equal(elementFor("#analysis-status-step").textContent, "Long-press, tap Paste, then send");
+    assert.equal(elementFor("#results-upgrade-kicker").textContent, "while Claude reads…");
     analyze("chatgpt");
     assert.ok(copies[1].startsWith(method.trim()));
     assert.equal(copies[0], copies[1], "the same sample and question receive identical instructions");
@@ -324,12 +384,18 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     analyze("claude");
     assert.equal(copies[2], copies[0]);
-    assert.equal(elementFor("#repeat-nudge").hidden, false);
     globalThis.sessionStorage.getItem = () => { throw new Error("blocked storage"); };
     globalThis.sessionStorage.setItem = () => { throw new Error("blocked storage"); };
     submit({ preventDefault() {} });
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
+
+    // A blocked clipboard exposes the dedicated red recovery state.
+    globalThis.navigator.clipboard.writeText = () => Promise.reject(new Error("blocked"));
+    analyze("claude");
+    await settle();
+    assert.equal(elementFor("#analysis-status-error").hidden, false);
+    assert.equal(elementFor("#analysis-error-destination").textContent, "Claude");
 
     // Name search waits for a pause, supports keyboard selection, and ignores an older response.
     const waitForSearch = () => new Promise((resolve) => setTimeout(resolve, 430));
