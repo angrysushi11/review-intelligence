@@ -520,7 +520,11 @@ test("the extension privacy page publishes the exact handoff and data boundary",
 test("the setup bridge and retriever assets are published explicitly", async () => {
   const config = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8"));
   const routes = new Map(config.routes.map(({ src, dest }) => [src, dest]));
-  const legacyRedirects = new Map(config.redirects.map((redirect) => [redirect.source, redirect]));
+  const legacyRedirects = new Map(
+    config.routes
+      .filter((route) => route.status === 308 && route.has)
+      .map((redirect) => [redirect.src, redirect]),
+  );
   const legacyHostCondition = [{ type: "host", value: "^reviews\\.doubledash\\.me$" }];
 
   assert.deepEqual(config.routes[0], {
@@ -588,8 +592,8 @@ test("the setup bridge and retriever assets are published explicitly", async () 
     ["/sitemap.xml", "https://www.willthiseverwork.com/review-intel/sitemap.xml"],
   ]) {
     const redirect = legacyRedirects.get(source);
-    assert.equal(redirect.destination, destination);
-    assert.equal(redirect.permanent, true);
+    assert.equal(redirect.headers.Location, destination);
+    assert.equal(redirect.status, 308);
     assert.deepEqual(redirect.has, legacyHostCondition);
   }
   assert.equal(legacyRedirects.has("/mcp"), false);
