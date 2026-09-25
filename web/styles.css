@@ -1050,6 +1050,36 @@ select.fld {
   margin-top: 24px;
 }
 
+.paste-note {
+  max-width: 62ch;
+  margin-top: 26px;
+}
+
+.paste-note__kicker {
+  margin: 0 0 4px;
+  font-size: 25px;
+  line-height: 1.1;
+}
+
+.paste-note__text,
+.paste-note__hint {
+  margin: 0;
+  font-family: var(--font-ui);
+}
+
+.paste-note__text {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.paste-note__hint {
+  margin-top: 6px;
+  color: var(--ink-faint);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .handoff {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
