@@ -3,7 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { buildRetrieverUrl, isSupportedStoreUrl, normalizeStoreUrl } from "../extension/retriever-url.js";
 
-test("the Chrome extension opens supported store pages in Review Retriever", () => {
+test("the Chrome extension opens supported store pages in Review Intel", () => {
   const appStoreUrl = "https://apps.apple.com/us/app/example/id123456789?platform=iphone";
   const playUrl = "https://play.google.com/store/apps/details?id=com.example.app&hl=en_US";
 
@@ -12,8 +12,8 @@ test("the Chrome extension opens supported store pages in Review Retriever", () 
 
   for (const storeUrl of [appStoreUrl, playUrl]) {
     const target = new URL(buildRetrieverUrl(storeUrl));
-    assert.equal(target.origin, "https://reviews.doubledash.me");
-    assert.equal(target.pathname, "/");
+    assert.equal(target.origin, "https://www.willthiseverwork.com");
+    assert.equal(target.pathname, "/review-intel");
     assert.equal(target.searchParams.has("app_url"), false);
     assert.equal(new URLSearchParams(target.hash.slice(1)).get("app_url"), normalizeStoreUrl(storeUrl));
     assert.equal(target.searchParams.get("source"), "chrome-extension");
@@ -51,7 +51,7 @@ test("unsupported and privileged pages open a blank Retriever without leaking th
   }
 });
 
-test("the MVP requests only activeTab and has no page-level access", async () => {
+test("the extension requests only activeTab and has no page-level access", async () => {
   const manifest = JSON.parse(await readFile(new URL("../extension/manifest.json", import.meta.url), "utf8"));
   const background = await readFile(new URL("../extension/background.js", import.meta.url), "utf8");
 
@@ -61,7 +61,9 @@ test("the MVP requests only activeTab and has no page-level access", async () =>
   assert.equal(manifest.content_scripts, undefined);
   assert.equal(manifest.background.service_worker, "background.js");
   assert.equal(manifest.background.type, "module");
-  assert.equal(manifest.action.default_title, "Open this public app URL in Review Retriever");
+  assert.equal(manifest.name, "Review Intel");
+  assert.equal(manifest.version, "0.1.1");
+  assert.equal(manifest.action.default_title, "Open this public app URL in Review Intel");
   assert.deepEqual(manifest.icons, {
     16: "icons/icon16.png",
     32: "icons/icon32.png",
@@ -119,7 +121,8 @@ test("the service worker opens exactly one sanitized Retriever tab per deliberat
     assert.equal(createdTabs.length, 2);
 
     const supportedTarget = new URL(createdTabs[0].url);
-    assert.equal(supportedTarget.origin, "https://reviews.doubledash.me");
+    assert.equal(supportedTarget.origin, "https://www.willthiseverwork.com");
+    assert.equal(supportedTarget.pathname, "/review-intel");
     assert.equal(
       new URLSearchParams(supportedTarget.hash.slice(1)).get("app_url"),
       "https://play.google.com/store/apps/details?id=com.example.app"
@@ -127,7 +130,8 @@ test("the service worker opens exactly one sanitized Retriever tab per deliberat
     assert.equal(supportedTarget.searchParams.get("source"), "chrome-extension");
 
     const unsupportedTarget = new URL(createdTabs[1].url);
-    assert.equal(unsupportedTarget.origin, "https://reviews.doubledash.me");
+    assert.equal(unsupportedTarget.origin, "https://www.willthiseverwork.com");
+    assert.equal(unsupportedTarget.pathname, "/review-intel");
     assert.equal(new URLSearchParams(unsupportedTarget.hash.slice(1)).has("app_url"), false);
   } finally {
     if (previousChrome) Object.defineProperty(globalThis, "chrome", previousChrome);

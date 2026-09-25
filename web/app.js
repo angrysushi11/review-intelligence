@@ -10,6 +10,7 @@ import {
 } from "./analysis-prompt.js?v=20260925-results-redesign";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
+const appBasePath = window.location.pathname === "/review-intel" || window.location.pathname.startsWith("/review-intel/") ? "/review-intel" : "";
 const VALIDATION_MESSAGE = "that doesn't look like a store link";
 const PICK_APP_MESSAGE = "pick an app from the list";
 const NETWORK_MESSAGE = "couldn't reach the store — try again in a minute";
@@ -170,7 +171,7 @@ function handleUrlInput() {
 async function searchForApps(term, sequence) {
   searchController = new AbortController();
   try {
-    const response = await fetch(`/api/search?${new URLSearchParams({ term, country: country.value })}`, {
+    const response = await fetch(`${appBasePath}/api/search?${new URLSearchParams({ term, country: country.value })}`, {
       signal: searchController.signal
     });
     const payload = await response.json();
@@ -347,7 +348,7 @@ async function startExtraction() {
 }
 
 async function fetchReviews(link, selectedCountry) {
-  const response = await fetch("/api/extract", {
+  const response = await fetch(`${appBasePath}/api/extract`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({

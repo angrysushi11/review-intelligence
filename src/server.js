@@ -19,20 +19,26 @@ const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url, `http://${request.headers.host}`);
 
-    if (request.method === "GET" && url.pathname === "/") {
+    if (request.method === "GET" && (url.pathname === "/" || url.pathname === "/review-intel" || url.pathname === "/review-intel/")) {
       return serveFile(response, path.join(webDir, "index.html"));
     }
 
-    if (request.method === "GET" && (url.pathname === "/setup" || url.pathname === "/setup/")) {
+    const appPath = url.pathname.replace(/^\/review-intel(?=\/|$)/, "") || "/";
+
+    if (request.method === "GET" && (appPath === "/setup" || appPath === "/setup/")) {
       response.writeHead(302, { location: powerUserSetupUrl });
       return response.end();
     }
 
-    if (request.method === "GET" && url.pathname === "/api/countries") {
+    if (request.method === "GET" && (appPath === "/extension/privacy" || appPath === "/extension/privacy/")) {
+      return serveFile(response, path.join(webDir, "extension-privacy.html"));
+    }
+
+    if (request.method === "GET" && appPath === "/api/countries") {
       return sendJson(response, { countries: COUNTRY_OPTIONS, markets: COUNTRY_LANGUAGE_OPTIONS });
     }
 
-    if (request.method === "GET" && url.pathname === "/api/search") {
+    if (request.method === "GET" && appPath === "/api/search") {
       let input;
       try {
         input = validateSearchInput(Object.fromEntries(url.searchParams));
@@ -45,7 +51,7 @@ const server = createServer(async (request, response) => {
       return sendJson(response, payload);
     }
 
-    if (request.method === "POST" && url.pathname === "/api/extract") {
+    if (request.method === "POST" && appPath === "/api/extract") {
       const body = await readJsonBody(request);
       const inputUrl = String(body.url || "").trim();
       if (!inputUrl) return sendJson(response, { error: "App Store or Google Play URL is required." }, 400);
@@ -63,8 +69,8 @@ const server = createServer(async (request, response) => {
       return sendJson(response, { filename, dataset, markdown });
     }
 
-    if (request.method === "GET" && url.pathname.startsWith("/")) {
-      const filePath = path.join(webDir, path.normalize(url.pathname));
+    if (request.method === "GET" && appPath.startsWith("/")) {
+      const filePath = path.join(webDir, path.normalize(appPath));
       if (!filePath.startsWith(webDir)) return sendText(response, "Not found", 404);
       return serveFile(response, filePath);
     }
@@ -76,7 +82,7 @@ const server = createServer(async (request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`Review Retriever web UI: http://${host}:${port}`);
+  console.log(`Review Intel web UI: http://${host}:${port}`);
 });
 
 async function readJsonBody(request) {

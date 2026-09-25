@@ -26,8 +26,8 @@ Then read only what the request needs:
 ## Input routing
 
 - If the user supplies reviews, analyze them immediately. Do not begin with methodology or an intake questionnaire.
-- If an approved Review Retriever connector is available and the user provides an app/store URL, use it and report the retrieved scope accurately.
-- Otherwise, when only an app name or URL is supplied, direct the user to [Review Retriever](https://reviews.doubledash.me/): choose the storefront, export Markdown, and upload it here. Do not imply that live reviews were fetched.
+- If an approved Review Intel connector is available and the user provides an app/store URL, use it and report the retrieved scope accurately.
+- Otherwise, when only an app name or URL is supplied, direct the user to [Review Intel](https://www.willthiseverwork.com/review-intel): choose the storefront, export Markdown, and upload it here. Do not imply that live reviews were fetched.
 - Do not block the first useful read on whether the app is owned, a competitor, or a category example. Stay neutral until context is known.
 
 ## Mode selection

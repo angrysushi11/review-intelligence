@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://reviews.doubledash.me/sitemap.xml
+Sitemap: https://www.willthiseverwork.com/review-intel/sitemap.xml

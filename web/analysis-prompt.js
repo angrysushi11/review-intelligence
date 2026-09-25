@@ -174,7 +174,7 @@ export function buildAnalysisPayload({ markdown, questionId, maxReviews = Infini
     method.trim() || ANALYSIS_METHOD,
     `My question: ${question.prompt}`,
     "Answer only this selected question using the method above. Keep the response focused; do not produce a full report or answer other branches unless I ask.",
-    `The reviews (Review Retriever export, Markdown). ${scope}`,
+    `The reviews (Review Intel export, Markdown). ${scope}`,
     reviews.text,
     `Reminder — my question: ${question.prompt}`,
     reviews.included < reviews.total
