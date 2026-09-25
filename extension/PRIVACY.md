@@ -14,7 +14,7 @@ If the current page is a supported App Store or Google Play app-detail page, the
 
 ## What is sent
 
-The extension opens `https://www.willthiseverwork.com/review-intel` in a new tab. For a supported listing, the canonical public app URL is placed in the new tab's URL fragment so Review Intel can prefill the form. URL fragments are not sent in the HTTP page request. Review Intel clears the fragment after prefilling the form. The listing URL reaches the extraction service only if the user presses **Extract reviews** on the hosted page.
+The extension opens `https://www.willthiseverwork.com/review-intel/` in a new tab. For a supported listing, the canonical public app URL is placed in the new tab's URL fragment so Review Intel can prefill the form. URL fragments are not sent in the HTTP page request. Review Intel clears the fragment after prefilling the form. The listing URL reaches the extraction service only if the user presses **Extract reviews** on the hosted page.
 
 The extension does not retrieve reviews itself.
 

@@ -1,6 +1,6 @@
 # Review Intel Chrome extension
 
-This unpacked Manifest V3 extension is a one-click bridge to Review Intel. Click it while viewing an App Store or Google Play listing and it opens `https://www.willthiseverwork.com/review-intel` with that public store URL already in the form. On any other page it opens a blank Review Intel form.
+This unpacked Manifest V3 extension is a one-click bridge to Review Intel. Click it while viewing an App Store or Google Play listing and it opens `https://www.willthiseverwork.com/review-intel/` with that public store URL already in the form. On any other page it opens a blank Review Intel form.
 
 It does not scrape the page, retrieve reviews in the background, run analysis, or send a request until the user presses **Extract reviews** in Review Intel.
 
@@ -24,5 +24,5 @@ Version 0.1.1 is already published in the Chrome Web Store under the former Revi
 - The extension itself stores nothing.
 - The hosted Review Intel tool has its own request and analytics boundary; see the [extension privacy disclosure](./PRIVACY.md) and the repository's [data and privacy boundary](../README.md#data-and-privacy-boundary).
 
-- Live tool: <https://www.willthiseverwork.com/review-intel>
+- Live tool: <https://www.willthiseverwork.com/review-intel/>
 - Source repository: <https://github.com/angrysushi11/review-intelligence>

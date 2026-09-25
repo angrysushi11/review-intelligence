@@ -9,11 +9,11 @@ Review Intel gets the evidence. Review Intelligence analyzes it. The legacy `rev
 
 ## Use it
 
-- Review Intel: <https://www.willthiseverwork.com/review-intel>
+- Review Intel: <https://www.willthiseverwork.com/review-intel/>
 - Legacy web address, kept working: <https://reviews.doubledash.me/>
-- Worked analysis example (no model required): <https://www.doubledash.me/tools/review-intelligence/#example>
-- Review Intelligence guide: <https://www.doubledash.me/tools/review-intelligence/>
-- MCP setup: <https://www.doubledash.me/tools/review-intelligence/mcp/>
+- Worked analysis example (no model required): <https://www.willthiseverwork.com/review-intel/#example>
+- MCP setup: <https://www.willthiseverwork.com/review-intel/setup/>
+- Privacy: <https://www.willthiseverwork.com/review-intel/privacy/>
 
 The hosted web retriever accepts an App Store or Google Play URL and exports up to 500 public written reviews as Markdown. After an export, **Analyze in Claude** and **Analyze in ChatGPT** copy the same full Review Intelligence v13 method as a prompt, your question, and the reviews, repeat your question after the reviews, then open a regular chat. Paste and send to start the analysis. Claude receives the full export; ChatGPT receives the newest 150 reviews. The method is bundled with the browser code so both paths always use the full method, without requiring an installed skill or a custom GPT. Run `npm run build:method` after changing the v13 skill sources to regenerate the Markdown and JavaScript method assets; tests reject stale generated files. The MCP returns bounded batches of up to 500 records and exposes an opaque `continuation.next_cursor` for further Google Play batches. Keep calling with the same app, market, sort order, and a limit of at least 150 until `continuation.has_more` is false. Apple coverage remains limited by the public feed for each storefront. Neither route requires an App Store Connect account, Play Console account, API key, or OAuth client.
 
@@ -35,7 +35,7 @@ The plugin lives in [`plugins/review-intelligence`](./plugins/review-intelligenc
   "mcpServers": {
     "review-intelligence": {
       "type": "http",
-      "url": "https://reviews.doubledash.me/mcp"
+      "url": "https://www.willthiseverwork.com/review-intel/mcp"
     }
   }
 }

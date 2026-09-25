@@ -8,9 +8,9 @@ This file is an optional content map for systems that choose to read llms.txt. I
 
 - [Review Intel](https://www.willthiseverwork.com/review-intel/): Retrieve up to 500 public written reviews as a Markdown packet.
   After retrieval, Analyze copies the packet with an evidence-first prompt and opens Claude or ChatGPT.
-- [Review Intelligence](https://www.doubledash.me/tools/review-intelligence/): Understand the analysis method, decisions it supports, and its limits.
-- [MCP setup](https://www.doubledash.me/tools/review-intelligence/mcp/): Connect the read-only Review Intel MCP server to Claude Cowork, Codex, or another remote HTTP MCP client.
-- [Worked analysis example](https://www.doubledash.me/tools/review-intelligence/#example): See how a review theme is named, prioritized, and traced to evidence.
+- [Setup](https://www.willthiseverwork.com/review-intel/setup/): Connect the read-only Review Intel MCP server and analysis method to Claude, Codex, or another remote HTTP MCP client.
+- [Worked analysis example](https://www.willthiseverwork.com/review-intel/#example): See how a review theme is named, prioritized, and traced to evidence.
+- [Privacy](https://www.willthiseverwork.com/review-intel/privacy/): Read the website and MCP data boundary, with a link to the extension-specific policy.
 
 ## What the connected workflow can do
 
@@ -30,6 +30,6 @@ This file is an optional content map for systems that choose to read llms.txt. I
 ## Technical references
 
 - [Source code](https://github.com/angrysushi11/review-intelligence)
-- [MCP endpoint](https://reviews.doubledash.me/mcp)
+- [MCP endpoint](https://www.willthiseverwork.com/review-intel/mcp)
 - [Sitemap](https://www.willthiseverwork.com/review-intel/sitemap.xml)
 - [Crawler policy](https://www.willthiseverwork.com/review-intel/robots.txt)

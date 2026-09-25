@@ -16,7 +16,7 @@ const SERVER_NAME = "review-retriever";
 const SERVER_VERSION = "1.0.0";
 const TOOL_NAME = "retrieve_app_reviews";
 const SCHEMA_VERSION = "review-retriever.v1";
-const POWER_USER_SETUP_URL = "https://www.doubledash.me/tools/review-intelligence/mcp/";
+const POWER_USER_SETUP_URL = "https://www.willthiseverwork.com/review-intel/setup/";
 const MAX_CURSOR_LENGTH = 32_768;
 
 const platformSchema = z.enum(["auto", "app_store", "google_play"]);

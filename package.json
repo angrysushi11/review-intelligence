@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Fetch App Store and Google Play reviews and export them as Markdown for external LLM analysis.",
   "license": "Apache-2.0",
-  "homepage": "https://www.doubledash.me/tools/review-intelligence/",
+  "homepage": "https://www.willthiseverwork.com/review-intel/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/angrysushi11/review-intelligence.git"

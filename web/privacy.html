@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Review Intel privacy</title>
+    <meta name="description" content="How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata.">
+    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/privacy/">
+    <base href="/review-intel/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="wrap privacy-page">
+      <header class="privacy-masthead">
+        <a class="lnk privacy-back" href="/review-intel/">Back to Review Intel</a>
+        <p class="pencil privacy-kicker">Website + MCP · last updated 26 September 2026</p>
+        <h1 class="title">Privacy, without the fog.</h1>
+        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <p class="privacy-lede">Review Intel works with public app-store data. It has no user accounts and no review database in the application.</p>
+      </header>
+
+      <section class="privacy-summary" aria-labelledby="privacy-summary-title">
+        <h2 class="privacy-summary-title" id="privacy-summary-title">The short version</h2>
+        <ul>
+          <li>Public reviews only.</li>
+          <li>No store login or OAuth.</li>
+          <li>No advertising or sale of data.</li>
+          <li>No application review database.</li>
+        </ul>
+      </section>
+
+      <div class="privacy-sections">
+        <section>
+          <h2>What the website processes</h2>
+          <p>When you ask Review Intel to retrieve reviews, it processes the public App Store or Google Play listing you supplied, the public review text, and available public metadata such as rating, date, app version, reviewer name, and developer reply. It uses that data to return the requested review packet.</p>
+          <p>The website does not ask for App Store Connect or Play Console credentials. Do not send credentials, private exports, or other confidential information.</p>
+        </section>
+
+        <section>
+          <h2>What the MCP service processes</h2>
+          <p>The public MCP endpoint is read-only and requires no account or OAuth login. It processes the app target, market, sort order, requested limit, and any Google Play continuation cursor needed to return the next public batch.</p>
+          <p>Each response is limited to 500 reviews. Google Play may provide a continuation cursor; Apple’s public storefront feed does not provide an equivalent continuation path.</p>
+        </section>
+
+        <section>
+          <h2>Storage and infrastructure</h2>
+          <p>The application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google services may retain ordinary request or operational logs under their own policies.</p>
+          <p>Public review text and reviewer names can still be personal data even when they are publicly visible. Handle downloaded packets according to the rules that apply to your use.</p>
+        </section>
+
+        <section>
+          <h2>Website analytics</h2>
+          <p>The hosted pages use Google Analytics. The application sends a sanitized page location without the app URL, query parameters, or fragment. It records coarse product interactions such as starting or completing retrieval, opening an analysis destination, or choosing a setup link.</p>
+          <p>When a visit arrives from a recognized AI assistant, analytics may also receive a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Review Intel does not use this information for advertising or sell it.</p>
+        </section>
+
+        <section>
+          <h2>Evidence and model boundaries</h2>
+          <p>The web tool can prepare review text for a destination you choose, such as Claude or ChatGPT. Those providers process data under their own terms and privacy policies. The public MCP endpoint returns evidence to the client that called it; how that client stores or uses the response is controlled by that client.</p>
+          <p>Reviews can reveal patterns in the retrieved sample. They do not by themselves prove revenue, retention, conversion, causality, or the views of every user.</p>
+        </section>
+
+        <section>
+          <h2>Chrome extension</h2>
+          <p>The optional Chrome extension has a narrower boundary: after a deliberate click, it can read the current supported app-listing URL and open Review Intel with that URL ready in the form. Read the <a href="extension/privacy/">extension-specific privacy policy</a> for its exact permissions and handling.</p>
+        </section>
+
+        <section>
+          <h2>Your choices and contact</h2>
+          <p>You can use the website without an account. Do not start a retrieval or connect the MCP service if you do not want the public app target and returned reviews processed through those services. You can avoid website analytics with browser privacy controls or an appropriate content blocker.</p>
+          <p>Questions: <a href="mailto:tools@doubledash.me">tools@doubledash.me</a></p>
+        </section>
+      </div>
+
+      <hr class="rule">
+      <footer class="privacy-footer">
+        <a class="drawn privacy-return" href="/review-intel/">
+          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true"><path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
+          <span>Open Review Intel</span>
+        </a>
+        <a class="lnk" href="extension/privacy/">Extension privacy</a>
+      </footer>
+    </main>
+  </body>
+</html>

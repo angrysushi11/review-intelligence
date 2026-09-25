@@ -1,12 +1,12 @@
 {
   "name": "review-intelligence",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Retrieve and analyze app reviews into evidence-backed product, pricing, growth, and ASO insights.",
   "author": {
     "name": "Dasha Antonova",
-    "url": "https://www.doubledash.me/"
+    "url": "https://www.willthiseverwork.com/#about"
   },
-  "homepage": "https://www.doubledash.me/tools/review-intelligence/",
+  "homepage": "https://www.willthiseverwork.com/review-intel/",
   "repository": "https://github.com/angrysushi11/review-intelligence",
   "keywords": [
     "app reviews",
@@ -26,7 +26,7 @@
     "capabilities": [
       "Read"
     ],
-    "websiteURL": "https://www.doubledash.me/tools/review-intelligence/",
+    "websiteURL": "https://www.willthiseverwork.com/review-intel/",
     "defaultPrompt": [
       "Retrieve reviews from this App Store or Google Play URL and show me the first useful read.",
       "Analyze this review export and find the strongest product, pricing, and ASO gaps.",

@@ -2,13 +2,185 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Review Intel power-user setup</title>
-    <meta name="robots" content="noindex,nofollow">
-    <meta http-equiv="refresh" content="0; url=https://www.doubledash.me/tools/review-intelligence/mcp/">
-    <link rel="canonical" href="https://www.doubledash.me/tools/review-intelligence/mcp/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Connect Review Intel to Claude or Codex</title>
+    <meta name="description" content="Connect Review Intel once, then retrieve and analyze public App Store and Google Play reviews inside Claude, Codex, or another MCP client.">
+    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/setup/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.willthiseverwork.com/review-intel/setup/">
+    <meta property="og:title" content="Connect Review Intel to Claude or Codex">
+    <meta property="og:description" content="Connect once, paste an app link, and ask evidence-backed questions about public app reviews.">
+    <meta property="og:image" content="https://www.willthiseverwork.com/review-intel/review-retriever-og.png">
+    <base href="/review-intel/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      if (window.location.hostname === "reviews.doubledash.me" || window.location.hostname === "willthiseverwork.com" || window.location.hostname === "www.willthiseverwork.com") {
+        const analyticsScript = document.createElement("script");
+        analyticsScript.async = true;
+        analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-5W48W3ZCBF";
+        document.head.appendChild(analyticsScript);
+        gtag("js", new Date());
+        gtag("config", "G-5W48W3ZCBF", { page_location: `${window.location.origin}${window.location.pathname}` });
+        document.addEventListener("click", (event) => {
+          const link = event.target.closest?.("[data-setup-cta]");
+          if (!link) return;
+          gtag("event", "review_connect_click", { placement: link.dataset.setupCta, destination: link.href });
+        });
+      }
+    </script>
   </head>
   <body>
-    <p>Continue to the <a href="https://www.doubledash.me/tools/review-intelligence/mcp/">Review Intel MCP setup guide</a>.</p>
+    <main class="wrap setup-page">
+      <nav class="setup-nav" aria-label="Review Intel setup navigation">
+        <a class="wordmark" href="/review-intel/">Review Intel</a>
+        <div class="setup-nav-links">
+          <a class="lnk" href="/review-intel/setup/#claude">Claude</a>
+          <a class="lnk" href="/review-intel/setup/#codex">Codex</a>
+        </div>
+      </nav>
+
+      <header class="setup-hero">
+        <p class="hand setup-kicker">connect once · keep asking</p>
+        <h1 class="title">Talk to app reviews in Claude or Codex.</h1>
+        <svg class="title-mark setup-title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <p class="setup-lede">Paste an App Store or Google Play link. Ask what users love, hate, or expected. Keep following the evidence without downloading and uploading a new file each time.</p>
+        <div class="setup-hero-actions">
+          <a class="drawn setup-primary" href="/review-intel/setup/#claude">
+            <svg viewBox="0 0 190 52" preserveAspectRatio="none" aria-hidden="true"><path d="M6 8 C 50 3, 140 4, 184 7 C 187 20, 186 34, 183 45 C 130 49, 55 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
+            <span>Set up Claude</span>
+          </a>
+          <a class="lnk" href="/review-intel/setup/#codex">Set up Codex</a>
+        </div>
+      </header>
+
+      <section class="setup-trust" aria-label="Access and privacy summary">
+        <div><strong>Public reviews only</strong><span>No store account, API key, or login.</span></div>
+        <div><strong>Read-only</strong><span>It cannot change reviews or store data.</span></div>
+        <div><strong>Traceable</strong><span>Answers can cite the review evidence behind them.</span></div>
+      </section>
+
+      <section class="setup-flow" aria-labelledby="setup-flow-title">
+        <p class="pencil setup-stage-label">01 · the whole flow</p>
+        <h2 id="setup-flow-title">Connect. Paste a link. Ask a real question.</h2>
+        <ol>
+          <li><span>1</span><p><strong>Connect it once.</strong> Choose Claude or Codex below.</p></li>
+          <li><span>2</span><p><strong>Paste an app link.</strong> Add a country when it matters.</p></li>
+          <li><span>3</span><p><strong>Keep asking.</strong> Compare themes, markets, or competitors.</p></li>
+        </ol>
+      </section>
+
+      <section class="setup-route" id="claude" aria-labelledby="claude-title">
+        <header class="setup-section-head">
+          <p class="pencil setup-stage-label">02 · Claude</p>
+          <h2 id="claude-title">Add the skill and connector.</h2>
+          <p>About two minutes. The skill carries the evidence rules; the connector retrieves the public reviews.</p>
+        </header>
+        <ol class="setup-steps">
+          <li><span>01</span><p>Download the Review Intelligence skill. In Claude, open <strong>Skills → Add → Upload a skill</strong>, choose the ZIP, and turn it on.</p></li>
+          <li><span>02</span><p>Select <strong>Connect in Claude</strong> and add Review Intel. Leave the optional OAuth fields empty.</p></li>
+          <li><span>03</span><p>Start a new chat, enable Review Intel, paste the app link, and ask your first question.</p></li>
+        </ol>
+        <div class="setup-actions">
+          <a class="setup-button setup-button--primary" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download data-setup-cta="claude_skill">Download skill</a>
+          <a class="setup-button" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener" data-setup-cta="claude_connector">Connect in Claude</a>
+        </div>
+        <div class="setup-subroute">
+          <h3>Claude Code</h3>
+          <p>Run this once, then start a new session:</p>
+          <pre><code>claude mcp add --transport http review-retriever https://www.willthiseverwork.com/review-intel/mcp</code></pre>
+        </div>
+      </section>
+
+      <section class="setup-route" id="codex" aria-labelledby="codex-title">
+        <header class="setup-section-head">
+          <p class="pencil setup-stage-label">03 · Codex</p>
+          <h2 id="codex-title">Install one plugin.</h2>
+          <p>The plugin adds both the public review retriever and the evidence-bound analysis method.</p>
+        </header>
+        <pre><code>codex plugin marketplace add angrysushi11/review-intelligence --ref main
+codex plugin add review-intelligence@doubledash</code></pre>
+        <ol class="setup-steps setup-steps--compact">
+          <li><span>01</span><p>Run the two commands in order.</p></li>
+          <li><span>02</span><p>Start a new task so the plugin loads.</p></li>
+          <li><span>03</span><p>Paste an app link and ask your first question.</p></li>
+        </ol>
+        <a class="lnk setup-source-link" href="https://github.com/angrysushi11/review-intelligence/tree/main/plugins/review-intelligence#install-from-github" target="_blank" rel="noreferrer" data-setup-cta="codex_install_guide">Open the install guide</a>
+      </section>
+
+      <section class="setup-prompt" aria-labelledby="prompt-title">
+        <div>
+          <p class="pencil setup-stage-label">04 · your first question</p>
+          <h2 id="prompt-title">Start broad, then follow the evidence.</h2>
+          <pre><code>Analyze reviews for [App Store or Google Play URL] in [country].
+Show me what users love, hate, and expected. Group repeated patterns, include exact quotes with evidence IDs, and keep findings separate from hypotheses.</code></pre>
+        </div>
+        <div class="setup-followups">
+          <h3>Then keep asking</h3>
+          <ul>
+            <li>What do people complain about most?</li>
+            <li>What are they trying to do when it fails?</li>
+            <li>What exact words do they use?</li>
+            <li>How is this different by country or competitor?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="setup-fallback" id="custom-gpt" aria-labelledby="fallback-title">
+        <p class="pencil setup-stage-label">No Claude or Codex?</p>
+        <h2 id="fallback-title">Use the file version.</h2>
+        <p>Retrieve the reviews on the web, download the Markdown file, and upload it to the Custom GPT. It works; you just repeat the file step for each new review set.</p>
+        <div class="setup-actions">
+          <a class="setup-button setup-button--primary" href="/review-intel/" data-setup-cta="web_retriever">Retrieve reviews</a>
+          <a class="setup-button" href="https://chatgpt.com/g/g-6a0123a3bc1c81918201a70e6307d35d-app-review-growth-analyzer" target="_blank" rel="noopener" data-setup-cta="custom_gpt">Open Custom GPT</a>
+        </div>
+      </section>
+
+      <details class="setup-details">
+        <summary>Technical details and data limits</summary>
+        <div class="setup-details-body">
+          <p>Review Intel retrieves public App Store and Google Play reviews. It does not sign in to App Store Connect or Play Console, and it cannot change store data.</p>
+          <dl class="setup-reference-grid">
+            <div><dt>MCP endpoint</dt><dd><code>https://www.willthiseverwork.com/review-intel/mcp</code></dd></div>
+            <div><dt>Per response</dt><dd>Up to 500 reviews. Google Play can continue into later batches; Apple is limited by its public storefront feed.</dd></div>
+            <div><dt>Storage</dt><dd>No review database is present in the application. Ordinary infrastructure request logs may still exist, so do not send credentials or private exports.</dd></div>
+            <div><dt>Evidence limit</dt><dd>Reviews reveal patterns and language. They do not prove revenue, retention, conversion, or causality on their own.</dd></div>
+          </dl>
+          <div class="setup-subroute">
+            <h3>Another MCP client</h3>
+            <p>Add a remote HTTP server named Review Intel with no authentication headers:</p>
+            <pre><code>{
+  "mcpServers": {
+    "review-intelligence": {
+      "type": "http",
+      "url": "https://www.willthiseverwork.com/review-intel/mcp"
+    }
+  }
+}</code></pre>
+          </div>
+          <p><a class="lnk" href="privacy/">Read the product and MCP privacy notes</a></p>
+        </div>
+      </details>
+
+      <section class="setup-return">
+        <p class="hand">connected?</p>
+        <h2>Now ask a question worth answering.</h2>
+        <p>Start with your own app, a competitor, or the same app in two countries. You can also inspect the <a class="lnk" href="/review-intel/#example">worked example</a> first.</p>
+        <a class="setup-button setup-button--primary" href="/review-intel/" data-setup-cta="return_to_app">Open Review Intel</a>
+      </section>
+
+      <footer class="setup-footer">
+        <span>Review Intel · public review evidence, made by <a href="https://www.willthiseverwork.com/#about">Dasha Antonova</a>.</span>
+        <a href="privacy/">Privacy</a>
+        <a href="https://github.com/angrysushi11/review-intelligence" target="_blank" rel="noreferrer">Source</a>
+      </footer>
+    </main>
   </body>
 </html>

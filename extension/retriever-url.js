@@ -1,6 +1,6 @@
 // Keep this release on the canonical Review Intel entry point. Previously
 // installed Review Retriever builds keep opening reviews.doubledash.me.
-const RETRIEVER_URL = "https://www.willthiseverwork.com/review-intel";
+const RETRIEVER_URL = "https://www.willthiseverwork.com/review-intel/";
 const APPLE_STORE_HOSTS = new Set(["apps.apple.com", "itunes.apple.com"]);
 
 export function normalizeStoreUrl(value) {

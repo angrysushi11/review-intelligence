@@ -13,7 +13,7 @@ test("the Chrome extension opens supported store pages in Review Intel", () => {
   for (const storeUrl of [appStoreUrl, playUrl]) {
     const target = new URL(buildRetrieverUrl(storeUrl));
     assert.equal(target.origin, "https://www.willthiseverwork.com");
-    assert.equal(target.pathname, "/review-intel");
+    assert.equal(target.pathname, "/review-intel/");
     assert.equal(target.searchParams.has("app_url"), false);
     assert.equal(new URLSearchParams(target.hash.slice(1)).get("app_url"), normalizeStoreUrl(storeUrl));
     assert.equal(target.searchParams.get("source"), "chrome-extension");
@@ -122,7 +122,7 @@ test("the service worker opens exactly one sanitized Retriever tab per deliberat
 
     const supportedTarget = new URL(createdTabs[0].url);
     assert.equal(supportedTarget.origin, "https://www.willthiseverwork.com");
-    assert.equal(supportedTarget.pathname, "/review-intel");
+    assert.equal(supportedTarget.pathname, "/review-intel/");
     assert.equal(
       new URLSearchParams(supportedTarget.hash.slice(1)).get("app_url"),
       "https://play.google.com/store/apps/details?id=com.example.app"
@@ -131,7 +131,7 @@ test("the service worker opens exactly one sanitized Retriever tab per deliberat
 
     const unsupportedTarget = new URL(createdTabs[1].url);
     assert.equal(unsupportedTarget.origin, "https://www.willthiseverwork.com");
-    assert.equal(unsupportedTarget.pathname, "/review-intel");
+    assert.equal(unsupportedTarget.pathname, "/review-intel/");
     assert.equal(new URLSearchParams(unsupportedTarget.hash.slice(1)).has("app_url"), false);
   } finally {
     if (previousChrome) Object.defineProperty(globalThis, "chrome", previousChrome);

@@ -17,8 +17,8 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
 
   // Search metadata stays stable while the page copy changes.
   assert.match(html, /<title>Export &amp; Analyze App Reviews \| Review Intel<\/title>/);
-  assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel">/);
-  assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel">/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
+  assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
   assert.match(html, /<base href="\/review-intel\/">/);
   assert.match(html, /name="description" content="Export public App Store and Google Play reviews, discover what users love and hate, and capture the exact language they use\."/);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
@@ -80,9 +80,9 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(appJs, /fetch\(`\$\{appBasePath\}\/api\/extract`/);
 
   // Connect: direct connector link, setup guide, Claude Code one-liner.
-  assert.match(idleState, /href="https:\/\/claude\.ai\/customize\/connectors\?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Freviews\.doubledash\.me%2Fmcp"/);
+  assert.match(idleState, /href="https:\/\/claude\.ai\/customize\/connectors\?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww\.willthiseverwork\.com%2Freview-intel%2Fmcp"/);
   assert.match(idleState, /works on the free plan/);
-  assert.match(idleState, /claude mcp add --transport http review-retriever https:\/\/reviews\.doubledash\.me\/mcp/);
+  assert.match(idleState, /claude mcp add --transport http review-retriever https:\/\/www\.willthiseverwork\.com\/review-intel\/mcp/);
 
   // "500" is stated where it matters, not everywhere.
   assert.ok((idleState.match(/500/g) ?? []).length <= 3);
@@ -94,10 +94,10 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(idleState, /Is this an app review scraper\?/);
   assert.match(idleState, /There’s no CSV, Excel or JSON export on this page/);
 
-  // Footers link the guide, source, extension privacy and support.
-  assert.equal((html.match(/href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/"[^>]*>Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
+  // Footers link the canonical guide, source, product privacy and support.
+  assert.equal((html.match(/href="setup\/"[^>]*>Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
   assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
-  assert.equal((html.match(/href="extension\/privacy\/">Extension privacy<\/a>/g) ?? []).length, 2);
+  assert.equal((html.match(/href="privacy\/">Privacy<\/a>/g) ?? []).length, 2);
   assert.match(html, /public reviews only · nothing stored/);
 
   // Results: compact receipt, visible question, one primary action, setup block, then proof.
@@ -136,7 +136,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(doneState, /id="download-btn"[^>]*>Download \.md<\/button>/);
   assert.ok(doneState.indexOf('id="results-upgrade"') < doneState.indexOf('id="evidence-title"'));
   assert.match(doneState, /id="results-upgrade-kicker">skip the copy-paste<\/p>/);
-  assert.match(doneState, /id="claude-skill-download" href="app-review-growth-analyzer-skill\.zip" download/);
+  assert.match(doneState, /id="claude-skill-download" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/app-review-growth-analyzer-skill\.zip" download/);
   assert.match(doneState, /id="evidence-title">Newest in the packet<\/h2>/);
 
   // Design system tokens and the new components.
@@ -464,14 +464,42 @@ test("the normalized review dataset exposes store artwork for the result packet"
   assert.equal(dataset.app_icon_url, "https://example.com/icon.png");
 });
 
-test("the retired local setup page forwards to the canonical MCP guide", async () => {
+test("the canonical setup guide covers every supported route and evidence boundary", async () => {
   const html = await readFile(new URL("setup.html", webUrl), "utf8");
 
-  assert.match(html, /<meta name="robots" content="noindex,nofollow">/);
-  assert.match(html, /http-equiv="refresh" content="0; url=https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/"/);
-  assert.match(html, /<link rel="canonical" href="https:\/\/www\.doubledash\.me\/tools\/review-intelligence\/mcp\/">/);
-  assert.match(html, /Review Intel MCP setup guide/);
-  assert.doesNotMatch(html, /setup\.css|setup\.js|manual-export/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/setup\/">/);
+  assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/setup\/">/);
+  assert.match(html, /Talk to app reviews in Claude or Codex/);
+  assert.match(html, /href="\/review-intel\/setup\/#claude">Claude<\/a>/);
+  assert.match(html, /href="\/review-intel\/setup\/#codex">Codex<\/a>/);
+  assert.match(html, /app-review-growth-analyzer-skill\.zip/);
+  assert.match(html, /claude\.ai\/customize\/connectors/);
+  assert.match(html, /codex plugin marketplace add angrysushi11\/review-intelligence --ref main/);
+  assert.match(html, /codex plugin add review-intelligence@doubledash/);
+  assert.match(html, /No Claude or Codex\?/);
+  assert.match(html, /Open Custom GPT/);
+  assert.match(html, /Then keep asking/);
+  assert.match(html, /Up to 500 reviews/);
+  assert.match(html, /Google Play can continue into later batches/);
+  assert.match(html, /Apple is limited by its public storefront feed/);
+  assert.match(html, /No review database is present in the application/);
+  assert.match(html, /do not prove revenue, retention, conversion, or causality/);
+  assert.match(html, /review_connect_click/);
+  assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
+});
+
+test("the product privacy page covers website and MCP processing and links the extension policy", async () => {
+  const html = await readFile(new URL("privacy.html", webUrl), "utf8");
+
+  assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/privacy\/">/);
+  assert.match(html, /What the website processes/);
+  assert.match(html, /What the MCP service processes/);
+  assert.match(html, /no review database or persistence layer/i);
+  assert.match(html, /ordinary request or operational logs/);
+  assert.match(html, /Google Analytics/);
+  assert.match(html, /without the app URL, query parameters, or fragment/);
+  assert.match(html, /href="extension\/privacy\/">extension-specific privacy policy<\/a>/);
+  assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
 });
 
 test("the extension privacy page publishes the exact handoff and data boundary", async () => {
@@ -486,7 +514,7 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   assert.match(html, /coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot/);
   assert.match(html, /tools@doubledash\.me/);
   assert.doesNotMatch(html, /dash@doubledash\.me/);
-  assert.match(html, /class="drawn privacy-return" href="\/review-intel">[\s\S]*?<span>Open Review Intel<\/span>/);
+  assert.match(html, /class="drawn privacy-return" href="\/review-intel\/">[\s\S]*?<span>Open Review Intel<\/span>/);
 });
 
 test("the setup bridge and retriever assets are published explicitly", async () => {
@@ -498,9 +526,27 @@ test("the setup bridge and retriever assets are published explicitly", async () 
     status: 308,
     headers: { Location: "https://www.willthiseverwork.com/review-intel/" },
   });
-  assert.equal(routes.get("/setup/?"), "/web/setup.html");
+  const unslashedApp = config.routes.find(({ src }) => src === "/review-intel");
+  assert.equal(unslashedApp.status, 308);
+  assert.equal(unslashedApp.headers.Location, "https://www.willthiseverwork.com/review-intel/");
+  assert.equal(routes.get("/review-intel/"), "/web/index.html");
+  assert.equal(routes.get("/review-intel/mcp"), "/api/mcp.js");
+  const unslashedSetup = config.routes.find(({ src }) => src === "/review-intel/setup");
+  assert.equal(unslashedSetup.status, 308);
+  assert.equal(unslashedSetup.headers.Location, "https://www.willthiseverwork.com/review-intel/setup/");
+  assert.equal(routes.get("/review-intel/setup/"), "/web/setup.html");
+  const unslashedPrivacy = config.routes.find(({ src }) => src === "/review-intel/privacy");
+  assert.equal(unslashedPrivacy.status, 308);
+  assert.equal(unslashedPrivacy.headers.Location, "https://www.willthiseverwork.com/review-intel/privacy/");
+  assert.equal(routes.get("/review-intel/privacy/"), "/web/privacy.html");
+  const unslashedExtensionPrivacy = config.routes.find(({ src }) => src === "/review-intel/extension/privacy");
+  assert.equal(unslashedExtensionPrivacy.status, 308);
+  assert.equal(unslashedExtensionPrivacy.headers.Location, "https://www.willthiseverwork.com/review-intel/extension/privacy/");
+  assert.equal(routes.get("/review-intel/extension/privacy/"), "/web/extension-privacy.html");
+  const legacySetup = config.routes.find(({ src }) => src === "/setup/?");
+  assert.equal(legacySetup.status, 308);
+  assert.equal(legacySetup.headers.Location, "https://www.willthiseverwork.com/review-intel/setup/");
   assert.equal(routes.get("/api/search"), "/api/search.js");
-  assert.equal(routes.get("/review-intel/?"), "/web/index.html");
   assert.equal(routes.get("/review-intel/api/search"), "/api/search.js");
   assert.equal(routes.get("/review-intel/api/extract"), "/api/extract.js");
   assert.equal(routes.get("/review-intel/app.js"), "/web/app.js");
@@ -509,7 +555,6 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/review-intel/robots.txt"), "/web/robots.txt");
   assert.equal(routes.get("/review-intel/sitemap.xml"), "/web/sitemap.xml");
   assert.equal(routes.get("/review-intel/llms.txt"), "/web/llms.txt");
-  assert.equal(routes.get("/review-intel/extension/privacy/?"), "/web/extension-privacy.html");
   assert.equal(routes.get("/extension/privacy/?"), "/web/extension-privacy.html");
   assert.equal(routes.has("/setup.css"), false);
   assert.equal(routes.has("/setup.js"), false);
@@ -529,13 +574,33 @@ test("the crawler files publish an accurate sitemap and optional llms content ma
   const llms = await readFile(new URL("llms.txt", webUrl), "utf8");
 
   assert.match(robots, /Sitemap: https:\/\/www\.willthiseverwork\.com\/review-intel\/sitemap\.xml/);
-  assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel<\/loc>/);
-  assert.match(sitemap, /<lastmod>2026-09-25<\/lastmod>/);
+  assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/setup\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/privacy\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/extension\/privacy\/<\/loc>/);
+  assert.doesNotMatch(sitemap, /review-intel\/mcp|review-intel\/api/);
+  assert.match(sitemap, /<lastmod>2026-09-26<\/lastmod>/);
   assert.match(llms, /optional content map/);
   assert.match(llms, /not a crawler permission policy/);
   assert.match(llms, /https:\/\/www\.willthiseverwork\.com\/review-intel\/robots\.txt/);
   assert.match(llms, /MCP returns up to 500 reviews per response/);
   assert.match(llms, /cannot by itself prove revenue, retention, causality, or the views of every user/);
+  assert.doesNotMatch(llms, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
+});
+
+test("public product docs keep setup and MCP links on the canonical Review Intel surface", async () => {
+  const publicDocs = await Promise.all([
+    readFile(new URL("../README.md", import.meta.url), "utf8"),
+    readFile(new URL("../plugins/review-intelligence/README.md", import.meta.url), "utf8"),
+    readFile(new URL("llms.txt", webUrl), "utf8"),
+    readFile(new URL("index.html", webUrl), "utf8"),
+    readFile(new URL("setup.html", webUrl), "utf8"),
+    readFile(new URL("privacy.html", webUrl), "utf8"),
+  ]);
+
+  for (const source of publicDocs) {
+    assert.doesNotMatch(source, /reviews\.doubledash\.me\/mcp|(?:www\.)?doubledash\.me\/tools\/review-intelligence/);
+  }
 });
 
 test("production analytics records an AI source without leaking the query string", async () => {

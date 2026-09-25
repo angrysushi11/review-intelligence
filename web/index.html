@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Export &amp; Analyze App Reviews | Review Intel</title>
     <meta name="description" content="Export public App Store and Google Play reviews, discover what users love and hate, and capture the exact language they use.">
-    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel">
+    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.willthiseverwork.com/review-intel">
+    <meta property="og:url" content="https://www.willthiseverwork.com/review-intel/">
     <meta property="og:title" content="Export &amp; Analyze App Reviews | Review Intel">
     <meta property="og:description" content="Export public App Store and Google Play reviews, discover what users love and hate, and capture the exact language they use.">
     <meta property="og:image" content="https://www.willthiseverwork.com/review-intel/review-retriever-og.png">
@@ -134,7 +134,7 @@
           <p class="form-meta">Free · No signup · Public reviews only · Open source</p>
         </form>
 
-        <section class="sample" aria-labelledby="sample-title">
+        <section class="sample" id="example" aria-labelledby="sample-title">
           <p class="hand section-kicker">what you get, for real</p>
           <h2 class="section-title" id="sample-title">What 40 recent Calm reviews said</h2>
           <p class="sample-meta">Google Play US · the 40 newest reviews, Sep 16–23, 2026 · one question in Claude</p>
@@ -174,7 +174,7 @@
               </ul>
             </div>
 
-            <a class="lnk sample-link" href="https://www.doubledash.me/tools/review-intelligence/#example">See a full worked example</a>
+            <a class="lnk sample-link" href="#questions-title">See what else reviews can answer</a>
           </article>
         </section>
 
@@ -232,11 +232,11 @@
           <h2 id="connect-title">Want it inside your chat?</h2>
           <p>Connect once. Then paste any app link in Claude or Codex, pull more than 500 Google Play reviews, and compare apps and countries in one conversation.</p>
           <div class="connect-actions">
-            <a data-connect-placement="landing_connector" class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
-            <a data-connect-placement="landing_guide" class="connect-button" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Codex and other clients<span>setup guide</span></a>
+            <a data-connect-placement="landing_connector" class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
+            <a data-connect-placement="landing_guide" class="connect-button" href="setup/">Codex and other clients<span>setup guide</span></a>
           </div>
           <p class="connect-code-label">Claude Code</p>
-          <code class="connect-code">claude mcp add --transport http review-retriever https://reviews.doubledash.me/mcp</code>
+          <code class="connect-code">claude mcp add --transport http review-retriever https://www.willthiseverwork.com/review-intel/mcp</code>
         </section>
 
         <section class="trust" aria-label="About Review Intel">
@@ -246,7 +246,7 @@
             <li>Open source, Apache-2.0</li>
             <li>No store login</li>
           </ul>
-          <p class="made-by">Made by <a href="https://www.doubledash.me/">Dasha at DoubleDash</a>.</p>
+          <p class="made-by">Made by <a href="https://www.willthiseverwork.com/#about">Dasha Antonova</a>.</p>
         </section>
 
         <section class="faq" aria-labelledby="faq-title">
@@ -282,9 +282,9 @@
         <footer class="foot">
           <span class="pencil">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="footer">Use it in Claude or Codex</a>
+            <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
-            <a class="lnk" href="extension/privacy/">Extension privacy</a>
+            <a class="lnk" href="privacy/">Privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
         </footer>
@@ -409,16 +409,16 @@
               <p class="upgrade-step">1 · One click</p>
               <h3>Connect Review Intel</h3>
               <p>Claude fetches the reviews itself, for any app.<br>Works on the free plan.</p>
-              <a class="upgrade-button upgrade-button--primary" data-connect-placement="results_connector" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Freviews.doubledash.me%2Fmcp" target="_blank" rel="noopener">Add to Claude</a>
+              <a class="upgrade-button upgrade-button--primary" data-connect-placement="results_connector" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener">Add to Claude</a>
             </article>
             <article class="upgrade-card">
               <p class="upgrade-step">2 · Three quick steps</p>
               <h3>Add the analysis skill</h3>
               <p>Every Claude chat gets the full method.<br>Download it, then upload it in <a class="upgrade-inline-link" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">Claude Skills</a>.</p>
-              <a class="upgrade-button" id="claude-skill-download" href="app-review-growth-analyzer-skill.zip" download>Download skill</a>
+              <a class="upgrade-button" id="claude-skill-download" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download>Download skill</a>
             </article>
           </div>
-          <p class="upgrade-guide">Codex, Claude Code or another client? <a data-connect-placement="results_guide" href="https://www.doubledash.me/tools/review-intelligence/mcp/">Setup guide</a></p>
+          <p class="upgrade-guide">Codex, Claude Code or another client? <a data-connect-placement="results_guide" href="setup/">Setup guide</a></p>
         </section>
 
         <section class="evidence" aria-labelledby="evidence-title">
@@ -433,9 +433,9 @@
         <footer class="foot">
           <span class="hand privacy-note">public reviews only · nothing stored</span>
           <span class="foot-links">
-            <a class="lnk" href="https://www.doubledash.me/tools/review-intelligence/mcp/" data-connect-placement="footer">Use it in Claude or Codex</a>
+            <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
-            <a class="lnk" href="extension/privacy/">Extension privacy</a>
+            <a class="lnk" href="privacy/">Privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
         </footer>

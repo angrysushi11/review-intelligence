@@ -5,7 +5,7 @@ Review Intelligence is a plugin for ChatGPT and Codex that turns public App Stor
 It combines:
 
 - the `app-review-growth-analyzer` skill for first reads, focused deep-dives, competitor analysis, and full reports;
-- the public, read-only Review Intel MCP service at `https://reviews.doubledash.me/mcp`;
+- the public, read-only Review Intel MCP service at `https://www.willthiseverwork.com/review-intel/mcp`;
 - an upload route for review exports when a live connection is unavailable or unnecessary.
 
 The analysis keeps review evidence, inference, and business outcomes separate. It does not modify app-store data or any other external system.
@@ -39,4 +39,8 @@ You can also upload a Markdown review export and ask for product, pricing, growt
 - `.mcp.json` — compatibility connection for existing Codex plugin installs
 - `skills/app-review-growth-analyzer/` — the Review Intelligence workflow and evidence protocol
 
-Product guide: https://www.doubledash.me/tools/review-intelligence/
+Product: https://www.willthiseverwork.com/review-intel/
+
+Setup guide: https://www.willthiseverwork.com/review-intel/setup/
+
+Privacy: https://www.willthiseverwork.com/review-intel/privacy/

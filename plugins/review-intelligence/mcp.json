@@ -3,7 +3,7 @@
   "mcpServers": {
     "review-intelligence": {
       "type": "streamable-http",
-      "url": "https://reviews.doubledash.me/mcp"
+      "url": "https://www.willthiseverwork.com/review-intel/mcp"
     }
   }
 }

@@ -13,7 +13,7 @@ const rootDir = path.resolve(__dirname, "..");
 const webDir = path.join(rootDir, "web");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
-const powerUserSetupUrl = "https://www.doubledash.me/tools/review-intelligence/mcp/";
+const canonicalSetupUrl = "https://www.willthiseverwork.com/review-intel/setup/";
 
 const server = createServer(async (request, response) => {
   try {
@@ -23,11 +23,19 @@ const server = createServer(async (request, response) => {
       return serveFile(response, path.join(webDir, "index.html"));
     }
 
+    if (request.method === "GET" && (url.pathname === "/setup" || url.pathname === "/setup/")) {
+      response.writeHead(302, { location: canonicalSetupUrl });
+      return response.end();
+    }
+
     const appPath = url.pathname.replace(/^\/review-intel(?=\/|$)/, "") || "/";
 
     if (request.method === "GET" && (appPath === "/setup" || appPath === "/setup/")) {
-      response.writeHead(302, { location: powerUserSetupUrl });
-      return response.end();
+      return serveFile(response, path.join(webDir, "setup.html"));
+    }
+
+    if (request.method === "GET" && (appPath === "/privacy" || appPath === "/privacy/")) {
+      return serveFile(response, path.join(webDir, "privacy.html"));
     }
 
     if (request.method === "GET" && (appPath === "/extension/privacy" || appPath === "/extension/privacy/")) {
