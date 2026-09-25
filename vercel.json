@@ -8,6 +8,7 @@
     { "src": "/mcp", "dest": "/api/mcp.js" },
     { "src": "/api/search", "dest": "/api/search.js" },
     { "src": "/api/extract", "dest": "/api/extract.js" },
+    { "src": "/r/(app_store|google_play)/([^/]+)\\.md", "dest": "/api/review-link.js" },
     { "src": "/setup/?", "dest": "/web/setup.html" },
     { "src": "/extension/privacy/?", "dest": "/web/extension-privacy.html" },
     { "src": "/styles.css", "dest": "/web/styles.css" },
