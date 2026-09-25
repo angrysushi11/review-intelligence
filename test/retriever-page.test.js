@@ -493,6 +493,11 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   const config = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8"));
   const routes = new Map(config.routes.map(({ src, dest }) => [src, dest]));
 
+  assert.deepEqual(config.routes[0], {
+    src: "/",
+    status: 308,
+    headers: { Location: "https://www.willthiseverwork.com/review-intel/" },
+  });
   assert.equal(routes.get("/setup/?"), "/web/setup.html");
   assert.equal(routes.get("/api/search"), "/api/search.js");
   assert.equal(routes.get("/review-intel/?"), "/web/index.html");
