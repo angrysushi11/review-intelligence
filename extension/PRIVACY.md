@@ -26,7 +26,7 @@ The current supported app-listing URL is web browsing activity under Chrome Web 
 
 The extension has no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code. Extension data is not sold, used for advertising or profiling, or used to determine creditworthiness or lending eligibility.
 
-The hosted Review Intel tool uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location without the app URL, query parameters, or fragment. Those providers may still process ordinary request or page metadata under their own policies. If the user starts retrieval, Review Intel processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.
+The hosted Review Intel tool uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location without the app URL, query parameters, or fragment. When a visit arrives from a recognized AI assistant, Analytics also receives a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Those providers may still process ordinary request or page metadata under their own policies. If the user starts retrieval, Review Intel processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.
 
 ## Limited use
 

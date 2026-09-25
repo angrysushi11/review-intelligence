@@ -62,7 +62,7 @@ test("the extension requests only activeTab and has no page-level access", async
   assert.equal(manifest.background.service_worker, "background.js");
   assert.equal(manifest.background.type, "module");
   assert.equal(manifest.name, "Review Intel");
-  assert.equal(manifest.version, "0.1.1");
+  assert.equal(manifest.version, "0.1.2");
   assert.equal(manifest.action.default_title, "Open this public app URL in Review Intel");
   assert.deepEqual(manifest.icons, {
     16: "icons/icon16.png",

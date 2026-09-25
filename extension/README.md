@@ -4,7 +4,7 @@ This unpacked Manifest V3 extension is a one-click bridge to Review Intel. Click
 
 It does not scrape the page, retrieve reviews in the background, run analysis, or send a request until the user presses **Extract reviews** in Review Intel.
 
-This 0.1.1 source package changes the destination and display name for the next Store update. The currently published 0.1.0 build still opens `https://reviews.doubledash.me/`; keep that legacy host available for those users until they update.
+This 0.1.2 source package changes the destination and display name for the next Store update. The currently published 0.1.1 build still opens `https://reviews.doubledash.me/`; keep that legacy host available for those users until they update.
 
 ## Test locally
 
@@ -13,7 +13,7 @@ This 0.1.1 source package changes the destination and display name for the next 
 3. Click **Load unpacked** and select this `extension` directory.
 4. Open an App Store or Google Play listing and click the Review Intel toolbar action.
 
-Version 0.1.0 is already published in the Chrome Web Store under the former Review Retriever name. The 0.1.1 update candidate includes a factual [privacy disclosure](./PRIVACY.md) and the official Double Dash mark as its Chrome icon. It is not live until its package and updated listing are submitted and approved.
+Version 0.1.1 is already published in the Chrome Web Store under the former Review Retriever name. The 0.1.2 update candidate includes a factual [privacy disclosure](./PRIVACY.md) and the official Double Dash mark as its Chrome icon. It is not live until its package and updated listing are submitted and approved.
 
 ## Permission and data boundary
 
