@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260926-feedback">
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -123,6 +123,7 @@
           </div>
 
           <p class="error" id="form-error" role="alert" aria-live="assertive" hidden>that doesn't look like a store link</p>
+          <p class="error-help" id="form-error-help" hidden>Still stuck? <a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Email tools@doubledash.me</a> and tell me what happened.</p>
 
           <div class="demo">
             <p class="hand demo-nudge" id="demo-label">no link handy? try one</p>
@@ -286,6 +287,8 @@
           <span class="foot-links">
             <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
+            <a class="lnk" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Feedback</a>
+            <a class="lnk" href="https://www.g2.com/products/review-intel/reviews" target="_blank" rel="noopener noreferrer">Review Intel on G2</a>
             <a class="lnk" href="privacy/">Privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
@@ -430,6 +433,20 @@
           <div class="peek" id="peek" aria-label="Review sample"></div>
         </section>
 
+        <section class="result-feedback" aria-labelledby="result-feedback-title">
+          <p class="hand result-feedback__kicker">a quick note?</p>
+          <div class="result-feedback__body">
+            <h2 id="result-feedback-title">Did this help?</h2>
+            <p>Tell me what worked, what didn’t, or what you needed next.</p>
+          </div>
+          <div class="result-feedback__actions">
+            <a class="result-feedback__email" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Email feedback</a>
+            <a class="result-feedback__email result-feedback__g2" href="https://www.g2.com/products/review-intel/take_survey" target="_blank" rel="noopener noreferrer">Write an honest G2 review</a>
+          </div>
+          <p class="result-feedback__g2-note">If you’ve used Review Intel, you can share any honest experience on G2.</p>
+          <p class="result-feedback__note">Your mail app opens with a draft. Add your note, then send it. If it doesn’t open, write to <a href="mailto:tools@doubledash.me">tools@doubledash.me</a>.</p>
+        </section>
+
         <hr class="rule">
 
         <footer class="foot">
@@ -437,6 +454,7 @@
           <span class="foot-links">
             <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
             <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
+            <a class="lnk" href="https://www.g2.com/products/review-intel/reviews" target="_blank" rel="noopener noreferrer">Review Intel on G2</a>
             <a class="lnk" href="privacy/">Privacy</a>
             <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
           </span>
@@ -444,6 +462,6 @@
       </section>
     </main>
 
-    <script type="module" src="app.js?v=20260925-results-redesign"></script>
+    <script type="module" src="app.js?v=20260926-feedback"></script>
   </body>
 </html>
