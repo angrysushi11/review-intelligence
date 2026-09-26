@@ -213,7 +213,8 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       'import { COUNTRY_OPTIONS } from "./markets.js";',
       'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
     )
-    .replace('from "./analysis-prompt.js?v=20260925-results-redesign";', `from "${new URL("analysis-prompt.js", webUrl).href}";`);
+    .replace('from "./analysis-prompt.js?v=20260925-results-redesign";', `from "${new URL("analysis-prompt.js", webUrl).href}";`)
+    .replace('from "./analytics.js";', `from "${new URL("analytics.js", webUrl).href}";`);
   assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
   assert.ok(executableAppJs.includes(new URL("analysis-prompt.js", webUrl).href), "the analysis module should resolve by absolute URL");
 
@@ -556,6 +557,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/review-intel/api/search"), "/api/search.js");
   assert.equal(routes.get("/review-intel/api/extract"), "/api/extract.js");
   assert.equal(routes.get("/review-intel/app.js"), "/web/app.js");
+  assert.equal(routes.get("/review-intel/analytics.js"), "/web/analytics.js");
   assert.equal(routes.get("/review-intel/styles.css"), "/web/styles.css");
   assert.equal(routes.get("/review-intel/review-intelligence-method.js"), "/web/review-intelligence-method.js");
   assert.equal(routes.get("/review-intel/robots.txt"), "/web/robots.txt");
@@ -568,6 +570,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/review-intelligence-method.js"), "/web/review-intelligence-method.js");
   assert.equal(routes.get("/review-intelligence-method.md"), "/web/review-intelligence-method.md");
   assert.equal(routes.get("/analysis-prompt.js"), "/web/analysis-prompt.js");
+  assert.equal(routes.get("/analytics.js"), "/web/analytics.js");
   assert.equal(routes.get("/llms.txt"), "/web/llms.txt");
   assert.equal(routes.get("/"), "/web/index.html");
   assert.equal(routes.has("/review/?"), false);
