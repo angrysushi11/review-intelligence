@@ -15,20 +15,20 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   const doneState = html.match(/<section id="state-done" hidden>([\s\S]*?)<\/main>/)?.[1] ?? "";
   assert.ok(idleState && doneState, "both page states should exist");
 
-  // Search metadata stays stable while the page copy changes.
-  assert.match(html, /<title>Export &amp; Analyze App Reviews \| Review Intel<\/title>/);
+  // Search metadata describes the answer, not only the extraction step.
+  assert.match(html, /<title>Find What Users Want in App Reviews \| Review Intel<\/title>/);
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
   assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
   assert.match(html, /<base href="\/review-intel\/">/);
-  assert.match(html, /name="description" content="Export public App Store and Google Play reviews, discover what users love and hate, and capture the exact language they use\."/);
+  assert.match(html, /name="description" content="Find what users love, where competing apps let them down, and what they wish worked differently\. Free public reviews and guided analysis, with evidence you can check\."/);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
 
   // Hero: the job first, no connector jargon.
   assert.match(idleState, /<span class="wordmark">Review Intel<\/span>/);
-  assert.match(idleState, /<p class="hand hero-kicker">for indie devs &amp; app makers<\/p>/);
+  assert.match(idleState, /<p class="hand hero-kicker">for anyone building an app from zero to one<\/p>/);
   assert.match(idleState, /<h1 class="title title--hero">Your competitors’ users already told you what to build\.<\/h1>/);
-  assert.match(idleState, /Paste an App Store or Google Play link\. Get up to 500 public reviews, then ask Claude or ChatGPT what people love, hate and wish existed, with quotes you can check\./);
+  assert.match(idleState, /Find what users love, where competing apps let them down, and what they wish worked differently, with reviews you can check\. Review Intel collects public app reviews for free and guides the analysis in Claude or ChatGPT\./);
   const hero = html.match(/<header class="hero">([\s\S]*?)<\/header>/)?.[1] ?? "";
   assert.doesNotMatch(hero, /\b(?:MCP|Codex|batches|continuation cursor|power users)\b/i);
 
