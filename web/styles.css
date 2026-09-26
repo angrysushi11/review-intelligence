@@ -385,6 +385,24 @@ select.fld {
   font-size: 20px;
 }
 
+.error-help {
+  margin: 5px 0 0;
+  color: var(--ink-faint);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.error-help a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.error-help a:focus-visible {
+  outline: 2px solid var(--pen);
+  outline-offset: 3px;
+}
+
 .demo {
   display: grid;
   gap: 8px;
@@ -1722,6 +1740,99 @@ select.fld {
   -webkit-line-clamp: 4;
 }
 
+/* Results: feedback and reviews */
+
+.result-feedback {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 35px;
+  padding: 22px 0 3px;
+  border-top: 1px solid var(--rule);
+}
+
+.result-feedback__kicker,
+.result-feedback__body h2,
+.result-feedback__body p,
+.result-feedback__note {
+  margin: 0;
+}
+
+.result-feedback__kicker {
+  color: var(--pen);
+  font-size: 22px;
+}
+
+.result-feedback__body h2 {
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.result-feedback__body p {
+  max-width: 47ch;
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.result-feedback__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.result-feedback__email {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--pen);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.result-feedback__email:hover {
+  background: var(--pen);
+  color: var(--paper);
+}
+
+.result-feedback__email:focus-visible,
+.result-feedback__note a:focus-visible {
+  outline: 2px solid var(--pen);
+  outline-offset: 3px;
+}
+
+.result-feedback__email:active {
+  transform: scale(0.97);
+}
+
+.result-feedback__note {
+  max-width: 60ch;
+  color: var(--ink-faint);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.result-feedback__g2-note {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--ink-faint);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.result-feedback__note a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
 .privacy-note {
   color: var(--ink-faint);
   font-size: 19px;
@@ -2555,6 +2666,10 @@ select.fld {
 
   .upgrade-card {
     padding: 16px 14px;
+  }
+
+  .result-feedback {
+    margin-top: 31px;
   }
 
   .foot-links {

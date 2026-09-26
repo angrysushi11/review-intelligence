@@ -25,6 +25,7 @@ const appUrl = document.querySelector("#app-url");
 const searchResultsElement = document.querySelector("#search-results");
 const country = document.querySelector("#country");
 const error = document.querySelector("#form-error");
+const errorHelp = document.querySelector("#form-error-help");
 const retrievalStatus = document.querySelector("#retrieval-status");
 const extractButton = document.querySelector("#extract-btn");
 const extractLabel = document.querySelector("#extract-label");
@@ -885,12 +886,14 @@ function packetNote(result) {
 function showError(message) {
   error.textContent = message;
   error.hidden = false;
+  errorHelp.hidden = false;
   appUrl.setAttribute("aria-invalid", "true");
 }
 
 function clearError() {
   error.textContent = VALIDATION_MESSAGE;
   error.hidden = true;
+  errorHelp.hidden = true;
   appUrl.removeAttribute("aria-invalid");
 }
 
