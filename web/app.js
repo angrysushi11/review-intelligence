@@ -8,6 +8,7 @@ import {
   buildAnalysisPayload,
   findQuestion
 } from "./analysis-prompt.js?v=20260925-results-redesign";
+import { sanitizeAnalyticsLabel, sanitizeAnalyticsSource } from "./analytics.js";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
 const appBasePath = window.location.pathname === "/review-intel" || window.location.pathname.startsWith("/review-intel/") ? "/review-intel" : "";
@@ -74,18 +75,21 @@ const claudeSkillsLink = document.querySelector("#claude-skills-link");
 
 const query = new URLSearchParams(window.location.search);
 const fragment = new URLSearchParams(window.location.hash.slice(1));
-const querySource = query.get("source_path") || query.get("source") || "";
-const queryRoute = query.get("route") || "";
-const queryCluster = query.get("content_cluster") || "";
+const querySource = sanitizeAnalyticsSource(query.get("source_path") || query.get("source"), window.location.origin);
+const queryRoute = sanitizeAnalyticsLabel(query.get("route"));
+const queryCluster = sanitizeAnalyticsLabel(query.get("content_cluster"));
 const queryAppUrl = fragment.get("app_url") || query.get("app_url") || "";
 
 if (querySource) safeSessionSet("dd_review_source", querySource);
 if (queryRoute) safeSessionSet("dd_review_route", queryRoute);
 if (queryCluster) safeSessionSet("dd_review_cluster", queryCluster);
 
-const originalSource = querySource || safeSessionGet("dd_review_source") || document.referrer || "/review-retriever/";
-const originalRoute = queryRoute || safeSessionGet("dd_review_route") || "review-intelligence";
-const originalCluster = queryCluster || safeSessionGet("dd_review_cluster") || "review-aso";
+const originalSource = querySource
+  || sanitizeAnalyticsSource(safeSessionGet("dd_review_source"), window.location.origin)
+  || sanitizeAnalyticsSource(document.referrer, window.location.origin)
+  || "/review-retriever/";
+const originalRoute = queryRoute || sanitizeAnalyticsLabel(safeSessionGet("dd_review_route")) || "review-intelligence";
+const originalCluster = queryCluster || sanitizeAnalyticsLabel(safeSessionGet("dd_review_cluster")) || "review-aso";
 
 let markdown = "";
 let currentFilename = "reviews.md";
