@@ -639,8 +639,12 @@ test("public product docs keep setup and MCP links on the canonical Review Intel
 
 test("production analytics records an AI source without leaking the query string", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
+  const setupHtml = await readFile(new URL("setup.html", webUrl), "utf8");
   const inlineScript = [...html.matchAll(/<script>\s*([\s\S]*?)\s*<\/script>/g)].map(([, script]) => script).find((script) => script.includes('gtag("config"'));
   assert.ok(inlineScript, "the inline analytics script should exist");
+  assert.match(html, /G-R8F1QX6HKC/);
+  assert.match(setupHtml, /G-R8F1QX6HKC/);
+  assert.doesNotMatch(`${html}\n${setupHtml}`, /G-5W48W3ZCBF/);
 
   const context = {
     Date,
