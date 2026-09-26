@@ -26,7 +26,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
 
   // Hero: the job first, no connector jargon.
   assert.match(idleState, /<span class="wordmark">Review Intel<\/span>/);
-  assert.match(idleState, /<p class="hand hero-kicker">for anyone building an app from zero to one<\/p>/);
+  assert.match(idleState, /<p class="hand hero-kicker">for anyone building from zero to one<\/p>/);
   assert.match(idleState, /<h1 class="title title--hero">Your competitors’ users already told you what to build\.<\/h1>/);
   assert.match(idleState, /Find what users love, where competing apps let them down, and what they wish worked differently, with reviews you can check\. Review Intel collects public app reviews for free and guides the analysis in Claude or ChatGPT\./);
   const hero = html.match(/<header class="hero">([\s\S]*?)<\/header>/)?.[1] ?? "";
