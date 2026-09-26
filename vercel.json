@@ -45,6 +45,7 @@
     { "src": "/review-intel/review-intelligence-method.md", "dest": "/web/review-intelligence-method.md" },
     { "src": "/review-intel/app-review-growth-analyzer-skill.zip", "dest": "/web/app-review-growth-analyzer-skill.zip" },
     { "src": "/review-intel/review-retriever-og.png", "dest": "/web/review-retriever-og.png" },
+    { "src": "/review-intel/review-intel-og-20260926.png", "dest": "/web/review-intel-og-20260926.png" },
     { "src": "/review-intel/review-retriever-og.svg", "dest": "/web/review-retriever-og.svg" },
     { "src": "/review-intel/favicon.svg", "dest": "/web/favicon.svg" },
     { "src": "/review-intel/extension/privacy", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/" } },

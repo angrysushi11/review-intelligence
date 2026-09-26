@@ -6,6 +6,29 @@ import { buildDataset } from "../src/app-store.js";
 
 const webUrl = new URL("../web/", import.meta.url);
 
+test("the share card leads with the review insight and serves its image", async () => {
+  const html = await readFile(new URL("index.html", webUrl), "utf8");
+  const setup = await readFile(new URL("setup.html", webUrl), "utf8");
+  const svg = await readFile(new URL("review-retriever-og.svg", webUrl), "utf8");
+  const image = await readFile(new URL("review-intel-og-20260926.png", webUrl));
+  const routes = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8")).routes;
+  const imagePath = "/review-intel/review-intel-og-20260926.png";
+
+  assert.match(html, /property="og:title" content="See What People Love, Hate &amp; Want Changed \| Review Intel"/);
+  assert.match(html, /property="og:description" content="[^"]*love, hate, and wish worked differently[^"]*public app reviews behind each finding/);
+  assert.match(html, /name="twitter:title" content="See What People Love, Hate &amp; Want Changed \| Review Intel"/);
+  assert.ok(html.includes(`content="https://www.willthiseverwork.com${imagePath}"`));
+  assert.ok(setup.includes(`content="https://www.willthiseverwork.com${imagePath}"`));
+  assert.ok(routes.some((route) => route.src === imagePath && route.dest === "/web/review-intel-og-20260926.png"));
+  assert.match(svg, /See what people love,/);
+  assert.match(svg, /hate, and wish worked/);
+  assert.match(svg, /In products they already use/);
+  assert.doesNotMatch(svg, /APP REVIEW EXPORT|into Markdown/i);
+  assert.equal(image.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 630);
+});
+
 test("the homepage leads with the job, a real example, and one-tap analysis", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const styles = await readFile(new URL("styles.css", webUrl), "utf8");
@@ -20,7 +43,7 @@ test("the homepage leads with the job, a real example, and one-tap analysis", as
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
   assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
   assert.match(html, /<base href="\/review-intel\/">/);
-  assert.match(html, /name="description" content="Find what users love, where competing apps let them down, and what they wish worked differently\. Free public reviews and guided analysis, with evidence you can check\."/);
+  assert.match(html, /name="description" content="See what people love, hate, and wish worked differently in products they already use, with public app reviews behind each finding\."/);
   assert.match(html, /family=Caveat:wght@400\.\.700/);
   assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
 
