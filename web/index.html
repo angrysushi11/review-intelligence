@@ -31,6 +31,27 @@
         window.dataLayer.push(arguments);
       }
       if (window.location.hostname === "reviews.doubledash.me" || window.location.hostname === "willthiseverwork.com" || window.location.hostname === "www.willthiseverwork.com") {
+        const campaignFields = {
+          utm_id: "campaign_id",
+          utm_source: "campaign_source",
+          utm_medium: "campaign_medium",
+          utm_campaign: "campaign_name",
+          utm_content: "campaign_content",
+          utm_term: "campaign_term",
+        };
+        const campaignConfig = {};
+        const landingParams = new URLSearchParams(window.location.search);
+        for (const [utmKey, campaignField] of Object.entries(campaignFields)) {
+          const value = landingParams.get(utmKey)?.trim() ?? "";
+          if (/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(value)) campaignConfig[campaignField] = value;
+        }
+        let referrerUrl = null;
+        try {
+          referrerUrl = document.referrer ? new URL(document.referrer) : null;
+        } catch {
+          referrerUrl = null;
+        }
+        const pageReferrer = referrerUrl && /^https?:$/.test(referrerUrl.protocol) ? `${referrerUrl.origin}/` : "";
         const analyticsScript = document.createElement("script");
         analyticsScript.async = true;
         analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-R8F1QX6HKC";
@@ -38,11 +59,12 @@
         gtag("js", new Date());
         gtag("config", "G-R8F1QX6HKC", {
           page_location: `${window.location.origin}${window.location.pathname}`,
+          page_referrer: pageReferrer,
+          ...campaignConfig,
         });
 
         const currentUrl = new URL(window.location.href);
         const utmSource = currentUrl.searchParams.get("utm_source")?.toLowerCase() ?? "";
-        const referrerUrl = document.referrer ? new URL(document.referrer) : null;
         const referrerHost = referrerUrl?.hostname.toLowerCase() ?? "";
         const referrerPath = referrerUrl?.pathname.toLowerCase() ?? "";
         const aiSource =

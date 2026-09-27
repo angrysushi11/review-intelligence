@@ -522,6 +522,9 @@ test("the product privacy page covers website and MCP processing and links the e
   assert.match(html, /ordinary request or operational logs/);
   assert.match(html, /Google Analytics/);
   assert.match(html, /without the app URL, query parameters, or fragment/);
+  assert.match(html, /sanitized page location and referrer without the app URL, query parameters, or fragment/);
+  assert.match(html, /referrer is limited to its origin/);
+  assert.match(html, /supported UTM fields.*validated campaign ID and source, medium, campaign, content, or term labels/);
   assert.match(html, /href="extension\/privacy\/">extension-specific privacy policy<\/a>/);
   assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
 });
@@ -534,7 +537,10 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   assert.match(html, /read the current tab URL only after you click the toolbar action/);
   assert.match(html, /does not retain the listing URL or browsing history/);
   assert.match(html, /no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code/);
-  assert.match(html, /Analytics receives a sanitized page location without the app URL, query parameters, or fragment/);
+  assert.match(html, /Analytics receives a sanitized page location and referrer without the app URL, query parameters, or fragment/);
+  assert.match(html, /sanitized page location and referrer without the app URL, query parameters, or fragment/);
+  assert.match(html, /referrer is limited to its origin/);
+  assert.match(html, /supported UTM fields.*validated campaign ID and source, medium, campaign, content, or term labels/);
   assert.match(html, /coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot/);
   assert.match(html, /tools@doubledash\.me/);
   assert.doesNotMatch(html, /dash@doubledash\.me/);
@@ -663,40 +669,74 @@ test("public product docs keep setup and MCP links on the canonical Review Intel
   }
 });
 
-test("production analytics records an AI source without leaking the query string", async () => {
+test("production analytics keeps page URLs private while passing only validated UTM campaign fields", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const setupHtml = await readFile(new URL("setup.html", webUrl), "utf8");
   const inlineScript = [...html.matchAll(/<script>\s*([\s\S]*?)\s*<\/script>/g)].map(([, script]) => script).find((script) => script.includes('gtag("config"'));
+  const setupScript = [...setupHtml.matchAll(/<script>\s*([\s\S]*?)\s*<\/script>/g)].map(([, script]) => script).find((script) => script.includes('gtag("config"'));
   assert.ok(inlineScript, "the inline analytics script should exist");
+  assert.ok(setupScript, "the setup analytics script should exist");
   assert.match(html, /G-R8F1QX6HKC/);
   assert.match(setupHtml, /G-R8F1QX6HKC/);
   assert.doesNotMatch(`${html}\n${setupHtml}`, /G-5W48W3ZCBF/);
 
-  const context = {
-    Date,
-    URL,
-    document: {
-      referrer: "",
-      createElement: () => ({}),
-      head: { appendChild: () => {} }
-    },
-    window: {
-      dataLayer: [],
-      location: {
-        hostname: "reviews.doubledash.me",
-        origin: "https://reviews.doubledash.me",
-        pathname: "/",
-        href: "https://reviews.doubledash.me/?utm_source=claude&app_url=private"
+  function execute(script, href, referrer = "") {
+    const url = new URL(href);
+    const context = {
+      Date,
+      URL,
+      URLSearchParams,
+      document: {
+        referrer,
+        createElement: () => ({}),
+        head: { appendChild: () => {} },
+        addEventListener: () => {}
+      },
+      window: {
+        dataLayer: [],
+        location: {
+          hostname: url.hostname,
+          origin: url.origin,
+          pathname: url.pathname,
+          search: url.search,
+          href: url.href
+        }
       }
-    }
-  };
+    };
+    runInNewContext(script, context);
+    return context.window.dataLayer.map((entry) => Array.from(entry));
+  }
 
-  runInNewContext(inlineScript, context);
-  const analyticsCalls = context.window.dataLayer.map((entry) => Array.from(entry));
+  const analyticsCalls = execute(
+    inlineScript,
+    "https://www.willthiseverwork.com/review-intel/?utm_id=RI2026&utm_source=Threads&utm_medium=social&utm_campaign=review_intel&utm_content=post&utm_term=app-reviews&app_url=private#fragment",
+    "https://www.willthiseverwork.com/review-intel/?app_url=private&utm_source=threads#fragment"
+  );
   const pageConfig = analyticsCalls.find(([command]) => command === "config");
   const aiEvent = analyticsCalls.find(([command, name]) => command === "event" && name === "ai_referral_landing");
 
-  assert.equal(pageConfig[2].page_location, "https://reviews.doubledash.me/");
-  assert.equal(aiEvent[2].ai_source, "claude");
-  assert.equal(aiEvent[2].landing_path, "/");
+  assert.deepEqual(JSON.parse(JSON.stringify(pageConfig[2])), {
+    page_location: "https://www.willthiseverwork.com/review-intel/",
+    page_referrer: "https://www.willthiseverwork.com/",
+    campaign_id: "RI2026",
+    campaign_source: "Threads",
+    campaign_medium: "social",
+    campaign_name: "review_intel",
+    campaign_content: "post",
+    campaign_term: "app-reviews"
+  });
+  assert.equal(aiEvent, undefined);
+
+  const unsafeCampaignCalls = execute(
+    setupScript,
+    "https://www.willthiseverwork.com/review-intel/setup/?utm_source=threads&utm_medium=social&utm_campaign=private%40example.com&utm_content=post%2Fwith%2Fpath&utm_term=x%3Femail%3Dprivate",
+    "https://search.example.com/results?q=private"
+  );
+  const unsafePageConfig = unsafeCampaignCalls.find(([command]) => command === "config");
+  assert.deepEqual(JSON.parse(JSON.stringify(unsafePageConfig[2])), {
+    page_location: "https://www.willthiseverwork.com/review-intel/setup/",
+    page_referrer: "https://search.example.com/",
+    campaign_source: "threads",
+    campaign_medium: "social"
+  });
 });
