@@ -17,7 +17,7 @@
     <main class="wrap privacy-page">
       <header class="privacy-masthead">
         <a class="lnk privacy-back" href="/review-intel/">Back to Review Intel</a>
-        <p class="pencil privacy-kicker">Website + MCP · last updated 26 September 2026</p>
+        <p class="pencil privacy-kicker">Website + MCP · last updated 1 October 2026</p>
         <h1 class="title">Privacy, without the fog.</h1>
         <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
           <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
@@ -50,14 +50,15 @@
 
         <section>
           <h2>Storage and infrastructure</h2>
-          <p>The application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google services may retain ordinary request or operational logs under their own policies.</p>
+          <p>The application source contains no review database or persistence layer: a request is processed to produce its response. Vercel’s Hobby plan retains customer-visible runtime logs for one hour. Other Vercel, network-infrastructure, Apple, and Google services may retain ordinary request or operational logs under their own policies; Review Intel does not control those records.</p>
           <p>Public review text and reviewer names can still be personal data even when they are publicly visible. Handle downloaded packets according to the rules that apply to your use.</p>
         </section>
 
         <section>
           <h2>Website analytics</h2>
-          <p>The hosted pages use Google Analytics. The application sends a sanitized page location and referrer without the app URL, query parameters, or fragment. A referrer is limited to its origin. If a landing link has supported UTM fields, it sends only a validated campaign ID and source, medium, campaign, content, or term labels, never the full query string. Attribution sources are otherwise reduced to an internal path, external hostname, or short label. It records coarse product interactions such as starting or completing retrieval, opening an analysis destination, or choosing a setup link.</p>
+          <p>The hosted pages use Google Analytics. Google Analytics uses cookie identifiers and browser or device categories to measure visits and coarse product interactions such as starting or completing retrieval, opening an analysis destination, or choosing a setup link. The application sends a sanitized page location and referrer without the app URL, query parameters, or fragment. A referrer is limited to its origin. If a landing link has supported UTM fields, it sends only a validated campaign ID and source, medium, campaign, content, or term labels, never the full query string. Attribution sources are otherwise reduced to an internal path, external hostname, or short label.</p>
           <p>When a visit arrives from a recognized AI assistant, analytics may also receive a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Review Intel does not use this information for advertising or sell it.</p>
+          <p>For this Google Analytics property, event data is retained for two months and user data for 14 months, with the user-retention period reset when there is new activity. Aggregate reports are not covered by those retention settings.</p>
         </section>
 
         <section>
@@ -73,8 +74,8 @@
 
         <section>
           <h2>Your choices and contact</h2>
-          <p>You can use the website without an account. Do not start a retrieval or connect the MCP service if you do not want the public app target and returned reviews processed through those services. You can avoid website analytics with browser privacy controls or an appropriate content blocker.</p>
-          <p>Questions: <a href="mailto:tools@doubledash.me">tools@doubledash.me</a></p>
+          <p>You can use the website without an account. Do not start a retrieval or connect the MCP service if you do not want the public app target and returned reviews processed through those services. You can use browser privacy controls or an appropriate content blocker to limit website analytics. Disconnecting an MCP client prevents that client from sending future calls.</p>
+          <p>For questions or requests about information Review Intel controls, contact <a href="mailto:tools@doubledash.me">tools@doubledash.me</a>.</p>
         </section>
       </div>
 

@@ -5,6 +5,8 @@
     { "src": "web/**", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/review-intel/reviewer-walkthrough-v0.3.3.mp4", "dest": "/web/reviewer-walkthrough-v0.3.3.mp4" },
+    { "src": "/review-intel/reviewer-walkthrough-v0.3.3.md", "dest": "/web/reviewer-walkthrough-v0.3.3.md" },
     { "src": "/", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
     { "src": "/review-intel/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
     { "src": "/review-intel/setup/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/setup/" } },
