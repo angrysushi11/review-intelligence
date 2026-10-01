@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Review Intelligence plugin privacy</title>
+    <meta name="description" content="How the skills-only Review Intelligence plugin handles review exports supplied in ChatGPT or Codex.">
+    <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/plugin-privacy/">
+    <base href="/review-intel/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="wrap privacy-page">
+      <header class="privacy-masthead">
+        <a class="lnk privacy-back" href="plugin/">Back to the Review Intelligence plugin</a>
+        <p class="pencil privacy-kicker">Skills-only plugin · last updated 1 October 2026</p>
+        <h1 class="title">A clear boundary for supplied reviews.</h1>
+        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
+          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <p class="privacy-lede">Review Intelligence is a set of analysis instructions that runs inside the OpenAI host you selected. It analyzes only reviews you paste or upload and performs no live retrieval.</p>
+      </header>
+
+      <section class="privacy-summary" aria-labelledby="plugin-privacy-summary-title">
+        <h2 class="privacy-summary-title" id="plugin-privacy-summary-title">The short version</h2>
+        <ul>
+          <li>You choose which review data to supply.</li>
+          <li>Your selected OpenAI product or workspace hosts the conversation and analysis.</li>
+          <li>No review data is sent to a DoubleDash MCP server or other DoubleDash service.</li>
+          <li>DoubleDash retains no copy of your plugin inputs or results.</li>
+        </ul>
+      </section>
+
+      <div class="privacy-sections">
+        <section>
+          <h2>Data the plugin can process</h2>
+          <p>The plugin can process the review export and instructions you provide. Depending on your file, that may include review text, ratings, dates, app versions, developer replies, app or store labels, and public reviewer names or identifiers. It can also process your questions and produce an analysis in the conversation.</p>
+          <p>File names, file metadata, account information, and ordinary service metadata may be handled by OpenAI as the host under its own policies. The plugin does not need store credentials, API keys, private developer-console access, or payment information. Do not supply them.</p>
+        </section>
+
+        <section>
+          <h2>Why the data is used</h2>
+          <p>The supplied material is used to parse and organize reviews, identify evidence-backed patterns and customer language, compare labelled review sets, answer your question, and show the limits of the available sample. The plugin itself sends none of that content to DoubleDash.</p>
+        </section>
+
+        <section>
+          <h2>Who receives the data</h2>
+          <p>The selected OpenAI host processes the content needed to run the conversation and return the analysis according to the product, account, and workspace settings that apply to you. If you use a managed workspace, its administrators may control or have access to data according to the workspace agreement and settings.</p>
+          <p>The skills-only plugin makes no outbound request to DoubleDash, so DoubleDash does not receive your review export, prompt, or result through the plugin.</p>
+        </section>
+
+        <section>
+          <h2>Retention</h2>
+          <p>The plugin creates no DoubleDash-held copy of its inputs or results because it does not send them to DoubleDash. This statement does not cover information you choose to send separately by email.</p>
+          <p>OpenAI controls retention for content held by ChatGPT or Codex. The applicable period depends on the product, account or workspace, settings, and actions such as deleting a chat or file. Review OpenAI’s current <a href="https://help.openai.com/en/articles/8983778-chat-and-file-retention-policies-in-chatgpt" target="_blank" rel="noopener noreferrer">chat and file retention policy</a> rather than relying on a fixed period stated here.</p>
+        </section>
+
+        <section>
+          <h2>Your controls</h2>
+          <p>Supply only reviews you are permitted to use. Remove unnecessary personal, confidential, or sensitive information before uploading. You can keep identifiers out of the export when they are not needed for the analysis.</p>
+          <p>Use the controls available in your OpenAI account or workspace to manage conversations, files, model-improvement preferences, exports, and deletion. OpenAI explains the current options in <a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt" target="_blank" rel="noopener noreferrer">Data controls in ChatGPT</a>. Available controls can vary by plan and workspace.</p>
+        </section>
+
+        <section>
+          <h2>Contact</h2>
+          <p>For questions about the Review Intelligence plugin, you may email <a href="mailto:tools@doubledash.me">tools@doubledash.me</a>. Details you voluntarily include in that email are received by DoubleDash through a separate support channel. Do not attach a review export or include personal, confidential, or sensitive review data. For requests about content held by ChatGPT or Codex, use the controls and contact routes provided by OpenAI.</p>
+        </section>
+      </div>
+
+      <hr class="rule">
+      <footer class="privacy-footer">
+        <a class="drawn privacy-return" href="plugin/">
+          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+          </svg>
+          <span>About the plugin</span>
+        </a>
+        <a class="lnk" href="plugin-terms/">Plugin terms</a>
+      </footer>
+    </main>
+  </body>
+</html>
