@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "review-intelligence",
-  "version": "0.3.1",
-  "description": "Retrieve and analyze public app reviews into evidence-backed product, pricing, growth, and ASO insights.",
+  "version": "0.3.2",
+  "description": "Analyze public app reviews to see what people love, hate, and wish worked differently before deciding what to build, improve, test, or say.",
   "author": {
     "name": "Dasha Antonova",
     "url": "https://www.willthiseverwork.com/#about"

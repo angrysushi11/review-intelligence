@@ -17,7 +17,8 @@ test("the DoubleDash marketplace resolves the public Review Intelligence plugin"
   assert.equal(marketplace.plugins[0].source.path, "./plugins/review-intelligence");
   assert.equal(plugin.$schema, "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json");
   assert.equal(plugin.name, "review-intelligence");
-  assert.equal(plugin.version, "0.3.1");
+  assert.equal(plugin.version, "0.3.2");
+  assert.match(plugin.description, /public app reviews/i);
   assert.equal(plugin.homepage, "https://www.willthiseverwork.com/review-intel/");
   assert.equal(plugin.author.url, "https://www.willthiseverwork.com/#about");
   assert.equal(plugin.repository, "https://github.com/angrysushi11/review-intelligence");
@@ -25,8 +26,13 @@ test("the DoubleDash marketplace resolves the public Review Intelligence plugin"
   assert.equal(portableMcp.mcpServers["review-intelligence"].type, "streamable-http");
   assert.equal(portableMcp.mcpServers["review-intelligence"].url, "https://www.willthiseverwork.com/review-intel/mcp");
   assert.equal(compatibilityPlugin.version, plugin.version);
+  assert.equal(compatibilityPlugin.description, plugin.description);
+  assert.match(compatibilityPlugin.description, /public app reviews/i);
   assert.equal(compatibilityPlugin.homepage, plugin.homepage);
   assert.equal(compatibilityPlugin.interface.websiteURL, plugin.homepage);
+  assert.ok(compatibilityPlugin.interface.shortDescription.length <= 30);
+  assert.match(compatibilityPlugin.interface.longDescription, /public written reviews/i);
+  assert.match(compatibilityPlugin.interface.longDescription, /do not prove demand, revenue, or causality/i);
   assert.equal(compatibilityMcp.mcpServers["review-intelligence"].url, portableMcp.mcpServers["review-intelligence"].url);
   assert.match(readme, /codex plugin marketplace add angrysushi11\/review-intelligence --ref main/);
   assert.match(readme, /universal public Plugins Directory is a separate OpenAI submission and review process/);

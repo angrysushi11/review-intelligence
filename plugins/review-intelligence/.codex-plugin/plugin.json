@@ -1,7 +1,7 @@
 {
   "name": "review-intelligence",
-  "version": "0.3.1",
-  "description": "Retrieve and analyze app reviews into evidence-backed product, pricing, growth, and ASO insights.",
+  "version": "0.3.2",
+  "description": "Analyze public app reviews to see what people love, hate, and wish worked differently before deciding what to build, improve, test, or say.",
   "author": {
     "name": "Dasha Antonova",
     "url": "https://www.willthiseverwork.com/#about"
@@ -19,8 +19,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Review Intelligence",
-    "shortDescription": "Retrieve and turn app reviews into evidence-backed growth insight.",
-    "longDescription": "Give Review Intelligence an App Store or Google Play URL and its read-only Review Retriever connection can collect public written reviews for evidence-backed analysis. You can also upload an existing review export. The skill surfaces patterns and prioritizes product, pricing, growth, and ASO opportunities without treating reviews as proof of business outcomes.",
+    "shortDescription": "See what app users want",
+    "longDescription": "Use Review Intelligence when you need to see what people love, hate, and wish worked differently in products they already use. Give it an App Store or Google Play URL, or upload a review export. It brings public written reviews together for evidence-backed analysis of product friction, unmet needs, customer language, pricing, growth, and ASO. Findings point to decisions worth researching or testing; they do not prove demand, revenue, or causality.",
     "developerName": "DoubleDash by Dasha Antonova",
     "category": "Productivity",
     "capabilities": [
