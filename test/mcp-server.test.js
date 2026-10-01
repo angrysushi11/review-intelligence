@@ -165,6 +165,11 @@ test("Streamable HTTP serializes review records for content-only clients and pre
   const tools = await client.listTools();
   assert.equal(tools.tools.length, 1);
   assert.equal(tools.tools[0].name, "retrieve_app_reviews");
+  assert.match(tools.tools[0].description, /^Use this when/i);
+  assert.match(tools.tools[0].description, /what users love, hate, or wish worked differently/i);
+  assert.match(tools.tools[0].description, /product, positioning, or competitor decision/i);
+  assert.match(tools.tools[0].description, /Do not use it for private analytics or as proof of demand or revenue/i);
+  assert.match(tools.tools[0].description, /continuation\.next_cursor/);
   assert.equal(tools.tools[0].annotations.readOnlyHint, true);
   assert.equal(tools.tools[0].annotations.destructiveHint, false);
   assert.equal(tools.tools[0].annotations.openWorldHint, true);

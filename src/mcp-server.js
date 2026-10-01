@@ -165,7 +165,7 @@ export function createReviewRetrieverMcpServer({ retrieveReviewsFn = retrieveRev
 
   server.registerTool(TOOL_NAME, {
     title: "Retrieve public app reviews",
-    description: "Retrieve public written reviews for one App Store or Google Play app and return analysis-ready records with stable evidence IDs and explicit coverage denominators. Each response contains up to 500 records. For Google Play, keep calling with continuation.next_cursor until has_more is false to retrieve beyond the first batch. This tool retrieves data only; it does not analyze reviews or modify any external system.",
+    description: "Use this when a builder needs public App Store or Google Play review evidence about what users love, hate, or wish worked differently before a product, positioning, or competitor decision. It returns analysis-ready records with stable evidence IDs and explicit coverage denominators. Each response contains up to 500 records. For Google Play, keep calling with continuation.next_cursor until has_more is false to retrieve beyond the first batch. Do not use it for private analytics or as proof of demand or revenue. This read-only tool does not analyze reviews or modify any external system.",
     inputSchema: retrieveReviewsInputSchema,
     outputSchema: retrieveReviewsOutputSchema,
     annotations: {
