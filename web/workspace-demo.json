@@ -1,0 +1,352 @@
+{
+  "demo": {
+    "label": "Saved example",
+    "preparedFrom": "450 Google Play reviews",
+    "notice": "This is a saved source-grounded example prepared from a bounded 450-review Google Play batch. It was not generated in this prototype.",
+    "retrievedAt": "2026-10-02T14:21:00.361Z",
+    "evidenceSubset": "The workspace includes the ten cited public reviews needed to inspect this saved example. The findings and counts were prepared from all 450 reviews in the source batch.",
+    "ledgerSummary": [
+      {
+        "id": "L1_access_value_exchange",
+        "count": 86
+      },
+      {
+        "id": "L2_billing_recovery",
+        "count": 43
+      },
+      {
+        "id": "L3_core_reliability",
+        "count": 52
+      },
+      {
+        "id": "L4_sleep_value",
+        "count": 51
+      }
+    ]
+  },
+  "snapshot": {
+    "demo": {
+      "evidenceSubset": true
+    },
+    "export": {
+      "schema_version": "review-intel-saved-example-v1",
+      "app": {
+        "name": "Calm - Sleep, Meditate, Relax",
+        "id": "com.calm.android",
+        "platform": "google_play"
+      },
+      "storefront": {
+        "market_key": "en-US",
+        "label": "United States / English",
+        "country_code": "us",
+        "country_name": "United States"
+      },
+      "coverage": {
+        "included": 450,
+        "date_from": "2026-06-23T05:58:55.629Z",
+        "date_to": "2026-10-01T13:40:00.168Z",
+        "sample_definition": "The 450 most recent reviews retrieved for this bounded Google Play US/English batch.",
+        "warning": "More Google Play review history exists. Counts and whole-number percentages describe only these 450 analyzed reviews and must not be presented as population prevalence.",
+        "rating_distribution": {
+          "1": 164,
+          "2": 27,
+          "3": 30,
+          "4": 31,
+          "5": 198
+        }
+      },
+      "reviews": [
+        {
+          "review_id": "rr_00cfd8e9173221ef7f7609d0eb3ac031",
+          "rating": 1,
+          "date": "2026-09-30T20:23:49.701Z",
+          "text": "Asked for money before I was even able to use the app, has a lot of paywalled content, and costs more than YouTube Premium. Doesn't seem worthwhile."
+        },
+        {
+          "review_id": "rr_6a9fc26c5bc18bf430b787a304e8187f",
+          "rating": 2,
+          "date": "2026-08-01T16:41:03.300Z",
+          "text": "this app was recommended on a podcast I listened to. figured I would download it and give it a try, but was immediately met with needing to create an account. and I realize it's going to cost at some point. that's a no-go for me. give me something to try before making me sign up for yet another account for an app I probably won't use"
+        },
+        {
+          "review_id": "rr_e1a67fedee59f026ab2d103e974d1a25",
+          "rating": 3,
+          "date": "2026-08-27T17:27:41.519Z",
+          "text": "works great, cancelling the subscription is full of dark patterns."
+        },
+        {
+          "review_id": "rr_920b435c24f02bd3025de04279743639",
+          "rating": 2,
+          "date": "2026-08-07T11:26:10.700Z",
+          "text": "While I love the app I am here to warn you if you accept their offer for a discount subscription, they will charge you once for the discount year and then charge you the full subscription 7 days later. Good luck getting a refund, their support is unresponsive. Currently waiting to hear back from Google support on my refund for the double billing since Calm support won't respond. Would've given the app 5 stars if not for the double billing"
+        },
+        {
+          "review_id": "rr_7ae88ff337209e3ef47e078095d6850c",
+          "rating": 1,
+          "date": "2026-08-11T18:21:50.134Z",
+          "text": "Pixel 10 — audio distortion in Calm Android app Audio in the Calm Android app has persistent scratchiness/distortion during meditation sessions - not just one. Both on Wi-Fi and 5G. Calm sessions play normally on the Calm website using the Brave Chromium browser on same Pixel 10. YouTube audio is completely clean on the Pixel. I have cleared Calm's cache and storage, uninstalled/reinstalled Calm, rebooted the phone, and updated Pixel Audio services/Adaptive Sound is off."
+        },
+        {
+          "review_id": "rr_21526fc989c31f1f7e77be345dd0ff2d",
+          "rating": 1,
+          "date": "2026-07-22T17:18:42.278Z",
+          "text": "If I'm doing a meditation or anything longer than my phone's screen sleep timer, which is virtually every meditation. The voice and bg noise begins to glitch out and stutter every other word. Extremely annoying bug that makes me regret signing up for a year subscription."
+        },
+        {
+          "review_id": "rr_aed502e499952354cec84c27b4d2c28a",
+          "rating": 1,
+          "date": "2026-07-30T23:25:55.373Z",
+          "text": "It gets routinely stuck on the opening screen of \"take a deep breath\" I can take 100 deep breaths and it still doesn't open. Developers, please change this and make it optional. I will cancel subscription for this which is a shame because it's a great app otherwise. I just wish I could use it."
+        },
+        {
+          "review_id": "rr_df9ff259353fb42f6fe7609929aac7ce",
+          "rating": 5,
+          "date": "2026-07-20T13:09:47.216Z",
+          "text": "This app is my go-to for falling asleep. The stories are soothing and I love the variety of subjects and voices. I've never made it to the end of \"Drifting off to Sheep\" because it works every time at putting me right out."
+        },
+        {
+          "review_id": "rr_5a6bb300b0495bbc39f04c80dfa576ce",
+          "rating": 4,
+          "date": "2026-07-03T14:01:28.949Z",
+          "text": "I don't use as many of the elements of Calm as I want to. But listening to something before sleep is final part of wind down. Sometimes asleep before timer ends. I recommend it."
+        },
+        {
+          "review_id": "rr_8dadc37eed0646c4fae2ecaadf07d9fd",
+          "rating": 5,
+          "date": "2026-07-29T03:07:09.316Z",
+          "text": "I love this app! If you have problems sleeping let sometime read to you. it's amazing and I can never get to the ending and I sleep so well!! I just completed my 169th session. ❤️"
+        }
+      ],
+      "dates": {
+        "denominator": 450,
+        "dated_reviews": 450,
+        "undated_reviews": 0,
+        "oldest": "2026-06-23T05:58:55.629Z",
+        "newest": "2026-10-01T13:40:00.168Z"
+      },
+      "ratings": {
+        "denominator": 450,
+        "rated_reviews": 450,
+        "unrated_reviews": 0,
+        "distribution": {
+          "1": 164,
+          "2": 27,
+          "3": 30,
+          "4": 31,
+          "5": 198
+        }
+      },
+      "retrieved_at": "2026-10-02T14:21:00.361Z",
+      "demo": {
+        "evidenceSubset": true
+      }
+    }
+  },
+  "report": {
+    "id": "saved-calm-review-intelligence-example-2026-10-02",
+    "answer": "The actionable tension in this batch is the value exchange: reviewers repeatedly say the subscription or account gate appears before they can establish value, while a separate billing and support cluster makes recovery difficult. The positive counterweight is concrete: sleep stories, voices, and soundscapes become nightly rituals when access and playback work.",
+    "coverage": "Saved example prepared from 450 Google Play US/English reviews retrieved Oct 2, 2026. Review dates run Jun 23–Oct 1, 2026. More Google Play review history exists; these counts describe this bounded batch only.",
+    "model": {
+      "label": "Saved source-grounded example — not generated in this prototype"
+    },
+    "createdAt": "2026-10-02T14:21:00.361Z",
+    "findings": [
+      {
+        "headline": "The value exchange is rejected at the gate, and billing recovery compounds the problem",
+        "explanation": "86 of 450 analyzed reviews (19%) explicitly criticize price, paid access, the trial or subscription requirement, reduced free access, or the inability to establish value before paying. 65 of those 86 are one-star reviews. A separate overlapping cluster of 43 of 450 reviews (10%) explicitly describes charging, cancellation, refund, paid-entitlement, or billing-support recovery; 35 of those 43 are one-star reviews.",
+        "implication": "The review language suggests two connected commitment problems: users do not see enough proof before the payment ask, and some who try to leave or recover access encounter additional friction. This is an activation and trust hypothesis, not proof of conversion or churn impact.",
+        "status": "OBSERVED · COMPUTED · INFERENCE",
+        "strength": "strong",
+        "reviewIds": [
+          "rr_00cfd8e9173221ef7f7609d0eb3ac031",
+          "rr_6a9fc26c5bc18bf430b787a304e8187f",
+          "rr_e1a67fedee59f026ab2d103e974d1a25",
+          "rr_920b435c24f02bd3025de04279743639"
+        ],
+        "quotes": [
+          {
+            "reviewId": "rr_00cfd8e9173221ef7f7609d0eb3ac031",
+            "text": "Asked for money before I was even able to use the app"
+          },
+          {
+            "reviewId": "rr_6a9fc26c5bc18bf430b787a304e8187f",
+            "text": "give me something to try before making me sign up for yet another account"
+          },
+          {
+            "reviewId": "rr_e1a67fedee59f026ab2d103e974d1a25",
+            "text": "cancelling the subscription is full of dark patterns."
+          },
+          {
+            "reviewId": "rr_920b435c24f02bd3025de04279743639",
+            "text": "Would've given the app 5 stars if not for the double billing"
+          }
+        ]
+      },
+      {
+        "headline": "Core-session failures interrupt the experience at the moment users expect calm",
+        "explanation": "52 of 450 analyzed reviews (12%) explicitly report a failure in access, loading, playback, audio quality, casting, crashing, or session continuity. 30 of those 52 are one-star reviews; the rest include 4 two-star, 11 three-star, and 7 four-star reviews.",
+        "implication": "Reliability carries extra product risk here because the interruption contradicts the immediate job reviewers hired the app to do. The corpus does not establish how often these failures occur in sessions or which versions and devices drive the majority.",
+        "status": "OBSERVED · COMPUTED · INFERENCE",
+        "strength": "strong",
+        "reviewIds": [
+          "rr_7ae88ff337209e3ef47e078095d6850c",
+          "rr_21526fc989c31f1f7e77be345dd0ff2d",
+          "rr_aed502e499952354cec84c27b4d2c28a"
+        ],
+        "quotes": [
+          {
+            "reviewId": "rr_7ae88ff337209e3ef47e078095d6850c",
+            "text": "persistent scratchiness/distortion during meditation sessions"
+          },
+          {
+            "reviewId": "rr_21526fc989c31f1f7e77be345dd0ff2d",
+            "text": "The voice and bg noise begins to glitch out and stutter every other word."
+          },
+          {
+            "reviewId": "rr_aed502e499952354cec84c27b4d2c28a",
+            "text": "It gets routinely stuck on the opening screen of \"take a deep breath\""
+          }
+        ]
+      },
+      {
+        "headline": "Sleep supports a specific positive ritual: a nightly wind-down routine",
+        "explanation": "51 of 450 analyzed reviews (11%) explicitly describe sleep, falling asleep, bedtime, or night use as value. 45 of those 51 are five-star reviews; the remainder are 4 four-star, 1 two-star, and 1 one-star review.",
+        "implication": "A reusable positioning territory in this batch is a dependable wind-down ritual with choice of voice and sound. Reviewer-reported sleep effects are customer evidence, not substantiated medical or guaranteed outcome claims.",
+        "status": "OBSERVED · COMPUTED · INFERENCE",
+        "strength": "strong",
+        "reviewIds": [
+          "rr_df9ff259353fb42f6fe7609929aac7ce",
+          "rr_5a6bb300b0495bbc39f04c80dfa576ce",
+          "rr_8dadc37eed0646c4fae2ecaadf07d9fd"
+        ],
+        "quotes": [
+          {
+            "reviewId": "rr_df9ff259353fb42f6fe7609929aac7ce",
+            "text": "This app is my go-to for falling asleep."
+          },
+          {
+            "reviewId": "rr_5a6bb300b0495bbc39f04c80dfa576ce",
+            "text": "listening to something before sleep is final part of wind down."
+          },
+          {
+            "reviewId": "rr_8dadc37eed0646c4fae2ecaadf07d9fd",
+            "text": "I just completed my 169th session."
+          }
+        ]
+      }
+    ],
+    "sourceSnapshot": {
+      "schema_version": "review-intel-saved-example-v1",
+      "app": {
+        "name": "Calm - Sleep, Meditate, Relax",
+        "id": "com.calm.android",
+        "platform": "google_play"
+      },
+      "storefront": {
+        "market_key": "en-US",
+        "label": "United States / English",
+        "country_code": "us",
+        "country_name": "United States"
+      },
+      "coverage": {
+        "included": 450,
+        "date_from": "2026-06-23T05:58:55.629Z",
+        "date_to": "2026-10-01T13:40:00.168Z",
+        "sample_definition": "The 450 most recent reviews retrieved for this bounded Google Play US/English batch.",
+        "warning": "More Google Play review history exists. Counts and whole-number percentages describe only these 450 analyzed reviews and must not be presented as population prevalence.",
+        "rating_distribution": {
+          "1": 164,
+          "2": 27,
+          "3": 30,
+          "4": 31,
+          "5": 198
+        }
+      },
+      "reviews": [
+        {
+          "review_id": "rr_00cfd8e9173221ef7f7609d0eb3ac031",
+          "rating": 1,
+          "date": "2026-09-30T20:23:49.701Z",
+          "text": "Asked for money before I was even able to use the app, has a lot of paywalled content, and costs more than YouTube Premium. Doesn't seem worthwhile."
+        },
+        {
+          "review_id": "rr_6a9fc26c5bc18bf430b787a304e8187f",
+          "rating": 2,
+          "date": "2026-08-01T16:41:03.300Z",
+          "text": "this app was recommended on a podcast I listened to. figured I would download it and give it a try, but was immediately met with needing to create an account. and I realize it's going to cost at some point. that's a no-go for me. give me something to try before making me sign up for yet another account for an app I probably won't use"
+        },
+        {
+          "review_id": "rr_e1a67fedee59f026ab2d103e974d1a25",
+          "rating": 3,
+          "date": "2026-08-27T17:27:41.519Z",
+          "text": "works great, cancelling the subscription is full of dark patterns."
+        },
+        {
+          "review_id": "rr_920b435c24f02bd3025de04279743639",
+          "rating": 2,
+          "date": "2026-08-07T11:26:10.700Z",
+          "text": "While I love the app I am here to warn you if you accept their offer for a discount subscription, they will charge you once for the discount year and then charge you the full subscription 7 days later. Good luck getting a refund, their support is unresponsive. Currently waiting to hear back from Google support on my refund for the double billing since Calm support won't respond. Would've given the app 5 stars if not for the double billing"
+        },
+        {
+          "review_id": "rr_7ae88ff337209e3ef47e078095d6850c",
+          "rating": 1,
+          "date": "2026-08-11T18:21:50.134Z",
+          "text": "Pixel 10 — audio distortion in Calm Android app Audio in the Calm Android app has persistent scratchiness/distortion during meditation sessions - not just one. Both on Wi-Fi and 5G. Calm sessions play normally on the Calm website using the Brave Chromium browser on same Pixel 10. YouTube audio is completely clean on the Pixel. I have cleared Calm's cache and storage, uninstalled/reinstalled Calm, rebooted the phone, and updated Pixel Audio services/Adaptive Sound is off."
+        },
+        {
+          "review_id": "rr_21526fc989c31f1f7e77be345dd0ff2d",
+          "rating": 1,
+          "date": "2026-07-22T17:18:42.278Z",
+          "text": "If I'm doing a meditation or anything longer than my phone's screen sleep timer, which is virtually every meditation. The voice and bg noise begins to glitch out and stutter every other word. Extremely annoying bug that makes me regret signing up for a year subscription."
+        },
+        {
+          "review_id": "rr_aed502e499952354cec84c27b4d2c28a",
+          "rating": 1,
+          "date": "2026-07-30T23:25:55.373Z",
+          "text": "It gets routinely stuck on the opening screen of \"take a deep breath\" I can take 100 deep breaths and it still doesn't open. Developers, please change this and make it optional. I will cancel subscription for this which is a shame because it's a great app otherwise. I just wish I could use it."
+        },
+        {
+          "review_id": "rr_df9ff259353fb42f6fe7609929aac7ce",
+          "rating": 5,
+          "date": "2026-07-20T13:09:47.216Z",
+          "text": "This app is my go-to for falling asleep. The stories are soothing and I love the variety of subjects and voices. I've never made it to the end of \"Drifting off to Sheep\" because it works every time at putting me right out."
+        },
+        {
+          "review_id": "rr_5a6bb300b0495bbc39f04c80dfa576ce",
+          "rating": 4,
+          "date": "2026-07-03T14:01:28.949Z",
+          "text": "I don't use as many of the elements of Calm as I want to. But listening to something before sleep is final part of wind down. Sometimes asleep before timer ends. I recommend it."
+        },
+        {
+          "review_id": "rr_8dadc37eed0646c4fae2ecaadf07d9fd",
+          "rating": 5,
+          "date": "2026-07-29T03:07:09.316Z",
+          "text": "I love this app! If you have problems sleeping let sometime read to you. it's amazing and I can never get to the ending and I sleep so well!! I just completed my 169th session. ❤️"
+        }
+      ],
+      "dates": {
+        "denominator": 450,
+        "dated_reviews": 450,
+        "undated_reviews": 0,
+        "oldest": "2026-06-23T05:58:55.629Z",
+        "newest": "2026-10-01T13:40:00.168Z"
+      },
+      "ratings": {
+        "denominator": 450,
+        "rated_reviews": 450,
+        "unrated_reviews": 0,
+        "distribution": {
+          "1": 164,
+          "2": 27,
+          "3": 30,
+          "4": 31,
+          "5": 198
+        }
+      },
+      "retrieved_at": "2026-10-02T14:21:00.361Z",
+      "demo": {
+        "evidenceSubset": true
+      }
+    }
+  }
+}

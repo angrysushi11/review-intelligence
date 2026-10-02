@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Review Intel workspace</title>
+    <meta name="description" content="Ask a focused question of public app reviews, with the evidence beside the answer.">
+    <meta name="robots" content="noindex, nofollow">
+    <base href="/review-intel/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="workspace.css">
+  </head>
+  <body>
+    <main class="shell" id="workspace">
+      <header class="masthead">
+        <a class="wordmark" href="/review-intel/" data-track="workspace_wordmark">Review Intel</a>
+        <div class="mast-actions"><p class="mastnote"><span class="mast-dot" aria-hidden="true"></span><span id="connection-note">Checking workspace…</span></p><button type="button" class="text-button" id="enter-access" data-track="workspace_enter_access">Enter code</button></div>
+      </header>
+
+      <div class="workspace-grid">
+        <section class="workbench" aria-labelledby="workspace-title">
+          <p class="eyebrow">Private prototype</p>
+          <h1 id="workspace-title">Read the evidence<br>before the answer.</h1>
+          <p class="intro">Bring a public App Store or Google Play listing, choose one question, then inspect the reviews behind each finding.</p>
+
+          <div class="setup-note" id="setup-note" hidden>
+            <strong>This workspace is being connected.</strong>
+            <span>Live analysis is not available in this environment yet. You can still open the saved demonstration below.</span>
+          </div>
+
+          <form id="source-form" novalidate>
+            <div class="source-fields">
+              <label class="field field--source" for="app-url">
+                <span>App link or name</span>
+                <input id="app-url" name="url" autocomplete="off" placeholder="Paste a store link or search an app name" required data-track="workspace_app_input" role="combobox" aria-autocomplete="list" aria-controls="app-results" aria-expanded="false" aria-describedby="source-help">
+                <ul class="app-results" id="app-results" role="listbox" aria-label="App search results" hidden></ul>
+              </label>
+              <label class="field field--market" for="market">
+                <span>Store & country</span>
+                <select id="market" name="market" data-track="workspace_market_select">
+                  <option value="en-US">United States</option>
+                  <option value="en-GB">United Kingdom</option>
+                  <option value="en-CA">Canada</option>
+                  <option value="en-AU">Australia</option>
+                </select>
+              </label>
+            </div>
+            <p class="field-help" id="source-help">Paste a public store link, or type two or more letters to search App Store and Google Play.</p>
+
+            <fieldset class="question-picker">
+              <legend>What do you want to learn?</legend>
+              <div id="question-groups" class="question-groups" aria-label="Question categories"></div>
+              <div id="questions" class="questions" aria-live="polite"></div>
+            </fieldset>
+
+            <div class="sample-controls">
+              <label class="field field--limit" for="review-limit">
+                <span>Reviews to read</span>
+                <select id="review-limit" name="limit" data-track="workspace_review_limit">
+                  <option value="40">40 recent reviews</option>
+                  <option value="80">80 recent reviews</option>
+                  <option value="120">120 recent reviews</option>
+                </select>
+              </label>
+              <button class="button button--quiet" type="submit" id="sample-button" data-track="workspace_get_sample" data-action="sample">Get review sample</button>
+              <button class="text-button" type="button" id="open-demo" data-track="workspace_open_saved_demo" data-action="saved-demo">Open saved demo</button>
+            </div>
+          </form>
+
+          <section class="sample-panel" id="sample-panel" hidden aria-labelledby="sample-title">
+            <div class="section-line">
+              <div>
+                <p class="eyebrow">Your sample</p>
+                <h2 id="sample-title">Reviews ready to inspect</h2>
+              </div>
+              <button type="button" class="text-button" id="copy-sample" data-track="workspace_copy_sample" data-action="copy-sample">Copy sample</button>
+            </div>
+            <dl class="sample-facts" id="sample-facts"></dl>
+            <p class="sample-caption" id="sample-caption"></p>
+          </section>
+
+          <section class="run-panel" id="run-panel" aria-labelledby="analysis-title">
+            <div>
+              <p class="eyebrow">Analysis</p>
+              <h2 id="analysis-title">One focused question</h2>
+              <p id="selected-question-copy">Choose a question above to set the analysis brief.</p>
+            </div>
+            <label class="field field--model" for="model-select">
+              <span>Model</span>
+              <select id="model-select" data-track="workspace_model_select" disabled><option>Loading available models…</option></select>
+            </label>
+            <div class="run-actions">
+              <button type="button" class="button" id="analyze-button" disabled data-track="workspace_analyze" data-action="analyze">Run analysis</button>
+              <p id="trial-note" class="trial-note">Live usage appears here when the workspace is connected.</p>
+            </div>
+            <p class="notice" id="consumption-warning" hidden>Running this analysis uses one of the live trial analyses. Opening review evidence is free.</p>
+            <p class="privacy-note">Public reviews are sent to AWS Bedrock to generate a report. Successful reports and usage records are retained for 30 days for retries; the invitation usage counter persists. Browser history stays on this device and can be cleared.</p>
+          </section>
+        </section>
+
+        <aside class="side-column" aria-label="Workspace details">
+          <nav class="tab-nav" aria-label="Workspace panels">
+            <button type="button" class="tab is-active" data-panel="report" data-track="workspace_tab_report">Report</button>
+            <button type="button" class="tab" data-panel="history" data-track="workspace_tab_history">History</button>
+            <button type="button" class="tab" data-panel="pricing" data-track="workspace_tab_pricing">Pricing</button>
+          </nav>
+
+          <section class="panel" id="panel-report" aria-labelledby="report-title">
+            <div id="report-empty" class="empty-state">
+              <span class="empty-mark" aria-hidden="true">↗</span>
+              <h2 id="report-title">Your report will appear here.</h2>
+              <p>It will name the sample it used and link every finding back to the reviews that support it.</p>
+            </div>
+            <article id="report-view" hidden></article>
+          </section>
+
+          <section class="panel" id="panel-history" hidden aria-labelledby="history-title">
+            <div class="section-line">
+              <div><p class="eyebrow">Prototype history</p><h2 id="history-title">Saved in this browser</h2></div>
+              <button type="button" class="text-button" id="clear-history" data-track="workspace_clear_history" data-action="clear-history">Clear</button>
+            </div>
+            <p class="panel-note">This list stays on this device. It does not represent your account or trial balance.</p>
+            <div id="history-list" class="history-list"></div>
+          </section>
+
+          <section class="panel" id="panel-pricing" hidden aria-labelledby="pricing-title">
+            <p class="eyebrow">Prototype pricing</p>
+            <h2 id="pricing-title">A small way to start.</h2>
+            <dl class="pricing-list">
+              <div><dt>Prototype invitation</dt><dd><strong>3 free</strong><span>Three successful reports per invitation, shared wherever the same code is used.</span></dd></div>
+              <div><dt>Proposed paid pack</dt><dd><strong>$5 for 10 reports</strong><span>One-time purchase in USD. Proposed price; purchasing is not available yet.</span></dd></div>
+            </dl>
+            <p class="panel-note">Billing is not active in this prototype.</p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <dialog id="access-dialog" aria-labelledby="access-title">
+      <form method="dialog" id="access-form">
+        <p class="eyebrow">Invited access</p>
+        <h2 id="access-title">Enter the access code.</h2>
+        <p>This code is held for this browser session only.</p>
+        <label class="field" for="access-code"><span>Access code</span><input id="access-code" autocomplete="one-time-code" data-track="workspace_access_input"></label>
+        <p id="access-error" class="form-error" role="alert"></p>
+        <div class="dialog-actions"><button type="button" class="text-button" id="access-cancel" data-track="workspace_access_cancel">Cancel</button><button type="submit" class="button" data-track="workspace_access_submit" data-action="access">Continue</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="evidence-dialog" aria-labelledby="evidence-title">
+      <div class="dialog-head"><div><p class="eyebrow">Source reviews</p><h2 id="evidence-title">Evidence</h2></div><button type="button" class="icon-button" id="close-evidence" aria-label="Close evidence" data-track="workspace_close_evidence">×</button></div>
+      <div id="evidence-list" class="evidence-list"></div>
+    </dialog>
+    <p class="sr-only" id="live-status" role="status" aria-live="polite"></p>
+    <script type="module" src="workspace.js"></script>
+  </body>
+</html>
