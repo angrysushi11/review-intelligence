@@ -6,6 +6,12 @@
   ],
   "routes": [
     { "src": "/", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
+    {"src": "/review-intel/app", "status": 308, "headers": {"Location": "/review-intel/app/"}},
+    {"src": "/review-intel/app/", "dest": "/web/workspace.html", "headers": {"Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow"}},
+    {"src": "/review-intel/api/workspace", "dest": "/api/workspace.js"},
+    {"src": "/review-intel/workspace.css", "dest": "/web/workspace.css"},
+    {"src": "/review-intel/workspace.js", "dest": "/web/workspace.js"},
+    {"src": "/review-intel/workspace-demo.json", "dest": "/web/workspace-demo.json"},
     { "src": "/review-intel/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
     { "src": "/review-intel/setup/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/setup/" } },
     { "src": "/review-intel/privacy/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/privacy/" } },
