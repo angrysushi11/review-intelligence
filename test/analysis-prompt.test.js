@@ -11,7 +11,8 @@ import {
   QUESTION_GROUPS,
   buildAnalysisPayload,
   findQuestion,
-  limitReviews
+  limitReviews,
+  questionMapGroups
 } from "../web/analysis-prompt.js";
 
 function exportFor(count, { trickyText = false } = {}) {
@@ -52,6 +53,24 @@ test("the question map has unique ids and a default first read", () => {
   }
   assert.equal(QUESTION_GROUPS.at(-1).label, "Support");
   assert.equal(findQuestion("price").description, "Whether people mind the price itself, or when and how the paywall shows up.");
+});
+
+test("the FAQ question map is generated from the picker taxonomy with the approved best start copy", () => {
+  const map = questionMapGroups();
+
+  assert.deepEqual(map.map((group) => group.label), [
+    "Best start",
+    "Before you build",
+    "Product",
+    "Money",
+    "Marketing",
+    "Support",
+  ]);
+  assert.deepEqual(map[0].questions, [
+    "First useful read: the two or three things in these reviews you’d most likely miss, and why they matter.",
+  ]);
+  assert.equal(map[3].questions[0], "Is it the price, or when the price appears?");
+  assert.equal(map.at(-1).questions.at(-1), "What changed across versions or dates?");
 });
 
 test("the Claude payload keeps every review and the chosen question", () => {

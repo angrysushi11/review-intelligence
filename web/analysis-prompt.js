@@ -21,7 +21,8 @@ export const QUESTION_GROUPS = [
       {
         id: "first-read",
         label: "First useful read (best start)",
-        description: "The two or three things in these reviews you'd most likely miss, and why they matter.",
+        description: "What you’d most likely miss, and why it matters.",
+        mapLabel: "First useful read: the two or three things in these reviews you’d most likely miss, and why they matter.",
         prompt: "Give me the first useful read: the two or three things in these reviews I would most likely miss, and why they matter."
       }
     ]
@@ -138,6 +139,13 @@ export const QUESTION_GROUPS = [
 ];
 
 const ALL_QUESTIONS = QUESTION_GROUPS.flatMap((group) => group.questions);
+
+export function questionMapGroups() {
+  return QUESTION_GROUPS.map((group) => ({
+    label: group.label === "Start here" ? "Best start" : group.label,
+    questions: group.questions.map((question) => question.mapLabel || question.label),
+  }));
+}
 
 export function findQuestion(id) {
   return ALL_QUESTIONS.find((question) => question.id === id)

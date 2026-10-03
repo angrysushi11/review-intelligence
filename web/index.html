@@ -258,87 +258,20 @@
 
 
 
-<section class="ri-rule-top" aria-labelledby="ask-h" data-section="question-map">
-<div class="ri-section ri-section--head">
-<h2 class="ri-two-tone" id="ask-h">Ask what you need to decide. <span class="ri-two-tone__muted">You pick the question after the reviews load.</span></h2>
-</div>
-<div class="ri-hairline-grid ri-qmap" id="landing-question-map">
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">First useful read <span class="ri-badge ri-badge--soft">Best start</span></h3>
-<p class="ri-qmap__desc">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
-</div>
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">Before you build</h3>
-<ul class="ri-qmap__list">
-<li>What do users wish this app did?</li>
-<li>Why do people switch apps?</li>
-<li>Which users does it serve badly?</li>
-</ul>
-</div>
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">Product</h3>
-<ul class="ri-qmap__list">
-<li>What keeps people coming back?</li>
-<li>What breaks, and when do people give up?</li>
-<li>Where does onboarding lose people?</li>
-</ul>
-</div>
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">Money</h3>
-<ul class="ri-qmap__list">
-<li>Is it the price, or when the price appears?</li>
-<li>What turns a trial into a refund request?</li>
-<li>What makes people feel unsafe paying?</li>
-</ul>
-</div>
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">Marketing</h3>
-<ul class="ri-qmap__list">
-<li>Which words do happy users use?</li>
-<li>What should screenshots and ads say?</li>
-<li>Which claims are safe to make?</li>
-</ul>
-</div>
-<div class="ri-qmap__cell">
-<h3 class="ri-qmap__title">Support</h3>
-<ul class="ri-qmap__list">
-<li>Where does support fail?</li>
-<li>What changed across versions or dates?</li>
-</ul>
-</div>
-</div>
-</section>
 
-<section class="ri-section" id="connect" aria-labelledby="connect-h" data-section="connect">
-<h2 class="ri-two-tone" id="connect-h">Skip the copy-paste. <span class="ri-two-tone__muted">Connect once, then ask about any app right in Claude or Codex.</span></h2>
-<p class="ri-sub">It keeps collecting past 500 Google Play reviews and compares apps and countries in one chat.</p>
-<div class="ri-split">
-<div class="ri-split__main">
-<ol class="ri-setup-steps">
-<li class="ri-setup-step">
-<span class="ri-disc">1</span>
-<div>
-<h3 class="ri-setup-step__title">Connect Review Intel</h3>
-<p class="ri-setup-step__text">One click. Works on Claude’s free plan.</p>
-<div class="ri-setup-step__actions"><a class="ri-btn ri-btn--primary ri-btn--md" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" data-connect-placement="landing_connector" data-control-id="page-add-to-claude" data-tracking="app">Add to Claude</a></div>
-</div>
-</li>
-<li class="ri-setup-step">
-<span class="ri-disc">2</span>
-<div>
-<h3 class="ri-setup-step__title">Add the analysis skill</h3>
-<p class="ri-setup-step__text">Gives every chat the full method. Download it, then upload it in Claude under Skills.</p>
-<div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download="" data-control-id="page-download-skill">Download skill</a></div>
-</div>
-</li>
-</ol>
-<p class="ri-more">In Claude Code, it’s one line:</p>
-<div class="ri-code"><code class="ri-code__text" id="landing-code-command">claude mcp add --transport http review-retriever https://www.willthiseverwork.com/review-intel/mcp</code><button class="ri-btn ri-btn--utility" type="button" data-copy-target="landing-code-command" data-control-id="landing-code-copy"><svg class="ri-icon" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy</button></div>
-<p class="ri-more">Codex or another client? <a class="ri-link" href="setup/" data-connect-placement="landing_guide" data-control-id="page-setup-guide" data-tracking="app">Setup guide</a></p>
-</div>
-<div class="ri-split__side">
-<div class="ri-crop">
-<div class="ri-chat">
+
+
+
+
+
+
+
+
+
+<section class="ri-connect" id="connect" aria-labelledby="connect-h" data-section="connect">
+<h2 class="ri-two-tone ri-two-tone--stack" id="connect-h">Skip the copy-paste. <span class="ri-two-tone__muted">Ask Claude about any app.</span></h2>
+<div class="ri-crop ri-connect__crop">
+<div class="ri-chat ri-chat--xl">
 <p class="ri-chat__you">Analyze reviews for <span class="ri-chat__url">play.google.com/store/apps/details?id=com.calm.android</span> in the US. Show me what users love, hate, and expected.</p>
 <div class="ri-chat__reply">
 <p class="ri-chat__who">Claude</p>
@@ -349,40 +282,26 @@
 </div>
 </div>
 </div>
-<p class="ri-caption-line">Claude with Review Intel connected, on the saved Calm reviews.</p>
+<div class="ri-connect__actions">
+<a class="ri-btn ri-btn--primary ri-btn--xl" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" data-connect-placement="landing_connector" data-control-id="page-add-to-claude" data-tracking="app">Add to Claude</a>
+<a class="ri-btn ri-btn--outline ri-btn--xl" href="setup/" data-connect-placement="landing_guide" data-control-id="page-setup-guide" data-tracking="app">Setup guide</a>
 </div>
-</div>
-</section>
-
-<section aria-labelledby="facts-h" data-section="facts">
+<p class="ri-connect__note">Works on Claude’s free plan.</p>
+</section><section aria-labelledby="facts-h" data-section="facts">
 <h2 class="ri-sr-only" id="facts-h">What you can check</h2>
-<div class="ri-hairline-grid ri-facts">
-<div class="ri-fact">
-<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Free, no signup</p>
-<p class="ri-fact__text">No account. Up to 500 reviews each time.</p>
-</div>
-<div class="ri-fact">
-<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Public reviews only</p>
-<p class="ri-fact__text">No store login, developer console or API key.</p>
-</div>
-<div class="ri-fact">
-<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>No review database</p>
-<p class="ri-fact__text">The app keeps no copy of what you collect. <a class="ri-link" href="privacy/" data-control-id="page-privacy">Privacy</a></p>
-</div>
-<div class="ri-fact">
-<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Open source</p>
-<p class="ri-fact__text">Apache-2.0. <a class="ri-link" href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=page-read-the-code" data-control-id="page-read-the-code">Read the code</a></p>
-</div>
-</div>
-</section>
-
-<section class="ri-section" aria-labelledby="faq-h" data-section="faq">
+<ul class="ri-factline">
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Free, no signup</li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Public reviews only</li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><a href="privacy/" data-control-id="page-privacy">No review database</a></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=page-read-the-code" data-control-id="page-read-the-code">Open source</a></li>
+</ul>
+</section><section class="ri-section ri-rule-top" aria-labelledby="faq-h" data-section="faq">
 <div class="ri-faq">
 <div class="ri-faq__head">
 <h2 class="ri-two-tone" id="faq-h">Questions. <span class="ri-two-tone__muted">Anything else? <a class="ri-link" href="mailto:tools@doubledash.me" data-control-id="page-email-me">Email me.</a></span></h2>
 </div>
 <div class="ri-faq__list">
-<details class="ri-faq__item" open="open" data-control-id="faq-1">
+<details class="ri-faq__item" data-control-id="faq-1">
 <summary data-control-id="faq-1">Do I need App Store Connect or Google Play Console?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
 <p>No. Review Intel reads public store listings, so you need no developer account, console access or API key.</p>
 </details>
@@ -406,17 +325,41 @@
 <summary data-control-id="faq-6">Is this an app review scraper?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
 <p>People often call it that. Review Intel reads public written reviews from store listings. It doesn’t sign in anywhere or touch private developer-console data.</p>
 </details>
+<details class="ri-faq__item" data-control-id="faq-7">
+<summary data-control-id="faq-7">What can I ask about the reviews?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<div class="ri-faq-map" id="landing-question-map">
+<div>
+<h3 class="ri-faq-map__h">Best start</h3>
+<ul><li>First useful read: the two or three things in these reviews you’d most likely miss, and why they matter.</li></ul>
+</div>
+<div>
+<h3 class="ri-faq-map__h">Before you build</h3>
+<ul><li>What do users wish this app did?</li><li>Why do people switch apps?</li><li>Which users does it serve badly?</li></ul>
+</div>
+<div>
+<h3 class="ri-faq-map__h">Product</h3>
+<ul><li>What keeps people coming back?</li><li>What breaks, and when do people give up?</li><li>Where does onboarding lose people?</li></ul>
+</div>
+<div>
+<h3 class="ri-faq-map__h">Money</h3>
+<ul><li>Is it the price, or when the price appears?</li><li>What turns a trial into a refund request?</li><li>What makes people feel unsafe paying?</li></ul>
+</div>
+<div>
+<h3 class="ri-faq-map__h">Marketing</h3>
+<ul><li>Which words do happy users use?</li><li>What should screenshots and ads say?</li><li>Which claims are safe to make?</li></ul>
+</div>
+<div>
+<h3 class="ri-faq-map__h">Support</h3>
+<ul><li>Where does support fail?</li><li>What changed across versions or dates?</li></ul>
 </div>
 </div>
-</section>
-
-
-
-</section><section id="state-done" aria-labelledby="packet-title" hidden="">
-  <section class="ri-done">
+</details></div>
+</div>
+</section></section><section id="state-done" aria-labelledby="packet-title" hidden="">
+  <section class="ri-done ri-done--xl">
   <div class="ri-done__grid">
     <div class="ri-done__receipt">
-      <div class="ri-card">
+      <div class="ri-card ri-bigreceipt">
         <div class="ri-app">
           <span class="ri-app-tile app-icon-shell">
             <img class="app-icon" id="app-icon" alt="" width="36" height="36" decoding="async" referrerpolicy="no-referrer" hidden="">
@@ -424,65 +367,62 @@
           <div style="min-width: 0;">
             <h1 class="ri-app__name" id="packet-title" tabindex="-1">Reviews exported</h1>
             <span class="ri-app__id" id="packet-app-id">App ID</span>
-            <span class="ri-app__id" id="packet-meta">Store, country, language</span>
+
           </div>
         </div>
-        <div class="ri-receipt">
-          <div class="ri-receipt__head">
-            <strong class="ri-receipt__count" id="packet-count">0</strong>
-            <span class="ri-receipt__caption">written reviews, <span id="packet-date">Date unavailable</span><span id="packet-date-short" hidden="">Date unavailable</span></span>
-          </div>
-          <div class="ri-receipt__bars">
-            <div class="ri-bars" id="rating-chart" role="img" aria-label="Rating distribution"></div>
-          </div>
+        <div class="ri-bigreceipt__body">
+          <strong class="ri-bigreceipt__count" id="packet-count">0</strong><p class="ri-bigreceipt__unit" id="receipt-unit">Google Play reviews</p><p class="ri-bigreceipt__meta"><span id="packet-meta">Store, country, language</span>, <span id="packet-date">Date unavailable</span><span id="packet-date-short" hidden="">Date unavailable</span></p><p class="ri-receipt-note" id="receipt-meta" hidden="">
+            <svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5"></path><path d="M12 16.2h.01"></path></svg>
+            <span id="receipt-note-text"></span>
+            <button class="ri-btn ri-btn--utility" id="receipt-retry" type="button" data-tracking="app" data-control-id="receipt-retry">Try again</button>
+          </p>
+
+            <div class="ri-bars ri-bars--xl" id="rating-chart" role="img" aria-label="Rating distribution"></div>
+
           <div class="ri-receipt__actions">
             <button class="ri-btn ri-btn--utility" id="copy-btn" type="button" data-tracking="app" data-control-id="copy-btn">Copy</button>
             <button class="ri-btn ri-btn--utility" id="download-btn" type="button" data-tracking="app" data-control-id="download-btn">Download .md</button>
             <button class="ri-btn ri-btn--utility" id="start-over" type="button" data-tracking="app" data-control-id="start-over">Start over</button>
           </div>
-          <p class="ri-receipt-note" id="receipt-meta" hidden="">
-            <svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5"></path><path d="M12 16.2h.01"></path></svg>
-            <span id="receipt-note-text"></span>
-            <button class="ri-btn ri-btn--utility" id="receipt-retry" type="button" data-tracking="app" data-control-id="receipt-retry">Try again</button>
-          </p>
+
         </div>
       </div>
     </div>
 
     <div class="ri-done__ask" id="analyze" aria-labelledby="analyze-title">
-      <h2 class="ri-two-tone ri-two-tone--sm" id="analyze-title">Pick a question. <span class="ri-two-tone__muted">We copy it with all <span id="question-review-count">0</span> reviews.</span></h2>
-      <select id="question-select" aria-label="Question" hidden="" data-control-id="question-select"></select>
-      <div class="ri-qlist" role="group" aria-label="Question">
-        <div class="ri-qcard is-selected" id="selected-question" aria-live="polite">
+      <h2 class="ri-sr-only" id="analyze-title">Pick a question</h2>
+      <select id="question-select" aria-label="Question" hidden="" data-control-id="question-select"></select><span id="question-review-count" hidden="">0</span>
+      <div class="ri-qlist" role="radiogroup" aria-labelledby="analyze-title">
+        <label class="ri-qcard is-selected" id="selected-question" aria-live="polite"><input class="ri-sr-only" id="question-first-read" type="radio" name="review-question" value="first-read" checked="" data-control-id="question-first-read" data-tracking="app">
           <span class="ri-qcard__dot" aria-hidden="true"></span>
-          <h3 class="ri-qcard__title" id="selected-question-title">First useful read</h3>
+          <span class="ri-qcard__title" id="selected-question-title">First useful read</span>
           <span class="ri-badge ri-badge--soft" id="selected-question-tag">Best start</span>
-          <p class="ri-qcard__desc" id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
-        </div>
-      </div>
-      <p class="ri-lead-in" id="question-groups-label">Or ask about</p>
-      <div class="ri-chips" id="question-group-chips" role="group" aria-labelledby="question-groups-label"></div>
-      <div id="question-options-panel" hidden="">
-        <div class="ri-qlist" id="question-options" role="group" aria-label="Questions"></div>
-        <p class="ri-more"><button class="ri-link" id="question-reset" type="button" data-tracking="app" data-control-id="question-reset">Back to the best start</button></p>
-      </div>
+          <span class="ri-qcard__desc" id="selected-question-description">What you’d most likely miss, and why it matters.</span>
+        </label>
+      </div><button class="ri-moreq" id="question-more" type="button" aria-expanded="false" aria-controls="question-more-panel" data-control-id="question-more" data-tracking="app">More questions<svg class="ri-icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><div class="ri-moreq__panel" id="question-more-panel" hidden=""><p class="ri-sr-only" id="question-groups-label">Question groups</p><div class="ri-chips" id="question-group-chips" role="group" aria-labelledby="question-groups-label"></div><div id="question-options-panel" hidden="">
+        <div class="ri-qlist" id="question-options" role="radiogroup" aria-label="Questions"></div>
+        <div><button class="ri-moreq ri-moreq--link" id="question-reset" type="button" data-tracking="app" data-control-id="question-reset">Back to the best start</button></div>
+      </div></div>
+
+
+
 
       <div id="analysis-actions">
         <div class="ri-actions">
-          <a class="ri-btn ri-btn--primary ri-btn--md" id="analyze-claude" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-claude">Copy &amp; open Claude</a>
-          <a class="ri-btn ri-btn--outline ri-btn--md" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-chatgpt">Copy &amp; open ChatGPT</a>
+          <a class="ri-btn ri-btn--primary ri-btn--xl" id="analyze-claude" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-claude">Copy &amp; open Claude</a>
+          <a class="ri-btn ri-btn--outline ri-btn--xl" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-chatgpt" aria-label="Copy &amp; open ChatGPT">ChatGPT</a>
         </div>
         <ol class="ri-handoff" id="paste-steps" aria-label="What happens next">
           <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">1</span>We copy everything</li>
           <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">2</span>A new chat opens</li>
           <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">3</span><span id="paste-step-text">You paste and send</span></li>
         </ol>
-        <p class="ri-note" id="handoff-scope">Claude reads all reviews. ChatGPT gets the newest 150, so it has room to answer.</p>
+        <p class="ri-note" id="handoff-scope">ChatGPT gets the newest 150, so it has room to answer.</p>
       </div>
 
       <div class="ri-status" id="analysis-status" role="status" aria-live="polite" hidden="">
         <div id="analysis-status-success">
-          <p class="ri-status__title" id="analysis-status-title">Copied. One step left, in the Claude tab.</p>
+          <p class="ri-status__title" id="analysis-status-title">One step left, in the Claude tab.</p>
           <ol class="ri-handoff" aria-label="Copy and paste progress">
             <li class="ri-handoff__step is-done"><span class="ri-handoff__mark" aria-hidden="true"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="ri-sr-only">Done: </span>We copied everything</li>
             <li class="ri-handoff__step is-done"><span class="ri-handoff__mark" aria-hidden="true"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="ri-sr-only">Done: </span><span id="analysis-opened-label">Claude opened</span></li>
@@ -492,60 +432,35 @@
             <span class="ri-sr-only" id="analysis-open-question">Claude didn’t open?</span>
             <a class="ri-btn ri-btn--utility" id="reopen-analysis" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="reopen-analysis">Open Claude again</a>
             <button class="ri-btn ri-btn--utility" id="copy-again" type="button" data-tracking="app" data-control-id="copy-again">Copy again</button>
-            <a class="ri-btn ri-btn--utility" id="switch-analysis" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="switch-analysis">Use ChatGPT instead</a>
+            <a class="ri-btn ri-btn--utility" id="switch-analysis" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="switch-analysis">ChatGPT instead</a>
           </div>
         </div>
         <div class="ri-alert" id="analysis-status-error" role="alert" hidden="">
           <svg class="ri-icon ri-alert__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5"></path><path d="M12 16.2h.01"></path></svg>
-          <p class="ri-alert__title">Couldn’t copy automatically.</p>
-          <p class="ri-alert__text">Press Copy, then paste into the new <span id="analysis-error-destination">Claude</span> chat.</p>
+          <p class="ri-alert__title" id="analysis-error-title">Couldn’t copy.</p>
+          <p class="ri-alert__text" id="analysis-error-text">Press Copy, then paste in <span id="analysis-error-destination">Claude</span>.</p>
           <div class="ri-alert__actions"><button class="ri-btn ri-btn--primary ri-btn--sm" id="analysis-error-copy" type="button" data-tracking="app" data-control-id="analysis-error-copy">Copy</button><a class="ri-btn ri-btn--outline ri-btn--sm" id="analysis-error-open" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="analysis-error-open">Open Claude</a></div>
         </div>
       </div>
     </div>
   </div>
   </section>
-  <section class="ri-keep" id="results-upgrade" aria-labelledby="results-upgrade-title">
-  <h2 class="ri-two-tone" id="results-upgrade-title"><span id="results-upgrade-kicker">Next time, skip the copy-paste.</span> <span class="ri-two-tone__muted">Ask Claude about any app directly.</span></h2>
-  <ol class="ri-setup-steps ri-setup-steps--row">
-    <li class="ri-setup-step">
-      <span class="ri-disc">1</span>
-      <div>
-        <h3 class="ri-setup-step__title">Connect Review Intel</h3>
-        <p class="ri-setup-step__text">One click. Works on Claude’s free plan.</p>
-        <div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" id="results-connect-claude" data-connect-placement="results_connector" data-tracking="app" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener" data-control-id="results-connect-claude">Add to Claude</a></div>
-      </div>
-    </li>
-    <li class="ri-setup-step">
-      <span class="ri-disc">2</span>
-      <div>
-        <h3 class="ri-setup-step__title">Add the analysis skill</h3>
-        <p class="ri-setup-step__text">Gives every chat the full method. Download it, then upload it in Claude under Skills.</p>
-        <div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" id="claude-skill-download" data-tracking="app" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download="" data-control-id="claude-skill-download">Download skill</a></div>
-      </div>
-    </li>
-  </ol>
-  <p class="ri-more">Codex, Claude Code or another client? <a class="ri-link" data-connect-placement="results_guide" href="setup/" data-control-id="page-setup-guide-2" data-tracking="app">Setup guide</a></p>
-  <a class="ri-sr-only" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener" data-control-id="claude-skills-link">Open Claude Skills</a>
-  </section>
+  <section class="ri-keepline" id="results-upgrade" aria-labelledby="results-upgrade-title"><h2 class="ri-keepline__text" id="results-upgrade-title"><span id="results-upgrade-kicker">Next time, skip the copy-paste.</span></h2><div class="ri-keepline__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" id="results-connect-claude" data-connect-placement="results_connector" data-tracking="app" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener" data-control-id="results-connect-claude">Add to Claude</a><a class="ri-link" data-connect-placement="results_guide" href="setup/" data-control-id="page-setup-guide-2" data-tracking="app">Setup guide</a></div><div hidden=""><a class="ri-btn ri-btn--outline ri-btn--sm" id="claude-skill-download" data-tracking="app" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download="" data-control-id="claude-skill-download">Download skill</a><a class="ri-sr-only" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener" data-control-id="claude-skills-link">Open Claude Skills</a></div></section>
 
-  <section class="ri-peek evidence" aria-labelledby="evidence-title">
-  <h2 class="ri-two-tone ri-two-tone--sm" id="evidence-title">A few of the <span id="peek-count">0</span>. <span class="ri-two-tone__muted">Exactly as they are in the file.</span></h2>
-  <div class="ri-peek__cards" id="peek" aria-label="Review sample"></div>
-  </section>
+  <section class="ri-peek ri-peek--wall evidence" aria-labelledby="evidence-title"><h2 class="ri-peek__label" id="evidence-title">Straight from the file</h2><span id="peek-count" hidden="">0</span><div class="ri-wall ri-wall--sm" style="--wall-height: 300px;"><div class="ri-wall__viewport"><div class="ri-wall__columns" id="peek" aria-label="Review sample"></div><div class="ri-wall__fade" aria-hidden="true"></div></div></div></section>
 
-  <div class="ri-pad" style="padding-bottom: 48px;">
-  <section class="ri-feedback" aria-labelledby="result-feedback-title">
-    <div>
-      <h2 class="ri-feedback__title" id="result-feedback-title">Did this help?</h2>
-      <p class="ri-feedback__text">Tell me what worked, what didn’t, or what you needed next.</p>
-    </div>
-    <div class="ri-feedback__actions">
-      <a class="ri-btn ri-btn--outline ri-btn--sm" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="page-email-feedback">Email feedback</a>
+
+  <section class="ri-feedline" aria-labelledby="result-feedback-title">
+
+      <h2 class="ri-feedline__title" id="result-feedback-title">Did this help?</h2>
+
+
+    <div class="ri-feedline__actions">
+      <a class="ri-btn ri-btn--outline ri-btn--sm" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="page-email-feedback">Email me</a>
       <a class="ri-btn ri-btn--outline ri-btn--sm" href="https://www.g2.com/products/review-intel/take_survey?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=page-write-a-g2-review" target="_blank" rel="noopener noreferrer" data-control-id="page-write-a-g2-review">Write a G2 review</a>
     </div>
   </section>
-  </div>
+
 </section>
 </main><footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
 <div class="ri-footer__top">
@@ -589,6 +504,7 @@
 <a href="https://www.willthiseverwork.com/" data-control-id="footer-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
 </div>
 </footer></div><p class="ri-sr-only" id="site-copy-status" role="status" aria-live="polite"></p><script type="module" src="app.js"></script>
+
 
 
 </body></html>

@@ -629,3 +629,108 @@ button.ri-result:focus-visible {
     animation: none;
   }
 }
+
+/* Appended to the end of ri-site.css on 3 Oct. Nothing above this block changed. */
+/* ---------- Next pass (3 Oct): one big real thing per section, a few words, the scale changes ---------- */
+
+/* Landing under the read: one big chat crop, centered */
+.ri-connect { padding: var(--section-pad-top) var(--gutter) var(--section-pad-bottom); border-top: 1px solid var(--rule); text-align: center; }
+.ri-connect .ri-two-tone { margin-inline: auto; }
+.ri-two-tone--stack .ri-two-tone__muted { display: block; }
+.ri-connect__crop { max-width: 760px; margin: 44px auto 0; text-align: left; }
+.ri-chat--xl { gap: 20px; padding: clamp(18px, 3vw, 32px); }
+.ri-chat--xl .ri-chat__you { padding: 14px 18px; font-size: clamp(16px, 1.5vw, 18px); text-wrap: pretty; }
+.ri-chat--xl .ri-chat__url { font-size: 0.82em; }
+.ri-chat--xl .ri-chat__who { font-size: 14px; }
+.ri-chat--xl .ri-chat__tool { min-height: 36px; padding: 7px 14px; font-size: 14px; }
+.ri-chat--xl .ri-chat__text { font-size: clamp(16px, 1.5vw, 18px); line-height: 1.55; text-wrap: pretty; }
+.ri-chat--xl .ri-quote { font-size: 16px; }
+.ri-connect__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 36px; }
+.ri-connect__note { margin: 14px 0 0; font-size: 13px; color: var(--ink-tertiary); }
+
+/* Landing: the four facts as one small line */
+.ri-factline { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 32px; margin: 0; padding: 22px var(--gutter); border-top: 1px solid var(--rule); list-style: none; font-size: 15px; color: var(--ink-body); }
+.ri-factline li { display: flex; align-items: center; gap: 10px; }
+.ri-factline a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: var(--border-input); text-underline-offset: 3px; }
+.ri-factline a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+
+/* Landing FAQ: the question map lives inside one item, for search */
+.ri-faq-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 18px 28px; padding: 0 0 24px; }
+.ri-faq-map__h { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.ri-faq-map ul { display: grid; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 14px; line-height: 1.45; color: var(--ink-body); }
+
+/* Results: the receipt is the big object */
+.ri-done--xl { padding: 28px var(--gutter) var(--section-pad-bottom); }
+.ri-done--xl .ri-done__grid { gap: 36px 56px; }
+.ri-done--xl .ri-done__receipt { flex: 1 1 520px; }
+.ri-done--xl .ri-done__ask { flex: 1 1 380px; padding-top: 6px; }
+.ri-bigreceipt { border-radius: var(--radius-2xl); }
+.ri-bigreceipt .ri-app { padding: 22px clamp(18px, 2.4vw, 28px) 0; }
+.ri-bigreceipt__body { padding: 20px clamp(18px, 2.4vw, 28px) clamp(20px, 2.4vw, 28px); }
+.ri-bigreceipt__count { display: block; margin: 0; font-size: clamp(88px, 9vw, 128px); line-height: 0.88; font-weight: 600; letter-spacing: -0.055em; font-variant-numeric: tabular-nums; }
+.ri-bigreceipt__unit { margin: 14px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -0.02em; }
+.ri-bigreceipt__meta { margin: 4px 0 0; font-size: 15px; line-height: 1.45; color: var(--ink-secondary); }
+.ri-bigreceipt .ri-receipt-note { margin-top: 18px; }
+.ri-bigreceipt .ri-receipt__actions { margin-top: 26px; }
+.ri-bars--xl { gap: 12px; margin-top: 28px; --bar-height: 12px; }
+.ri-bars--xl .ri-bars__row { grid-template-columns: 34px minmax(0, 1fr) 40px; gap: 14px; font-size: 15px; }
+.ri-ask__title { margin: 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+.ri-done--xl .ri-qlist, .ri-state > .ri-qlist { margin-top: 14px; }
+.ri-done--xl .ri-actions { margin-top: 16px; }
+.ri-qcard--plain { padding: 13px 16px; }
+.ri-moreq { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: 4px 0 0; padding: 0 2px; border: 0; border-radius: 8px; background: none; font-family: inherit; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; cursor: pointer; }
+.ri-moreq:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ri-moreq:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.ri-moreq[aria-expanded="true"] .ri-icon { transform: rotate(180deg); }
+.ri-moreq--link { text-decoration: underline; text-decoration-color: var(--border-input); text-underline-offset: 3px; }
+.ri-moreq--link:hover { text-decoration-color: var(--ink); }
+.ri-moreq__panel { display: grid; gap: 10px; margin: 2px 0 4px; }
+.ri-moreq__panel .ri-qlist { margin-top: 0; }
+@media (max-width: 560px) {
+  .ri-done--xl { padding-top: 20px; }
+  .ri-done--xl .ri-done__grid { gap: 24px; }
+  .ri-bigreceipt__count { font-size: 76px; }
+  .ri-bigreceipt__unit { margin-top: 10px; }
+  .ri-bars--xl { gap: 9px; margin-top: 20px; }
+  .ri-bigreceipt .ri-receipt__actions { margin-top: 18px; }
+  .ri-done--xl .ri-actions .ri-btn--xl { padding: 0 20px; }
+}
+
+/* Results: keep-it as one line, right under the action */
+.ri-keepline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 20px var(--gutter); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.ri-keepline--bare { padding: 0; border: 0; }
+.ri-keepline__text { margin: 0; font-size: 17px; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }
+.ri-keepline__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.ri-keepline__actions .ri-link { font-size: 15px; }
+
+/* Results: a small review wall, proof last */
+.ri-peek--wall { padding: 36px var(--gutter) 0; border-top: 0; }
+.ri-peek__label { margin: 0 0 14px; font-size: 14px; line-height: 1.4; font-weight: 500; color: var(--ink-secondary); }
+.ri-wall--sm .ri-wall__columns { columns: 3 240px; column-gap: 12px; }
+.ri-wall--sm .ri-wall__columns > * { margin-bottom: 12px; }
+.ri-wall--sm .ri-review-card { padding: 14px 16px 12px; border-radius: var(--radius-md); }
+.ri-wall--sm .ri-review-card__text { margin-top: 8px; font-size: 13.5px; line-height: 1.5; }
+.ri-wall--sm .ri-wall__fade { height: 110px; }
+
+/* Results: feedback as one line */
+.ri-feedline { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 32px var(--gutter) 48px; }
+.ri-feedline__title { margin: 0 8px 0 0; font-size: 17px; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }
+.ri-feedline__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Plugin: the read card, then one boundary statement */
+.ri-read-wrap { padding: 0 var(--gutter) var(--section-pad-bottom); }
+.ri-read-wrap .ri-caption-line { margin: 16px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary); }
+.ri-statement { padding: var(--section-pad-top) var(--gutter) var(--section-pad-bottom); border-top: 1px solid var(--rule); }
+.ri-statement__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 28px; }
+.ri-statement__note { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary); }
+.ri-quietlinks { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 36px 0 0; padding: 0; list-style: none; }
+.ri-quietlinks a { display: inline-flex; align-items: center; min-height: 32px; font-size: 14px; color: var(--ink-secondary); text-decoration: underline; text-decoration-color: var(--border-input); text-underline-offset: 3px; }
+.ri-quietlinks a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+
+/* Runtime integration: keep board disclosures, native radios and touch targets usable. */
+.ri-root { --control-sm: 44px; }
+.ri-qcard input.ri-sr-only { margin: 0; }
+.ri-quietlinks a,
+.ri-factline a { display: inline-flex; align-items: center; min-height: 44px; }
+.ri-root :where(.ri-link, .ri-prose a, .ri-doc__lede a, .ri-doc__contact a, .ri-job__text a, .ri-more a, .ri-faq__item p a, .ri-caption-line a, .ri-sub a, .ri-boundary__text a)::after { height: max(44px, 100%); }
+.ri-wall--sm .ri-wall__viewport { height: 300px; }

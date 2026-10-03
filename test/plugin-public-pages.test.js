@@ -34,18 +34,17 @@ test("plugin landing page describes the supplied-export flow without a publicati
   const html = await readFile(new URL(pages.plugin, root), "utf8");
 
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/plugin\/">/);
-  assert.match(html, /Paste reviews or upload an export in ChatGPT or Codex/i);
-  assert.match(html, /shows what’s worth investigating or testing next/i);
+  assert.match(html, /<p class="ri-lede">Paste or upload the reviews\.<\/p>/);
   assert.match(html, /Saved example, 450 Google Play reviews/i);
   assert.match(html, /86 of 450 reviews \(19%\).*65 are 1★/i);
   assert.match(html, /This is an activation and trust hypothesis, not proof of conversion or churn impact/i);
-  assert.match(html, /How many reviews were supplied, parsed, excluded and analyzed/i);
-  assert.match(html, /Percentages on the analyzed total/i);
-  assert.match(html, /Stable review IDs behind every finding/i);
-  assert.match(html, /Observations kept apart from inferences/i);
-  assert.match(html, /reviews can’t prove demand, revenue, retention, conversion or causality/i);
-  assert.match(html, /plugin makes no live requests and connects to no server/i);
-  assert.match(html, /Review Intel gets up to 500 free/i);
+  assert.match(html, /Every read also counts the reviews supplied, parsed, excluded and analyzed\./);
+  assert.match(html, /Supplied reviews only\./);
+  assert.match(html, /No live requests, no server\./);
+  assert.match(html, /Review Intel collects up to 500, free\./);
+  assert.match(html, /class="ri-statement"/);
+  assert.match(html, /class="ri-quietlinks"/);
+  assert.doesNotMatch(html, /ri-evidence-list|ri-boundary/);
   assert.match(html, /href="plugin-privacy\/"/);
   assert.match(html, /href="plugin-terms\/"/);
   assert.match(html, /href="plugin-support\/"/);

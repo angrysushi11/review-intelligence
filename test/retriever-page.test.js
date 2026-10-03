@@ -34,7 +34,7 @@ test("direction D preserves the source example, accessible controls and free han
   const styles = await readFile(new URL("styles.css", webUrl), "utf8");
   const tokens = await readFile(new URL("tokens.css", webUrl), "utf8");
   const appJs = await readFile(new URL("app.js", webUrl), "utf8");
-  for (const id of ["state-idle", "state-done", "extract-form", "app-url", "country", "extract-btn", "extract-label", "search-results", "form-error", "form-error-help", "retrieval-status", "packet-title", "rating-chart", "question-group-chips", "question-options", "question-reset", "analyze-claude", "analyze-chatgpt", "analysis-status-success", "analysis-status-error", "analysis-error-copy", "paste-step-text", "results-upgrade-kicker", "copy-btn", "download-btn", "start-over", "peek"]) {
+  for (const id of ["state-idle", "state-done", "extract-form", "app-url", "country", "extract-btn", "extract-label", "search-results", "form-error", "form-error-help", "retrieval-status", "packet-title", "rating-chart", "question-more", "question-more-panel", "question-first-read", "question-group-chips", "question-options", "question-reset", "receipt-unit", "analyze-claude", "analyze-chatgpt", "analysis-status-success", "analysis-status-error", "analysis-error-copy", "paste-step-text", "results-upgrade-kicker", "copy-btn", "download-btn", "start-over", "peek"]) {
     assert.equal((html.match(new RegExp(`\\sid="${id}"`, "g")) || []).length, 1, `${id} appears exactly once`);
   }
   assert.match(html, /Your competitors’ users already told you what to build\./);
@@ -51,9 +51,27 @@ test("direction D preserves the source example, accessible controls and free han
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /aria-live="assertive"/);
   assert.equal((html.match(/data-demo-url=/g) || []).length, 3);
-  assert.equal((html.match(/<details\b/g) || []).length, 6);
+  assert.equal((html.match(/<details\b/g) || []).length, 7);
   assert.match(html, /Copy &amp; open Claude/);
   assert.match(html, /Copy &amp; open ChatGPT/);
+  assert.match(html, /class="ri-connect" id="connect"/);
+  assert.match(html, /class="ri-factline"/);
+  assert.match(html, /class="ri-faq-map" id="landing-question-map"/);
+  assert.doesNotMatch(html, /<details[^>]+\sopen(?:=|\s|>)/);
+  assert.doesNotMatch(html, /data-section="question-map"|id="landing-code-command"/);
+  assert.match(html, /class="ri-card ri-bigreceipt"/);
+  assert.match(html, /class="ri-bars ri-bars--xl" id="rating-chart"/);
+  assert.match(html, /id="question-more"[^>]+aria-expanded="false"[^>]+aria-controls="question-more-panel"/);
+  assert.match(html, /class="ri-moreq__panel" id="question-more-panel" hidden/);
+  assert.match(html, /class="ri-sr-only" id="analyze-title">Pick a question<\/h2>/);
+  assert.match(html, /role="radiogroup" aria-labelledby="analyze-title"/);
+  assert.match(html, /id="analyze-chatgpt"[^>]+aria-label="Copy &amp; open ChatGPT">ChatGPT<\/a>/);
+  assert.match(html, /class="ri-keepline"/);
+  assert.match(html, /class="ri-wall ri-wall--sm" style="--wall-height: 300px;"/);
+  assert.match(html, /Straight from the file/);
+  assert.match(html, /class="ri-feedline"/);
+  assert.match(styles, /@media \(max-width: 560px\)/);
+  assert.match(styles, /\.ri-root \{ --control-sm: 44px; \}/);
   assert.match(html, /class="ri-footer/);
   assert.doesNotMatch(html, /fonts\.googleapis|Caveat|x-import|dc-import|\{\{/);
   assert.match(tokens, /#FFE27A/i);
@@ -70,7 +88,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       'import { COUNTRY_OPTIONS } from "./markets.js";',
       'const COUNTRY_OPTIONS = [{ value: "us", label: "United States" }];'
     )
-    .replace('from "./analysis-prompt.js?v=20260925-results-redesign";', `from "${new URL("analysis-prompt.js", webUrl).href}";`)
+    .replace('from "./analysis-prompt.js?v=20261003-next-pass";', `from "${new URL("analysis-prompt.js", webUrl).href}";`)
     .replace('from "./analytics.js";', `from "${new URL("analytics.js", webUrl).href}";`);
   assert.notEqual(executableAppJs, appJs, "the browser-only markets import should be replaced in the test harness");
   assert.ok(executableAppJs.includes(new URL("analysis-prompt.js", webUrl).href), "the analysis module should resolve by absolute URL");
@@ -96,18 +114,22 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
         textContent: "",
         className: "",
         style: {},
+        children: [],
         classList: { add() {}, remove() {}, toggle() {} },
         addEventListener(type, handler) {
           elementListeners.set(type, handler);
         },
-        append() {},
-        replaceChildren() {},
+        append(...nodes) { this.children.push(...nodes); },
+        replaceChildren(...nodes) {
+          this.children = nodes.flatMap((node) => node?.isFragment ? node.children : [node]);
+        },
         setAttribute(name, value) {
           this[name] = String(value);
         },
+        getAttribute(name) { return this[name] ?? null; },
         removeAttribute() {},
         contains() { return true; },
-        focus() {},
+        focus() { this.focused = true; },
         select() {},
         remove() {},
         scrollIntoView() {},
@@ -137,7 +159,11 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
           node.dataset = { connectPlacement: placement, controlId: controlIds[placement] };
           return node;
         }) : [],
-      createDocumentFragment: () => ({ append() {} }),
+      createDocumentFragment: () => ({
+        isFragment: true,
+        children: [],
+        append(...nodes) { this.children.push(...nodes); },
+      }),
       createElement: () => elementFor(`created-${elements.size}`),
     },
     window: {
@@ -189,7 +215,24 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       assert.equal(event[2].placement, placement);
     }
 
-    // The visible group picker updates the selected question and reports the choice.
+    // More questions opens and closes with dedicated low-cardinality events.
+    assert.equal(elementFor("#question-more").getAttribute("aria-expanded"), "false");
+    assert.equal(elementFor("#question-more-panel").hidden, true);
+    listeners.get("#question-more").get("click")();
+    assert.equal(elementFor("#question-more").getAttribute("aria-expanded"), "true");
+    assert.equal(elementFor("#question-more-panel").hidden, false);
+    assert.equal(window.dataLayer.at(-1)[1], "review_question_more_open");
+    assert.deepEqual(
+      { control_id: window.dataLayer.at(-1)[2].control_id, action: window.dataLayer.at(-1)[2].action },
+      { control_id: "question-more", action: "open" }
+    );
+    listeners.get("#question-more").get("click")();
+    assert.equal(elementFor("#question-more").getAttribute("aria-expanded"), "false");
+    assert.equal(elementFor("#question-more-panel").hidden, true);
+    assert.equal(window.dataLayer.at(-1)[1], "review_question_more_close");
+    listeners.get("#question-more").get("click")();
+
+    // Opening a group picks its first native radio; another radio and reset update the prompt state.
     const moneyButton = [...elements.values()].find((element) => element.dataset.questionGroup === "Money");
     assert.ok(moneyButton, "the Money group chip should be rendered");
     listeners.get("#question-group-chips").get("click")({ target: { closest: () => moneyButton } });
@@ -198,18 +241,44 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       { control_id: window.dataLayer.at(-1)[2].control_id, group_id: window.dataLayer.at(-1)[2].group_id, action: window.dataLayer.at(-1)[2].action },
       { control_id: "question-group-money", group_id: "money", action: "open" }
     );
-    const priceButton = [...elements.values()].find((element) => element.dataset.questionId === "price");
-    assert.ok(priceButton, "opening Money should render its questions");
-    listeners.get("#question-options").get("click")({ target: { closest: () => priceButton } });
     assert.equal(elementFor("#question-select").value, "price");
-    assert.equal(elementFor("#selected-question-title").textContent, "Is it the price, or when the price appears?");
+    const priceRadio = [...elements.values()].find((element) => element.type === "radio" && element.dataset.questionId === "price");
+    const refundsRadio = [...elements.values()].find((element) => element.type === "radio" && element.dataset.questionId === "refunds");
+    assert.equal(priceRadio.type, "radio");
+    assert.equal(priceRadio.name, "review-question");
+    assert.equal(priceRadio.checked, true);
+    assert.equal(elementFor("#selected-question-title").textContent, "First useful read");
+    const refundsCard = elementFor("#question-options").children.find((card) => card.dataset.questionId === "refunds");
+    refundsRadio.checked = true;
+    priceRadio.checked = false;
+    listeners.get("#analyze").get("change")({ target: { closest: () => refundsRadio } });
+    assert.equal(elementFor("#question-select").value, "refunds");
+    assert.equal(
+      elementFor("#question-options").children.find((card) => card.dataset.questionId === "refunds"),
+      refundsCard,
+      "selecting a radio must not replace the focused option node"
+    );
     assert.equal(window.dataLayer.at(-1)[1], "review_question_pick");
-    assert.equal(window.dataLayer.at(-1)[2].question_id, "price");
+    assert.equal(window.dataLayer.at(-1)[2].question_id, "refunds");
+    listeners.get("#question-reset").get("click")();
+    assert.equal(elementFor("#question-select").value, "first-read");
+    assert.equal(elementFor("#question-first-read").checked, true);
+    assert.equal(elementFor("#question-options-panel").hidden, true);
+    assert.equal(moneyButton.getAttribute("aria-expanded"), "false");
+    assert.equal(elementFor("#question-first-read").focused, true);
 
     // Both paths carry the complete method on the first click, without another fetch.
     const copies = [];
     const method = await readFile(new URL("review-intelligence-method.md", webUrl), "utf8");
-    const reviewMarkdown = "# App Reviews\n\n### Review 1\n\n- Rating: 5\n\n```text\nHelpful app\n```";
+    const reviewMarkdown = `# App Reviews\n\n${Array.from({ length: 6 }, (_, index) => [
+      `### Review ${index + 1}`,
+      `- Rating: ${(index % 5) + 1}`,
+      `- Date: 2026-09-${String(24 - index).padStart(2, "0")}`,
+      `- Title: Cluster title ${index + 1}`,
+      "```text",
+      `Raw review ${index + 1}`,
+      "```",
+    ].join("\n\n")).join("\n\n")}`;
     globalThis.navigator.clipboard.writeText = (text) => {
       copies.push(text);
       return Promise.resolve();
@@ -218,14 +287,14 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       assert.equal(url, "/api/extract");
       return { ok: true, text: async () => JSON.stringify({
         dataset: {
-          reviews_exported: 1,
+          reviews_exported: 6,
           app_name: "Example",
           platform: "google_play",
           country: "us",
           country_name: "United States",
           language_name: "English",
           date_range: "2026-09-23 to 2026-09-24",
-          rating_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 1 },
+          rating_distribution: { "1": 1, "2": 1, "3": 1, "4": 1, "5": 2 },
         },
         markdown: reviewMarkdown,
       }) };
@@ -240,11 +309,16 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.equal(elementFor("#state-done").hidden, false);
     assert.equal(elementFor("#question-select").value, "first-read", "a new packet resets to the best-start question");
     assert.equal(elementFor("#packet-title").textContent, "Example");
-    assert.equal(elementFor("#packet-meta").textContent, "Google Play, United States, English");
-    assert.equal(elementFor("#packet-count").textContent, "1");
+    assert.equal(elementFor("#receipt-unit").textContent, "Google Play reviews");
+    assert.equal(elementFor("#packet-meta").textContent, "United States");
+    assert.equal(elementFor("#packet-count").textContent, "6");
     assert.equal(elementFor("#packet-date").textContent, "Sep 23 – Sep 24, 2026");
     assert.equal(elementFor("#packet-date-short").textContent, "Sep 23 – Sep 24");
-    assert.equal(elementFor("#handoff-scope").textContent, "Claude and ChatGPT both read all 1 review.");
+    assert.equal(elementFor("#handoff-scope").textContent, "Claude and ChatGPT both read all 6 reviews.");
+    assert.equal(elementFor("#peek").children.length, 6);
+    assert.ok(elementFor("#peek").children.every((card) => card.className === "ri-review-card"));
+    assert.ok(elementFor("#peek").children.every((card) => card.children.every((child) => child.className !== "ri-review-card__cluster")));
+    assert.equal(elementFor("#peek").children[0].children.at(-1).textContent, "Raw review 1");
     assert.equal(elementFor("#paste-step-text").textContent, "Long-press, tap Paste, then send");
     analyze("claude");
     assert.equal(copies.length, 1, "clipboard write starts within the click, without an await");
@@ -252,9 +326,9 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     assert.equal(elementFor("#analysis-actions").hidden, true);
     assert.equal(elementFor("#analysis-status").hidden, false);
-    assert.equal(elementFor("#analysis-status-title").textContent, "Copied. One step left, in the Claude tab.");
+    assert.equal(elementFor("#analysis-status-title").textContent, "One step left, in the Claude tab.");
     assert.equal(elementFor("#analysis-status-step").textContent, "Long-press, tap Paste, then send");
-    assert.equal(elementFor("#results-upgrade-kicker").textContent, "While Claude reads…");
+    assert.equal(elementFor("#results-upgrade-kicker").textContent, "While Claude reads: skip the copy-paste next time.");
     listeners.get("connector-results_connector").get("click")();
     assert.equal(window.dataLayer.at(-1)[1], "review_keep_it_click");
     assert.deepEqual(
@@ -292,6 +366,12 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     analyze("claude");
     await settle();
     assert.equal(elementFor("#analysis-status-error").hidden, false);
+    assert.equal(elementFor("#analysis-error-title").textContent, "Couldn’t copy.");
+    assert.deepEqual(elementFor("#analysis-error-text").children, [
+      "Press Copy, then paste in ",
+      elementFor("#analysis-error-destination"),
+      ".",
+    ]);
     assert.equal(elementFor("#analysis-error-destination").textContent, "Claude");
     assert.equal(elementFor("#analysis-error-open").textContent, "Open Claude");
 
@@ -337,7 +417,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
     assert.equal(elementFor("#receipt-meta").hidden, false);
-    assert.equal(elementFor("#receipt-note-text").textContent, "Apple’s full review feed was unavailable, so this file has only the reviews the store page shows. Try again in a minute for more.");
+    assert.equal(elementFor("#receipt-note-text").textContent, "Only the store page’s reviews: Apple’s full feed was down.");
     assert.equal(elementFor("#app-icon").src, undefined, "redesigned results must not request remote store artwork");
 
     // Name search waits for a pause, supports keyboard selection, and ignores an older response.

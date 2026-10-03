@@ -6,8 +6,9 @@ import {
   DEFAULT_QUESTION_ID,
   QUESTION_GROUPS,
   buildAnalysisPayload,
-  findQuestion
-} from "./analysis-prompt.js?v=20260925-results-redesign";
+  findQuestion,
+  questionMapGroups
+} from "./analysis-prompt.js?v=20261003-next-pass";
 import { sanitizeAnalyticsLabel, sanitizeAnalyticsSource, trackReviewEvent } from "./analytics.js";
 
 const STORE_LINK_PATTERN = /apps\.apple\.com|itunes\.apple\.com|play\.google\.com/i;
@@ -36,6 +37,7 @@ const packetTitle = document.querySelector("#packet-title");
 const packetAppId = document.querySelector("#packet-app-id");
 const packetMeta = document.querySelector("#packet-meta");
 const packetCount = document.querySelector("#packet-count");
+const receiptUnit = document.querySelector("#receipt-unit");
 const packetDate = document.querySelector("#packet-date");
 const packetDateShort = document.querySelector("#packet-date-short");
 const ratingChart = document.querySelector("#rating-chart");
@@ -48,6 +50,8 @@ const peekCount = document.querySelector("#peek-count");
 const startOver = document.querySelector("#start-over");
 const analyzeSection = document.querySelector("#analyze");
 const questionSelect = document.querySelector("#question-select");
+const questionMore = document.querySelector("#question-more");
+const questionMorePanel = document.querySelector("#question-more-panel");
 const questionGroupChips = document.querySelector("#question-group-chips");
 const questionOptionsPanel = document.querySelector("#question-options-panel");
 const questionOptions = document.querySelector("#question-options");
@@ -55,6 +59,8 @@ const questionReset = document.querySelector("#question-reset");
 const selectedQuestionTitle = document.querySelector("#selected-question-title");
 const selectedQuestionDescription = document.querySelector("#selected-question-description");
 const selectedQuestionTag = document.querySelector("#selected-question-tag");
+const selectedQuestion = document.querySelector("#selected-question");
+const defaultQuestionInput = document.querySelector("#question-first-read");
 const questionReviewCount = document.querySelector("#question-review-count");
 const analyzeClaude = document.querySelector("#analyze-claude");
 const analyzeChatGpt = document.querySelector("#analyze-chatgpt");
@@ -64,6 +70,8 @@ const analysisActions = document.querySelector("#analysis-actions");
 const analysisStatus = document.querySelector("#analysis-status");
 const analysisStatusSuccess = document.querySelector("#analysis-status-success");
 const analysisStatusError = document.querySelector("#analysis-status-error");
+const analysisErrorTitle = document.querySelector("#analysis-error-title");
+const analysisErrorText = document.querySelector("#analysis-error-text");
 const analysisStatusTitle = document.querySelector("#analysis-status-title");
 const analysisOpenedLabel = document.querySelector("#analysis-opened-label");
 const analysisStatusStep = document.querySelector("#analysis-status-step");
@@ -123,6 +131,7 @@ renderCountryOptions();
 renderQuestionOptions();
 renderLandingQuestionMap();
 renderPasteInstructions();
+setMoreQuestionsOpen(false);
 analyzeClaude.href = CLAUDE_NEW_CHAT_URL;
 analyzeChatGpt.href = CHATGPT_NEW_CHAT_URL;
 
@@ -172,10 +181,12 @@ startOver.addEventListener("click", () => {
   resetRetriever();
 });
 questionGroupChips.addEventListener("click", handleQuestionGroupClick);
-questionOptions.addEventListener("click", handleQuestionPick);
+analyzeSection.addEventListener("change", handleQuestionPick);
+questionMore?.addEventListener("click", toggleMoreQuestions);
 questionReset.addEventListener("click", () => {
   track("review_question_reset", { control_id: "question-reset" });
   resetQuestionPicker(true);
+  defaultQuestionInput?.focus();
 });
 analyzeClaude.addEventListener("click", () => handleAnalyze("claude"));
 analyzeChatGpt.addEventListener("click", () => handleAnalyze("chatgpt"));
@@ -511,24 +522,36 @@ function renderCountryOptions() {
 
 function renderLandingQuestionMap() {
   if (!landingQuestionMap) return;
-  const groups = QUESTION_GROUPS.filter((group) => group.label !== "Start here");
-  const cells = groups.map((group) => {
-    const cell = document.createElement("section");
+  const cells = questionMapGroups().map((group) => {
+    const cell = document.createElement("div");
     const heading = document.createElement("h3");
     const list = document.createElement("ul");
-    cell.className = "ri-qmap__cell";
-    heading.className = "ri-qmap__title";
+    heading.className = "ri-faq-map__h";
     heading.textContent = group.label;
-    list.className = "ri-qmap__list";
-    for (const question of group.questions) {
+    for (const questionLabel of group.questions) {
       const item = document.createElement("li");
-      item.textContent = question.label;
+      item.textContent = questionLabel;
       list.append(item);
     }
     cell.append(heading, list);
     return cell;
   });
   landingQuestionMap.replaceChildren(...cells);
+}
+
+function toggleMoreQuestions() {
+  const open = questionMore?.getAttribute("aria-expanded") !== "true";
+  setMoreQuestionsOpen(open);
+  track(open ? "review_question_more_open" : "review_question_more_close", {
+    control_id: "question-more",
+    action: open ? "open" : "close",
+  });
+}
+
+function setMoreQuestionsOpen(open) {
+  if (!questionMore || !questionMorePanel) return;
+  questionMore.setAttribute("aria-expanded", String(open));
+  questionMorePanel.hidden = !open;
 }
 
 function defaultCountryFromNavigator() {
@@ -581,7 +604,7 @@ function handleQuestionGroupClick(event) {
       group_id: sanitizeAnalyticsLabel(label),
       action: "close",
     });
-    closeQuestionGroup();
+    resetQuestionPicker(false);
     return;
   }
 
@@ -590,16 +613,17 @@ function handleQuestionGroupClick(event) {
     group_id: sanitizeAnalyticsLabel(label),
     action: "open",
   });
-  openQuestionGroup(label);
+  openQuestionGroup(label, { selectFirst: true });
 }
 
-function openQuestionGroup(label) {
+function openQuestionGroup(label, { selectFirst = false } = {}) {
   const group = QUESTION_GROUPS.find((candidate) => candidate.label === label);
   if (!group) return;
 
   activeQuestionGroup = group.label;
   questionOptionsPanel.hidden = false;
   questionOptions.setAttribute("aria-label", `${group.label} questions`);
+  if (selectFirst && group.questions[0]) selectQuestion(group.questions[0].id);
   renderQuestionChoices(group);
   syncQuestionChipStates();
 }
@@ -614,37 +638,46 @@ function closeQuestionGroup() {
 
 function renderQuestionChoices(group) {
   questionOptionButtons = group.questions.map((question) => {
-    const button = document.createElement("button");
+    const card = document.createElement("label");
+    const input = document.createElement("input");
     const radio = document.createElement("span");
-    const copy = document.createElement("span");
     const label = document.createElement("span");
-    const description = document.createElement("span");
     const isSelected = question.id === questionSelect.value;
 
-    button.type = "button";
-    button.className = `ri-qcard${isSelected ? " is-selected" : ""}`;
-    button.dataset.questionId = question.id;
-    button.dataset.controlId = `question-option-${question.id}`;
-    button.dataset.tracking = "app";
-    button.setAttribute("aria-pressed", String(isSelected));
+    card.className = `ri-qcard ri-qcard--plain${isSelected ? " is-selected" : ""}`;
+    card.dataset.questionId = question.id;
+    input.type = "radio";
+    input.name = "review-question";
+    input.value = question.id;
+    input.checked = isSelected;
+    input.className = "ri-sr-only";
+    input.dataset.questionId = question.id;
+    input.dataset.controlId = `question-option-${question.id}`;
+    input.dataset.tracking = "app";
+    card.questionInput = input;
     radio.className = "ri-qcard__dot";
     radio.setAttribute("aria-hidden", "true");
-    copy.style.display = "contents";
     label.className = "ri-qcard__title";
     label.textContent = question.label;
-    description.className = "ri-qcard__desc";
-    description.textContent = question.description || question.prompt;
-    copy.append(label, description);
-    button.append(radio, copy);
-    return button;
+    card.append(input, radio, label);
+    return card;
   });
   questionOptions.replaceChildren(...questionOptionButtons);
 }
 
+function syncQuestionChoiceStates() {
+  for (const card of questionOptionButtons) {
+    const isSelected = card.dataset.questionId === questionSelect.value;
+    card.classList.toggle("is-selected", isSelected);
+    if (card.questionInput) card.questionInput.checked = isSelected;
+  }
+}
+
 function handleQuestionPick(event) {
-  const button = event.target.closest("[data-question-id]");
-  if (!button || !questionOptions.contains(button)) return;
-  selectQuestion(button.dataset.questionId, true, button.dataset.controlId);
+  const input = event.target.closest?.('input[type="radio"][name="review-question"]');
+  if (!input || !analyzeSection.contains(input) || !input.checked) return;
+  selectQuestion(input.value, true, input.dataset.controlId || "question-option");
+  if (input.value === DEFAULT_QUESTION_ID) closeQuestionGroup();
 }
 
 function selectQuestion(questionId, shouldTrack = false, controlId = "question-option") {
@@ -654,7 +687,7 @@ function selectQuestion(questionId, shouldTrack = false, controlId = "question-o
   renderSelectedQuestion();
 
   const group = groupForQuestion(question.id);
-  if (group && activeQuestionGroup === group.label) renderQuestionChoices(group);
+  if (group && activeQuestionGroup === group.label) syncQuestionChoiceStates();
   syncQuestionChipStates();
 
   if (lastAnalysisPayload && question.id !== previousQuestionId) resetAnalysisState();
@@ -669,9 +702,13 @@ function resetQuestionPicker(shouldTrack = true) {
 
 function renderSelectedQuestion() {
   const question = findQuestion(questionSelect.value);
-  selectedQuestionTitle.textContent = question.label.replace(/\s*\(best start\)$/i, "");
-  selectedQuestionDescription.textContent = question.description || question.prompt;
-  selectedQuestionTag.hidden = question.id !== DEFAULT_QUESTION_ID;
+  const defaultQuestion = findQuestion(DEFAULT_QUESTION_ID);
+  const isDefault = question.id === DEFAULT_QUESTION_ID;
+  selectedQuestionTitle.textContent = defaultQuestion.label.replace(/\s*\(best start\)$/i, "");
+  selectedQuestionDescription.textContent = defaultQuestion.description;
+  selectedQuestionTag.hidden = false;
+  if (defaultQuestionInput) defaultQuestionInput.checked = isDefault;
+  selectedQuestion?.classList.toggle("is-selected", isDefault);
   syncQuestionChipStates();
 }
 
@@ -695,7 +732,7 @@ function samplesFromMarkdown(value) {
   const reviewPattern = /### Review \d+\n([\s\S]*?)```text\n([\s\S]*?)\n```/g;
   let match;
 
-  while (samples.length < 3 && (match = reviewPattern.exec(value))) {
+  while (samples.length < 6 && (match = reviewPattern.exec(value))) {
     const metadata = match[1];
     const review = normalizeInlineText(match[2]);
     if (!review) continue;
@@ -713,7 +750,7 @@ function samplesFromMarkdown(value) {
 
 function renderSamples(samples) {
   const fragment = document.createDocumentFragment();
-  for (const sample of samples.slice(0, 3)) {
+  for (const sample of samples.slice(0, 6)) {
     const card = document.createElement("article");
     card.className = "ri-review-card";
 
@@ -731,13 +768,6 @@ function renderSamples(samples) {
 
     card.append(meta);
 
-    if (sample.title) {
-      const title = document.createElement("p");
-      title.className = "ri-review-card__cluster";
-      title.textContent = sample.title;
-      card.append(title);
-    }
-
     const text = document.createElement("p");
     text.className = "ri-review-card__text";
     text.textContent = sample.text;
@@ -754,7 +784,8 @@ function renderPacket(result) {
   packetTitle.textContent = result.appName;
   if (packetAppId) packetAppId.textContent = result.appId || "App ID unavailable";
   renderAppIcon(result);
-  packetMeta.textContent = [result.store, result.countryName, result.languages].filter(Boolean).join(", ");
+  if (receiptUnit) receiptUnit.textContent = `${result.store} reviews`;
+  packetMeta.textContent = result.countryName;
   packetCount.textContent = String(result.count);
   packetDate.textContent = compactDateRange(result.dateRange);
   packetDateShort.textContent = compactDateRange(result.dateRange, false);
@@ -828,9 +859,10 @@ function prepareAnalyze(result) {
   questionSelect.value = DEFAULT_QUESTION_ID;
   renderSelectedQuestion();
   closeQuestionGroup();
+  setMoreQuestionsOpen(false);
   resetAnalysisState();
   handoffScope.textContent = result.count > CHATGPT_REVIEW_CAP
-    ? `Claude reads all ${result.count} reviews. ChatGPT gets the newest ${CHATGPT_REVIEW_CAP}, so it has room to answer.`
+    ? `ChatGPT gets the newest ${CHATGPT_REVIEW_CAP}, so it has room to answer.`
     : `Claude and ChatGPT both read all ${result.count} ${pluralize("review", result.count)}.`;
 }
 
@@ -889,17 +921,17 @@ function showAnalysisSuccess(destination) {
   analysisStatusSuccess.hidden = false;
   analysisStatusError.hidden = true;
   analysisStatus.classList.remove("analysis-status--error");
-  analysisStatusTitle.textContent = `Copied. One step left, in the ${destination} tab.`;
+  analysisStatusTitle.textContent = `One step left, in the ${destination} tab.`;
   analysisOpenedLabel.textContent = `${destination} opened`;
   analysisOpenQuestion.textContent = `${destination} didn’t open?`;
   analysisStatusStep.textContent = currentPasteInstruction();
   reopenAnalysis.href = reopenUrl;
   reopenAnalysis.textContent = `Open ${destination} again`;
   switchAnalysis.href = alternateUrl;
-  switchAnalysis.textContent = `Use ${alternate} instead`;
-  resultsUpgradeKicker.textContent = `While ${destination} reads…`;
-  resultsConnectClaude?.classList.remove("ri-btn--outline", "ri-btn--sm");
-  resultsConnectClaude?.classList.add("ri-btn--primary", "ri-btn--md");
+  switchAnalysis.textContent = `${alternate} instead`;
+  resultsUpgradeKicker.textContent = `While ${destination} reads: skip the copy-paste next time.`;
+  resultsConnectClaude?.classList.remove("ri-btn--outline", "ri-btn--md");
+  resultsConnectClaude?.classList.add("ri-btn--primary", "ri-btn--sm");
 }
 
 function showAnalysisError(destination) {
@@ -908,7 +940,11 @@ function showAnalysisError(destination) {
   analysisStatusSuccess.hidden = true;
   analysisStatusError.hidden = false;
   analysisStatus.classList.add("analysis-status--error");
+  if (analysisErrorTitle) analysisErrorTitle.textContent = "Couldn’t copy.";
   analysisErrorDestination.textContent = destination;
+  if (analysisErrorText) {
+    analysisErrorText.replaceChildren("Press Copy, then paste in ", analysisErrorDestination, ".");
+  }
   if (analysisErrorOpen) {
     analysisErrorOpen.href = destination === "Claude" ? CLAUDE_NEW_CHAT_URL : CHATGPT_NEW_CHAT_URL;
     analysisErrorOpen.textContent = `Open ${destination}`;
@@ -1023,10 +1059,10 @@ function packetNote(result) {
       : "The public source returned no written reviews for this request.";
   }
   if (isAppStore && /Visible App Store review cards/i.test(result.source)) {
-    return "Apple’s full review feed was unavailable, so this file has only the reviews the store page shows. Try again in a minute for more.";
+    return "Only the store page’s reviews: Apple’s full feed was down.";
   }
   if (isAppStore && result.count <= 10) {
-    return `Only ${result.count} ${pluralize("review", result.count)} came back. Apple’s public feed is often flaky: try again in a minute, or pick another country.`;
+    return "Apple’s public feed is flaky. Give it a minute.";
   }
   return "";
 }
@@ -1110,7 +1146,8 @@ function resetRetriever({ preserveInput = false } = {}) {
   currentFilename = "reviews.md";
   packetTitle.textContent = "Reviews exported";
   if (packetAppId) packetAppId.textContent = "App ID";
-  packetMeta.textContent = "Store, country, language";
+  if (receiptUnit) receiptUnit.textContent = "Store reviews";
+  packetMeta.textContent = "Country";
   packetCount.textContent = "0";
   packetDate.textContent = "Date unavailable";
   ratingChart.replaceChildren();
