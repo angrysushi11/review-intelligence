@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="en"><head>
+  <meta name="robots" content="index, follow">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intel privacy</title>
@@ -15,15 +16,15 @@
 <header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click">Add to Claude</a></nav></header>
 <main class="ri-doc">
 <p class="ri-doc__kicker">Website and MCP server. Updated 26 September 2026.</p>
-<h1 class="ri-doc__title">Privacy. <span>Public reviews only, no accounts, no review database.</span></h1>
-<p class="ri-doc__lede">This covers the website and the MCP server. The <a href="extension/privacy/" data-control-id="privacy-a-chrome-extension">Chrome extension</a> and the <a href="plugin-privacy/" data-control-id="privacy-a-chatgpt-and-codex-plugin">ChatGPT and Codex plugin</a> have their own policies.</p>
+<h1 class="ri-doc__title">Privacy. <span>Public reviews only, no accounts, no Review Retriever database.</span></h1>
+<p class="ri-doc__lede">This covers Review Retriever on the free website and the public MCP server. It does not cover the hosted prototype. The <a href="extension/privacy/" data-control-id="privacy-a-chrome-extension">Chrome extension</a> and the <a href="plugin-privacy/" data-control-id="privacy-a-chatgpt-and-codex-plugin">skills-only OpenAI package</a> have their own policies.</p>
 <section class="ri-doc__short" aria-labelledby="short-h">
 <h2 class="ri-doc__short-title" id="short-h">The short version</h2>
 <ul>
 <li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Public reviews only.</span></li>
 <li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No store login or OAuth.</span></li>
 <li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No advertising, and no sale of data.</span></li>
-<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No review database in the app.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No review database in Review Retriever.</span></li>
 </ul>
 </section>
 <div class="ri-doc__body">
@@ -47,7 +48,7 @@
 <p>The public MCP endpoint is read-only and needs no account or OAuth login. It processes the app, the market, the sort order, the number of reviews requested and, on Google Play, the continuation cursor for the next batch.</p>
 <p>Each response holds up to 500 reviews. Google Play can return a cursor for more; Apple’s public feed has no equivalent.</p>
 <h2 id="storage">Storage and infrastructure</h2>
-<p>The app’s code has no review database or persistence layer: each request is processed to produce its response. That doesn’t mean no metadata exists anywhere. Vercel, network providers and Apple’s or Google’s services may keep ordinary request or operational logs under their own policies.</p>
+<p>For Review Retriever on the website and MCP server covered here, the application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google services may retain ordinary request or operational logs under their own policies.</p>
 <p>Public review text and reviewer names can still be personal data, even when anyone can read them. Handle downloaded files under the rules that apply to your use.</p>
 <h2 id="analytics">Website analytics</h2>
 <p>The pages use Google Analytics. Review Intel sends a cleaned page location and referrer, without the app link, query parameters or fragment, and cuts a referrer down to its origin.</p>

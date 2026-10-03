@@ -127,7 +127,7 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
           this[name] = String(value);
         },
         getAttribute(name) { return this[name] ?? null; },
-        removeAttribute() {},
+        removeAttribute(name) { delete this[name]; },
         contains() { return true; },
         focus() { this.focused = true; },
         select() {},
@@ -303,9 +303,9 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     const analyze = (target) => listeners.get(`#analyze-${target}`).get("click")();
     const settle = () => new Promise((resolve) => setImmediate(resolve));
     submit({ preventDefault() {} });
-    assert.equal(elementFor("#extract-spinner").hidden, false);
+    assert.equal(elementFor("#extract-spinner").getAttribute("hidden"), null);
     await settle();
-    assert.equal(elementFor("#extract-spinner").hidden, true);
+    assert.equal(elementFor("#extract-spinner").getAttribute("hidden"), "");
     assert.equal(elementFor("#state-done").hidden, false);
     assert.equal(elementFor("#question-select").value, "first-read", "a new packet resets to the best-start question");
     assert.equal(elementFor("#packet-title").textContent, "Example");
@@ -639,7 +639,7 @@ test("the crawler files publish an accurate sitemap and optional llms content ma
   assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/privacy\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/www\.willthiseverwork\.com\/review-intel\/extension\/privacy\/<\/loc>/);
   assert.doesNotMatch(sitemap, /review-intel\/mcp|review-intel\/api/);
-  assert.match(sitemap, /<lastmod>2026-09-26<\/lastmod>/);
+  assert.match(sitemap, /<lastmod>2026-10-03<\/lastmod>/);
   assert.match(llms, /optional content map/);
   assert.match(llms, /not a crawler permission policy/);
   assert.match(llms, /https:\/\/www\.willthiseverwork\.com\/review-intel\/robots\.txt/);

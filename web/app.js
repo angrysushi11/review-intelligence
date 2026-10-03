@@ -1131,7 +1131,11 @@ function setLoading(loading) {
   extractButton.classList.toggle("busy", loading);
   extractButton.classList.toggle("is-loading", loading);
   extractButton.setAttribute("aria-busy", String(loading));
-  if (extractSpinner) extractSpinner.hidden = !loading;
+  if (extractSpinner) {
+    // SVGElement does not reflect the HTML hidden property to its attribute.
+    if (loading) extractSpinner.removeAttribute("hidden");
+    else extractSpinner.setAttribute("hidden", "");
+  }
   extractLabel.textContent = loading ? LOADING_LABEL : EXTRACT_LABEL;
   if (loading) retrievalStatus.textContent = "Collecting up to 500 public reviews…";
 }

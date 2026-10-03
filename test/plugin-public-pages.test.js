@@ -41,6 +41,8 @@ test("plugin landing page describes the supplied-export flow without a publicati
   assert.match(html, /Every read also counts the reviews supplied, parsed, excluded and analyzed\./);
   assert.match(html, /Supplied reviews only\./);
   assert.match(html, /No live requests, no server\./);
+  assert.match(html, /This describes the skills-only OpenAI package\./);
+  assert.match(html, /separate GitHub package for Codex also includes Review Intel’s public read-only MCP connection/i);
   assert.match(html, /Review Intel collects up to 500, free\./);
   assert.match(html, /class="ri-statement"/);
   assert.match(html, /class="ri-quietlinks"/);
@@ -58,8 +60,10 @@ test("plugin privacy covers categories, purpose, recipients, retention, controls
   assert.match(html, /To parse and organize the reviews, find evidence-backed patterns/i);
   assert.match(html, /OpenAI host processes what it needs to run the chat/i);
   assert.match(html, /under the product, account and workspace settings/i);
-  assert.match(html, /plugin makes no outbound request to DoubleDash/i);
-  assert.match(html, /plugin creates no DoubleDash-held copy of its inputs or results/i);
+  assert.match(html, /skills-only package makes no outbound request to DoubleDash/i);
+  assert.match(html, /skills-only package creates no DoubleDash-held copy of its inputs or results/i);
+  assert.match(html, /This policy covers the skills-only OpenAI package/i);
+  assert.match(html, /separate GitHub package for Codex includes Review Intel’s public read-only MCP connection/i);
   assert.match(html, /period depends on the product, your account or workspace, your settings and actions/i);
   assert.match(html, /help\.openai\.com\/en\/articles\/8983778-chat-and-file-retention-policies-in-chatgpt/);
   assert.match(html, /help\.openai\.com\/en\/articles\/7730893-data-controls-in-chatgpt/);
@@ -70,17 +74,19 @@ test("plugin privacy covers categories, purpose, recipients, retention, controls
   assert.doesNotMatch(html, /googletagmanager|gtag\(/i);
 });
 
-test("plugin terms and support stay within the skills-only boundary", async () => {
+test("plugin terms and support distinguish the skills-only package from the Codex MCP package", async () => {
   const [terms, support] = await Promise.all([
     readFile(new URL(pages.terms, root), "utf8"),
     readFile(new URL(pages.support, root), "utf8"),
   ]);
 
-  assert.match(terms, /skills-only plugin/i);
+  assert.match(terms, /skills-only Review Intelligence package/i);
   assert.match(terms, /makes no live requests and connects to no DoubleDash server/i);
+  assert.match(terms, /separate GitHub package for Codex also includes Review Intel’s public read-only MCP connection/i);
   assert.match(terms, /don’t by themselves establish demand, revenue, retention, conversion, causality/i);
   assert.match(support, /Paste review text or upload an export/i);
-  assert.match(support, /plugin makes no live requests and connects to no DoubleDash server/i);
+  assert.match(support, /skills-only package makes no live requests and connects to no DoubleDash server/i);
+  assert.match(support, /separate GitHub package for Codex includes Review Intel’s public read-only MCP connection/i);
   assert.match(support, /Don’t include review exports or sensitive data/i);
   assert.match(support, /href="plugin-privacy\/"/);
   const privacy = await readFile(new URL(pages.privacy, root), "utf8");
