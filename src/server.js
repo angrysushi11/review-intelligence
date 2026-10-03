@@ -31,6 +31,12 @@ const server = createServer(async (request, response) => {
 
     const appPath = url.pathname.replace(/^\/review-intel(?=\/|$)/, "") || "/";
 
+    const documentPages = new Set(["terms", "support", "plugin", "plugin-privacy", "plugin-terms", "plugin-support"]);
+    const documentName = appPath.replace(/^\/|\/$/g, "");
+    if (request.method === "GET" && documentPages.has(documentName)) {
+      return serveFile(response, path.join(webDir, `${documentName}.html`));
+    }
+
     if (appPath === "/api/workspace") {
       response.status = (status) => { response.statusCode = status; return response; };
       response.json = (payload) => { response.end(JSON.stringify(payload)); return response; };
@@ -149,6 +155,7 @@ function contentType(filePath) {
   if (filePath.endsWith(".js")) return "text/javascript; charset=utf-8";
   if (filePath.endsWith(".png")) return "image/png";
   if (filePath.endsWith(".svg")) return "image/svg+xml; charset=utf-8";
+  if (filePath.endsWith(".woff2")) return "font/woff2";
   return "application/octet-stream";
 }
 

@@ -58,6 +58,8 @@
     { "src": "/review-intel/plugin-support/", "dest": "/web/plugin-support.html" },
     { "src": "/review-intel/api/search", "dest": "/api/search.js" },
     { "src": "/review-intel/api/extract", "dest": "/api/extract.js" },
+    { "src": "/review-intel/site.js", "dest": "/web/site.js" },
+    { "src": "/review-intel/fonts/(.*)", "dest": "/web/fonts/$1" },
     { "src": "/review-intel/styles.css", "dest": "/web/styles.css" },
     { "src": "/review-intel/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/review-intel/app.js", "dest": "/web/app.js" },

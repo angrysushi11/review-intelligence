@@ -29,204 +29,38 @@ test("the share card leads with the review insight and serves its image", async 
   assert.equal(image.readUInt32BE(20), 630);
 });
 
-test("the homepage leads with the job, a real example, and one-tap analysis", async () => {
+test("direction D preserves the source example, accessible controls and free handoff", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const styles = await readFile(new URL("styles.css", webUrl), "utf8");
   const tokens = await readFile(new URL("tokens.css", webUrl), "utf8");
   const appJs = await readFile(new URL("app.js", webUrl), "utf8");
-  const idleState = html.match(/<section id="state-idle">([\s\S]*?)<section id="state-done" hidden>/)?.[1] ?? "";
-  const doneState = html.match(/<section id="state-done" hidden>([\s\S]*?)<\/main>/)?.[1] ?? "";
-  assert.ok(idleState && doneState, "both page states should exist");
-
-  // Search metadata describes the answer, not only the extraction step.
-  assert.match(html, /<title>Find What Users Want in App Reviews \| Review Intel<\/title>/);
-  assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
-  assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/">/);
-  assert.match(html, /<base href="\/review-intel\/">/);
-  assert.match(html, /name="description" content="See what people love, hate, and wish worked differently in products they already use, with public app reviews behind each finding\."/);
-  assert.match(html, /family=Caveat:wght@400\.\.700/);
-  assert.match(html, /id="retrieval-status" role="status" aria-live="polite"/);
-
-  // Hero: the job first, no connector jargon.
-  assert.match(idleState, /<span class="wordmark">Review Intel<\/span>/);
-  assert.match(idleState, /<p class="hand hero-kicker">for anyone building from zero to one<\/p>/);
-  assert.match(idleState, /<h1 class="title title--hero">Your competitors’ users already told you what to build\.<\/h1>/);
-  assert.match(idleState, /Find what users love, where competing apps let them down, and what they wish worked differently, with reviews you can check\. Review Intel collects public app reviews for free and guides the analysis in Claude or ChatGPT\./);
-  const hero = html.match(/<header class="hero">([\s\S]*?)<\/header>/)?.[1] ?? "";
-  assert.doesNotMatch(hero, /\b(?:MCP|Codex|batches|continuation cursor|power users)\b/i);
-
-  // Extractor: one field, one button, one hand-drawn note, demo apps, no warning under the button.
-  assert.match(idleState, /id="app-url"[^>]*autofocus/);
-  assert.match(idleState, /<label class="field-label" for="app-url">App link or name<\/label>/);
-  assert.match(idleState, /placeholder="Paste a store link or type an app name"/);
-  assert.match(idleState, /role="combobox"[^>]*aria-autocomplete="list"[^>]*aria-controls="search-results"/);
-  assert.match(idleState, /id="search-results" role="listbox"/);
-  assert.match(idleState, /id="extract-label">Get the reviews<\/span>/);
-  assert.match(idleState, /id="form-error"[^>]*hidden>that doesn't look like a store link/);
-  assert.equal((idleState.match(/class="hand demo-nudge"/g) ?? []).length, 1);
-  assert.doesNotMatch(html, /form-nudge|submit-nudge|power-user-jump|export-nudge|class="notice"/);
-  const demoUrls = [...idleState.matchAll(/class="demo-chip" type="button" data-demo-name="([a-z]+)" data-demo-url="([^"]+)"/g)];
-  assert.deepEqual(demoUrls.map(([, name]) => name), ["calm", "duolingo", "strava"]);
-  for (const [, , url] of demoUrls) assert.match(url, /^https:\/\/play\.google\.com\/store\/apps\/details\?id=[\w.]+$/);
-
-  // Section order: form → real example → questions → how it works → connect → FAQ.
-  const order = ['id="extract-form"', 'class="sample"', 'class="questions"', 'class="how"', 'class="connect"', 'class="faq"'];
-  const positions = order.map((marker) => idleState.indexOf(marker));
-  assert.ok(positions.every((position) => position > -1), "every idle section should exist");
-  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
-
-  // The example is real, dated, and quotes reviews verbatim.
-  assert.match(idleState, /What 40 recent Calm reviews said/);
-  assert.match(idleState, /Google Play US · the 40 newest reviews, Sep 16–23, 2026/);
-  assert.match(idleState, /10 of 17 one-star reviews/);
-  assert.match(idleState, /“Charged for a free trial \$85, refused refund\.”/);
-  assert.match(idleState, /“Not at all what was described in the ad\.”/);
-  assert.match(idleState, /“A mini spa date in your pocket\.”/);
-
-  // The question map shows how much reviews can answer.
-  const questionMap = idleState.match(/<div class="question-groups">([\s\S]*?)<p class="questions-more">/)?.[1] ?? "";
-  assert.equal((questionMap.match(/<h3>/g) ?? []).length, 4);
-  assert.equal((questionMap.match(/<li>/g) ?? []).length, 12);
-  assert.match(idleState, /Is it the price, or when the price appears\?/);
-
-  assert.match(idleState, /Want it inside your chat\?/);
-  assert.match(idleState, /pull more than 500 Google Play reviews, and compare apps and countries in one conversation/);
-  for (const placement of ["landing_connector", "landing_guide", "results_connector", "results_guide", "footer"]) {
-    assert.ok(html.includes(`data-connect-placement="${placement}"`));
+  for (const id of ["state-idle", "state-done", "extract-form", "app-url", "country", "extract-btn", "extract-label", "search-results", "form-error", "form-error-help", "retrieval-status", "packet-title", "rating-chart", "question-group-chips", "question-options", "question-reset", "analyze-claude", "analyze-chatgpt", "analysis-status-success", "analysis-status-error", "analysis-error-copy", "paste-step-text", "results-upgrade-kicker", "copy-btn", "download-btn", "start-over", "peek"]) {
+    assert.equal((html.match(new RegExp(`\\sid="${id}"`, "g")) || []).length, 1, `${id} appears exactly once`);
   }
-  assert.match(html, /Next time, just ask Claude/);
-  assert.match(html, /Claude fetches the reviews itself, for any app/);
-  assert.match(html, /Every Claude chat gets the full method/);
-  assert.match(appJs, /track\("review_connect_click", \{ placement: link\.dataset\.connectPlacement \}\)/);
-  assert.match(appJs, /const appBasePath = window\.location\.pathname === "\/review-intel"/);
-  assert.match(appJs, /fetch\(`\$\{appBasePath\}\/api\/search\?/);
-  assert.match(appJs, /fetch\(`\$\{appBasePath\}\/api\/extract`/);
-
-  // Connect: direct connector link, setup guide, Claude Code one-liner.
-  assert.match(idleState, /href="https:\/\/claude\.ai\/customize\/connectors\?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww\.willthiseverwork\.com%2Freview-intel%2Fmcp"/);
-  assert.match(idleState, /works on the free plan/);
-  assert.match(idleState, /claude mcp add --transport http review-retriever https:\/\/www\.willthiseverwork\.com\/review-intel\/mcp/);
-
-  // "500" is stated where it matters, not everywhere.
-  assert.ok((idleState.match(/500/g) ?? []).length <= 3);
-
-  // FAQ keeps the Apple caveat and the search-relevant questions.
-  assert.equal((idleState.match(/<details>/g) ?? []).length, 6);
-  assert.match(idleState, /Apple’s public review feed can be flaky/);
-  assert.match(idleState, /Can I get more than 500 reviews\?/);
-  assert.match(idleState, /Is this an app review scraper\?/);
-  assert.match(idleState, /There’s no CSV, Excel or JSON export on this page/);
-
-  // Footers link the canonical guide, source, product privacy and support.
-  assert.equal((html.match(/href="setup\/"[^>]*>Use it in Claude or Codex<\/a>/g) ?? []).length, 2);
-  assert.equal((html.match(/href="https:\/\/github\.com\/angrysushi11\/review-intelligence#run-review-retriever-locally"[^>]*>Source<\/a>/g) ?? []).length, 2);
-  assert.equal((html.match(/href="privacy\/">Privacy<\/a>/g) ?? []).length, 2);
-  assert.match(html, /public reviews only · nothing stored/);
-
-  // Results: compact receipt, visible question, one primary action, setup block, then proof.
-  assert.match(doneState, /<header class="result-masthead">[\s\S]*?<span class="result-wordmark">Review Intel<\/span>/);
-  assert.match(doneState, /id="start-over"[^>]*>Try another app<\/button>/);
-  assert.match(doneState, /id="app-icon"[^>]*referrerpolicy="no-referrer"[^>]*hidden/);
-  assert.match(doneState, /id="packet-title" tabindex="-1"/);
-  assert.match(doneState, /id="packet-meta">Store · Country · Language<\/p>/);
-  assert.match(doneState, /id="packet-count">0<\/strong>/);
-  assert.match(doneState, /id="packet-date">Date unavailable<\/span>/);
-  assert.match(doneState, /id="packet-date-short">Date unavailable<\/span>/);
-  assert.match(doneState, /id="rating-chart" role="img"/);
-  assert.ok(doneState.indexOf('id="rating-chart"') < doneState.indexOf('id="analyze"'));
-  assert.ok(doneState.indexOf('id="analyze"') < doneState.indexOf('id="evidence-title"'));
-  assert.match(doneState, /id="selected-question-title">First useful read<\/h3>/);
-  assert.match(doneState, /id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter\.<\/p>/);
-  assert.match(doneState, /id="question-group-chips" role="group"/);
-  assert.match(doneState, /id="question-options" role="group"/);
-  assert.match(doneState, /id="question-reset"[^>]*>Back to First useful read<\/button>/);
-  assert.match(doneState, /id="analyze-claude" href="https:\/\/claude\.ai\/new\?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below\.[^"]*" target="_blank" rel="noopener"/);
-  assert.match(doneState, /id="analyze-chatgpt" href="https:\/\/chatgpt\.com\/" target="_blank" rel="noopener"/);
-  assert.equal((doneState.match(/class="card card--primary"/g) ?? []).length, 1);
-  assert.match(idleState, /Pick a question, then choose Claude or ChatGPT\. Paste and send in the new chat\./);
-  assert.match(doneState, />Copy &amp; open Claude<\/span>/);
-  assert.match(doneState, />Copy &amp; open ChatGPT<\/span>/);
-  assert.match(doneState, /Claude reads all reviews\. ChatGPT gets the newest 150, so it has room to answer\./);
-  assert.match(doneState, /id="paste-steps" aria-label="What happens next"/);
-  assert.match(doneState, /id="paste-step-text">You paste and send<\/span>/);
-  assert.match(doneState, /id="analysis-status" role="status" aria-live="polite" hidden/);
-  assert.match(doneState, /Copied\. One step left, in the Claude tab\./);
-  assert.match(doneState, /id="copy-again"[^>]*>Copy again<\/button>/);
-  assert.match(doneState, /id="switch-analysis"[^>]*>Use ChatGPT instead<\/a>/);
-  assert.match(doneState, /Couldn’t copy automatically\. Copy it here, then paste it into/);
-  assert.match(doneState, /id="analysis-error-copy"[^>]*>Copy<\/button>/);
-  assert.match(doneState, /id="copy-btn"[^>]*>Copy<\/button>/);
-  assert.match(doneState, /id="download-btn"[^>]*>Download \.md<\/button>/);
-  assert.ok(doneState.indexOf('id="results-upgrade"') < doneState.indexOf('id="evidence-title"'));
-  assert.match(doneState, /id="results-upgrade-kicker">skip the copy-paste<\/p>/);
-  assert.match(doneState, /id="claude-skill-download" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/app-review-growth-analyzer-skill\.zip" download/);
-  assert.match(doneState, /id="evidence-title">Newest in the packet<\/h2>/);
-
-  // Design system tokens and the new components.
-  assert.match(styles, /@import url\("tokens\.css"\)/);
-  assert.match(tokens, /--paper:\s*#f7f4ec/);
-  assert.match(tokens, /--well:\s*#efe9da/);
-  assert.match(tokens, /--pen:\s*#3a6b5c/);
-  assert.match(styles, /#state-done\s*\{[^}]*--pen:\s*#3f7568[^}]*--error:\s*#a33e2f/s);
-  assert.match(tokens, /--font-ui:\s*-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif/);
-  assert.match(styles, /font-family:\s*var\(--font-display\)/);
-  assert.match(styles, /\.tool-frame::before\s*\{/);
-  assert.match(styles, /\.demo-chip\s*\{[^}]*min-height:\s*44px[^}]*border:\s*1\.5px dashed var\(--pen\)/s);
-  assert.match(styles, /\.sample-card\s*\{/);
-  assert.match(styles, /\.mix-row--low \.mix-bar\s*\{[^}]*background:\s*var\(--error\)/s);
-  assert.match(styles, /\.question-groups\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
-  assert.match(styles, /\.connect\s*\{[^}]*background:\s*var\(--ink\)/s);
-  assert.match(styles, /\.packet-body\s*\{[^}]*grid-template-columns:/s);
-  assert.match(styles, /\.rating-row--low \.rating-bar\s*\{[^}]*background:\s*var\(--error\)/s);
-  assert.match(styles, /\.question-group-chips\s*\{[^}]*overflow-x:\s*auto/s);
-  assert.match(styles, /\.question-card\s*\{[^}]*border:\s*2px solid var\(--pen\)/s);
-  assert.match(styles, /\.analysis-status--error\s*\{[^}]*border-color:\s*var\(--error\)/s);
-  assert.match(doneState, /Copy failed <span>\(browser blocked the clipboard\)<\/span>/);
-  assert.match(styles, /\.results-upgrade\s*\{[^}]*background:\s*var\(--ink\)/s);
-  assert.doesNotMatch(styles, /\.review-card::after/);
-  assert.match(styles, /\.busy\s*\{[^}]*opacity:\s*0\.58[^}]*pointer-events:\s*none/s);
-  assert.match(styles, /@media \(max-width:\s*39\.999rem\)\s*\{[\s\S]*?\.paste-steps\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/);
-  assert.match(styles, /@media \(min-width:\s*40rem\)\s*\{[\s\S]*?\.upgrade-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(styles, /\.sr-only\s*\{/);
-  assert.doesNotMatch(styles, /\.form-nudge|\.power-user-jump|\.guide-power|\.export-nudge/);
-
-  // Behaviour kept from the previous flow.
-  assert.ok(appJs.includes("const STORE_LINK_PATTERN = /apps\\.apple\\.com|itunes\\.apple\\.com|play\\.google\\.com/i;"));
-  assert.match(appJs, /const fragment = new URLSearchParams\(window\.location\.hash\.slice\(1\)\)/);
-  assert.match(appJs, /const queryAppUrl = fragment\.get\("app_url"\) \|\| query\.get\("app_url"\) \|\| ""/);
-  assert.match(appJs, /appUrl\.value = queryAppUrl/);
-  assert.match(appJs, /window\.history\.replaceState\(null, "", cleanLocation\)/);
-  assert.match(appJs, /fetch\(`\$\{appBasePath\}\/api\/extract`/);
-  assert.match(appJs, /\/api\/search\?/);
-  assert.match(appJs, /review_search", \{ result_count: searchResults\.length \}/);
-  assert.match(appJs, /review_search_pick", \{ store: result\.store \}/);
-  assert.match(appJs, /AbortController/);
-  assert.match(appJs, /event\.key === "ArrowDown"/);
-  assert.match(appJs, /limit:\s*500/);
-  assert.match(appJs, /Getting the reviews…/);
-  assert.match(appJs, /couldn't reach the store — try again in a minute/);
-  assert.match(appJs, /link\.download = currentFilename/);
-  assert.match(appJs, /review packet ready with \$\{result\.count\}/);
-  assert.match(appJs, /packetTitle\.focus\(\)/);
-  assert.match(appJs, /iconUrl:\s*safeImageUrl\(dataset\.app_icon_url\)/);
-  assert.match(appJs, /url\.protocol === "https:"/);
-  assert.match(appJs, /Visible App Store review cards/i);
-  assert.match(appJs, /function renderRatingChart/);
-  assert.match(appJs, /function compactDateRange/);
-
-  // New behaviour: demo apps, question picker, one-tap analysis.
-  assert.match(appJs, /from "\.\/analysis-prompt\.js\?v=20260925-results-redesign"/);
-  assert.match(appJs, /track\("review_demo_pick"/);
-  assert.match(appJs, /track\("review_question_pick"/);
-  assert.match(appJs, /function openQuestionGroup/);
-  assert.match(appJs, /button\.setAttribute\("aria-pressed", String\(isSelected\)\)/);
-  assert.match(appJs, /function showAnalysisSuccess/);
-  assert.match(appJs, /function showAnalysisError/);
-  assert.match(appJs, /tool: isChatGpt \? "chatgpt_oneclick" : "claude_oneclick"/);
-  assert.match(appJs, /maxReviews: isChatGpt \? CHATGPT_REVIEW_CAP : Infinity/);
-  assert.match(appJs, /navigator\.clipboard\?\.writeText/);
-  assert.match(appJs, /function countryFromStoreUrl/);
-  assert.doesNotMatch(appJs, /event\.preventDefault\(\);\s*\n\s*const payload/);
+  assert.match(html, /Your competitors’ users already told you what to build\./);
+  assert.match(html, /Paste an App Store or Google Play link\. Get up to 500 public reviews free, with a guided read in Claude or ChatGPT\./);
+  assert.match(html, /450 Google Play reviews/);
+  assert.match(html, /86 of 450 reviews/);
+  assert.match(html, /51 of 450 reviews/);
+  assert.match(html, /rr_00cfd8e9/);
+  assert.match(html, /Jun 23 – Oct 1, 2026/);
+  assert.match(html, /<base href="\/review-intel\/">/);
+  assert.match(html, /role="combobox"/);
+  assert.match(html, /aria-controls="search-results"/);
+  assert.match(html, /role="listbox"/);
+  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /aria-live="assertive"/);
+  assert.equal((html.match(/data-demo-url=/g) || []).length, 3);
+  assert.equal((html.match(/<details\b/g) || []).length, 6);
+  assert.match(html, /Copy &amp; open Claude/);
+  assert.match(html, /Copy &amp; open ChatGPT/);
+  assert.match(html, /class="ri-footer/);
+  assert.doesNotMatch(html, /fonts\.googleapis|Caveat|x-import|dc-import|\{\{/);
+  assert.match(tokens, /#FFE27A/i);
+  assert.match(styles, /prefers-reduced-motion/);
+  assert.match(styles, /focus-visible/);
+  assert.match(appJs, /CHATGPT_REVIEW_CAP/);
+  assert.match(appJs, /QUESTION_GROUPS/);
 });
 
 test("the extension handoff prefills locally, clears the fragment, and waits for user action", async () => {
@@ -293,7 +127,14 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
       querySelectorAll: (selector) => selector === "[data-connect-placement]"
         ? ["landing_connector", "landing_guide", "results_connector", "results_guide", "footer"].map((placement) => {
           const node = elementFor(`connector-${placement}`);
-          node.dataset = { connectPlacement: placement };
+          const controlIds = {
+            landing_connector: "page-add-to-claude",
+            landing_guide: "page-setup-guide",
+            results_connector: "results-connect-claude",
+            results_guide: "page-setup-guide-2",
+            footer: "footer-setup",
+          };
+          node.dataset = { connectPlacement: placement, controlId: controlIds[placement] };
           return node;
         }) : [],
       createDocumentFragment: () => ({ append() {} }),
@@ -352,6 +193,11 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     const moneyButton = [...elements.values()].find((element) => element.dataset.questionGroup === "Money");
     assert.ok(moneyButton, "the Money group chip should be rendered");
     listeners.get("#question-group-chips").get("click")({ target: { closest: () => moneyButton } });
+    assert.equal(window.dataLayer.at(-1)[1], "review_question_group_toggle");
+    assert.deepEqual(
+      { control_id: window.dataLayer.at(-1)[2].control_id, group_id: window.dataLayer.at(-1)[2].group_id, action: window.dataLayer.at(-1)[2].action },
+      { control_id: "question-group-money", group_id: "money", action: "open" }
+    );
     const priceButton = [...elements.values()].find((element) => element.dataset.questionId === "price");
     assert.ok(priceButton, "opening Money should render its questions");
     listeners.get("#question-options").get("click")({ target: { closest: () => priceButton } });
@@ -388,11 +234,13 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     const analyze = (target) => listeners.get(`#analyze-${target}`).get("click")();
     const settle = () => new Promise((resolve) => setImmediate(resolve));
     submit({ preventDefault() {} });
+    assert.equal(elementFor("#extract-spinner").hidden, false);
     await settle();
+    assert.equal(elementFor("#extract-spinner").hidden, true);
     assert.equal(elementFor("#state-done").hidden, false);
     assert.equal(elementFor("#question-select").value, "first-read", "a new packet resets to the best-start question");
     assert.equal(elementFor("#packet-title").textContent, "Example");
-    assert.equal(elementFor("#packet-meta").textContent, "Google Play · United States · English");
+    assert.equal(elementFor("#packet-meta").textContent, "Google Play, United States, English");
     assert.equal(elementFor("#packet-count").textContent, "1");
     assert.equal(elementFor("#packet-date").textContent, "Sep 23 – Sep 24, 2026");
     assert.equal(elementFor("#packet-date-short").textContent, "Sep 23 – Sep 24");
@@ -406,10 +254,18 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     assert.equal(elementFor("#analysis-status").hidden, false);
     assert.equal(elementFor("#analysis-status-title").textContent, "Copied. One step left, in the Claude tab.");
     assert.equal(elementFor("#analysis-status-step").textContent, "Long-press, tap Paste, then send");
-    assert.equal(elementFor("#results-upgrade-kicker").textContent, "while Claude reads…");
+    assert.equal(elementFor("#results-upgrade-kicker").textContent, "While Claude reads…");
+    listeners.get("connector-results_connector").get("click")();
+    assert.equal(window.dataLayer.at(-1)[1], "review_keep_it_click");
+    assert.deepEqual(
+      { control_id: window.dataLayer.at(-1)[2].control_id, handoff_tool: window.dataLayer.at(-1)[2].handoff_tool },
+      { control_id: "results-connect-claude", handoff_tool: "claude" }
+    );
     analyze("chatgpt");
     assert.ok(copies[1].startsWith(method.trim()));
     assert.equal(copies[0], copies[1], "the same sample and question receive identical instructions");
+    await settle();
+    assert.equal(elementFor("#reopen-analysis").textContent, "Open ChatGPT again");
     submit({ preventDefault() {} });
     await settle();
     analyze("claude");
@@ -420,12 +276,69 @@ test("the extension handoff prefills locally, clears the fragment, and waits for
     await settle();
     assert.equal(elementFor("#state-done").hidden, false);
 
-    // A blocked clipboard exposes the dedicated red recovery state.
+    // The same handoff uses platform-appropriate paste instructions.
+    globalThis.window.matchMedia = () => ({ matches: false });
+    globalThis.navigator.platform = "MacIntel";
+    analyze("claude");
+    await settle();
+    assert.equal(elementFor("#analysis-status-step").textContent, "Paste (⌘V), then send");
+    globalThis.navigator.platform = "Win32";
+    analyze("claude");
+    await settle();
+    assert.equal(elementFor("#analysis-status-step").textContent, "Paste (Ctrl+V), then send");
+
+    // A blocked clipboard exposes the dedicated monochrome recovery state.
     globalThis.navigator.clipboard.writeText = () => Promise.reject(new Error("blocked"));
     analyze("claude");
     await settle();
     assert.equal(elementFor("#analysis-status-error").hidden, false);
     assert.equal(elementFor("#analysis-error-destination").textContent, "Claude");
+    assert.equal(elementFor("#analysis-error-open").textContent, "Open Claude");
+
+    // Empty and partial store responses render the distinct approved recovery states.
+    listeners.get("#start-over").get("click")();
+    elementFor("#app-url").value = "https://apps.apple.com/us/app/example/id123456789";
+    globalThis.fetch = async () => ({ ok: true, text: async () => JSON.stringify({
+      dataset: { reviews_exported: 0, app_name: "Example", platform: "app_store", country: "us" },
+      markdown: "# App Reviews",
+    }) });
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#state-done").hidden, true);
+    assert.equal(elementFor("#form-error-title").textContent, "Apple returned no written reviews.");
+    assert.match(elementFor("#form-error-text").textContent, /public feed is often flaky/);
+    assert.equal(elementFor("#form-retry").hidden, false);
+    assert.equal(elementFor("#form-change-country").hidden, false);
+
+    elementFor("#app-url").value = "https://play.google.com/store/apps/details?id=com.example";
+    globalThis.fetch = async () => ({ ok: true, text: async () => JSON.stringify({
+      dataset: { reviews_exported: 0, app_name: "Example", platform: "google_play", country: "us" },
+      markdown: "# App Reviews",
+    }) });
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#form-error-title").textContent, "No written reviews for this app in this country.");
+    assert.equal(elementFor("#form-retry").hidden, true);
+    assert.equal(elementFor("#form-change-country").hidden, false);
+
+    elementFor("#app-url").value = "https://apps.apple.com/us/app/example/id123456789";
+    globalThis.fetch = async () => ({ ok: true, text: async () => JSON.stringify({
+      dataset: {
+        reviews_exported: 3,
+        app_name: "Example",
+        platform: "app_store",
+        country: "us",
+        source: "Visible App Store review cards",
+        rating_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 3 },
+      },
+      markdown: reviewMarkdown,
+    }) });
+    submit({ preventDefault() {} });
+    await settle();
+    assert.equal(elementFor("#state-done").hidden, false);
+    assert.equal(elementFor("#receipt-meta").hidden, false);
+    assert.equal(elementFor("#receipt-note-text").textContent, "Apple’s full review feed was unavailable, so this file has only the reviews the store page shows. Try again in a minute for more.");
+    assert.equal(elementFor("#app-icon").src, undefined, "redesigned results must not request remote store artwork");
 
     // Name search waits for a pause, supports keyboard selection, and ignores an older response.
     const waitForSearch = () => new Promise((resolve) => setTimeout(resolve, 430));
@@ -493,22 +406,22 @@ test("the canonical setup guide covers every supported route and evidence bounda
 
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/setup\/">/);
   assert.match(html, /<meta property="og:url" content="https:\/\/www\.willthiseverwork\.com\/review-intel\/setup\/">/);
-  assert.match(html, /Talk to app reviews in Claude or Codex/);
-  assert.match(html, /href="\/review-intel\/setup\/#claude">Claude<\/a>/);
-  assert.match(html, /href="\/review-intel\/setup\/#codex">Codex<\/a>/);
+  assert.match(html, /Ask Claude or Codex about any app’s reviews/);
+  assert.match(html, /href="setup\/#claude"[^>]*>Claude<\/a>/);
+  assert.match(html, /href="setup\/#codex"[^>]*>Codex<\/a>/);
   assert.match(html, /app-review-growth-analyzer-skill\.zip/);
   assert.match(html, /claude\.ai\/customize\/connectors/);
   assert.match(html, /codex plugin marketplace add angrysushi11\/review-intelligence --ref main/);
   assert.match(html, /codex plugin add review-intelligence@doubledash/);
-  assert.match(html, /No Claude or Codex\?/);
-  assert.match(html, /Open Custom GPT/);
-  assert.match(html, /Then keep asking/);
-  assert.match(html, /Up to 500 reviews/);
-  assert.match(html, /Google Play can continue into later batches/);
-  assert.match(html, /Apple is limited by its public storefront feed/);
-  assert.match(html, /No review database is present in the application/);
-  assert.match(html, /do not prove revenue, retention, conversion, or causality/);
-  assert.match(html, /review_connect_click/);
+  assert.match(html, /From the web tool/);
+  assert.match(html, /Copy &amp; open ChatGPT/);
+  assert.match(html, /With the plugin/);
+  assert.match(html, /Up to 500 reviews per response/);
+  assert.match(html, /Google Play continues batch by batch/);
+  assert.match(html, /Apple’s public feed stops earlier/);
+  assert.match(html, /No review database/);
+  assert.match(html, /data-copy-target="setup-codex-commands"/);
+  assert.match(html, /<script type="module" src="site\.js"><\/script>/);
   assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
 });
 
@@ -517,15 +430,15 @@ test("the product privacy page covers website and MCP processing and links the e
 
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/privacy\/">/);
   assert.match(html, /What the website processes/);
-  assert.match(html, /What the MCP service processes/);
+  assert.match(html, /What the MCP server processes/);
   assert.match(html, /no review database or persistence layer/i);
   assert.match(html, /ordinary request or operational logs/);
   assert.match(html, /Google Analytics/);
-  assert.match(html, /without the app URL, query parameters, or fragment/);
-  assert.match(html, /sanitized page location and referrer without the app URL, query parameters, or fragment/);
-  assert.match(html, /referrer is limited to its origin/);
-  assert.match(html, /supported UTM fields.*validated campaign ID and source, medium, campaign, content, or term labels/);
-  assert.match(html, /href="extension\/privacy\/">extension-specific privacy policy<\/a>/);
+  assert.match(html, /without the app link, query parameters or fragment/);
+  assert.match(html, /cuts a referrer down to its origin/);
+  assert.match(html, /supported UTM fields.*validated campaign ID and the source, medium, campaign, content or term labels/);
+  assert.match(html, /href="extension\/privacy\/"[^>]*>own policy<\/a>/);
+  assert.match(html, /<script type="module" src="site\.js"><\/script>/);
   assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
 });
 
@@ -533,18 +446,19 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   const html = await readFile(new URL("extension-privacy.html", webUrl), "utf8");
 
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.willthiseverwork\.com\/review-intel\/extension\/privacy\/">/);
-  assert.match(html, /uses Chrome's <code>activeTab<\/code> permission/);
-  assert.match(html, /read the current tab URL only after you click the toolbar action/);
-  assert.match(html, /does not retain the listing URL or browsing history/);
-  assert.match(html, /no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code/);
-  assert.match(html, /Analytics receives a sanitized page location and referrer without the app URL, query parameters, or fragment/);
-  assert.match(html, /sanitized page location and referrer without the app URL, query parameters, or fragment/);
-  assert.match(html, /referrer is limited to its origin/);
-  assert.match(html, /supported UTM fields.*validated campaign ID and source, medium, campaign, content, or term labels/);
-  assert.match(html, /coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot/);
+  assert.match(html, /uses Chrome’s <code>activeTab<\/code> permission/);
+  assert.match(html, /read the current tab’s URL only after you click its toolbar button/);
+  assert.match(html, /keeps neither the URL nor your browsing history/);
+  assert.match(html, /no account system, advertising, content scripts, host permissions, background collection or remotely hosted code/);
+  assert.match(html, /Analytics gets a cleaned page location and referrer, without the app link, query parameters or fragment/);
+  assert.match(html, /referrer is cut down to its origin/);
+  assert.match(html, /supported UTM fields.*validated campaign ID and the source, medium, campaign, content or term labels/);
+  assert.match(html, /coarse label such as ChatGPT, Claude, Perplexity, Gemini or Copilot/);
+  assert.match(html, /press <strong>Get the reviews<\/strong>/);
+  assert.match(html, /Chrome Web Store User Data Policy/);
   assert.match(html, /tools@doubledash\.me/);
   assert.doesNotMatch(html, /dash@doubledash\.me/);
-  assert.match(html, /class="drawn privacy-return" href="\/review-intel\/">[\s\S]*?<span>Open Review Intel<\/span>/);
+  assert.match(html, /href="\.\/"[^>]*>Review Intel<\/a>/);
 });
 
 test("the setup bridge and retriever assets are published explicitly", async () => {
@@ -672,13 +586,14 @@ test("public product docs keep setup and MCP links on the canonical Review Intel
 test("production analytics keeps page URLs private while passing only validated UTM campaign fields", async () => {
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const setupHtml = await readFile(new URL("setup.html", webUrl), "utf8");
-  const inlineScript = [...html.matchAll(/<script>\s*([\s\S]*?)\s*<\/script>/g)].map(([, script]) => script).find((script) => script.includes('gtag("config"'));
-  const setupScript = [...setupHtml.matchAll(/<script>\s*([\s\S]*?)\s*<\/script>/g)].map(([, script]) => script).find((script) => script.includes('gtag("config"'));
-  assert.ok(inlineScript, "the inline analytics script should exist");
-  assert.ok(setupScript, "the setup analytics script should exist");
-  assert.match(html, /G-R8F1QX6HKC/);
-  assert.match(setupHtml, /G-R8F1QX6HKC/);
-  assert.doesNotMatch(`${html}\n${setupHtml}`, /G-5W48W3ZCBF/);
+  const source = await readFile(new URL("site.js", webUrl), "utf8");
+  const shared = await readFile(new URL("analytics.js", webUrl), "utf8");
+  const inlineScript = shared.replaceAll("export ", "") + "\n" + source.replace(/^import[^;]+;/, "");
+  const setupScript = inlineScript;
+  assert.match(html, /src="site\.js"/);
+  assert.match(setupHtml, /src="site\.js"/);
+  assert.match(source, /G-R8F1QX6HKC/);
+  assert.doesNotMatch(`${html}\n${setupHtml}\n${source}`, /G-5W48W3ZCBF/);
 
   function execute(script, href, referrer = "") {
     const url = new URL(href);
@@ -689,7 +604,9 @@ test("production analytics keeps page URLs private while passing only validated 
       document: {
         referrer,
         createElement: () => ({}),
-        head: { appendChild: () => {} },
+        head: { append: () => {} },
+        querySelectorAll: () => [],
+        getElementById: () => null,
         addEventListener: () => {}
       },
       window: {

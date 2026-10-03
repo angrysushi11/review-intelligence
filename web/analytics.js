@@ -1,5 +1,22 @@
 const MAX_ANALYTICS_LABEL_LENGTH = 80;
 
+export function isProductionHost(hostname) {
+  return ["reviews.doubledash.me", "willthiseverwork.com", "www.willthiseverwork.com"].includes(hostname);
+}
+
+// Every redesigned page and the app share the same production gate.
+// Callers provide fixed control IDs and coarse outcomes, never user input.
+export function trackReviewEvent(eventName, parameters = {}) {
+  if (typeof window === "undefined" || !isProductionHost(window.location.hostname || new URL(window.location.href).hostname)) return;
+  if (!/^review_[a-z_]+$/.test(eventName) && eventName !== "ai_referral_landing") return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag("event", eventName, {
+    page_path: window.location.pathname,
+    ...parameters,
+  });
+}
+
 export function sanitizeAnalyticsLabel(value) {
   const raw = String(value || "").trim();
   if (!raw) return "";

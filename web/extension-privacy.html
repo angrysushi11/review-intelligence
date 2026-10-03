@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intel extension privacy</title>
@@ -8,81 +6,109 @@
     <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/extension/privacy/">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
+    <script type="module" src="site.js"></script>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/extension/privacy/"><meta property="og:title" content="Review Intel extension privacy"><meta property="og:description" content="How the Review Intel Chrome extension handles the current supported app-listing URL."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/extension/privacy/","name":"Review Intel extension privacy","description":"How the Review Intel Chrome extension handles the current supported app-listing URL."}</script></head>
   <body>
-    <main class="wrap privacy-page">
-      <header class="privacy-masthead">
-        <a class="lnk privacy-back" href="/review-intel/">Back to Review Intel</a>
-        <p class="pencil privacy-kicker">Chrome extension · last updated 25 September 2026</p>
-        <h1 class="title">Privacy, without the fog.</h1>
-        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-        </svg>
-        <p class="privacy-lede">The extension does one thing: when you click it on a public App Store or Google Play app page, it opens Review Intel with that listing URL ready in the form.</p>
-      </header>
+<div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
+<div class="ri-frame">
+<header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click">Add to Claude</a></nav></header>
+<main class="ri-doc">
+<p class="ri-doc__kicker">Chrome extension. Updated 25 September 2026.</p>
+<h1 class="ri-doc__title">Extension privacy. <span>One click, one link, no storage.</span></h1>
+<p class="ri-doc__lede">The extension does one thing: when you click it on a public App Store or Google Play app page, it opens Review Intel with that link in the form.</p>
+<section class="ri-doc__short" aria-labelledby="short-h">
+<h2 class="ri-doc__short-title" id="short-h">The short version</h2>
+<ul>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No background scraping.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No browsing-history storage.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No access to page content.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No ads, profiling or sale of data.</span></li>
+</ul>
+</section>
+<div class="ri-doc__body">
+<nav class="ri-doc__toc" aria-labelledby="toc-h">
+<p class="ri-doc__toc-title" id="toc-h">On this page</p>
+<ol>
+<li><a href="extension/privacy/#access" data-control-id="extension-privacy-a-what-it-can-access">What it can access</a></li>
+<li><a href="extension/privacy/#sends" data-control-id="extension-privacy-a-what-it-sends">What it sends</a></li>
+<li><a href="extension/privacy/#storage" data-control-id="extension-privacy-a-storage-and-data-use">Storage and data use</a></li>
+<li><a href="extension/privacy/#website" data-control-id="extension-privacy-a-the-review-intel-website">The Review Intel website</a></li>
+<li><a href="extension/privacy/#limited" data-control-id="extension-privacy-a-limited-use">Limited use</a></li>
+<li><a href="extension/privacy/#control" data-control-id="extension-privacy-a-your-control">Your control</a></li>
+</ol>
+</nav>
+<article class="ri-prose">
+<h2 id="access">What it can access</h2>
+<p>The extension uses Chrome’s <code>activeTab</code> permission. It can read the current tab’s URL only after you click its toolbar button.</p>
+<p>If that URL is a supported App Store or Google Play app page, the extension keeps only the canonical public listing URL, without fragments or nonessential tracking parameters. It doesn’t handle unrelated pages, other store pages or privileged Chrome pages.</p>
+<h2 id="sends">What it sends</h2>
+<p>It opens <a href="./" data-control-id="extension-privacy-a-review-intel-2">Review Intel</a> in a new tab and puts the listing URL in the new tab’s URL fragment, so the form can be filled in. Fragments aren’t sent with the page request, and Review Intel clears the fragment after filling the form. Builds up to version 0.1.1 may keep opening reviews.doubledash.me until they update.</p>
+<p>The listing URL reaches the review service only if you press <strong>Get the reviews</strong>. The extension doesn’t collect reviews itself, and it never sends page content, form data, credentials, browsing history or the URL of an unsupported page.</p>
+<h2 id="storage">Storage and data use</h2>
+<p>The current supported app-listing URL counts as web browsing activity under Chrome Web Store policy. The extension handles that one URL only after your deliberate click, and only for the hand-off above. It has no storage permission and keeps neither the URL nor your browsing history. Chrome may still record the page it opens in your normal browser history.</p>
+<p>The extension has no account system, advertising, content scripts, host permissions, background collection or remotely hosted code. Its data isn’t sold, used for advertising or profiling, or used to decide creditworthiness or lending eligibility.</p>
+<h2 id="website">The Review Intel website</h2>
+<p>The website is hosted on Vercel and uses Google Analytics. Analytics gets a cleaned page location and referrer, without the app link, query parameters or fragment, and a referrer is cut down to its origin. If a link carries supported UTM fields, only a validated campaign ID and the source, medium, campaign, content or term labels are sent, never the full query string. Other sources are reduced to an internal path, an external hostname or a short label.</p>
+<p>When a visit comes from a recognized AI assistant, analytics also gets a coarse label such as ChatGPT, Claude, Perplexity, Gemini or Copilot. Those providers may still process ordinary request or page metadata under their own policies.</p>
+<p>If you start a collection, Review Intel processes the public app URL, public review text and public review details to produce your result. Hosting and store providers may keep request metadata. Public review text and reviewer names can still be personal data, even when anyone can read them.</p>
+<h2 id="limited">Limited use</h2>
+<p>Information handled through the extension is used only to provide or improve its single user-facing purpose. It is not transferred except where necessary to provide or secure that purpose, comply with law, or as otherwise allowed by the Chrome Web Store User Data Policy.</p>
+<p>Humans do not read extension-handled data except with your explicit consent, when necessary for security or legal compliance, or in an aggregated and anonymized form for internal operations. Use of information received from Chrome APIs follows the Chrome Web Store User Data Policy, including its Limited Use requirements.</p>
+<h2 id="control">Your control</h2>
+<p>If you don’t want the hand-off to run, don’t click the toolbar button. You can remove the extension from Chrome at any time.</p>
+<div class="ri-doc__end">
+<p class="ri-doc__contact">Questions: <a href="mailto:tools@doubledash.me" data-control-id="extension-privacy-a-tools-doubledash-me">tools@doubledash.me</a></p>
+<div class="ri-doc__related"><a class="ri-btn ri-btn--outline ri-btn--sm" href="privacy/" data-control-id="extension-privacy-a-website-privacy">Website privacy</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-policy-source" data-control-id="extension-privacy-a-policy-source">Policy source</a></div>
+</div>
+</article>
+</div>
+</main>
+<footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
+<div class="ri-footer__top">
+<div class="ri-footer__brand">
+<a href="./" class="ri-logo" data-control-id="extension-privacy-a-review-intel-3"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a>
+</div>
+<nav class="ri-footer__cols" aria-label="Footer">
+<div>
+<p class="ri-footer__h">Use it</p>
+<ul class="ri-footer__links">
+<li><a href="./" data-control-id="extension-privacy-a-get-reviews">Get reviews</a></li>
+<li><a href="setup/" data-control-id="extension-privacy-a-setup-guide">Setup guide</a></li>
+<li><a href="plugin/" data-control-id="extension-privacy-a-plugin-for-chatgpt-and-codex">Plugin for ChatGPT and Codex</a></li>
+<li><a href="https://www.willthiseverwork.com/review-intel/app/" data-control-id="extension-privacy-a-hosted-prototype">Hosted prototype</a></li>
+<li><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-source-code" data-control-id="extension-privacy-a-source-code">Source code</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Help</p>
+<ul class="ri-footer__links">
+<li><a href="support/" data-control-id="extension-privacy-a-support">Support</a></li>
+<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="extension-privacy-a-email-feedback">Email feedback</a></li>
+<li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-review-intel-on-g2" data-control-id="extension-privacy-a-review-intel-on-g2">Review Intel on G2</a></li>
+<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-support-the-tools" data-control-id="extension-privacy-a-support-the-tools">Support the tools</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Policies</p>
+<ul class="ri-footer__links">
+<li><a href="privacy/" data-control-id="extension-privacy-a-privacy">Privacy</a></li>
+<li><a href="terms/" data-control-id="extension-privacy-a-terms">Terms</a></li>
+<li><a href="extension/privacy/" data-control-id="extension-privacy-a-extension-privacy">Extension privacy</a></li>
+<li><a href="plugin-privacy/" data-control-id="extension-privacy-a-plugin-privacy">Plugin privacy</a></li>
+<li><a href="plugin-terms/" data-control-id="extension-privacy-a-plugin-terms">Plugin terms</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="ri-footer__bottom">
+<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-dasha-antonova" data-control-id="extension-privacy-a-dasha-antonova">Dasha Antonova</a></span>
+<a href="https://www.willthiseverwork.com/" data-control-id="extension-privacy-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
+</div>
+</footer>
+</div>
+</div>
+<p id="site-copy-status" class="ri-sr-only" role="status" aria-live="polite"></p>
 
-      <section class="privacy-summary" aria-labelledby="privacy-summary-title">
-        <h2 class="privacy-summary-title" id="privacy-summary-title">The short version</h2>
-        <ul>
-          <li>No background scraping.</li>
-          <li>No browsing-history storage.</li>
-          <li>No page-content access.</li>
-          <li>No ads, profiling, or sale of data.</li>
-        </ul>
-      </section>
 
-      <div class="privacy-sections">
-        <section>
-          <h2>What the extension can access</h2>
-          <p>Review Intel uses Chrome's <code>activeTab</code> permission. It can read the current tab URL only after you click the toolbar action.</p>
-          <p>If that URL is a supported App Store or Google Play app-detail page, the extension keeps only the canonical public listing URL. It removes fragments and nonessential tracking parameters. It does not handle unrelated pages, other store pages, or privileged Chrome pages.</p>
-        </section>
-
-        <section>
-          <h2>What gets sent</h2>
-          <p>The current extension opens <a href="https://www.willthiseverwork.com/review-intel/">Review Intel</a> in a new tab. The supported listing URL is placed in the new tab's URL fragment so the form can be prefilled. URL fragments are not sent in the page request, and Review Intel clears the fragment after prefilling. Previously installed builds through version 0.1.1 may continue to open <a href="https://reviews.doubledash.me/">reviews.doubledash.me</a> until they update.</p>
-          <p>The listing URL reaches the extraction service only if you press <strong>Extract reviews</strong>. The extension does not retrieve reviews itself. It does not send page content, form data, credentials, browsing history, or the URL of an unsupported page.</p>
-        </section>
-
-        <section>
-          <h2>Storage and data use</h2>
-          <p>The current supported app-listing URL counts as web browsing activity under Chrome Web Store policy. The extension handles that one URL only after your deliberate click and only for the handoff described above. It has no storage permission and does not retain the listing URL or browsing history. Chrome may still record the page it opens in normal browser history.</p>
-          <p>The extension has no account system, advertising, content scripts, host permissions, background retrieval, or remotely hosted extension code. Extension data is not sold, used for advertising or profiling, or used to determine creditworthiness or lending eligibility.</p>
-        </section>
-
-        <section>
-          <h2>The hosted Review Intel tool</h2>
-          <p>The hosted Review Intel tool uses Google Analytics and is hosted on Vercel. Analytics receives a sanitized page location and referrer without the app URL, query parameters, or fragment. A referrer is limited to its origin. If a landing link has supported UTM fields, it sends only a validated campaign ID and source, medium, campaign, content, or term labels, never the full query string. Attribution sources are otherwise reduced to an internal path, external hostname, or short label. When a visit arrives from a recognized AI assistant, Analytics also receives a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Those providers may still process ordinary request or page metadata under their own policies.</p>
-          <p>If you start retrieval, Review Intel processes the public app URL, public review text, and public review metadata to produce the requested result. Hosting and upstream app-store providers may retain request metadata. Public review text and reviewer names can still be personal data even when publicly visible.</p>
-        </section>
-
-        <section>
-          <h2>Limited use</h2>
-          <p>Information handled through the extension is used only to provide or improve its single user-facing purpose. It is not transferred except where necessary to provide or secure that purpose, comply with law, or as otherwise allowed by the Chrome Web Store User Data Policy.</p>
-          <p>Humans do not read extension-handled data except with your explicit consent, when necessary for security or legal compliance, or in an aggregated and anonymized form for internal operations. Use of information received from Chrome APIs follows the Chrome Web Store User Data Policy, including its Limited Use requirements.</p>
-        </section>
-
-        <section>
-          <h2>Your control</h2>
-          <p>Do not click the toolbar action if you do not want the handoff to run. You can remove the extension from Chrome at any time.</p>
-          <p>Questions: <a href="mailto:tools@doubledash.me">tools@doubledash.me</a></p>
-        </section>
-      </div>
-
-      <hr class="rule">
-      <footer class="privacy-footer">
-        <a class="drawn privacy-return" href="/review-intel/">
-          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-          </svg>
-          <span>Open Review Intel</span>
-        </a>
-        <a class="lnk" href="https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md" target="_blank" rel="noreferrer">Policy source</a>
-      </footer>
-    </main>
-  </body>
-</html>
+</body></html>

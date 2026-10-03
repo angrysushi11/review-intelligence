@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intelligence plugin privacy</title>
@@ -8,79 +6,106 @@
     <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/plugin-privacy/">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
+    <script type="module" src="site.js"></script>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/plugin-privacy/"><meta property="og:title" content="Review Intelligence plugin privacy"><meta property="og:description" content="How the skills-only Review Intelligence plugin handles review exports supplied in ChatGPT or Codex."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/plugin-privacy/","name":"Review Intelligence plugin privacy","description":"How the skills-only Review Intelligence plugin handles review exports supplied in ChatGPT or Codex."}</script></head>
   <body>
-    <main class="wrap privacy-page">
-      <header class="privacy-masthead">
-        <a class="lnk privacy-back" href="plugin/">Back to the Review Intelligence plugin</a>
-        <p class="pencil privacy-kicker">Skills-only plugin · last updated 1 October 2026</p>
-        <h1 class="title">A clear boundary for supplied reviews.</h1>
-        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-        </svg>
-        <p class="privacy-lede">Review Intelligence is a set of analysis instructions that runs inside the OpenAI host you selected. It analyzes only reviews you paste or upload and performs no live retrieval.</p>
-      </header>
+<div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
+<div class="ri-frame">
+<header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click">Add to Claude</a></nav></header>
+<main class="ri-doc">
+<p class="ri-doc__kicker">Review Intelligence plugin. Updated 1 October 2026.</p>
+<h1 class="ri-doc__title">Plugin privacy. <span>Nothing you supply through it reaches DoubleDash.</span></h1>
+<p class="ri-doc__lede">Review Intelligence is a set of analysis instructions that runs inside the OpenAI product you chose. It analyzes only the reviews you paste or upload, and fetches nothing.</p>
+<section class="ri-doc__short" aria-labelledby="short-h">
+<h2 class="ri-doc__short-title" id="short-h">The short version</h2>
+<ul>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>You choose which review data to supply.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Your OpenAI product or workspace hosts the chat and the analysis.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No review data goes to a DoubleDash MCP server or any other DoubleDash service.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>DoubleDash keeps no copy of your plugin inputs or results.</span></li>
+</ul>
+</section>
+<div class="ri-doc__body">
+<nav class="ri-doc__toc" aria-labelledby="toc-h">
+<p class="ri-doc__toc-title" id="toc-h">On this page</p>
+<ol>
+<li><a href="plugin-privacy/#data" data-control-id="plugin-privacy-a-what-it-can-process">What it can process</a></li>
+<li><a href="plugin-privacy/#why" data-control-id="plugin-privacy-a-why-its-used">Why it’s used</a></li>
+<li><a href="plugin-privacy/#who" data-control-id="plugin-privacy-a-who-receives-it">Who receives it</a></li>
+<li><a href="plugin-privacy/#retention" data-control-id="plugin-privacy-a-retention">Retention</a></li>
+<li><a href="plugin-privacy/#controls" data-control-id="plugin-privacy-a-your-controls">Your controls</a></li>
+<li><a href="plugin-privacy/#contact" data-control-id="plugin-privacy-a-contact">Contact</a></li>
+</ol>
+</nav>
+<article class="ri-prose">
+<h2 id="data">What it can process</h2>
+<p>The review export and the instructions you provide. Depending on your file, that can include review text, ratings, dates, app versions, developer replies, app or store labels, and public reviewer names or identifiers. It also processes your questions and writes the analysis in the chat.</p>
+<p>OpenAI, as the host, may handle file names, file metadata, account information and ordinary service metadata under its own policies. The plugin doesn’t need store credentials, API keys, developer-console access or payment details. Don’t supply them.</p>
+<h2 id="why">Why it’s used</h2>
+<p>To parse and organize the reviews, find evidence-backed patterns and customer language, compare labelled sets, answer your question and show the limits of the sample. The plugin itself sends none of it to DoubleDash.</p>
+<h2 id="who">Who receives it</h2>
+<p>The OpenAI host processes what it needs to run the chat and return the analysis, under the product, account and workspace settings that apply to you. In a managed workspace, its administrators may control or access data under the workspace agreement and settings.</p>
+<p>The plugin makes no outbound request to DoubleDash, so DoubleDash doesn’t receive your export, prompt or result through it.</p>
+<h2 id="retention">Retention</h2>
+<p>Because nothing is sent to DoubleDash, the plugin creates no DoubleDash-held copy of its inputs or results. This doesn’t cover anything you choose to send separately by email.</p>
+<p>OpenAI controls retention for content in ChatGPT or Codex. The period depends on the product, your account or workspace, your settings and actions such as deleting a chat or file. Check OpenAI’s current <a href="https://help.openai.com/en/articles/8983778-chat-and-file-retention-policies-in-chatgpt?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-chat-and-file-retention-policy" data-control-id="plugin-privacy-a-chat-and-file-retention-policy">chat and file retention policy</a> rather than relying on a fixed period stated here.</p>
+<h2 id="controls">Your controls</h2>
+<p>Supply only reviews you’re permitted to use. Remove unnecessary personal, confidential or sensitive information before uploading, and leave identifiers out of the export when the analysis doesn’t need them.</p>
+<p>Use your OpenAI account or workspace controls to manage chats, files, model-improvement preferences, exports and deletion. OpenAI explains the current options in <a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-data-controls-in-chatgpt" data-control-id="plugin-privacy-a-data-controls-in-chatgpt">Data controls in ChatGPT</a>. Controls can vary by plan and workspace.</p>
+<h2 id="contact">Contact</h2>
+<p>Questions about the plugin: <a href="mailto:tools@doubledash.me" data-control-id="plugin-privacy-a-tools-doubledash-me">tools@doubledash.me</a>. Anything you put in that email reaches DoubleDash through a separate support channel, so don’t attach a review export or include personal, confidential or sensitive review data. For content held in ChatGPT or Codex, use OpenAI’s controls and contact routes.</p>
+<div class="ri-doc__end">
+<div class="ri-doc__related"><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin/" data-control-id="plugin-privacy-a-about-the-plugin">About the plugin</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin-terms/" data-control-id="plugin-privacy-a-plugin-terms">Plugin terms</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin-support/" data-control-id="plugin-privacy-a-plugin-support">Plugin support</a></div>
+</div>
+</article>
+</div>
+</main>
+<footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
+<div class="ri-footer__top">
+<div class="ri-footer__brand">
+<a href="./" class="ri-logo" data-control-id="plugin-privacy-a-review-intel-2"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a>
+</div>
+<nav class="ri-footer__cols" aria-label="Footer">
+<div>
+<p class="ri-footer__h">Use it</p>
+<ul class="ri-footer__links">
+<li><a href="./" data-control-id="plugin-privacy-a-get-reviews">Get reviews</a></li>
+<li><a href="setup/" data-control-id="plugin-privacy-a-setup-guide">Setup guide</a></li>
+<li><a href="plugin/" data-control-id="plugin-privacy-a-plugin-for-chatgpt-and-codex">Plugin for ChatGPT and Codex</a></li>
+<li><a href="https://www.willthiseverwork.com/review-intel/app/" data-control-id="plugin-privacy-a-hosted-prototype">Hosted prototype</a></li>
+<li><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-source-code" data-control-id="plugin-privacy-a-source-code">Source code</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Help</p>
+<ul class="ri-footer__links">
+<li><a href="support/" data-control-id="plugin-privacy-a-support">Support</a></li>
+<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="plugin-privacy-a-email-feedback">Email feedback</a></li>
+<li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-review-intel-on-g2" data-control-id="plugin-privacy-a-review-intel-on-g2">Review Intel on G2</a></li>
+<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-support-the-tools" data-control-id="plugin-privacy-a-support-the-tools">Support the tools</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Policies</p>
+<ul class="ri-footer__links">
+<li><a href="privacy/" data-control-id="plugin-privacy-a-privacy">Privacy</a></li>
+<li><a href="terms/" data-control-id="plugin-privacy-a-terms">Terms</a></li>
+<li><a href="extension/privacy/" data-control-id="plugin-privacy-a-extension-privacy">Extension privacy</a></li>
+<li><a href="plugin-privacy/" data-control-id="plugin-privacy-a-plugin-privacy">Plugin privacy</a></li>
+<li><a href="plugin-terms/" data-control-id="plugin-privacy-a-plugin-terms-2">Plugin terms</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="ri-footer__bottom">
+<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-privacy-a-dasha-antonova" data-control-id="plugin-privacy-a-dasha-antonova">Dasha Antonova</a></span>
+<a href="https://www.willthiseverwork.com/" data-control-id="plugin-privacy-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
+</div>
+</footer>
+</div>
+</div>
+<p id="site-copy-status" class="ri-sr-only" role="status" aria-live="polite"></p>
 
-      <section class="privacy-summary" aria-labelledby="plugin-privacy-summary-title">
-        <h2 class="privacy-summary-title" id="plugin-privacy-summary-title">The short version</h2>
-        <ul>
-          <li>You choose which review data to supply.</li>
-          <li>Your selected OpenAI product or workspace hosts the conversation and analysis.</li>
-          <li>No review data is sent to a DoubleDash MCP server or other DoubleDash service.</li>
-          <li>DoubleDash retains no copy of your plugin inputs or results.</li>
-        </ul>
-      </section>
 
-      <div class="privacy-sections">
-        <section>
-          <h2>Data the plugin can process</h2>
-          <p>The plugin can process the review export and instructions you provide. Depending on your file, that may include review text, ratings, dates, app versions, developer replies, app or store labels, and public reviewer names or identifiers. It can also process your questions and produce an analysis in the conversation.</p>
-          <p>File names, file metadata, account information, and ordinary service metadata may be handled by OpenAI as the host under its own policies. The plugin does not need store credentials, API keys, private developer-console access, or payment information. Do not supply them.</p>
-        </section>
-
-        <section>
-          <h2>Why the data is used</h2>
-          <p>The supplied material is used to parse and organize reviews, identify evidence-backed patterns and customer language, compare labelled review sets, answer your question, and show the limits of the available sample. The plugin itself sends none of that content to DoubleDash.</p>
-        </section>
-
-        <section>
-          <h2>Who receives the data</h2>
-          <p>The selected OpenAI host processes the content needed to run the conversation and return the analysis according to the product, account, and workspace settings that apply to you. If you use a managed workspace, its administrators may control or have access to data according to the workspace agreement and settings.</p>
-          <p>The skills-only plugin makes no outbound request to DoubleDash, so DoubleDash does not receive your review export, prompt, or result through the plugin.</p>
-        </section>
-
-        <section>
-          <h2>Retention</h2>
-          <p>The plugin creates no DoubleDash-held copy of its inputs or results because it does not send them to DoubleDash. This statement does not cover information you choose to send separately by email.</p>
-          <p>OpenAI controls retention for content held by ChatGPT or Codex. The applicable period depends on the product, account or workspace, settings, and actions such as deleting a chat or file. Review OpenAI’s current <a href="https://help.openai.com/en/articles/8983778-chat-and-file-retention-policies-in-chatgpt" target="_blank" rel="noopener noreferrer">chat and file retention policy</a> rather than relying on a fixed period stated here.</p>
-        </section>
-
-        <section>
-          <h2>Your controls</h2>
-          <p>Supply only reviews you are permitted to use. Remove unnecessary personal, confidential, or sensitive information before uploading. You can keep identifiers out of the export when they are not needed for the analysis.</p>
-          <p>Use the controls available in your OpenAI account or workspace to manage conversations, files, model-improvement preferences, exports, and deletion. OpenAI explains the current options in <a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt" target="_blank" rel="noopener noreferrer">Data controls in ChatGPT</a>. Available controls can vary by plan and workspace.</p>
-        </section>
-
-        <section>
-          <h2>Contact</h2>
-          <p>For questions about the Review Intelligence plugin, you may email <a href="mailto:tools@doubledash.me">tools@doubledash.me</a>. Details you voluntarily include in that email are received by DoubleDash through a separate support channel. Do not attach a review export or include personal, confidential, or sensitive review data. For requests about content held by ChatGPT or Codex, use the controls and contact routes provided by OpenAI.</p>
-        </section>
-      </div>
-
-      <hr class="rule">
-      <footer class="privacy-footer">
-        <a class="drawn privacy-return" href="plugin/">
-          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-          </svg>
-          <span>About the plugin</span>
-        </a>
-        <a class="lnk" href="plugin-terms/">Plugin terms</a>
-      </footer>
-    </main>
-  </body>
-</html>
+</body></html>

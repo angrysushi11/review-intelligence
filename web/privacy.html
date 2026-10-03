@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intel privacy</title>
@@ -8,84 +6,112 @@
     <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/privacy/">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
+    <script type="module" src="site.js"></script>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/privacy/"><meta property="og:title" content="Review Intel privacy"><meta property="og:description" content="How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/privacy/","name":"Review Intel privacy","description":"How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata."}</script></head>
   <body>
-    <main class="wrap privacy-page">
-      <header class="privacy-masthead">
-        <a class="lnk privacy-back" href="/review-intel/">Back to Review Intel</a>
-        <p class="pencil privacy-kicker">Website + MCP · last updated 26 September 2026</p>
-        <h1 class="title">Privacy, without the fog.</h1>
-        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-        </svg>
-        <p class="privacy-lede">Review Intel works with public app-store data. It has no user accounts and no review database in the application.</p>
-      </header>
+<div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
+<div class="ri-frame">
+<header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click">Add to Claude</a></nav></header>
+<main class="ri-doc">
+<p class="ri-doc__kicker">Website and MCP server. Updated 26 September 2026.</p>
+<h1 class="ri-doc__title">Privacy. <span>Public reviews only, no accounts, no review database.</span></h1>
+<p class="ri-doc__lede">This covers the website and the MCP server. The <a href="extension/privacy/" data-control-id="privacy-a-chrome-extension">Chrome extension</a> and the <a href="plugin-privacy/" data-control-id="privacy-a-chatgpt-and-codex-plugin">ChatGPT and Codex plugin</a> have their own policies.</p>
+<section class="ri-doc__short" aria-labelledby="short-h">
+<h2 class="ri-doc__short-title" id="short-h">The short version</h2>
+<ul>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Public reviews only.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No store login or OAuth.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No advertising, and no sale of data.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>No review database in the app.</span></li>
+</ul>
+</section>
+<div class="ri-doc__body">
+<nav class="ri-doc__toc" aria-labelledby="toc-h">
+<p class="ri-doc__toc-title" id="toc-h">On this page</p>
+<ol>
+<li><a href="privacy/#website" data-control-id="privacy-a-what-the-website-processes">What the website processes</a></li>
+<li><a href="privacy/#mcp" data-control-id="privacy-a-what-the-mcp-server-processes">What the MCP server processes</a></li>
+<li><a href="privacy/#storage" data-control-id="privacy-a-storage-and-infrastructure">Storage and infrastructure</a></li>
+<li><a href="privacy/#analytics" data-control-id="privacy-a-website-analytics">Website analytics</a></li>
+<li><a href="privacy/#ai" data-control-id="privacy-a-ai-providers-and-evidence-limits">AI providers and evidence limits</a></li>
+<li><a href="privacy/#extension" data-control-id="privacy-a-chrome-extension-2">Chrome extension</a></li>
+<li><a href="privacy/#choices" data-control-id="privacy-a-your-choices">Your choices</a></li>
+</ol>
+</nav>
+<article class="ri-prose">
+<h2 id="website">What the website processes</h2>
+<p>When you ask for reviews, Review Intel processes the App Store or Google Play listing you gave it, the public review text and the public details that come with it: rating, date, app version, reviewer name and developer reply. It uses them to return the reviews you asked for.</p>
+<p>The website never asks for App Store Connect or Play Console credentials. Don’t send credentials, private exports or anything confidential.</p>
+<h2 id="mcp">What the MCP server processes</h2>
+<p>The public MCP endpoint is read-only and needs no account or OAuth login. It processes the app, the market, the sort order, the number of reviews requested and, on Google Play, the continuation cursor for the next batch.</p>
+<p>Each response holds up to 500 reviews. Google Play can return a cursor for more; Apple’s public feed has no equivalent.</p>
+<h2 id="storage">Storage and infrastructure</h2>
+<p>The app’s code has no review database or persistence layer: each request is processed to produce its response. That doesn’t mean no metadata exists anywhere. Vercel, network providers and Apple’s or Google’s services may keep ordinary request or operational logs under their own policies.</p>
+<p>Public review text and reviewer names can still be personal data, even when anyone can read them. Handle downloaded files under the rules that apply to your use.</p>
+<h2 id="analytics">Website analytics</h2>
+<p>The pages use Google Analytics. Review Intel sends a cleaned page location and referrer, without the app link, query parameters or fragment, and cuts a referrer down to its origin.</p>
+<p>If a link carries supported UTM fields, only a validated campaign ID and the source, medium, campaign, content or term labels are sent, never the full query string. Other sources are reduced to an internal path, an external hostname or a short label.</p>
+<p>Analytics records coarse product events, such as starting or finishing a review collection, opening an analysis destination or choosing a setup link. When a visit comes from a recognized AI assistant, it may also get a coarse label such as ChatGPT, Claude, Perplexity, Gemini or Copilot. None of this is used for advertising or sold.</p>
+<h2 id="ai">AI providers and evidence limits</h2>
+<p>The web tool can prepare reviews for a destination you choose, such as Claude or ChatGPT. Those providers process the data under their own terms and privacy policies. The MCP endpoint returns reviews to the client that called it, and that client decides how it stores or uses them.</p>
+<p>Reviews show patterns in the sample you collected. On their own, they don’t prove revenue, retention, conversion, causality or what every user thinks.</p>
+<h2 id="extension">Chrome extension</h2>
+<p>The optional Chrome extension does less. After you click it, it reads the current app-listing URL and opens Review Intel with that link in the form. Its <a href="extension/privacy/" data-control-id="privacy-a-own-policy">own policy</a> lists the exact permissions and handling.</p>
+<h2 id="choices">Your choices</h2>
+<p>You can use the website without an account. If you don’t want an app link and its reviews processed through these services, don’t start a collection or connect the MCP server. Your browser’s privacy controls or a content blocker can stop the analytics.</p>
+<div class="ri-doc__end">
+<p class="ri-doc__contact">Questions: <a href="mailto:tools@doubledash.me" data-control-id="privacy-a-tools-doubledash-me">tools@doubledash.me</a></p>
+<div class="ri-doc__related"><a class="ri-btn ri-btn--outline ri-btn--sm" href="terms/" data-control-id="privacy-a-terms">Terms</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="support/" data-control-id="privacy-a-support">Support</a></div>
+</div>
+</article>
+</div>
+</main>
+<footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
+<div class="ri-footer__top">
+<div class="ri-footer__brand">
+<a href="./" class="ri-logo" data-control-id="privacy-a-review-intel-2"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a>
+</div>
+<nav class="ri-footer__cols" aria-label="Footer">
+<div>
+<p class="ri-footer__h">Use it</p>
+<ul class="ri-footer__links">
+<li><a href="./" data-control-id="privacy-a-get-reviews">Get reviews</a></li>
+<li><a href="setup/" data-control-id="privacy-a-setup-guide">Setup guide</a></li>
+<li><a href="plugin/" data-control-id="privacy-a-plugin-for-chatgpt-and-codex">Plugin for ChatGPT and Codex</a></li>
+<li><a href="https://www.willthiseverwork.com/review-intel/app/" data-control-id="privacy-a-hosted-prototype">Hosted prototype</a></li>
+<li><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-source-code" data-control-id="privacy-a-source-code">Source code</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Help</p>
+<ul class="ri-footer__links">
+<li><a href="support/" data-control-id="privacy-a-support-2">Support</a></li>
+<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="privacy-a-email-feedback">Email feedback</a></li>
+<li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-review-intel-on-g2" data-control-id="privacy-a-review-intel-on-g2">Review Intel on G2</a></li>
+<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-support-the-tools" data-control-id="privacy-a-support-the-tools">Support the tools</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Policies</p>
+<ul class="ri-footer__links">
+<li><a href="privacy/" data-control-id="privacy-a-privacy">Privacy</a></li>
+<li><a href="terms/" data-control-id="privacy-a-terms-2">Terms</a></li>
+<li><a href="extension/privacy/" data-control-id="privacy-a-extension-privacy">Extension privacy</a></li>
+<li><a href="plugin-privacy/" data-control-id="privacy-a-plugin-privacy">Plugin privacy</a></li>
+<li><a href="plugin-terms/" data-control-id="privacy-a-plugin-terms">Plugin terms</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="ri-footer__bottom">
+<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-dasha-antonova" data-control-id="privacy-a-dasha-antonova">Dasha Antonova</a></span>
+<a href="https://www.willthiseverwork.com/" data-control-id="privacy-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
+</div>
+</footer>
+</div>
+</div>
+<p id="site-copy-status" class="ri-sr-only" role="status" aria-live="polite"></p>
 
-      <section class="privacy-summary" aria-labelledby="privacy-summary-title">
-        <h2 class="privacy-summary-title" id="privacy-summary-title">The short version</h2>
-        <ul>
-          <li>Public reviews only.</li>
-          <li>No store login or OAuth.</li>
-          <li>No advertising or sale of data.</li>
-          <li>No application review database.</li>
-        </ul>
-      </section>
 
-      <div class="privacy-sections">
-        <section>
-          <h2>What the website processes</h2>
-          <p>When you ask Review Intel to retrieve reviews, it processes the public App Store or Google Play listing you supplied, the public review text, and available public metadata such as rating, date, app version, reviewer name, and developer reply. It uses that data to return the requested review packet.</p>
-          <p>The website does not ask for App Store Connect or Play Console credentials. Do not send credentials, private exports, or other confidential information.</p>
-        </section>
-
-        <section>
-          <h2>What the MCP service processes</h2>
-          <p>The public MCP endpoint is read-only and requires no account or OAuth login. It processes the app target, market, sort order, requested limit, and any Google Play continuation cursor needed to return the next public batch.</p>
-          <p>Each response is limited to 500 reviews. Google Play may provide a continuation cursor; Apple’s public storefront feed does not provide an equivalent continuation path.</p>
-        </section>
-
-        <section>
-          <h2>Storage and infrastructure</h2>
-          <p>The application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google services may retain ordinary request or operational logs under their own policies.</p>
-          <p>Public review text and reviewer names can still be personal data even when they are publicly visible. Handle downloaded packets according to the rules that apply to your use.</p>
-        </section>
-
-        <section>
-          <h2>Website analytics</h2>
-          <p>The hosted pages use Google Analytics. The application sends a sanitized page location and referrer without the app URL, query parameters, or fragment. A referrer is limited to its origin. If a landing link has supported UTM fields, it sends only a validated campaign ID and source, medium, campaign, content, or term labels, never the full query string. Attribution sources are otherwise reduced to an internal path, external hostname, or short label. It records coarse product interactions such as starting or completing retrieval, opening an analysis destination, or choosing a setup link.</p>
-          <p>When a visit arrives from a recognized AI assistant, analytics may also receive a coarse source label such as ChatGPT, Claude, Perplexity, Gemini, or Copilot. Review Intel does not use this information for advertising or sell it.</p>
-        </section>
-
-        <section>
-          <h2>Evidence and model boundaries</h2>
-          <p>The web tool can prepare review text for a destination you choose, such as Claude or ChatGPT. Those providers process data under their own terms and privacy policies. The public MCP endpoint returns evidence to the client that called it; how that client stores or uses the response is controlled by that client.</p>
-          <p>Reviews can reveal patterns in the retrieved sample. They do not by themselves prove revenue, retention, conversion, causality, or the views of every user.</p>
-        </section>
-
-        <section>
-          <h2>Chrome extension</h2>
-          <p>The optional Chrome extension has a narrower boundary: after a deliberate click, it can read the current supported app-listing URL and open Review Intel with that URL ready in the form. Read the <a href="extension/privacy/">extension-specific privacy policy</a> for its exact permissions and handling.</p>
-        </section>
-
-        <section>
-          <h2>Your choices and contact</h2>
-          <p>You can use the website without an account. Do not start a retrieval or connect the MCP service if you do not want the public app target and returned reviews processed through those services. You can avoid website analytics with browser privacy controls or an appropriate content blocker.</p>
-          <p>Questions: <a href="mailto:tools@doubledash.me">tools@doubledash.me</a></p>
-        </section>
-      </div>
-
-      <hr class="rule">
-      <footer class="privacy-footer">
-        <a class="drawn privacy-return" href="/review-intel/">
-          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true"><path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
-          <span>Open Review Intel</span>
-        </a>
-        <a class="lnk" href="extension/privacy/">Extension privacy</a>
-      </footer>
-    </main>
-  </body>
-</html>
+</body></html>

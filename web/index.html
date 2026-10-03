@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Find What Users Want in App Reviews | Review Intel</title>
@@ -21,473 +19,576 @@
     <meta name="twitter:image:alt" content="Review Intel: see what people love, hate, and wish worked differently in products they already use.">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260926-feedback">
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        window.dataLayer.push(arguments);
-      }
-      if (window.location.hostname === "reviews.doubledash.me" || window.location.hostname === "willthiseverwork.com" || window.location.hostname === "www.willthiseverwork.com") {
-        const campaignFields = {
-          utm_id: "campaign_id",
-          utm_source: "campaign_source",
-          utm_medium: "campaign_medium",
-          utm_campaign: "campaign_name",
-          utm_content: "campaign_content",
-          utm_term: "campaign_term",
-        };
-        const campaignConfig = {};
-        const landingParams = new URLSearchParams(window.location.search);
-        for (const [utmKey, campaignField] of Object.entries(campaignFields)) {
-          const value = landingParams.get(utmKey)?.trim() ?? "";
-          if (/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(value)) campaignConfig[campaignField] = value;
-        }
-        let referrerUrl = null;
-        try {
-          referrerUrl = document.referrer ? new URL(document.referrer) : null;
-        } catch {
-          referrerUrl = null;
-        }
-        const pageReferrer = referrerUrl && /^https?:$/.test(referrerUrl.protocol) ? `${referrerUrl.origin}/` : "";
-        const analyticsScript = document.createElement("script");
-        analyticsScript.async = true;
-        analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-R8F1QX6HKC";
-        document.head.appendChild(analyticsScript);
-        gtag("js", new Date());
-        gtag("config", "G-R8F1QX6HKC", {
-          page_location: `${window.location.origin}${window.location.pathname}`,
-          page_referrer: pageReferrer,
-          ...campaignConfig,
-        });
 
-        const currentUrl = new URL(window.location.href);
-        const utmSource = currentUrl.searchParams.get("utm_source")?.toLowerCase() ?? "";
-        const referrerHost = referrerUrl?.hostname.toLowerCase() ?? "";
-        const referrerPath = referrerUrl?.pathname.toLowerCase() ?? "";
-        const aiSource =
-          referrerHost.endsWith("chatgpt.com") || referrerHost.endsWith("chat.openai.com") || utmSource === "chatgpt" || utmSource === "chatgpt.com"
-            ? "chatgpt"
-            : referrerHost.endsWith("perplexity.ai") || utmSource === "perplexity" || utmSource === "perplexity.ai"
-              ? "perplexity"
-              : referrerHost.endsWith("copilot.microsoft.com") || (referrerHost.endsWith("bing.com") && referrerPath.includes("copilot")) || utmSource === "copilot"
-                ? "copilot"
-                : referrerHost.endsWith("gemini.google.com") || utmSource === "gemini"
-                  ? "gemini"
-                  : referrerHost.endsWith("claude.ai") || utmSource === "claude" || utmSource === "claude.ai"
-                    ? "claude"
-                    : null;
 
-        if (aiSource) {
-          gtag("event", "ai_referral_landing", {
-            ai_source: aiSource,
-            landing_path: window.location.pathname,
-          });
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <main class="wrap">
-      <p class="sr-only" id="retrieval-status" role="status" aria-live="polite"></p>
-      <section id="state-idle">
-        <div class="masthead">
-          <span class="wordmark">Review Intel</span>
-          <a class="lnk" href="app/" data-connect-placement="hosted_prototype">Try the hosted prototype</a>
+
+
+
+  <link rel="stylesheet" href="styles.css"><script type="module" src="site.js"></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/","name":"Find What Users Want in App Reviews | Review Intel","description":"See what people love, hate, and wish worked differently in products they already use, with public app reviews behind each finding."}</script></head><body class="ri-root ri-page"><div class="ri-frame"><header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click" data-tracking="app">Add to Claude</a></nav></header><main id="main"><section id="state-idle">
+
+
+
+<section style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px 48px; padding: clamp(28px, 5vw, 60px) clamp(20px, 4vw, 48px) clamp(36px, 4vw, 52px);" class="ri-hero">
+<div style="flex: 1 1 500px; min-width: 0; padding-top: clamp(0px, 2vw, 22px);">
+<p style="margin: 0 0 18px; font-size: 15px; font-weight: 500; color: #525252;">For anyone building from zero to one</p>
+
+<h1 style="margin: 0; font-size: clamp(38px, 4.3vw, 60px); line-height: 1.03; letter-spacing: -0.04em; font-weight: 600; text-wrap: balance;" class="ri-display">Your competitors’ users already told you what to build.</h1>
+
+
+<p style="margin: 22px 0 0; max-width: 500px; font-size: 18px; line-height: 1.55; color: #525252;">Paste an App Store or Google Play link. Get up to 500 public reviews free, with a guided read in Claude or ChatGPT.</p>
+
+<form class="ri-form" id="extract-form" novalidate="">
+<div class="ri-form__row">
+<div class="ri-field ri-field--icon ri-search-field">
+<label class="ri-sr-only" for="app-url">App link or name</label>
+<svg class="ri-icon ri-field__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"></path><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"></path></svg>
+<input class="ri-input" id="app-url" name="url" type="text" autocomplete="off" spellcheck="false" placeholder="Paste a store link or type an app name" aria-describedby="form-error" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-control-id="app-url" data-tracking="app">
+<ul class="ri-results" id="search-results" role="listbox" aria-label="App search results" hidden=""></ul>
+</div>
+<div class="ri-select"><label class="ri-sr-only" for="country">Country</label>
+<select class="ri-select__control" id="country" name="country" data-control-id="country" data-tracking="app"><option value="us" selected="">United States</option></select>
+<svg class="ri-icon ri-select__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></div>
+</div>
+<div><button class="ri-btn ri-btn--primary ri-btn--xl" type="submit" id="extract-btn" data-control-id="extract-btn" data-tracking="app"><svg class="ri-icon ri-spin" id="extract-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden="" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.22-8.56"></path></svg><span id="extract-label">Get the reviews</span></button></div>
+<p class="ri-progress" id="retrieval-status" role="status" aria-live="polite"></p>
+<div class="ri-alert" id="form-error" role="alert" aria-live="assertive" hidden="">
+<svg class="ri-icon ri-alert__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5M12 16.2h.01"></path></svg>
+<p class="ri-alert__title" id="form-error-title">That doesn’t look like a store link.</p><p class="ri-alert__text" id="form-error-text"></p>
+<div class="ri-alert__actions" id="form-error-actions"><button class="ri-btn ri-btn--outline ri-btn--sm" id="form-retry" type="button" data-control-id="form-retry" data-tracking="app">Try again</button><button class="ri-btn ri-btn--outline ri-btn--sm" id="form-change-country" type="button" data-control-id="form-change-country" data-tracking="app">Change country</button></div>
+</div>
+<p class="ri-note" id="form-error-help" hidden="">Paste a link from apps.apple.com or play.google.com, or type the app’s name.</p>
+</form>
+
+<div style="margin: 26px 0 0;" class="ri-examples">
+<p style="margin: 0 0 10px; font-size: 14px; color: #737373;" id="demo-label" class="ri-examples__label">No link handy? Try a real app:</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;" role="group" aria-labelledby="demo-label" class="ri-examples__list">
+<button class="ri-btn ri-btn--example demo-chip" type="button" data-demo-name="calm" data-demo-url="https://play.google.com/store/apps/details?id=com.calm.android" data-control-id="demo-calm" data-tracking="app">Calm</button>
+<button class="ri-btn ri-btn--example demo-chip" type="button" data-demo-name="duolingo" data-demo-url="https://play.google.com/store/apps/details?id=com.duolingo" data-control-id="demo-duolingo" data-tracking="app">Duolingo</button>
+<button class="ri-btn ri-btn--example demo-chip" type="button" data-demo-name="strava" data-demo-url="https://play.google.com/store/apps/details?id=com.strava" data-control-id="demo-strava" data-tracking="app">Strava</button>
+</div>
+</div>
+</div>
+
+<div style="flex: 1 1 440px; min-width: 0;">
+<p style="margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: #525252;"><span style="font-weight: 600; color: #171717;">Calm, 450 Google Play reviews</span><span>United States, Jun 23 – Oct 1, 2026</span></p>
+<div style="position: relative; height: 620px; overflow: hidden;">
+<div style="columns: 2 220px; column-gap: 14px;">
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="1 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-09-30</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;"><mark class="ri-mark">Asked for money before I was even able to use the app</mark>, has a lot of paywalled content, and costs more than YouTube Premium. Doesn't seem worthwhile.</p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 86 reviews about the price or the paywall</p>
+</article>
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="5 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-07-20</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;"><mark class="ri-mark">This app is my go-to for falling asleep.</mark> The stories are soothing and I love the variety of subjects and voices. I've never made it to the end of "Drifting off to Sheep" because it works every time at putting me right out.</p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 51 reviews that value sleep</p>
+</article>
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="3 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-08-27</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;">works great, <mark class="ri-mark">cancelling the subscription is full of dark patterns.</mark></p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 43 reviews about charges, cancelling or refunds</p>
+</article>
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="1 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-07-22</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;">If I'm doing a meditation or anything longer than my phone's screen sleep timer, which is virtually every meditation. <mark class="ri-mark">The voice and bg noise begins to glitch out and stutter every other word.</mark> Extremely annoying bug that makes me regret signing up for a year subscription.</p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 52 reviews about sessions that break</p>
+</article>
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="2 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#E2E2E2"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-08-01</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;">…immediately met with needing to create an account. and I realize it's going to cost at some point. that's a no-go for me. <mark class="ri-mark">give me something to try before making me sign up for yet another account</mark> for an app I probably won't use</p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 86 reviews about the price or the paywall</p>
+</article>
+
+<article style="break-inside: avoid; margin: 0 0 14px; padding: 16px 18px 14px; border: 1px solid #EAEAEA; border-radius: 14px; background: #FFFFFF;" class="ri-review-card">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<svg width="72" height="12" viewBox="0 0 72 12" role="img" aria-label="5 out of 5 stars"><path d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(15 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(30 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(45 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path><path transform="translate(60 0)" d="M6 .7l1.6 3.3 3.7.5-2.7 2.6.6 3.6L6 9l-3.2 1.7.6-3.6L.7 4.5l3.7-.5z" fill="#171717"></path></svg>
+<span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;">2026-07-29</span>
+</div>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #262626;">I love this app! If you have problems sleeping let sometime read to you. it's amazing and I can never get to the ending and I sleep so well!! <mark class="ri-mark">I just completed my 169th session.</mark></p>
+<p style="margin: 10px 0 0; font-size: 12.5px; line-height: 1.4; color: #737373;">One of 51 reviews that value sleep</p>
+</article>
+
+</div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: linear-gradient(to bottom, rgba(255,255,255,0), #FFFFFF 85%);"></div>
+</div>
+</div>
+</section>
+
+<h2 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">How it works</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1px; background: #EBEBEB; border-top: 1px solid #EBEBEB; border-bottom: 1px solid #EBEBEB;" class="ri-landing-steps">
+
+<article style="display: flex; flex-direction: column; gap: 22px; padding: 28px clamp(20px, 3vw, 32px) 32px; background: #FFFFFF;">
+<div>
+<p style="margin: 0; font-size: 13px; color: #737373;">Step 1</p>
+<h3 style="margin: 6px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">Paste a link, or search by name.</h3>
+</div>
+<div aria-hidden="true" style="border: 1px solid #E5E5E5; border-radius: 16px; background: #FFFFFF; box-shadow: 0 10px 28px -16px rgba(0,0,0,0.2); overflow: hidden;">
+<div style="display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 16px; border-bottom: 1px solid #EFEFEF;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8F8F8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+<span style="font-size: 15px; color: #171717;">calm</span><span style="width: 1.5px; height: 18px; margin-left: -8px; background: #171717;"></span>
+</div>
+<div style="padding: 6px;">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 10px; background: #F5F5F5;">
+<span style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: #E8E8E8;"></span>
+<span style="flex: 1 1 auto; min-width: 0;"><span style="display: block; font-size: 14px; font-weight: 600;">Calm - Sleep, Meditate, Relax</span><span style="display: block; margin-top: 1px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #737373;">com.calm.android</span></span>
+<span style="flex: none; padding: 4px 9px; border: 1px solid #E5E5E5; border-radius: 99px; background: #FFFFFF; font-size: 12px; color: #404040;">Google Play</span>
+</div>
+</div>
+</div>
+</article>
+
+<article style="display: flex; flex-direction: column; gap: 22px; padding: 28px clamp(20px, 3vw, 32px) 32px; background: #FFFFFF;">
+<div>
+<p style="margin: 0; font-size: 13px; color: #737373;">Step 2</p>
+<h3 style="margin: 6px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">Get up to 500 public reviews in one file.</h3>
+</div>
+<div aria-hidden="true" style="border: 1px solid #E5E5E5; border-radius: 16px; background: #FFFFFF; box-shadow: 0 10px 28px -16px rgba(0,0,0,0.2); padding: 18px;">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px;">
+<span style="font-size: 38px; line-height: 1; letter-spacing: -0.04em; font-weight: 600; font-variant-numeric: tabular-nums;">450</span>
+<span style="font-size: 14px; color: #525252;">Calm reviews, Jun 23 – Oct 1, 2026</span>
+</div>
+<div style="margin-top: 16px; display: grid; gap: 7px;">
+<div style="display: grid; grid-template-columns: 26px minmax(0, 1fr) 32px; align-items: center; gap: 10px; font-size: 12px;"><span style="color: #525252;">5★</span><span style="display: block; height: 8px; border-radius: 99px; background: #F2F2F2;"><span style="display: block; width: 100%; height: 8px; border-radius: 99px; background: #262626;"></span></span><span style="text-align: right; font-variant-numeric: tabular-nums;">198</span></div>
+<div style="display: grid; grid-template-columns: 26px minmax(0, 1fr) 32px; align-items: center; gap: 10px; font-size: 12px;"><span style="color: #525252;">4★</span><span style="display: block; height: 8px; border-radius: 99px; background: #F2F2F2;"><span style="display: block; width: 15.7%; height: 8px; border-radius: 99px; background: #262626;"></span></span><span style="text-align: right; font-variant-numeric: tabular-nums;">31</span></div>
+<div style="display: grid; grid-template-columns: 26px minmax(0, 1fr) 32px; align-items: center; gap: 10px; font-size: 12px;"><span style="color: #525252;">3★</span><span style="display: block; height: 8px; border-radius: 99px; background: #F2F2F2;"><span style="display: block; width: 15.2%; height: 8px; border-radius: 99px; background: #262626;"></span></span><span style="text-align: right; font-variant-numeric: tabular-nums;">30</span></div>
+<div style="display: grid; grid-template-columns: 26px minmax(0, 1fr) 32px; align-items: center; gap: 10px; font-size: 12px;"><span style="color: #525252;">2★</span><span style="display: block; height: 8px; border-radius: 99px; background: #F2F2F2;"><span style="display: block; width: 13.6%; height: 8px; border-radius: 99px; background: #262626;"></span></span><span style="text-align: right; font-variant-numeric: tabular-nums;">27</span></div>
+<div style="display: grid; grid-template-columns: 26px minmax(0, 1fr) 32px; align-items: center; gap: 10px; font-size: 12px;"><span style="color: #B42318; font-weight: 600;">1★</span><span style="display: block; height: 8px; border-radius: 99px; background: #F2F2F2;"><span style="display: block; width: 82.8%; height: 8px; border-radius: 99px; background: #D0402B;"></span></span><span style="text-align: right; font-variant-numeric: tabular-nums; color: #B42318; font-weight: 600;">164</span></div>
+</div>
+<div style="margin-top: 16px; display: flex; gap: 8px;">
+<span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 99px; font-size: 13px; color: #262626;">Copy</span>
+<span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 99px; font-size: 13px; color: #262626;">Download .md</span>
+</div>
+</div>
+</article>
+
+<article style="display: flex; flex-direction: column; gap: 22px; padding: 28px clamp(20px, 3vw, 32px) 32px; background: #FFFFFF;">
+<div>
+<p style="margin: 0; font-size: 13px; color: #737373;">Step 3</p>
+<h3 style="margin: 6px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">Pick a question. Paste it into Claude or ChatGPT.</h3>
+</div>
+<div aria-hidden="true" style="border: 1px solid #E5E5E5; border-radius: 16px; background: #FFFFFF; box-shadow: 0 10px 28px -16px rgba(0,0,0,0.2); padding: 14px;">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid #171717; border-radius: 12px;">
+<span style="flex: none; width: 16px; height: 16px; box-sizing: border-box; border: 5px solid #171717; border-radius: 99px;"></span>
+<span style="flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600;">First useful read</span>
+<span style="flex: none; padding: 3px 8px; border-radius: 99px; background: #F2F2F2; font-size: 11px; font-weight: 600; color: #404040;">Best start</span>
+</div>
+<div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;">
+<span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 99px; background: #171717; color: #FFFFFF; font-size: 14px; font-weight: 600;">Copy &amp; open Claude</span>
+<span style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border: 1px solid #D9D9D9; border-radius: 99px; color: #171717; font-size: 14px; font-weight: 600;">ChatGPT</span>
+</div>
+<div style="margin-top: 12px; display: grid; gap: 6px; padding: 10px; border-radius: 12px; background: #F6F6F6;">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #404040;"><span style="flex: none; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 99px; background: #FFFFFF; border: 1px solid #DADADA;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#171717" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>We copy everything</div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #404040;"><span style="flex: none; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 99px; background: #FFFFFF; border: 1px solid #DADADA;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#171717" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>A new chat opens</div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 600; color: #171717;"><span style="flex: none; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 99px; background: #171717; color: #FFFFFF; font-size: 12px;">3</span>You paste and send</div>
+</div>
+</div>
+</article>
+</div>
+
+<section style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 72px);" id="example" class="ri-landing-read">
+<h2 style="margin: 0; max-width: 860px; font-size: clamp(28px, 3vw, 40px); line-height: 1.15; letter-spacing: -0.03em; font-weight: 600;">What comes back. <span style="color: #8A8A8A;">A first useful read, with the reviews behind every finding.</span></h2>
+
+<div style="margin-top: 36px; border: 1px solid #E3E3E3; border-radius: 22px; background: #FFFFFF; box-shadow: 0 28px 70px -36px rgba(0,0,0,0.25); overflow: hidden;">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 22px clamp(20px, 3vw, 32px); border-bottom: 1px solid #EDEDED; background: #FCFCFC;">
+<p style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">First useful read: Calm</p>
+<p style="margin: 0; font-size: 14px; color: #525252;">Saved example from the same 450 reviews</p>
+</div>
+<div style="padding: clamp(22px, 3vw, 32px);">
+<p style="margin: 0; max-width: 860px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.55; letter-spacing: -0.01em; color: #171717;">The actionable tension in this batch is the value exchange: reviewers repeatedly say the subscription or account gate appears before they can establish value, while a separate billing and support cluster makes recovery difficult.</p>
+
+<div style="margin-top: 28px; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 0 14px; padding-top: 24px; border-top: 1px solid #EDEDED;">
+<span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 99px; background: #171717; color: #FFFFFF; font-size: 14px; font-weight: 600;">1</span>
+<div style="min-width: 0;">
+<h3 style="margin: 3px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">The value exchange is rejected at the gate, and billing recovery compounds the problem</h3>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: #404040;">86 of 450 reviews (19%) criticize the price, paid access, the trial or the subscription requirement; 65 are 1★. A separate cluster of 43 (10%) describes charging, cancellation or refunds; 35 are 1★.</p>
+<div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px;">
+<span style="padding: 4px 10px; border-radius: 99px; background: #F2F2F2; font-size: 12px; font-weight: 600; color: #262626;">Observed</span>
+<span style="padding: 4px 10px; border-radius: 99px; background: #F2F2F2; font-size: 12px; font-weight: 600; color: #262626;">Computed</span>
+<span style="padding: 4px 10px; border-radius: 99px; background: #F2F2F2; font-size: 12px; font-weight: 600; color: #262626;">Inference</span>
+<span style="padding: 4px 10px; border-radius: 99px; border: 1px solid #DADADA; font-size: 12px; font-weight: 600; color: #262626;">Strong</span>
+</div>
+<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px;">
+<p style="margin: 0; padding: 14px 16px; border: 1px solid #EDEDED; border-radius: 12px; font-size: 15px; line-height: 1.5; color: #262626;"><mark class="ri-mark">Asked for money before I was even able to use the app</mark>, has a lot of paywalled content…<span style="display: flex; gap: 10px; margin-top: 8px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;"><span>1★</span><span>rr_00cfd8e9</span></span></p>
+<p style="margin: 0; padding: 14px 16px; border: 1px solid #EDEDED; border-radius: 12px; font-size: 15px; line-height: 1.5; color: #262626;">works great, <mark class="ri-mark">cancelling the subscription is full of dark patterns.</mark><span style="display: flex; gap: 10px; margin-top: 8px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;"><span>3★</span><span>rr_e1a67fed</span></span></p>
+</div>
+<p style="margin: 14px 0 0; font-size: 14px; line-height: 1.5; color: #525252;">This is an activation and trust hypothesis, not proof of conversion or churn impact.</p>
+</div>
+</div>
+
+<div style="margin-top: 24px; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 0 14px; padding-top: 24px; border-top: 1px solid #EDEDED;">
+<span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 99px; background: #171717; color: #FFFFFF; font-size: 14px; font-weight: 600;">2</span>
+<div style="min-width: 0;">
+<h3 style="margin: 3px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">Core-session failures interrupt the experience at the moment users expect calm</h3>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: #404040;">52 of 450 reviews (12%) report failures in access, loading, playback, audio, casting or crashes; 30 are 1★.</p>
+<p style="margin: 12px 0 0; padding: 14px 16px; border: 1px solid #EDEDED; border-radius: 12px; font-size: 15px; line-height: 1.5; color: #262626;">…which is virtually every meditation. <mark class="ri-mark">The voice and bg noise begins to glitch out and stutter every other word.</mark><span style="display: flex; gap: 10px; margin-top: 8px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;"><span>1★</span><span>rr_21526fc9</span></span></p>
+</div>
+</div>
+
+<div style="margin-top: 24px; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 0 14px; padding-top: 24px; border-top: 1px solid #EDEDED;">
+<span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 99px; background: #171717; color: #FFFFFF; font-size: 14px; font-weight: 600;">3</span>
+<div style="min-width: 0;">
+<h3 style="margin: 3px 0 0; font-size: 19px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em;">Sleep supports a specific positive ritual: a nightly wind-down routine</h3>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: #404040;">51 of 450 reviews (11%) describe sleep, bedtime or night use as the value; 45 are 5★.</p>
+<p style="margin: 12px 0 0; padding: 14px 16px; border: 1px solid #EDEDED; border-radius: 12px; font-size: 15px; line-height: 1.5; color: #262626;"><mark class="ri-mark">This app is my go-to for falling asleep.</mark> The stories are soothing…<span style="display: flex; gap: 10px; margin-top: 8px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: #737373;"><span>5★</span><span>rr_df9ff259</span></span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<section class="ri-rule-top" aria-labelledby="ask-h" data-section="question-map">
+<div class="ri-section ri-section--head">
+<h2 class="ri-two-tone" id="ask-h">Ask what you need to decide. <span class="ri-two-tone__muted">You pick the question after the reviews load.</span></h2>
+</div>
+<div class="ri-hairline-grid ri-qmap" id="landing-question-map">
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">First useful read <span class="ri-badge ri-badge--soft">Best start</span></h3>
+<p class="ri-qmap__desc">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
+</div>
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">Before you build</h3>
+<ul class="ri-qmap__list">
+<li>What do users wish this app did?</li>
+<li>Why do people switch apps?</li>
+<li>Which users does it serve badly?</li>
+</ul>
+</div>
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">Product</h3>
+<ul class="ri-qmap__list">
+<li>What keeps people coming back?</li>
+<li>What breaks, and when do people give up?</li>
+<li>Where does onboarding lose people?</li>
+</ul>
+</div>
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">Money</h3>
+<ul class="ri-qmap__list">
+<li>Is it the price, or when the price appears?</li>
+<li>What turns a trial into a refund request?</li>
+<li>What makes people feel unsafe paying?</li>
+</ul>
+</div>
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">Marketing</h3>
+<ul class="ri-qmap__list">
+<li>Which words do happy users use?</li>
+<li>What should screenshots and ads say?</li>
+<li>Which claims are safe to make?</li>
+</ul>
+</div>
+<div class="ri-qmap__cell">
+<h3 class="ri-qmap__title">Support</h3>
+<ul class="ri-qmap__list">
+<li>Where does support fail?</li>
+<li>What changed across versions or dates?</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="ri-section" id="connect" aria-labelledby="connect-h" data-section="connect">
+<h2 class="ri-two-tone" id="connect-h">Skip the copy-paste. <span class="ri-two-tone__muted">Connect once, then ask about any app right in Claude or Codex.</span></h2>
+<p class="ri-sub">It keeps collecting past 500 Google Play reviews and compares apps and countries in one chat.</p>
+<div class="ri-split">
+<div class="ri-split__main">
+<ol class="ri-setup-steps">
+<li class="ri-setup-step">
+<span class="ri-disc">1</span>
+<div>
+<h3 class="ri-setup-step__title">Connect Review Intel</h3>
+<p class="ri-setup-step__text">One click. Works on Claude’s free plan.</p>
+<div class="ri-setup-step__actions"><a class="ri-btn ri-btn--primary ri-btn--md" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" data-connect-placement="landing_connector" data-control-id="page-add-to-claude" data-tracking="app">Add to Claude</a></div>
+</div>
+</li>
+<li class="ri-setup-step">
+<span class="ri-disc">2</span>
+<div>
+<h3 class="ri-setup-step__title">Add the analysis skill</h3>
+<p class="ri-setup-step__text">Gives every chat the full method. Download it, then upload it in Claude under Skills.</p>
+<div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download="" data-control-id="page-download-skill">Download skill</a></div>
+</div>
+</li>
+</ol>
+<p class="ri-more">In Claude Code, it’s one line:</p>
+<div class="ri-code"><code class="ri-code__text" id="landing-code-command">claude mcp add --transport http review-retriever https://www.willthiseverwork.com/review-intel/mcp</code><button class="ri-btn ri-btn--utility" type="button" data-copy-target="landing-code-command" data-control-id="landing-code-copy"><svg class="ri-icon" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy</button></div>
+<p class="ri-more">Codex or another client? <a class="ri-link" href="setup/" data-connect-placement="landing_guide" data-control-id="page-setup-guide" data-tracking="app">Setup guide</a></p>
+</div>
+<div class="ri-split__side">
+<div class="ri-crop">
+<div class="ri-chat">
+<p class="ri-chat__you">Analyze reviews for <span class="ri-chat__url">play.google.com/store/apps/details?id=com.calm.android</span> in the US. Show me what users love, hate, and expected.</p>
+<div class="ri-chat__reply">
+<p class="ri-chat__who">Claude</p>
+<span class="ri-chat__tool"><svg class="ri-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Review Intel: 450 Google Play reviews, Jun 23 – Oct 1, 2026</span>
+<p class="ri-chat__text"><strong>Love:</strong> sleep. 51 reviews describe sleep as the value; 45 of them are 5★.</p>
+<p class="ri-chat__text"><strong>Hate:</strong> paying before trying. 86 criticize the price, the trial or the subscription; 65 are 1★.</p>
+<blockquote class="ri-quote"><mark class="ri-mark">Asked for money before I was even able to use the app</mark>, has a lot of paywalled content…<span class="ri-quote__meta"><span>1★</span><span>rr_00cfd8e9</span></span></blockquote>
+</div>
+</div>
+</div>
+<p class="ri-caption-line">Claude with Review Intel connected, on the saved Calm reviews.</p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="facts-h" data-section="facts">
+<h2 class="ri-sr-only" id="facts-h">What you can check</h2>
+<div class="ri-hairline-grid ri-facts">
+<div class="ri-fact">
+<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Free, no signup</p>
+<p class="ri-fact__text">No account. Up to 500 reviews each time.</p>
+</div>
+<div class="ri-fact">
+<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Public reviews only</p>
+<p class="ri-fact__text">No store login, developer console or API key.</p>
+</div>
+<div class="ri-fact">
+<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>No review database</p>
+<p class="ri-fact__text">The app keeps no copy of what you collect. <a class="ri-link" href="privacy/" data-control-id="page-privacy">Privacy</a></p>
+</div>
+<div class="ri-fact">
+<p class="ri-fact__title"><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>Open source</p>
+<p class="ri-fact__text">Apache-2.0. <a class="ri-link" href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=page-read-the-code" data-control-id="page-read-the-code">Read the code</a></p>
+</div>
+</div>
+</section>
+
+<section class="ri-section" aria-labelledby="faq-h" data-section="faq">
+<div class="ri-faq">
+<div class="ri-faq__head">
+<h2 class="ri-two-tone" id="faq-h">Questions. <span class="ri-two-tone__muted">Anything else? <a class="ri-link" href="mailto:tools@doubledash.me" data-control-id="page-email-me">Email me.</a></span></h2>
+</div>
+<div class="ri-faq__list">
+<details class="ri-faq__item" open="open" data-control-id="faq-1">
+<summary data-control-id="faq-1">Do I need App Store Connect or Google Play Console?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>No. Review Intel reads public store listings, so you need no developer account, console access or API key.</p>
+</details>
+<details class="ri-faq__item" data-control-id="faq-2">
+<summary data-control-id="faq-2">Can I get more than 500 reviews?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>On Google Play, yes: connect Claude or Codex and it keeps collecting the next batch until the store runs out. Apple’s public feed stops earlier. No public source can promise every review ever posted.</p>
+</details>
+<details class="ri-faq__item" data-control-id="faq-3">
+<summary data-control-id="faq-3">Does it work on a competitor’s app?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>Yes, and on any app with a public App Store or Google Play listing: a similar app, an adjacent one, or the workaround people use today.</p>
+</details>
+<details class="ri-faq__item" data-control-id="faq-4">
+<summary data-control-id="faq-4">The App Store gave me only a few reviews. Why?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>Apple’s public review feed is unreliable. If you get 0 or about 10 reviews, try again in a minute or pick another country.</p>
+</details>
+<details class="ri-faq__item" data-control-id="faq-5">
+<summary data-control-id="faq-5">What file format do I get?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>Markdown. Copy &amp; open Claude copies it with your question, or you can copy it yourself or download the .md file. There’s no CSV, Excel or JSON export.</p>
+</details>
+<details class="ri-faq__item" data-control-id="faq-6">
+<summary data-control-id="faq-6">Is this an app review scraper?<svg class="ri-icon ri-faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></summary>
+<p>People often call it that. Review Intel reads public written reviews from store listings. It doesn’t sign in anywhere or touch private developer-console data.</p>
+</details>
+</div>
+</div>
+</section>
+
+
+
+</section><section id="state-done" aria-labelledby="packet-title" hidden="">
+  <section class="ri-done">
+  <div class="ri-done__grid">
+    <div class="ri-done__receipt">
+      <div class="ri-card">
+        <div class="ri-app">
+          <span class="ri-app-tile app-icon-shell">
+            <img class="app-icon" id="app-icon" alt="" width="36" height="36" decoding="async" referrerpolicy="no-referrer" hidden="">
+          </span>
+          <div style="min-width: 0;">
+            <h1 class="ri-app__name" id="packet-title" tabindex="-1">Reviews exported</h1>
+            <span class="ri-app__id" id="packet-app-id">App ID</span>
+            <span class="ri-app__id" id="packet-meta">Store, country, language</span>
+          </div>
         </div>
-
-        <header class="hero">
-          <p class="hand hero-kicker">for anyone building from zero to one</p>
-          <h1 class="title title--hero">Your competitors’ users already told you what to build.</h1>
-          <svg class="title-mark title-mark--hero" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-            <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-          </svg>
-          <p class="hero-lede">Find what users love, where competing apps let them down, and what they wish worked differently, with reviews you can check. Review Intel collects public app reviews for free and guides the analysis in Claude or ChatGPT.</p>
-        </header>
-
-        <form class="tool-frame" id="extract-form" novalidate>
-          <div class="fields">
-            <div>
-              <label class="field-label" for="app-url">App link or name</label>
-              <div class="field-wrap">
-                <input class="fld" id="app-url" name="url" type="text" autocomplete="off" spellcheck="false" autofocus placeholder="Paste a store link or type an app name" aria-describedby="form-error" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false">
-                <ul class="search-results" id="search-results" role="listbox" aria-label="App search results" hidden></ul>
-                <svg class="baseline" viewBox="0 0 400 9" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M2 5 C 70 2, 150 8, 230 4 S 340 3, 398 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="picker">
-              <label class="field-label" for="country">Country</label>
-              <div class="field-wrap">
-                <select class="fld" id="country" name="country">
-                  <option value="us" selected>United States</option>
-                </select>
-                <svg class="chev" viewBox="0 0 15 10" aria-hidden="true">
-                  <path d="M1.5 2 L 7.5 8 L 13.5 2" fill="none" stroke="var(--ink-faint)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-                <svg class="baseline" viewBox="0 0 200 9" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M2 5 C 40 2, 90 8, 130 4 S 175 3, 198 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-              </div>
-            </div>
+        <div class="ri-receipt">
+          <div class="ri-receipt__head">
+            <strong class="ri-receipt__count" id="packet-count">0</strong>
+            <span class="ri-receipt__caption">written reviews, <span id="packet-date">Date unavailable</span><span id="packet-date-short" hidden="">Date unavailable</span></span>
           </div>
-
-          <div class="submit-row">
-            <button class="drawn" type="submit" id="extract-btn">
-              <svg viewBox="0 0 190 52" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M6 8 C 50 3, 140 4, 184 7 C 187 20, 186 34, 183 45 C 130 49, 55 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-              </svg>
-              <span id="extract-label">Get the reviews</span>
-            </button>
+          <div class="ri-receipt__bars">
+            <div class="ri-bars" id="rating-chart" role="img" aria-label="Rating distribution"></div>
           </div>
-
-          <p class="error" id="form-error" role="alert" aria-live="assertive" hidden>that doesn't look like a store link</p>
-          <p class="error-help" id="form-error-help" hidden>Still stuck? <a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Email tools@doubledash.me</a> and tell me what happened.</p>
-
-          <div class="demo">
-            <p class="hand demo-nudge" id="demo-label">no link handy? try one</p>
-            <div class="demo-chips" role="group" aria-labelledby="demo-label">
-              <button class="demo-chip" type="button" data-demo-name="calm" data-demo-url="https://play.google.com/store/apps/details?id=com.calm.android">Calm</button>
-              <button class="demo-chip" type="button" data-demo-name="duolingo" data-demo-url="https://play.google.com/store/apps/details?id=com.duolingo">Duolingo</button>
-              <button class="demo-chip" type="button" data-demo-name="strava" data-demo-url="https://play.google.com/store/apps/details?id=com.strava">Strava</button>
-            </div>
+          <div class="ri-receipt__actions">
+            <button class="ri-btn ri-btn--utility" id="copy-btn" type="button" data-tracking="app" data-control-id="copy-btn">Copy</button>
+            <button class="ri-btn ri-btn--utility" id="download-btn" type="button" data-tracking="app" data-control-id="download-btn">Download .md</button>
+            <button class="ri-btn ri-btn--utility" id="start-over" type="button" data-tracking="app" data-control-id="start-over">Start over</button>
           </div>
+          <p class="ri-receipt-note" id="receipt-meta" hidden="">
+            <svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5"></path><path d="M12 16.2h.01"></path></svg>
+            <span id="receipt-note-text"></span>
+            <button class="ri-btn ri-btn--utility" id="receipt-retry" type="button" data-tracking="app" data-control-id="receipt-retry">Try again</button>
+          </p>
+        </div>
+      </div>
+    </div>
 
-          <p class="form-meta">Free · No signup · Public reviews only · Open source</p>
-        </form>
+    <div class="ri-done__ask" id="analyze" aria-labelledby="analyze-title">
+      <h2 class="ri-two-tone ri-two-tone--sm" id="analyze-title">Pick a question. <span class="ri-two-tone__muted">We copy it with all <span id="question-review-count">0</span> reviews.</span></h2>
+      <select id="question-select" aria-label="Question" hidden="" data-control-id="question-select"></select>
+      <div class="ri-qlist" role="group" aria-label="Question">
+        <div class="ri-qcard is-selected" id="selected-question" aria-live="polite">
+          <span class="ri-qcard__dot" aria-hidden="true"></span>
+          <h3 class="ri-qcard__title" id="selected-question-title">First useful read</h3>
+          <span class="ri-badge ri-badge--soft" id="selected-question-tag">Best start</span>
+          <p class="ri-qcard__desc" id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
+        </div>
+      </div>
+      <p class="ri-lead-in" id="question-groups-label">Or ask about</p>
+      <div class="ri-chips" id="question-group-chips" role="group" aria-labelledby="question-groups-label"></div>
+      <div id="question-options-panel" hidden="">
+        <div class="ri-qlist" id="question-options" role="group" aria-label="Questions"></div>
+        <p class="ri-more"><button class="ri-link" id="question-reset" type="button" data-tracking="app" data-control-id="question-reset">Back to the best start</button></p>
+      </div>
 
-        <section class="sample" id="example" aria-labelledby="sample-title">
-          <p class="hand section-kicker">what you get, for real</p>
-          <h2 class="section-title" id="sample-title">What 40 recent Calm reviews said</h2>
-          <p class="sample-meta">Google Play US · the 40 newest reviews, Sep 16–23, 2026 · one question in Claude</p>
+      <div id="analysis-actions">
+        <div class="ri-actions">
+          <a class="ri-btn ri-btn--primary ri-btn--md" id="analyze-claude" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-claude">Copy &amp; open Claude</a>
+          <a class="ri-btn ri-btn--outline ri-btn--md" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="analyze-chatgpt">Copy &amp; open ChatGPT</a>
+        </div>
+        <ol class="ri-handoff" id="paste-steps" aria-label="What happens next">
+          <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">1</span>We copy everything</li>
+          <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">2</span>A new chat opens</li>
+          <li class="ri-handoff__step"><span class="ri-handoff__mark" aria-hidden="true">3</span><span id="paste-step-text">You paste and send</span></li>
+        </ol>
+        <p class="ri-note" id="handoff-scope">Claude reads all reviews. ChatGPT gets the newest 150, so it has room to answer.</p>
+      </div>
 
-          <article class="sample-card">
-            <div class="sample-block">
-              <p class="sample-label" id="sample-mix-label">Rating mix</p>
-              <dl class="mix" aria-labelledby="sample-mix-label">
-                <div class="mix-row"><dt>5★</dt><dd><span class="mix-bar" style="--share: 88%"></span><span class="mix-count">15</span></dd></div>
-                <div class="mix-row"><dt>4★</dt><dd><span class="mix-bar" style="--share: 24%"></span><span class="mix-count">4</span></dd></div>
-                <div class="mix-row"><dt>3★</dt><dd><span class="mix-bar" style="--share: 12%"></span><span class="mix-count">2</span></dd></div>
-                <div class="mix-row"><dt>2★</dt><dd><span class="mix-bar" style="--share: 12%"></span><span class="mix-count">2</span></dd></div>
-                <div class="mix-row mix-row--low"><dt>1★</dt><dd><span class="mix-bar" style="--share: 100%"></span><span class="mix-count">17</span></dd></div>
-              </dl>
-            </div>
-
-            <div class="sample-block">
-              <p class="sample-label">Finding 1 · strong in this sample</p>
-              <h3>Most 1★ reviews are about money, not meditation.</h3>
-              <p>10 of 17 one-star reviews: charges people didn’t expect, content locked behind the paywall, the price itself.</p>
-              <blockquote>“Charged for a free trial $85, refused refund.” <span class="sample-id">rr_c205…</span></blockquote>
-            </div>
-
-            <div class="sample-block">
-              <p class="sample-label">Finding 2 · early signal, 2 reviews</p>
-              <h3>The ad and the app tell different stories.</h3>
-              <p>Two reviewers say the ad didn’t match what they found. Too few to call a theme, but worth checking against the creatives.</p>
-              <blockquote>“Not at all what was described in the ad.” <span class="sample-id">rr_a0e7…</span></blockquote>
-            </div>
-
-            <div class="sample-block">
-              <p class="sample-label">Words happy users choose</p>
-              <ul class="phrases">
-                <li>“A mini spa date in your pocket.”</li>
-                <li>“puts my over thinking mind to rest”</li>
-                <li>“listen every night”</li>
-              </ul>
-            </div>
-
-            <a class="lnk sample-link" href="#questions-title">See what else reviews can answer</a>
-          </article>
-        </section>
-
-        <section class="questions" aria-labelledby="questions-title">
-          <p class="hand section-kicker">reviews answer more than you think</p>
-          <h2 class="section-title" id="questions-title">What reviews can tell you</h2>
-          <div class="question-groups">
-            <div class="question-group">
-              <h3>Before you build</h3>
-              <ul>
-                <li>What do users of a competitor wish it did?</li>
-                <li>Why do people switch apps?</li>
-                <li>Which users does nobody serve well?</li>
-              </ul>
-            </div>
-            <div class="question-group">
-              <h3>Product</h3>
-              <ul>
-                <li>What keeps people coming back?</li>
-                <li>What breaks, and when do people give up?</li>
-                <li>Where does onboarding lose people?</li>
-              </ul>
-            </div>
-            <div class="question-group">
-              <h3>Money</h3>
-              <ul>
-                <li>Is it the price, or when the price appears?</li>
-                <li>What turns a trial into a refund request?</li>
-                <li>What makes people feel unsafe paying?</li>
-              </ul>
-            </div>
-            <div class="question-group">
-              <h3>Marketing</h3>
-              <ul>
-                <li>Which exact words do happy users use?</li>
-                <li>What should the screenshots and ads say?</li>
-                <li>Which claims are safe to make?</li>
-              </ul>
-            </div>
-          </div>
-          <p class="questions-more">Also: where support fails, what changed between versions or countries, UGC angles, PRDs and the full report. Pick your question after the reviews load.</p>
-        </section>
-
-        <section class="how" aria-labelledby="how-title">
-          <h2 class="section-title" id="how-title">How it works</h2>
-          <ol class="steps">
-            <li><span class="n">1</span>Paste an App Store or Google Play link.</li>
-            <li><span class="n">2</span>Get the public reviews as one clean file.</li>
-            <li><span class="n">3</span>Pick a question, then choose Claude or ChatGPT. Paste and send in the new chat.</li>
+      <div class="ri-status" id="analysis-status" role="status" aria-live="polite" hidden="">
+        <div id="analysis-status-success">
+          <p class="ri-status__title" id="analysis-status-title">Copied. One step left, in the Claude tab.</p>
+          <ol class="ri-handoff" aria-label="Copy and paste progress">
+            <li class="ri-handoff__step is-done"><span class="ri-handoff__mark" aria-hidden="true"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="ri-sr-only">Done: </span>We copied everything</li>
+            <li class="ri-handoff__step is-done"><span class="ri-handoff__mark" aria-hidden="true"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span class="ri-sr-only">Done: </span><span id="analysis-opened-label">Claude opened</span></li>
+            <li class="ri-handoff__step is-active" aria-current="step"><span class="ri-handoff__mark" aria-hidden="true">3</span><span id="analysis-status-step">Paste, then send</span></li>
           </ol>
-        </section>
-
-        <section class="connect" id="connect" aria-labelledby="connect-title">
-          <p class="hand connect-kicker">skip the copy-paste</p>
-          <h2 id="connect-title">Want it inside your chat?</h2>
-          <p>Connect once. Then paste any app link in Claude or Codex, pull more than 500 Google Play reviews, and compare apps and countries in one conversation.</p>
-          <div class="connect-actions">
-            <a data-connect-placement="landing_connector" class="connect-button connect-button--primary" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener">Add to Claude<span>works on the free plan</span></a>
-            <a data-connect-placement="landing_guide" class="connect-button" href="setup/">Codex and other clients<span>setup guide</span></a>
+          <div class="ri-status__links">
+            <span class="ri-sr-only" id="analysis-open-question">Claude didn’t open?</span>
+            <a class="ri-btn ri-btn--utility" id="reopen-analysis" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="reopen-analysis">Open Claude again</a>
+            <button class="ri-btn ri-btn--utility" id="copy-again" type="button" data-tracking="app" data-control-id="copy-again">Copy again</button>
+            <a class="ri-btn ri-btn--utility" id="switch-analysis" href="https://chatgpt.com/" target="_blank" rel="noopener" data-tracking="app" data-control-id="switch-analysis">Use ChatGPT instead</a>
           </div>
-          <p class="connect-code-label">Claude Code</p>
-          <code class="connect-code">claude mcp add --transport http review-retriever https://www.willthiseverwork.com/review-intel/mcp</code>
-        </section>
-
-        <section class="trust" aria-label="About Review Intel">
-          <ul class="trust-chips">
-            <li>Public reviews only</li>
-            <li>Nothing stored</li>
-            <li>Open source, Apache-2.0</li>
-            <li>No store login</li>
-          </ul>
-          <p class="made-by">Built by <a href="https://www.willthiseverwork.com/#about">Dasha Antonova</a>.</p>
-        </section>
-
-        <section class="faq" aria-labelledby="faq-title">
-          <h2 class="section-title" id="faq-title">Questions</h2>
-          <details>
-            <summary>Do I need App Store Connect or Google Play Console?</summary>
-            <p>No. Review Intel reads public store listings, so it doesn’t need a developer account, store-console access or an API key.</p>
-          </details>
-          <details>
-            <summary>Can I get more than 500 reviews?</summary>
-            <p>For Google Play, yes: connect Claude or Codex and it keeps pulling the next batch until the store has no more pages. Apple’s public feed stops earlier. No public source can promise every review ever posted.</p>
-          </details>
-          <details>
-            <summary>Does it work on a competitor’s app?</summary>
-            <p>Yes, for any app with a public App Store or Google Play listing.</p>
-          </details>
-          <details>
-            <summary>The App Store gave me only a few reviews. Why?</summary>
-            <p>Apple’s public review feed can be flaky. If an export comes back with 0 or only 10 reviews, try again in a minute or pick another country.</p>
-          </details>
-          <details>
-            <summary>What file format do I get?</summary>
-            <p>Markdown. Analyze copies it for you together with the prompt, or you can copy it yourself or download a <code>.md</code> file. There’s no CSV, Excel or JSON export on this page.</p>
-          </details>
-          <details>
-            <summary>Is this an app review scraper?</summary>
-            <p>People often call a public review exporter that. Review Intel reads public written reviews from supported store listings. It doesn’t sign in anywhere or touch private developer-console data.</p>
-          </details>
-        </section>
-
-        <hr class="rule">
-
-        <footer class="foot">
-          <span class="pencil">public reviews only · nothing stored</span>
-          <span class="foot-links">
-            <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
-            <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
-            <a class="lnk" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Feedback</a>
-            <a class="lnk" href="https://www.g2.com/products/review-intel/reviews" target="_blank" rel="noopener noreferrer">Review Intel on G2</a>
-            <a class="lnk" href="privacy/">Privacy</a>
-            <a class="lnk" href="terms/">Terms</a>
-            <a class="lnk" href="support/">Support</a>
-            <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
-          </span>
-        </footer>
-      </section>
-
-      <section id="state-done" hidden>
-        <header class="result-masthead">
-          <span class="result-wordmark">Review Intel</span>
-          <button class="lnk start-over" id="start-over" type="button">Try another app</button>
-        </header>
-
-        <div class="receipt packet">
-          <div class="packet-head">
-            <div class="app-icon-shell">
-              <span class="app-icon-placeholder" aria-hidden="true"></span>
-              <img class="app-icon" id="app-icon" alt="" width="72" height="72" decoding="async" referrerpolicy="no-referrer" hidden>
-            </div>
-            <div class="packet-identity">
-              <h1 class="packet-title" id="packet-title" tabindex="-1">Reviews exported</h1>
-              <p class="packet-meta" id="packet-meta">Store · Country · Language</p>
-            </div>
-          </div>
-          <div class="packet-body">
-            <div class="packet-count">
-              <strong id="packet-count">0</strong>
-              <span>written reviews</span>
-              <span class="packet-date packet-date--full" id="packet-date">Date unavailable</span>
-              <span class="packet-date packet-date--short" id="packet-date-short">Date unavailable</span>
-            </div>
-            <div class="rating-chart" id="rating-chart" role="img" aria-label="Rating distribution"></div>
-          </div>
-          <p class="receipt-meta" id="receipt-meta" hidden></p>
         </div>
+        <div class="ri-alert" id="analysis-status-error" role="alert" hidden="">
+          <svg class="ri-icon ri-alert__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5"></path><path d="M12 16.2h.01"></path></svg>
+          <p class="ri-alert__title">Couldn’t copy automatically.</p>
+          <p class="ri-alert__text">Press Copy, then paste into the new <span id="analysis-error-destination">Claude</span> chat.</p>
+          <div class="ri-alert__actions"><button class="ri-btn ri-btn--primary ri-btn--sm" id="analysis-error-copy" type="button" data-tracking="app" data-control-id="analysis-error-copy">Copy</button><a class="ri-btn ri-btn--outline ri-btn--sm" id="analysis-error-open" href="https://claude.ai/new" target="_blank" rel="noopener" data-tracking="app" data-control-id="analysis-error-open">Open Claude</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  <section class="ri-keep" id="results-upgrade" aria-labelledby="results-upgrade-title">
+  <h2 class="ri-two-tone" id="results-upgrade-title"><span id="results-upgrade-kicker">Next time, skip the copy-paste.</span> <span class="ri-two-tone__muted">Ask Claude about any app directly.</span></h2>
+  <ol class="ri-setup-steps ri-setup-steps--row">
+    <li class="ri-setup-step">
+      <span class="ri-disc">1</span>
+      <div>
+        <h3 class="ri-setup-step__title">Connect Review Intel</h3>
+        <p class="ri-setup-step__text">One click. Works on Claude’s free plan.</p>
+        <div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" id="results-connect-claude" data-connect-placement="results_connector" data-tracking="app" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener" data-control-id="results-connect-claude">Add to Claude</a></div>
+      </div>
+    </li>
+    <li class="ri-setup-step">
+      <span class="ri-disc">2</span>
+      <div>
+        <h3 class="ri-setup-step__title">Add the analysis skill</h3>
+        <p class="ri-setup-step__text">Gives every chat the full method. Download it, then upload it in Claude under Skills.</p>
+        <div class="ri-setup-step__actions"><a class="ri-btn ri-btn--outline ri-btn--sm" id="claude-skill-download" data-tracking="app" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download="" data-control-id="claude-skill-download">Download skill</a></div>
+      </div>
+    </li>
+  </ol>
+  <p class="ri-more">Codex, Claude Code or another client? <a class="ri-link" data-connect-placement="results_guide" href="setup/" data-control-id="page-setup-guide-2" data-tracking="app">Setup guide</a></p>
+  <a class="ri-sr-only" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener" data-control-id="claude-skills-link">Open Claude Skills</a>
+  </section>
 
-        <section class="analyze" id="analyze" aria-labelledby="analyze-title">
-          <header class="analyze-head">
-            <h2 class="section-title" id="analyze-title">Now ask what it means</h2>
-            <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-              <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-            </svg>
-          </header>
+  <section class="ri-peek evidence" aria-labelledby="evidence-title">
+  <h2 class="ri-two-tone ri-two-tone--sm" id="evidence-title">A few of the <span id="peek-count">0</span>. <span class="ri-two-tone__muted">Exactly as they are in the file.</span></h2>
+  <div class="ri-peek__cards" id="peek" aria-label="Review sample"></div>
+  </section>
 
-          <div class="question-picker">
-            <select id="question-select" hidden></select>
-            <div class="question-card" id="selected-question" aria-live="polite">
-              <span class="question-radio question-radio--selected" aria-hidden="true"></span>
-              <div class="question-card__copy">
-                <h3 id="selected-question-title">First useful read</h3>
-                <p id="selected-question-description">The two or three things in these reviews you’d most likely miss, and why they matter.</p>
-              </div>
-              <span class="question-card__tag" id="selected-question-tag">Best start</span>
-            </div>
-            <p class="question-groups-label" id="question-groups-label">Or ask about</p>
-            <div class="question-group-chips" id="question-group-chips" role="group" aria-labelledby="question-groups-label"></div>
-            <div class="question-options-panel" id="question-options-panel" hidden>
-              <div class="question-options" id="question-options" role="group" aria-label="Questions"></div>
-              <button class="lnk question-reset" id="question-reset" type="button">Back to First useful read</button>
-            </div>
-          </div>
+  <div class="ri-pad" style="padding-bottom: 48px;">
+  <section class="ri-feedback" aria-labelledby="result-feedback-title">
+    <div>
+      <h2 class="ri-feedback__title" id="result-feedback-title">Did this help?</h2>
+      <p class="ri-feedback__text">Tell me what worked, what didn’t, or what you needed next.</p>
+    </div>
+    <div class="ri-feedback__actions">
+      <a class="ri-btn ri-btn--outline ri-btn--sm" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="page-email-feedback">Email feedback</a>
+      <a class="ri-btn ri-btn--outline ri-btn--sm" href="https://www.g2.com/products/review-intel/take_survey?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=page-write-a-g2-review" target="_blank" rel="noopener noreferrer" data-control-id="page-write-a-g2-review">Write a G2 review</a>
+    </div>
+  </section>
+  </div>
+</section>
+</main><footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
+<div class="ri-footer__top">
+<div class="ri-footer__brand">
+<a href="./" class="ri-logo" data-control-id="footer-review-intel"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a>
+</div>
+<nav class="ri-footer__cols" aria-label="Footer">
+<div>
+<p class="ri-footer__h">Use it</p>
+<ul class="ri-footer__links">
+<li><a href="./" data-control-id="footer-get-reviews">Get reviews</a></li>
+<li><a href="setup/" data-control-id="footer-setup-guide">Setup guide</a></li>
+<li><a href="plugin/" data-control-id="footer-plugin-for-chatgpt-and-codex">Plugin for ChatGPT and Codex</a></li>
+<li><a href="https://www.willthiseverwork.com/review-intel/app/" data-control-id="footer-hosted-prototype">Hosted prototype</a></li>
+<li><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=footer-source-code" data-control-id="footer-source-code">Source code</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Help</p>
+<ul class="ri-footer__links">
+<li><a href="support/" data-control-id="footer-support">Support</a></li>
+<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="footer-email-feedback">Email feedback</a></li>
+<li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=footer-review-intel-on-g2" data-control-id="footer-review-intel-on-g2">Review Intel on G2</a></li>
+<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=footer-support-the-tools" data-control-id="footer-support-the-tools">Support the tools</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Policies</p>
+<ul class="ri-footer__links">
+<li><a href="privacy/" data-control-id="footer-privacy">Privacy</a></li>
+<li><a href="terms/" data-control-id="footer-terms">Terms</a></li>
+<li><a href="extension/privacy/" data-control-id="footer-extension-privacy">Extension privacy</a></li>
+<li><a href="plugin-privacy/" data-control-id="footer-plugin-privacy">Plugin privacy</a></li>
+<li><a href="plugin-terms/" data-control-id="footer-plugin-terms">Plugin terms</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="ri-footer__bottom">
+<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=footer-dasha-antonova" data-control-id="footer-dasha-antonova">Dasha Antonova</a></span>
+<a href="https://www.willthiseverwork.com/" data-control-id="footer-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
+</div>
+</footer></div><p class="ri-sr-only" id="site-copy-status" role="status" aria-live="polite"></p><script type="module" src="app.js"></script>
 
-          <div class="analysis-actions" id="analysis-actions">
-            <div class="handoff">
-              <a class="card card--primary" id="analyze-claude" href="https://claude.ai/new?q=Analyze%20the%20app%20reviews%20I%27m%20pasting%20below.%20The%20instructions%20and%20my%20question%20are%20at%20the%20top%20of%20the%20paste." target="_blank" rel="noopener">
-                <svg viewBox="0 0 260 64" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M7 8 C 70 3, 190 4, 253 8 C 257 25, 256 45, 252 57 C 180 62, 74 61, 8 57 C 4 42, 3 22, 7 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-                <span class="inner"><span class="h">Copy &amp; open Claude</span></span>
-              </a>
-              <a class="card" id="analyze-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener">
-                <svg viewBox="0 0 260 64" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M8 9 C 72 4, 188 3, 252 8 C 256 26, 255 44, 251 56 C 178 61, 72 60, 7 56 C 3 40, 4 23, 8 9 Z" fill="none" stroke="var(--outline-soft)" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                </svg>
-                <span class="inner"><span class="h">Copy &amp; open ChatGPT</span></span>
-              </a>
-            </div>
-            <p class="handoff-scope" id="handoff-scope">Claude reads all reviews. ChatGPT gets the newest 150, so it has room to answer.</p>
-            <ol class="paste-steps" id="paste-steps" aria-label="What happens next">
-              <li><span class="step-number">1</span><span>We copy everything</span></li>
-              <li><span class="step-number">2</span><span>A new chat opens</span></li>
-              <li><span class="step-number">3</span><span id="paste-step-text">You paste and send</span></li>
-            </ol>
-            <p class="hand paste-callout">paste before you hit send</p>
-          </div>
 
-          <div class="analysis-status" id="analysis-status" role="status" aria-live="polite" hidden>
-            <div class="analysis-status__success" id="analysis-status-success">
-              <p class="analysis-status__title"><span class="status-check" aria-hidden="true">✓</span><span id="analysis-status-title">Copied. One step left, in the Claude tab.</span></p>
-              <ol class="analysis-progress" aria-label="Copy and paste progress">
-                <li class="is-done"><span aria-hidden="true">✓</span>Copied</li>
-                <li class="is-done"><span aria-hidden="true">✓</span><span id="analysis-opened-label">Claude opened</span></li>
-                <li class="is-current"><span aria-hidden="true">3</span><span id="analysis-status-step">Paste, then send</span></li>
-              </ol>
-              <div class="analysis-recovery">
-                <span id="analysis-open-question">Claude didn’t open?</span>
-                <a class="lnk" id="reopen-analysis" href="https://claude.ai/new" target="_blank" rel="noopener">Open it again</a>
-                <button class="lnk" id="copy-again" type="button">Copy again</button>
-                <a class="lnk" id="switch-analysis" href="https://chatgpt.com/" target="_blank" rel="noopener">Use ChatGPT instead</a>
-              </div>
-            </div>
-            <div class="analysis-status__error" id="analysis-status-error" hidden>
-              <div class="analysis-status__error-copy">
-                <p class="analysis-status__error-title">Copy failed <span>(browser blocked the clipboard)</span></p>
-                <p>Couldn’t copy automatically. Copy it here, then paste it into <span id="analysis-error-destination">Claude</span>.</p>
-              </div>
-              <button class="analysis-error-copy" id="analysis-error-copy" type="button">Copy</button>
-            </div>
-          </div>
-
-          <div class="file-actions">
-            <span>Prefer the raw file?</span>
-            <button class="lnk" id="copy-btn" type="button">Copy</button>
-            <button class="lnk" id="download-btn" type="button">Download .md</button>
-          </div>
-        </section>
-
-        <section class="results-upgrade" id="results-upgrade" aria-labelledby="results-upgrade-title">
-          <p class="hand results-upgrade__kicker" id="results-upgrade-kicker">skip the copy-paste</p>
-          <h2 id="results-upgrade-title">Next time, just ask Claude</h2>
-          <p class="results-upgrade__lede">Set it up once. Then paste any app link into Claude, pull more than 500 Google Play reviews, and compare competitors in one chat.</p>
-          <div class="upgrade-grid">
-            <article class="upgrade-card">
-              <p class="upgrade-step">1 · One click</p>
-              <h3>Connect Review Intel</h3>
-              <p>Claude fetches the reviews itself, for any app.<br>Works on the free plan.</p>
-              <a class="upgrade-button upgrade-button--primary" data-connect-placement="results_connector" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" target="_blank" rel="noopener">Add to Claude</a>
-            </article>
-            <article class="upgrade-card">
-              <p class="upgrade-step">2 · Three quick steps</p>
-              <h3>Add the analysis skill</h3>
-              <p>Every Claude chat gets the full method.<br>Download it, then upload it in <a class="upgrade-inline-link" id="claude-skills-link" href="https://claude.ai/customize/skills" target="_blank" rel="noopener">Claude Skills</a>.</p>
-              <a class="upgrade-button" id="claude-skill-download" href="https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" download>Download skill</a>
-            </article>
-          </div>
-          <p class="upgrade-guide">Codex, Claude Code or another client? <a data-connect-placement="results_guide" href="setup/">Setup guide</a></p>
-        </section>
-
-        <section class="evidence" aria-labelledby="evidence-title">
-          <div class="evidence-head">
-            <h2 class="evidence-title" id="evidence-title">Newest in the packet</h2>
-          </div>
-          <div class="peek" id="peek" aria-label="Review sample"></div>
-        </section>
-
-        <section class="result-feedback" aria-labelledby="result-feedback-title">
-          <p class="hand result-feedback__kicker">a quick note?</p>
-          <div class="result-feedback__body">
-            <h2 id="result-feedback-title">Did this help?</h2>
-            <p>Tell me what worked, what didn’t, or what you needed next.</p>
-          </div>
-          <div class="result-feedback__actions">
-            <a class="result-feedback__email" href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback">Email feedback</a>
-            <a class="result-feedback__email result-feedback__g2" href="https://www.g2.com/products/review-intel/take_survey" target="_blank" rel="noopener noreferrer">Write an honest G2 review</a>
-          </div>
-          <p class="result-feedback__g2-note">If you’ve used Review Intel, you can share any honest experience on G2.</p>
-          <p class="result-feedback__note">Your mail app opens with a draft. Add your note, then send it. If it doesn’t open, write to <a href="mailto:tools@doubledash.me">tools@doubledash.me</a>.</p>
-        </section>
-
-        <hr class="rule">
-
-        <footer class="foot">
-          <span class="hand privacy-note">public reviews only · nothing stored</span>
-          <span class="foot-links">
-            <a class="lnk" href="setup/" data-connect-placement="footer">Use it in Claude or Codex</a>
-            <a class="lnk" href="https://github.com/angrysushi11/review-intelligence#run-review-retriever-locally" target="_blank" rel="noreferrer">Source</a>
-            <a class="lnk" href="https://www.g2.com/products/review-intel/reviews" target="_blank" rel="noopener noreferrer">Review Intel on G2</a>
-            <a class="lnk" href="privacy/">Privacy</a>
-            <a class="lnk" href="terms/">Terms</a>
-            <a class="lnk" href="support/">Support</a>
-            <a class="lnk" href="https://ko-fi.com/dash_doubledash" target="_blank" rel="noreferrer">Support the tools</a>
-          </span>
-        </footer>
-      </section>
-    </main>
-
-    <script type="module" src="app.js?v=20260926-feedback"></script>
-  </body>
-</html>
+</body></html>

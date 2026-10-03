@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intelligence plugin</title>
@@ -8,69 +6,96 @@
     <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/plugin/">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-  </head>
+    <script type="module" src="site.js"></script>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/plugin/"><meta property="og:title" content="Review Intelligence plugin"><meta property="og:description" content="A skills-only plugin that analyzes app-review exports you paste or upload in ChatGPT or Codex."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/plugin/","name":"Review Intelligence plugin","description":"A skills-only plugin that analyzes app-review exports you paste or upload in ChatGPT or Codex."}</script></head>
   <body>
-    <main class="wrap privacy-page">
-      <header class="privacy-masthead">
-        <p class="pencil privacy-kicker">Review Intelligence · skills-only plugin</p>
-        <h1 class="title">See what users love, hate, and wish worked differently.</h1>
-        <svg class="title-mark" viewBox="0 0 340 12" aria-hidden="true" preserveAspectRatio="none">
-          <path d="M3 7 C 60 2, 120 10, 180 5 S 300 3, 337 8" fill="none" stroke="var(--pen)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-        </svg>
-        <p class="privacy-lede">Review Intelligence analyzes app-review exports you paste or upload in ChatGPT or Codex, then shows what is worth investigating or testing next.</p>
-      </header>
+<div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
+<div class="ri-frame">
+<header class="ri-header"><a href="./" class="ri-logo" data-control-id="header-home"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a><nav class="ri-header__nav" aria-label="Site"><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=header-source" class="ri-icon-btn" aria-label="Source code on GitHub" data-control-id="header-source"><svg class="ri-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg></a><a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Review%20Intel&amp;connectorUrl=https%3A%2F%2Fwww.willthiseverwork.com%2Freview-intel%2Fmcp" class="ri-btn ri-btn--outline ri-btn--sm" data-control-id="header-claude" data-connect-placement="header_connector" data-event="review_connect_click">Add to Claude</a></nav></header>
+<main>
 
-      <section class="privacy-summary" aria-labelledby="plugin-summary-title">
-        <h2 class="privacy-summary-title" id="plugin-summary-title">What it does</h2>
-        <ul>
-          <li>Works with review data you supply.</li>
-          <li>Finds evidence-backed themes, tensions, and customer language.</li>
-          <li>Keeps observations, inferences, and business claims separate.</li>
-          <li>Shows what the evidence supports and what still needs validation.</li>
-        </ul>
-      </section>
+<section class="ri-page-hero">
+<p class="ri-eyebrow" style="margin: 0 0 18px;">Review Intelligence for ChatGPT and Codex</p>
+<h1 class="ri-display-long">See what users love, hate and wish worked differently.</h1>
+<p class="ri-lede">A skills-only plugin. Paste reviews or upload an export in ChatGPT or Codex, and it shows what’s worth investigating or testing next.</p>
+</section>
 
-      <div class="privacy-sections">
-        <section>
-          <h2>Start with your export</h2>
-          <p>Paste reviews into the conversation or upload a review-export file supported by your OpenAI host. Ask a focused question, request a first useful read, or compare clearly labelled sets. The plugin analyzes only the material available in that conversation.</p>
-        </section>
+<section class="ri-pad" style="padding-bottom: 56px;" aria-labelledby="back-h">
+<h2 class="ri-sr-only" id="back-h">What comes back</h2>
+<article class="ri-read"><div class="ri-read__head"><p class="ri-read__title">First useful read: Calm</p><p class="ri-read__meta">Saved example, 450 Google Play reviews</p></div><div class="ri-read__body"><p class="ri-read__lede">The actionable tension in this batch is the value exchange: reviewers repeatedly say the subscription or account gate appears before they can establish value, while a separate billing and support cluster makes recovery difficult.</p>
+<div class="ri-finding"><span class="ri-finding__num">1</span><div class="ri-finding__main"><h3 class="ri-finding__title">The value exchange is rejected at the gate, and billing recovery compounds the problem</h3><p class="ri-finding__text">86 of 450 reviews (19%) criticize the price, paid access, the trial or the subscription requirement; 65 are 1★. A separate cluster of 43 (10%) describes charging, cancellation or refunds; 35 are 1★.</p><div class="ri-finding__tags"><span class="ri-tag">Observed</span><span class="ri-tag">Computed</span><span class="ri-tag">Inference</span><span class="ri-tag ri-tag--outline">Strong</span></div><div class="ri-finding__quotes">
+<blockquote class="ri-quote"><mark class="ri-mark">Asked for money before I was even able to use the app</mark>, has a lot of paywalled content…<span class="ri-quote__meta"><span>1★</span><span>rr_00cfd8e9</span></span></blockquote>
+<blockquote class="ri-quote">works great, <mark class="ri-mark">cancelling the subscription is full of dark patterns.</mark><span class="ri-quote__meta"><span>3★</span><span>rr_e1a67fed</span></span></blockquote>
+</div><p class="ri-finding__caveat">This is an activation and trust hypothesis, not proof of conversion or churn impact.</p></div></div>
+</div></article>
+</section>
 
-        <section>
-          <h2>Questions the reviews can help answer</h2>
-          <p>Find product friction and unmet needs; examine pricing, subscriptions, paywalls, billing, and cancellation; surface positioning, ASO, and creative directions in customers’ own language; or trace support failures, recovery, and trust concerns.</p>
-        </section>
+<section class="ri-section ri-rule-top" aria-labelledby="ev-h">
+<h2 class="ri-two-tone" id="ev-h">Evidence you can check. <span class="ri-two-tone__muted">Every finding shows its sample and its sources.</span></h2>
+<ul class="ri-evidence-list">
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>How many reviews were supplied, parsed, excluded and analyzed.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Percentages on the analyzed total.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Stable review IDs behind every finding.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Observations kept apart from inferences.</span></li>
+<li><span class="ri-check"><svg class="ri-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Stated limits where reviews can’t prove demand, revenue, retention, conversion or causality.</span></li>
+</ul>
+</section>
 
-        <section>
-          <h2>Evidence you can check</h2>
-          <p>The analysis reports how many reviews were supplied, parsed, excluded, and analyzed. Percentages use the analyzed denominator. Findings cite stable review IDs, separate observations from inferences, and state coverage or claim limits when reviews cannot prove demand, revenue, retention, conversion, or causality.</p>
-        </section>
+<div class="ri-pad" style="padding-bottom: 56px;">
+<div class="ri-boundary">
+<p class="ri-boundary__text"><strong>Supplied reviews only.</strong> The plugin makes no live requests and connects to no server. Need public reviews first? Review Intel gets up to 500 free.</p>
+<a class="ri-btn ri-btn--primary ri-btn--md" href="./" data-control-id="plugin-a-get-the-reviews">Get the reviews</a>
+</div>
+<div class="ri-doc__related" style="margin-top: 24px;"><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin-privacy/" data-control-id="plugin-a-plugin-privacy">Plugin privacy</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin-terms/" data-control-id="plugin-a-plugin-terms">Plugin terms</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="plugin-support/" data-control-id="plugin-a-plugin-support">Plugin support</a></div>
+</div>
 
-        <section>
-          <h2>Supplied reviews only</h2>
-          <p>The skills-only plugin analyzes only reviews you paste or upload; it performs no live retrieval or DoubleDash server connection.</p>
-        </section>
+</main>
+<footer class="ri-footer ri-root" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FFFFFF;">
+<div class="ri-footer__top">
+<div class="ri-footer__brand">
+<a href="./" class="ri-logo" data-control-id="plugin-a-review-intel-2"><svg class="ri-logo__mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#171715"></rect><path d="M17 18h30v7H17zm0 14h23v7H17zm0 14h16v7H17z" fill="#F4EFE5"></path><circle cx="47" cy="46" r="7" fill="#0F4F46" stroke="#F4EFE5" stroke-width="3"></circle></svg>Review Intel</a>
+</div>
+<nav class="ri-footer__cols" aria-label="Footer">
+<div>
+<p class="ri-footer__h">Use it</p>
+<ul class="ri-footer__links">
+<li><a href="./" data-control-id="plugin-a-get-reviews">Get reviews</a></li>
+<li><a href="setup/" data-control-id="plugin-a-setup-guide">Setup guide</a></li>
+<li><a href="plugin/" data-control-id="plugin-a-plugin-for-chatgpt-and-codex">Plugin for ChatGPT and Codex</a></li>
+<li><a href="https://www.willthiseverwork.com/review-intel/app/" data-control-id="plugin-a-hosted-prototype">Hosted prototype</a></li>
+<li><a href="https://github.com/angrysushi11/review-intelligence?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-a-source-code" data-control-id="plugin-a-source-code">Source code</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Help</p>
+<ul class="ri-footer__links">
+<li><a href="support/" data-control-id="plugin-a-support">Support</a></li>
+<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="plugin-a-email-feedback">Email feedback</a></li>
+<li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-a-review-intel-on-g2" data-control-id="plugin-a-review-intel-on-g2">Review Intel on G2</a></li>
+<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-a-support-the-tools" data-control-id="plugin-a-support-the-tools">Support the tools</a></li>
+</ul>
+</div>
+<div>
+<p class="ri-footer__h">Policies</p>
+<ul class="ri-footer__links">
+<li><a href="privacy/" data-control-id="plugin-a-privacy">Privacy</a></li>
+<li><a href="terms/" data-control-id="plugin-a-terms">Terms</a></li>
+<li><a href="extension/privacy/" data-control-id="plugin-a-extension-privacy">Extension privacy</a></li>
+<li><a href="plugin-privacy/" data-control-id="plugin-a-plugin-privacy-2">Plugin privacy</a></li>
+<li><a href="plugin-terms/" data-control-id="plugin-a-plugin-terms-2">Plugin terms</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="ri-footer__bottom">
+<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=plugin-a-dasha-antonova" data-control-id="plugin-a-dasha-antonova">Dasha Antonova</a></span>
+<a href="https://www.willthiseverwork.com/" data-control-id="plugin-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
+</div>
+</footer>
+</div>
+</div>
+<p id="site-copy-status" class="ri-sr-only" role="status" aria-live="polite"></p>
 
-        <section>
-          <h2>Plugin information</h2>
-          <p>Read the plugin-specific <a href="plugin-privacy/">privacy policy</a>, <a href="plugin-terms/">terms</a>, or <a href="plugin-support/">support guide</a>.</p>
-        </section>
-      </div>
 
-      <hr class="rule">
-      <footer class="privacy-footer">
-        <a class="drawn privacy-return" href="plugin-support/">
-          <svg viewBox="0 0 240 52" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M6 8 C 58 3, 180 4, 234 7 C 237 20, 236 34, 233 45 C 170 49, 67 48, 7 44 C 4 33, 3 19, 6 8 Z" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-          </svg>
-          <span>Plugin support</span>
-        </a>
-        <a class="lnk" href="plugin-privacy/">Plugin privacy</a>
-      </footer>
-    </main>
-  </body>
-</html>
+</body></html>
