@@ -76,7 +76,7 @@ The same policy remains reviewable in source at:
 
 ### Contact email
 
-`tools@doubledash.me`
+`support@willthiseverwork.com`
 
 ## Store assets
 

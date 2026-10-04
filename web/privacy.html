@@ -3,13 +3,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Review Intel privacy</title>
-    <meta name="description" content="How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata.">
+    <meta name="description" content="How the Review Intel website and public MCP endpoint process app links, public reviews, analytics, and request metadata.">
     <link rel="canonical" href="https://www.willthiseverwork.com/review-intel/privacy/">
     <base href="/review-intel/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="site.js"></script>
-  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/privacy/"><meta property="og:title" content="Review Intel privacy"><meta property="og:description" content="How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/privacy/","name":"Review Intel privacy","description":"How the Review Intel website and public MCP service process app links, public reviews, analytics, and request metadata."}</script></head>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/privacy/"><meta property="og:title" content="Review Intel privacy"><meta property="og:description" content="How the Review Intel website and public MCP endpoint process app links, public reviews, analytics, and request metadata."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/privacy/","name":"Review Intel privacy","description":"How the Review Intel website and public MCP endpoint process app links, public reviews, analytics, and request metadata."}</script>  <script type="module" src="footer-analytics.js"></script>
+</head>
   <body>
 <div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
 <div class="ri-frame">
@@ -48,7 +49,7 @@
 <p>The public MCP endpoint is read-only and needs no account or OAuth login. It processes the app, the market, the sort order, the number of reviews requested and, on Google Play, the continuation cursor for the next batch.</p>
 <p>Each response holds up to 500 reviews. Google Play can return a cursor for more; Apple’s public feed has no equivalent.</p>
 <h2 id="storage">Storage and infrastructure</h2>
-<p>For Review Retriever on the website and MCP server covered here, the application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google services may retain ordinary request or operational logs under their own policies.</p>
+<p>For Review Retriever on the website and MCP server covered here, the application source contains no review database or persistence layer: a request is processed to produce its response. That does not mean no metadata exists anywhere. Vercel, network infrastructure, and upstream Apple or Google providers may retain ordinary request or operational logs under their own policies.</p>
 <p>Public review text and reviewer names can still be personal data, even when anyone can read them. Handle downloaded files under the rules that apply to your use.</p>
 <h2 id="analytics">Website analytics</h2>
 <p>The pages use Google Analytics. Review Intel sends a cleaned page location and referrer, without the app link, query parameters or fragment, and cuts a referrer down to its origin.</p>
@@ -60,9 +61,9 @@
 <h2 id="extension">Chrome extension</h2>
 <p>The optional Chrome extension does less. After you click it, it reads the current app-listing URL and opens Review Intel with that link in the form. Its <a href="extension/privacy/" data-control-id="privacy-a-own-policy">own policy</a> lists the exact permissions and handling.</p>
 <h2 id="choices">Your choices</h2>
-<p>You can use the website without an account. If you don’t want an app link and its reviews processed through these services, don’t start a collection or connect the MCP server. Your browser’s privacy controls or a content blocker can stop the analytics.</p>
+<p>You can use the website without an account. If you don’t want an app link and its reviews processed through these systems, don’t start a collection or connect the MCP server. Your browser’s privacy controls or a content blocker can stop the analytics.</p>
 <div class="ri-doc__end">
-<p class="ri-doc__contact">Questions: <a href="mailto:tools@doubledash.me" data-control-id="privacy-a-tools-doubledash-me">tools@doubledash.me</a></p>
+<p class="ri-doc__contact">Questions: <a href="mailto:support@willthiseverwork.com" data-control-id="privacy-a-support-willthiseverwork-com">support@willthiseverwork.com</a></p>
 <div class="ri-doc__related"><a class="ri-btn ri-btn--outline ri-btn--sm" href="terms/" data-control-id="privacy-a-terms">Terms</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="support/" data-control-id="privacy-a-support">Support</a></div>
 </div>
 </article>
@@ -88,14 +89,16 @@
 <p class="ri-footer__h">Help</p>
 <ul class="ri-footer__links">
 <li><a href="support/" data-control-id="privacy-a-support-2">Support</a></li>
-<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="privacy-a-email-feedback">Email feedback</a></li>
+<li><a href="mailto:support@willthiseverwork.com?subject=Review%20Intel%20feedback" data-control-id="privacy-a-email-feedback">Email feedback</a></li>
 <li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-review-intel-on-g2" data-control-id="privacy-a-review-intel-on-g2">Review Intel on G2</a></li>
-<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-support-the-tools" data-control-id="privacy-a-support-the-tools">Support the tools</a></li>
 </ul>
 </div>
 <div>
 <p class="ri-footer__h">Policies</p>
 <ul class="ri-footer__links">
+<li><a href="/terms/" data-footer-control="site_terms">Site terms</a></li>
+<li><a href="/privacy/" data-footer-control="site_privacy">Site privacy</a></li>
+<li><a href="/refunds/" data-footer-control="site_refunds">Refunds</a></li>
 <li><a href="privacy/" data-control-id="privacy-a-privacy">Privacy</a></li>
 <li><a href="terms/" data-control-id="privacy-a-terms-2">Terms</a></li>
 <li><a href="extension/privacy/" data-control-id="privacy-a-extension-privacy">Extension privacy</a></li>
@@ -106,7 +109,7 @@
 </nav>
 </div>
 <div class="ri-footer__bottom">
-<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=privacy-a-dasha-antonova" data-control-id="privacy-a-dasha-antonova">Dasha Antonova</a></span>
+<span>Individual Entrepreneur Startup factory, a Georgian sole proprietor</span>
 <a href="https://www.willthiseverwork.com/" data-control-id="privacy-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
 </div>
 </footer>

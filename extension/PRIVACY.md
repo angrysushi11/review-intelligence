@@ -47,4 +47,4 @@ Humans do not read extension-handled data except with your explicit consent, whe
 
 If you don’t want the hand-off to run, don’t click the toolbar button. You can remove the extension from Chrome at any time.
 
-Questions: [tools@doubledash.me](mailto:tools@doubledash.me)
+Questions: [support@willthiseverwork.com](mailto:support@willthiseverwork.com)

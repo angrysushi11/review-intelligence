@@ -153,8 +153,8 @@ test("the privacy disclosure matches the extension's narrow data boundary", asyn
   assert.match(privacy, /Get the reviews/i);
   assert.match(privacy, /Google Analytics/);
   assert.match(privacy, /Vercel/);
-  assert.match(privacy, /tools@doubledash\.me/);
-  assert.doesNotMatch(privacy, /dash@doubledash\.me/);
+  assert.match(privacy, /support@willthiseverwork\.com/);
+  assert.doesNotMatch(privacy, /(?:dash|tools)@doubledash\.me/);
 });
 
 test("all executable extension code is packaged and contains no remote-code loader", async () => {

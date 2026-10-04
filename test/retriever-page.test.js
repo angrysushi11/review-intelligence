@@ -491,8 +491,8 @@ test("the canonical setup guide covers every supported route and evidence bounda
   assert.match(html, /href="setup\/#codex"[^>]*>Codex<\/a>/);
   assert.match(html, /app-review-growth-analyzer-skill\.zip/);
   assert.match(html, /claude\.ai\/customize\/connectors/);
-  assert.match(html, /codex plugin marketplace add angrysushi11\/review-intelligence --ref main/);
-  assert.match(html, /codex plugin add review-intelligence@doubledash/);
+  assert.match(html, /Open the install guide and run its current commands in order/);
+  assert.match(html, /Open the install guide/);
   assert.match(html, /From the web tool/);
   assert.match(html, /Copy &amp; open ChatGPT/);
   assert.match(html, /With the plugin/);
@@ -500,7 +500,7 @@ test("the canonical setup guide covers every supported route and evidence bounda
   assert.match(html, /Google Play continues batch by batch/);
   assert.match(html, /Apple’s public feed stops earlier/);
   assert.match(html, /No review database/);
-  assert.match(html, /data-copy-target="setup-codex-commands"/);
+  assert.match(html, /data-control-id="setup-open-codex-install-guide"/);
   assert.match(html, /<script type="module" src="site\.js"><\/script>/);
   assert.doesNotMatch(html, /reviews\.doubledash\.me\/mcp|doubledash\.me\/tools\/review-intelligence/);
 });
@@ -536,8 +536,8 @@ test("the extension privacy page publishes the exact handoff and data boundary",
   assert.match(html, /coarse label such as ChatGPT, Claude, Perplexity, Gemini or Copilot/);
   assert.match(html, /press <strong>Get the reviews<\/strong>/);
   assert.match(html, /Chrome Web Store User Data Policy/);
-  assert.match(html, /tools@doubledash\.me/);
-  assert.doesNotMatch(html, /dash@doubledash\.me/);
+  assert.match(html, /support@willthiseverwork\.com/);
+  assert.doesNotMatch(html, /(?:dash|tools)@doubledash\.me/);
   assert.match(html, /href="\.\/"[^>]*>Review Intel<\/a>/);
 });
 
@@ -581,6 +581,7 @@ test("the setup bridge and retriever assets are published explicitly", async () 
   assert.equal(routes.get("/review-intel/api/extract"), "/api/extract.js");
   assert.equal(routes.get("/review-intel/app.js"), "/web/app.js");
   assert.equal(routes.get("/review-intel/analytics.js"), "/web/analytics.js");
+  assert.equal(routes.get("/review-intel/footer-analytics.js"), "/web/footer-analytics.js");
   assert.equal(routes.get("/review-intel/styles.css"), "/web/styles.css");
   assert.equal(routes.get("/review-intel/review-intelligence-method.js"), "/web/review-intelligence-method.js");
   assert.equal(routes.get("/review-intel/robots.txt"), "/web/robots.txt");

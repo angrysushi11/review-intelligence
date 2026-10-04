@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { sanitizeAnalyticsLabel, sanitizeAnalyticsSource, isProductionHost, trackReviewEvent } from "../web/analytics.js";
+import { FOOTER_CONTROL_IDS, isFooterAnalyticsHost, normalizeFooterControl, trackFooterControl } from "../web/footer-analytics.js";
 
 const origin = "https://www.willthiseverwork.com";
 
@@ -43,4 +44,20 @@ test("shared interaction tracking is silent on local and preview hosts", () => {
     assert.equal(window.dataLayer[0][1], "review_setup_copy");
     assert.deepEqual(window.dataLayer[0][2], { page_path: "/review-intel/setup/", control_id: "setup-endpoint-copy", outcome: "success" });
   } finally { globalThis.window = previous; }
+});
+
+test("footer policy tracking uses a fixed production-only control allowlist", () => {
+  assert.deepEqual(FOOTER_CONTROL_IDS, ["site_terms", "site_privacy", "site_refunds"]);
+  assert.equal(isFooterAnalyticsHost("www.willthiseverwork.com"), true);
+  assert.equal(isFooterAnalyticsHost("willthiseverwork.com"), true);
+  assert.equal(isFooterAnalyticsHost("review-retriever-preview.vercel.app"), false);
+  assert.equal(isFooterAnalyticsHost("localhost"), false);
+  assert.equal(normalizeFooterControl("site_terms"), "site_terms");
+  assert.equal(normalizeFooterControl("site_terms?email=private@example.com"), "");
+
+  const calls = [];
+  const gtag = (...args) => calls.push(args);
+  assert.equal(trackFooterControl(gtag, "site_privacy"), true);
+  assert.equal(trackFooterControl(gtag, "unknown"), false);
+  assert.deepEqual(calls, [["event", "footer_click", { control: "site_privacy" }]]);
 });

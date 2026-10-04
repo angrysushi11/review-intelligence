@@ -64,6 +64,7 @@
     { "src": "/review-intel/tokens.css", "dest": "/web/tokens.css" },
     { "src": "/review-intel/app.js", "dest": "/web/app.js" },
     { "src": "/review-intel/analytics.js", "dest": "/web/analytics.js" },
+    { "src": "/review-intel/footer-analytics.js", "dest": "/web/footer-analytics.js" },
     { "src": "/review-intel/analysis-prompt.js", "dest": "/web/analysis-prompt.js" },
     { "src": "/review-intel/markets.js", "dest": "/web/markets.js" },
     { "src": "/review-intel/storefronts.js", "dest": "/web/storefronts.js" },

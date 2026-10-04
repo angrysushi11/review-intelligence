@@ -9,7 +9,8 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="site.js"></script>
-  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/extension/privacy/"><meta property="og:title" content="Review Intel extension privacy"><meta property="og:description" content="How the Review Intel Chrome extension handles the current supported app-listing URL."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/extension/privacy/","name":"Review Intel extension privacy","description":"How the Review Intel Chrome extension handles the current supported app-listing URL."}</script></head>
+  <meta property="og:type" content="website"><meta property="og:url" content="https://www.willthiseverwork.com/review-intel/extension/privacy/"><meta property="og:title" content="Review Intel extension privacy"><meta property="og:description" content="How the Review Intel Chrome extension handles the current supported app-listing URL."><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.willthiseverwork.com/review-intel/extension/privacy/","name":"Review Intel extension privacy","description":"How the Review Intel Chrome extension handles the current supported app-listing URL."}</script>  <script type="module" src="footer-analytics.js"></script>
+</head>
   <body>
 <div class="ri-root ri-page" style="font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; color: #171717; background: #FAFAFA;">
 <div class="ri-frame">
@@ -44,8 +45,8 @@
 <p>The extension uses Chrome’s <code>activeTab</code> permission. It can read the current tab’s URL only after you click its toolbar button.</p>
 <p>If that URL is a supported App Store or Google Play app page, the extension keeps only the canonical public listing URL, without fragments or nonessential tracking parameters. It doesn’t handle unrelated pages, other store pages or privileged Chrome pages.</p>
 <h2 id="sends">What it sends</h2>
-<p>It opens <a href="./" data-control-id="extension-privacy-a-review-intel-2">Review Intel</a> in a new tab and puts the listing URL in the new tab’s URL fragment, so the form can be filled in. Fragments aren’t sent with the page request, and Review Intel clears the fragment after filling the form. Builds up to version 0.1.1 may keep opening reviews.doubledash.me until they update.</p>
-<p>The listing URL reaches the review service only if you press <strong>Get the reviews</strong>. The extension doesn’t collect reviews itself, and it never sends page content, form data, credentials, browsing history or the URL of an unsupported page.</p>
+<p>It opens <a href="./" data-control-id="extension-privacy-a-review-intel-2">Review Intel</a> in a new tab and puts the listing URL in the new tab’s URL fragment, so the form can be filled in. Fragments aren’t sent with the page request, and Review Intel clears the fragment after filling the form. Some earlier builds may first open a compatibility address before redirecting here.</p>
+<p>The listing URL reaches the extraction endpoint only if you press <strong>Get the reviews</strong>. The extension doesn’t collect reviews itself, and it never sends page content, form data, credentials, browsing history or the URL of an unsupported page.</p>
 <h2 id="storage">Storage and data use</h2>
 <p>The current supported app-listing URL counts as web browsing activity under Chrome Web Store policy. The extension handles that one URL only after your deliberate click, and only for the hand-off above. It has no storage permission and keeps neither the URL nor your browsing history. Chrome may still record the page it opens in your normal browser history.</p>
 <p>The extension has no account system, advertising, content scripts, host permissions, background collection or remotely hosted code. Its data isn’t sold, used for advertising or profiling, or used to decide creditworthiness or lending eligibility.</p>
@@ -59,7 +60,7 @@
 <h2 id="control">Your control</h2>
 <p>If you don’t want the hand-off to run, don’t click the toolbar button. You can remove the extension from Chrome at any time.</p>
 <div class="ri-doc__end">
-<p class="ri-doc__contact">Questions: <a href="mailto:tools@doubledash.me" data-control-id="extension-privacy-a-tools-doubledash-me">tools@doubledash.me</a></p>
+<p class="ri-doc__contact">Questions: <a href="mailto:support@willthiseverwork.com" data-control-id="extension-privacy-a-support-willthiseverwork-com">support@willthiseverwork.com</a></p>
 <div class="ri-doc__related"><a class="ri-btn ri-btn--outline ri-btn--sm" href="privacy/" data-control-id="extension-privacy-a-website-privacy">Website privacy</a><a class="ri-btn ri-btn--outline ri-btn--sm" href="https://github.com/angrysushi11/review-intelligence/blob/main/extension/PRIVACY.md?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-policy-source" data-control-id="extension-privacy-a-policy-source">Policy source</a></div>
 </div>
 </article>
@@ -85,14 +86,16 @@
 <p class="ri-footer__h">Help</p>
 <ul class="ri-footer__links">
 <li><a href="support/" data-control-id="extension-privacy-a-support">Support</a></li>
-<li><a href="mailto:tools@doubledash.me?subject=Review%20Intel%20feedback" data-control-id="extension-privacy-a-email-feedback">Email feedback</a></li>
+<li><a href="mailto:support@willthiseverwork.com?subject=Review%20Intel%20feedback" data-control-id="extension-privacy-a-email-feedback">Email feedback</a></li>
 <li><a href="https://www.g2.com/products/review-intel/reviews?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-review-intel-on-g2" data-control-id="extension-privacy-a-review-intel-on-g2">Review Intel on G2</a></li>
-<li><a href="https://ko-fi.com/dash_doubledash?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-support-the-tools" data-control-id="extension-privacy-a-support-the-tools">Support the tools</a></li>
 </ul>
 </div>
 <div>
 <p class="ri-footer__h">Policies</p>
 <ul class="ri-footer__links">
+<li><a href="/terms/" data-footer-control="site_terms">Site terms</a></li>
+<li><a href="/privacy/" data-footer-control="site_privacy">Site privacy</a></li>
+<li><a href="/refunds/" data-footer-control="site_refunds">Refunds</a></li>
 <li><a href="privacy/" data-control-id="extension-privacy-a-privacy">Privacy</a></li>
 <li><a href="terms/" data-control-id="extension-privacy-a-terms">Terms</a></li>
 <li><a href="extension/privacy/" data-control-id="extension-privacy-a-extension-privacy">Extension privacy</a></li>
@@ -103,7 +106,7 @@
 </nav>
 </div>
 <div class="ri-footer__bottom">
-<span>Built by <a href="https://doubledash.me/?utm_source=review_intel&amp;utm_medium=website&amp;utm_campaign=review_intel&amp;utm_content=extension-privacy-a-dasha-antonova" data-control-id="extension-privacy-a-dasha-antonova">Dasha Antonova</a></span>
+<span>Individual Entrepreneur Startup factory, a Georgian sole proprietor</span>
 <a href="https://www.willthiseverwork.com/" data-control-id="extension-privacy-a-one-of-the-will-this-ever-work-tools">One of the Will This Ever Work tools</a>
 </div>
 </footer>
