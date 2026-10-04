@@ -57,7 +57,7 @@ test("every public HTML footer carries the legal identity, site policies, and pr
 
   assert.equal(htmlFiles.length, 11);
   for (const [name, html] of sources) {
-    assert.match(html, /Individual Entrepreneur Startup factory, a Georgian sole proprietor/, `${name} should carry the exact legal identity`);
+    assert.match(html, /© 2026 IE Startup Factory/, `${name} should carry the exact legal identity`);
     assert.match(html, /src="footer-analytics\.js"/, `${name} should load the shared footer tracker`);
     assert.match(html, /href="\/terms\/" data-footer-control="site_terms"/, `${name} should link site terms`);
     assert.match(html, /href="\/privacy\/" data-footer-control="site_privacy"/, `${name} should link site privacy`);
