@@ -112,3 +112,7 @@ See [`SECURITY.md`](./SECURITY.md) for private vulnerability reporting. Do not i
 ## License
 
 Apache License 2.0. See [`LICENSE`](./LICENSE).
+
+### Approved share image
+
+The approved Review Intel card is in `scripts/og-cards.html`. After `npm ci` and `npx playwright install chromium`, `npm run render:og` recreates `web/og/og-review-intel-v2.png` at 1200×630 with the actual Geist font. Inspect the PNG before release. `npm run check:og` and `npm test` compare the card's counts/quote with the saved Calm example in `web/index.html` and verify the source/PNG hash manifest. Keep prior image URLs available; use a new versioned filename when the card changes again. If the demo changes, refresh the shared homepage card in the separate website repository too.

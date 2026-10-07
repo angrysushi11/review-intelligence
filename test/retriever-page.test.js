@@ -10,16 +10,16 @@ test("the share card leads with the review insight and serves its image", async 
   const html = await readFile(new URL("index.html", webUrl), "utf8");
   const setup = await readFile(new URL("setup.html", webUrl), "utf8");
   const svg = await readFile(new URL("review-retriever-og.svg", webUrl), "utf8");
-  const image = await readFile(new URL("og/og-review-intel.png", webUrl));
+  const image = await readFile(new URL("og/og-review-intel-v2.png", webUrl));
   const routes = JSON.parse(await readFile(new URL("../vercel.json", import.meta.url), "utf8")).routes;
-  const imagePath = "/review-intel/og/og-review-intel.png";
+  const imagePath = "/review-intel/og/og-review-intel-v2.png";
 
   assert.match(html, /property="og:title" content="See What People Love, Hate &amp; Want Changed \| Review Intel"/);
   assert.match(html, /property="og:description" content="[^"]*love, hate, and wish worked differently[^"]*public app reviews behind each finding/);
   assert.match(html, /name="twitter:title" content="See What People Love, Hate &amp; Want Changed \| Review Intel"/);
   assert.ok(html.includes(`content="https://www.willthiseverwork.com${imagePath}"`));
   assert.ok(setup.includes('content="https://www.willthiseverwork.com/review-intel/review-intel-og-20260926.png"'));
-  assert.ok(routes.some((route) => route.src === imagePath && route.dest === "/web/og/og-review-intel.png"));
+  assert.ok(routes.some((route) => route.src === imagePath && route.dest === "/web/og/og-review-intel-v2.png"));
   assert.match(svg, /See what people love,/);
   assert.match(svg, /hate, and wish worked/);
   assert.match(svg, /In products they already use/);

@@ -515,6 +515,10 @@
       "dest": "/web/og/og-review-intel.png"
     },
     {
+      "src": "/review-intel/og/og-review-intel-v2.png",
+      "dest": "/web/og/og-review-intel-v2.png"
+    },
+    {
       "src": "/review-intel/review-retriever-og.png",
       "dest": "/web/review-retriever-og.png"
     },
