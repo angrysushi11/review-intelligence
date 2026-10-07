@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Will This Ever Work share cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&display=swap">
+<style>
+/* Each .card is one approved 1200x630 share image. Render each by its id. */
+body{margin:0;background:#e9ebee;display:flex;flex-direction:column;align-items:flex-start;gap:40px;padding:40px}
+.card{width:1200px;height:630px;box-sizing:border-box;padding:52px 64px 48px;background:#fff;color:#121417;font-family:'Geist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;flex:none}
+.brand{display:flex;align-items:center;gap:15px}
+.brand svg{width:40px;height:40px;display:block}
+.brand span{font-size:24px;font-weight:600;letter-spacing:-0.01em}
+.main{flex:1 1 auto;display:flex;align-items:center;gap:40px}
+.copy{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font-size:20px;font-weight:500;color:#363b43}
+h1{margin:0;font-size:54px;font-weight:600;line-height:1.04;letter-spacing:-0.04em}
+.panel{width:498px;flex:none;border:1px solid #e3e6e9;border-radius:12px;background:#fff;box-shadow:0 12px 32px rgba(18,20,23,.08),0 1px 2px rgba(18,20,23,.06);overflow:hidden}
+.panel-head{padding:11px 20px;background:#f5f6f7;border-bottom:1px solid #e3e6e9;font-size:15px;font-weight:600;color:#363b43;text-align:center}
+.panel-body{padding:22px 28px 26px;display:flex;flex-direction:column}
+.big-row{display:flex;align-items:center;gap:14px}
+.big{font-size:80px;font-weight:600;letter-spacing:-0.045em;line-height:1}
+.big small{font-size:34px;font-weight:500;letter-spacing:-0.02em;color:#59606a}
+.loss{color:#b3261e}
+.tag{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:6px;background:#fbe9e7;color:#b3261e;font-size:15px;font-weight:600;letter-spacing:.06em}
+.caption{margin-top:8px;font-size:19px;color:#59606a}
+.rows{margin-top:20px;display:flex;flex-direction:column;border-bottom:1px solid #e3e6e9}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-top:1px solid #e3e6e9;font-size:18px;color:#363b43}
+.row b{font-size:19px;font-weight:600;color:#121417}
+.quote{padding:13px 0;border-top:1px solid #e3e6e9;font-size:17px;line-height:1.45;color:#363b43}
+.quote mark{background:rgba(255,224,122,.6);color:inherit;padding:1px 3px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.note{margin-top:20px;padding:13px 0;border-top:1px solid #e3e6e9;border-bottom:1px solid #e3e6e9;font-size:18px;line-height:1.4;color:#363b43}
+.note b{font-weight:600;color:#121417}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{padding:5px 10px;border:1px solid #e3e6e9;border-radius:7px;background:#f5f6f7;font-size:15px;color:#363b43}
+.chip b{font-weight:600;color:#121417}
+.foot{display:flex;align-items:center;justify-content:space-between}
+.url{font-size:20px;color:#59606a}
+.badges{display:flex;align-items:center;gap:8px}
+.badge{padding:5px 13px;border-radius:7px;background:#e5f2e9;color:#13773a;font-size:18px;font-weight:600}
+.badge.outline{padding:4px 12px;border:1px solid #cdd2d8;background:#fff;color:#121417}
+/* Home: three separate example boxes */
+.stack{width:498px;flex:none;display:flex;flex-direction:column;gap:12px}
+.mini{border:1px solid #e3e6e9;border-radius:12px;background:#fff;box-shadow:0 8px 22px rgba(18,20,23,.07),0 1px 2px rgba(18,20,23,.05);overflow:hidden}
+.mini-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 18px;background:#f5f6f7;border-bottom:1px solid #e3e6e9;font-size:14px;font-weight:600;color:#363b43}
+.mini-head span+span{font-weight:500;color:#59606a}
+.mini-body{display:flex;align-items:center;gap:16px;padding:12px 18px}
+.mini-num{flex:none;font-size:38px;font-weight:600;letter-spacing:-0.035em;line-height:1.1}
+.mini-num small{font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#59606a}
+.mini-text{min-width:0;font-size:17px;line-height:1.3;color:#363b43}
+</style>
+</head>
+<body>
+
+<div class="card" id="og-review-intel">
+<div class="brand"><svg viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="#121417"/><path d="M5 11.1H7.4L9.35 6.3L13.25 15.9L15.2 11.1H17.6" fill="none" stroke="#ffe07a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Will This Ever Work?</span></div>
+<div class="main">
+<div class="copy"><div class="eyebrow">Review Intel</div><h1>See what people love, hate and want changed.</h1></div>
+<div class="panel"><div class="panel-head">Calm, 450 Google Play reviews, United States</div><div class="panel-body">
+<div class="big-row"><span class="big">86<small> of 450</small></span><span class="tag">HATE</span></div>
+<div class="caption">reviews hate paying before they can try it</div>
+<div class="rows"><div class="quote"><mark>“Asked for money before I was even able to use the app.”</mark></div><div class="row"><span>Of those, 1★ reviews</span><b>65</b></div></div>
+</div></div>
+</div>
+<div class="foot"><span class="url">willthiseverwork.com/review-intel</span><span class="badge">Free, up to 500 reviews</span></div>
+</div>
+
+</body>
+</html>

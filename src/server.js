@@ -7,6 +7,7 @@ import { retrieveReviews } from "./retrieve.js";
 import { COUNTRY_LANGUAGE_OPTIONS, COUNTRY_OPTIONS } from "./storefronts.js";
 import { loadGooglePlayScraper } from "./google-play.js";
 import { searchApps, validateSearchInput } from "./app-search.js";
+import workspaceHandler from "../api/workspace.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -29,6 +30,28 @@ const server = createServer(async (request, response) => {
     }
 
     const appPath = url.pathname.replace(/^\/review-intel(?=\/|$)/, "") || "/";
+
+    const documentPages = new Set(["terms", "support", "plugin", "plugin-privacy", "plugin-terms", "plugin-support"]);
+    const documentName = appPath.replace(/^\/|\/$/g, "");
+    if (request.method === "GET" && documentPages.has(documentName)) {
+      return serveFile(response, path.join(webDir, `${documentName}.html`));
+    }
+
+    if (appPath === "/api/workspace") {
+      response.status = (status) => { response.statusCode = status; return response; };
+      response.json = (payload) => { response.end(JSON.stringify(payload)); return response; };
+      if (request.method === "POST") {
+        try { request.body = await readJsonBody(request, 1_800_000); }
+        catch (error) { return sendJson(response, { error: error.message }, error.statusCode || 400); }
+      }
+      return await workspaceHandler(request, response);
+    }
+
+    if (request.method === "GET" && (appPath === "/app" || appPath === "/app/")) {
+      response.setHeader("cache-control", "no-store");
+      response.setHeader("x-robots-tag", "noindex, nofollow");
+      return serveFile(response, path.join(webDir, "workspace.html"));
+    }
 
     if (request.method === "GET" && (appPath === "/setup" || appPath === "/setup/")) {
       return serveFile(response, path.join(webDir, "setup.html"));
@@ -93,9 +116,14 @@ server.listen(port, host, () => {
   console.log(`Review Intel web UI: http://${host}:${port}`);
 });
 
-async function readJsonBody(request) {
+async function readJsonBody(request, maxBytes = Infinity) {
   const chunks = [];
-  for await (const chunk of request) chunks.push(chunk);
+  let bytes = 0;
+  for await (const chunk of request) {
+    bytes += chunk.length;
+    if (bytes > maxBytes) throw Object.assign(new Error("Request body is too large."), { statusCode: 413 });
+    chunks.push(chunk);
+  }
   const raw = Buffer.concat(chunks).toString("utf8");
   return raw ? JSON.parse(raw) : {};
 }
@@ -121,11 +149,13 @@ function sendText(response, text, status = 200) {
 }
 
 function contentType(filePath) {
+  if (filePath.endsWith(".json")) return "application/json; charset=utf-8";
   if (filePath.endsWith(".html")) return "text/html; charset=utf-8";
   if (filePath.endsWith(".css")) return "text/css; charset=utf-8";
   if (filePath.endsWith(".js")) return "text/javascript; charset=utf-8";
   if (filePath.endsWith(".png")) return "image/png";
   if (filePath.endsWith(".svg")) return "image/svg+xml; charset=utf-8";
+  if (filePath.endsWith(".woff2")) return "font/woff2";
   return "application/octet-stream";
 }
 

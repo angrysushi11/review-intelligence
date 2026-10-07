@@ -15,3 +15,5 @@ web/review-retriever-og.svg.png
 .vercel/
 .env.local
 .env.*.local
+.vercel
+.env*

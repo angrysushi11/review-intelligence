@@ -1,94 +1,640 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" },
-    { "src": "web/**", "use": "@vercel/static" }
+    {
+      "src": "api/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "web/**",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
-    { "src": "/review-intel/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
-    { "src": "/review-intel/setup/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/setup/" } },
-    { "src": "/review-intel/privacy/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/privacy/" } },
-    { "src": "/review-intel/terms/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/terms/" } },
-    { "src": "/review-intel/support/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/support/" } },
-    { "src": "/review-intel/plugin/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin/" } },
-    { "src": "/review-intel/plugin-privacy/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-privacy/" } },
-    { "src": "/review-intel/plugin-terms/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-terms/" } },
-    { "src": "/review-intel/plugin-support/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-support/" } },
-    { "src": "/review-intel/extension/privacy/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/" } },
-    { "src": "/extension/privacy", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/" } },
-    { "src": "/extension/privacy/", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/" } },
-    { "src": "/review-intel/review-intelligence-method.md", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md" } },
-    { "src": "/review-intelligence-method.md", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md" } },
-    { "src": "/review-intel/app-review-growth-analyzer-skill.zip", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" } },
-    { "src": "/app-review-growth-analyzer-skill.zip", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip" } },
-    { "src": "/review-intel/llms.txt", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/llms.txt" } },
-    { "src": "/llms.txt", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/llms.txt" } },
-    { "src": "/review-intel/robots.txt", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/robots.txt" } },
-    { "src": "/robots.txt", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/robots.txt" } },
-    { "src": "/review-intel/sitemap.xml", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/sitemap.xml" } },
-    { "src": "/sitemap.xml", "has": [{ "type": "host", "value": "^reviews\\.doubledash\\.me$" }], "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/sitemap.xml" } },
-    { "src": "/mcp", "dest": "/api/mcp.js" },
-    { "src": "/api/search", "dest": "/api/search.js" },
-    { "src": "/api/extract", "dest": "/api/extract.js" },
-    { "src": "/review-intel", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/" } },
-    { "src": "/review-intel/", "dest": "/web/index.html" },
-    { "src": "/review-intel/mcp", "dest": "/api/mcp.js" },
-    { "src": "/review-intel/setup", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/setup/" } },
-    { "src": "/review-intel/setup/", "dest": "/web/setup.html" },
-    { "src": "/review-intel/privacy", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/privacy/" } },
-    { "src": "/review-intel/privacy/", "dest": "/web/privacy.html" },
-    { "src": "/review-intel/terms", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/terms/" } },
-    { "src": "/review-intel/terms/", "dest": "/web/terms.html" },
-    { "src": "/review-intel/support", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/support/" } },
-    { "src": "/review-intel/support/", "dest": "/web/support.html" },
-    { "src": "/review-intel/plugin", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin/" } },
-    { "src": "/review-intel/plugin/", "dest": "/web/plugin.html" },
-    { "src": "/review-intel/plugin-privacy", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-privacy/" } },
-    { "src": "/review-intel/plugin-privacy/", "dest": "/web/plugin-privacy.html" },
-    { "src": "/review-intel/plugin-terms", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-terms/" } },
-    { "src": "/review-intel/plugin-terms/", "dest": "/web/plugin-terms.html" },
-    { "src": "/review-intel/plugin-support", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/plugin-support/" } },
-    { "src": "/review-intel/plugin-support/", "dest": "/web/plugin-support.html" },
-    { "src": "/review-intel/api/search", "dest": "/api/search.js" },
-    { "src": "/review-intel/api/extract", "dest": "/api/extract.js" },
-    { "src": "/review-intel/styles.css", "dest": "/web/styles.css" },
-    { "src": "/review-intel/tokens.css", "dest": "/web/tokens.css" },
-    { "src": "/review-intel/app.js", "dest": "/web/app.js" },
-    { "src": "/review-intel/analytics.js", "dest": "/web/analytics.js" },
-    { "src": "/review-intel/analysis-prompt.js", "dest": "/web/analysis-prompt.js" },
-    { "src": "/review-intel/markets.js", "dest": "/web/markets.js" },
-    { "src": "/review-intel/storefronts.js", "dest": "/web/storefronts.js" },
-    { "src": "/review-intel/review-intelligence-method.js", "dest": "/web/review-intelligence-method.js" },
-    { "src": "/review-intel/review-intelligence-method.md", "dest": "/web/review-intelligence-method.md" },
-    { "src": "/review-intel/app-review-growth-analyzer-skill.zip", "dest": "/web/app-review-growth-analyzer-skill.zip" },
-    { "src": "/review-intel/review-retriever-og.png", "dest": "/web/review-retriever-og.png" },
-    { "src": "/review-intel/review-intel-og-20260926.png", "dest": "/web/review-intel-og-20260926.png" },
-    { "src": "/review-intel/review-retriever-og.svg", "dest": "/web/review-retriever-og.svg" },
-    { "src": "/review-intel/favicon.svg", "dest": "/web/favicon.svg" },
-    { "src": "/review-intel/extension/privacy", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/" } },
-    { "src": "/review-intel/extension/privacy/", "dest": "/web/extension-privacy.html" },
-    { "src": "/review-intel/robots.txt", "dest": "/web/robots.txt" },
-    { "src": "/review-intel/sitemap.xml", "dest": "/web/sitemap.xml" },
-    { "src": "/review-intel/llms.txt", "dest": "/web/llms.txt" },
-    { "src": "/setup/?", "status": 308, "headers": { "Location": "https://www.willthiseverwork.com/review-intel/setup/" } },
-    { "src": "/extension/privacy/?", "dest": "/web/extension-privacy.html" },
-    { "src": "/styles.css", "dest": "/web/styles.css" },
-    { "src": "/tokens.css", "dest": "/web/tokens.css" },
-    { "src": "/app.js", "dest": "/web/app.js" },
-    { "src": "/analytics.js", "dest": "/web/analytics.js" },
-    { "src": "/review-intelligence-method.js", "dest": "/web/review-intelligence-method.js" },
-    { "src": "/review-intelligence-method.md", "dest": "/web/review-intelligence-method.md" },
-    { "src": "/analysis-prompt.js", "dest": "/web/analysis-prompt.js" },
-    { "src": "/markets.js", "dest": "/web/markets.js" },
-    { "src": "/storefronts.js", "dest": "/web/storefronts.js" },
-    { "src": "/review-retriever-og.png", "dest": "/web/review-retriever-og.png" },
-    { "src": "/review-retriever-og.svg", "dest": "/web/review-retriever-og.svg" },
-    { "src": "/favicon.svg", "dest": "/web/favicon.svg" },
-    { "src": "/robots.txt", "dest": "/web/robots.txt" },
-    { "src": "/sitemap.xml", "dest": "/web/sitemap.xml" },
-    { "src": "/llms.txt", "dest": "/web/llms.txt" },
-    { "src": "/app-review-growth-analyzer-skill.zip", "dest": "/web/app-review-growth-analyzer-skill.zip" },
-    { "src": "/", "dest": "/web/index.html" }
+    {
+      "src": "/",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/"
+      }
+    },
+    {
+      "src": "/review-intel/app",
+      "status": 308,
+      "headers": {
+        "Location": "/review-intel/app/"
+      }
+    },
+    {
+      "src": "/review-intel/app/",
+      "dest": "/web/workspace.html",
+      "headers": {
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow"
+      }
+    },
+    {
+      "src": "/review-intel/api/workspace",
+      "dest": "/api/workspace.js"
+    },
+    {
+      "src": "/review-intel/workspace.css",
+      "dest": "/web/workspace.css"
+    },
+    {
+      "src": "/review-intel/workspace.js",
+      "dest": "/web/workspace.js"
+    },
+    {
+      "src": "/review-intel/workspace-demo.json",
+      "dest": "/web/workspace-demo.json"
+    },
+    {
+      "src": "/review-intel/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/"
+      }
+    },
+    {
+      "src": "/review-intel/setup/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/setup/"
+      }
+    },
+    {
+      "src": "/review-intel/privacy/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/terms/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/terms/"
+      }
+    },
+    {
+      "src": "/review-intel/support/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/support/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-privacy/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-terms/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-terms/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-support/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-support/"
+      }
+    },
+    {
+      "src": "/review-intel/extension/privacy/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/"
+      }
+    },
+    {
+      "src": "/extension/privacy",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/"
+      }
+    },
+    {
+      "src": "/extension/privacy/",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/review-intelligence-method.md",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md"
+      }
+    },
+    {
+      "src": "/review-intelligence-method.md",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/review-intelligence-method.md"
+      }
+    },
+    {
+      "src": "/review-intel/app-review-growth-analyzer-skill.zip",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip"
+      }
+    },
+    {
+      "src": "/app-review-growth-analyzer-skill.zip",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/app-review-growth-analyzer-skill.zip"
+      }
+    },
+    {
+      "src": "/review-intel/llms.txt",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/llms.txt"
+      }
+    },
+    {
+      "src": "/llms.txt",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/llms.txt"
+      }
+    },
+    {
+      "src": "/review-intel/robots.txt",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/robots.txt"
+      }
+    },
+    {
+      "src": "/robots.txt",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/robots.txt"
+      }
+    },
+    {
+      "src": "/review-intel/sitemap.xml",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/sitemap.xml"
+      }
+    },
+    {
+      "src": "/sitemap.xml",
+      "has": [
+        {
+          "type": "host",
+          "value": "^reviews\\.doubledash\\.me$"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/sitemap.xml"
+      }
+    },
+    {
+      "src": "/mcp",
+      "dest": "/api/mcp.js"
+    },
+    {
+      "src": "/api/search",
+      "dest": "/api/search.js"
+    },
+    {
+      "src": "/api/extract",
+      "dest": "/api/extract.js"
+    },
+    {
+      "src": "/review-intel",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/"
+      }
+    },
+    {
+      "src": "/review-intel/",
+      "dest": "/web/index.html"
+    },
+    {
+      "src": "/review-intel/mcp",
+      "dest": "/api/mcp.js"
+    },
+    {
+      "src": "/review-intel/setup",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/setup/"
+      }
+    },
+    {
+      "src": "/review-intel/setup/",
+      "dest": "/web/setup.html"
+    },
+    {
+      "src": "/review-intel/privacy",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/privacy/",
+      "dest": "/web/privacy.html"
+    },
+    {
+      "src": "/review-intel/terms",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/terms/"
+      }
+    },
+    {
+      "src": "/review-intel/terms/",
+      "dest": "/web/terms.html"
+    },
+    {
+      "src": "/review-intel/support",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/support/"
+      }
+    },
+    {
+      "src": "/review-intel/support/",
+      "dest": "/web/support.html"
+    },
+    {
+      "src": "/review-intel/plugin",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin/",
+      "dest": "/web/plugin.html"
+    },
+    {
+      "src": "/review-intel/plugin-privacy",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-privacy/",
+      "dest": "/web/plugin-privacy.html"
+    },
+    {
+      "src": "/review-intel/plugin-terms",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-terms/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-terms/",
+      "dest": "/web/plugin-terms.html"
+    },
+    {
+      "src": "/review-intel/plugin-support",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/plugin-support/"
+      }
+    },
+    {
+      "src": "/review-intel/plugin-support/",
+      "dest": "/web/plugin-support.html"
+    },
+    {
+      "src": "/review-intel/api/search",
+      "dest": "/api/search.js"
+    },
+    {
+      "src": "/review-intel/api/extract",
+      "dest": "/api/extract.js"
+    },
+    {
+      "src": "/review-intel/site.js",
+      "dest": "/web/site.js"
+    },
+    {
+      "src": "/review-intel/fonts/(.*)",
+      "dest": "/web/fonts/$1"
+    },
+    {
+      "src": "/review-intel/styles.css",
+      "dest": "/web/styles.css"
+    },
+    {
+      "src": "/review-intel/tokens.css",
+      "dest": "/web/tokens.css"
+    },
+    {
+      "src": "/review-intel/app.js",
+      "dest": "/web/app.js"
+    },
+    {
+      "src": "/review-intel/analytics.js",
+      "dest": "/web/analytics.js"
+    },
+    {
+      "src": "/review-intel/footer-analytics.js",
+      "dest": "/web/footer-analytics.js"
+    },
+    {
+      "src": "/review-intel/analysis-prompt.js",
+      "dest": "/web/analysis-prompt.js"
+    },
+    {
+      "src": "/review-intel/markets.js",
+      "dest": "/web/markets.js"
+    },
+    {
+      "src": "/review-intel/storefronts.js",
+      "dest": "/web/storefronts.js"
+    },
+    {
+      "src": "/review-intel/review-intelligence-method.js",
+      "dest": "/web/review-intelligence-method.js"
+    },
+    {
+      "src": "/review-intel/review-intelligence-method.md",
+      "dest": "/web/review-intelligence-method.md"
+    },
+    {
+      "src": "/review-intel/app-review-growth-analyzer-skill.zip",
+      "dest": "/web/app-review-growth-analyzer-skill.zip"
+    },
+    {
+      "src": "/review-intel/og/og-review-intel.png",
+      "dest": "/web/og/og-review-intel.png"
+    },
+    {
+      "src": "/review-intel/og/og-review-intel-v2.png",
+      "dest": "/web/og/og-review-intel-v2.png"
+    },
+    {
+      "src": "/review-intel/review-retriever-og.png",
+      "dest": "/web/review-retriever-og.png"
+    },
+    {
+      "src": "/review-intel/review-intel-og-20260926.png",
+      "dest": "/web/review-intel-og-20260926.png"
+    },
+    {
+      "src": "/review-intel/review-retriever-og.svg",
+      "dest": "/web/review-retriever-og.svg"
+    },
+    {
+      "src": "/review-intel/favicon.svg",
+      "dest": "/web/favicon.svg"
+    },
+    {
+      "src": "/review-intel/extension/privacy",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/extension/privacy/"
+      }
+    },
+    {
+      "src": "/review-intel/extension/privacy/",
+      "dest": "/web/extension-privacy.html"
+    },
+    {
+      "src": "/review-intel/robots.txt",
+      "dest": "/web/robots.txt"
+    },
+    {
+      "src": "/review-intel/sitemap.xml",
+      "dest": "/web/sitemap.xml"
+    },
+    {
+      "src": "/review-intel/llms.txt",
+      "dest": "/web/llms.txt"
+    },
+    {
+      "src": "/setup/?",
+      "status": 308,
+      "headers": {
+        "Location": "https://www.willthiseverwork.com/review-intel/setup/"
+      }
+    },
+    {
+      "src": "/extension/privacy/?",
+      "dest": "/web/extension-privacy.html"
+    },
+    {
+      "src": "/styles.css",
+      "dest": "/web/styles.css"
+    },
+    {
+      "src": "/tokens.css",
+      "dest": "/web/tokens.css"
+    },
+    {
+      "src": "/app.js",
+      "dest": "/web/app.js"
+    },
+    {
+      "src": "/analytics.js",
+      "dest": "/web/analytics.js"
+    },
+    {
+      "src": "/review-intelligence-method.js",
+      "dest": "/web/review-intelligence-method.js"
+    },
+    {
+      "src": "/review-intelligence-method.md",
+      "dest": "/web/review-intelligence-method.md"
+    },
+    {
+      "src": "/analysis-prompt.js",
+      "dest": "/web/analysis-prompt.js"
+    },
+    {
+      "src": "/markets.js",
+      "dest": "/web/markets.js"
+    },
+    {
+      "src": "/storefronts.js",
+      "dest": "/web/storefronts.js"
+    },
+    {
+      "src": "/review-retriever-og.png",
+      "dest": "/web/review-retriever-og.png"
+    },
+    {
+      "src": "/review-retriever-og.svg",
+      "dest": "/web/review-retriever-og.svg"
+    },
+    {
+      "src": "/favicon.svg",
+      "dest": "/web/favicon.svg"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/web/robots.txt"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/web/sitemap.xml"
+    },
+    {
+      "src": "/llms.txt",
+      "dest": "/web/llms.txt"
+    },
+    {
+      "src": "/app-review-growth-analyzer-skill.zip",
+      "dest": "/web/app-review-growth-analyzer-skill.zip"
+    },
+    {
+      "src": "/",
+      "dest": "/web/index.html"
+    }
   ]
 }

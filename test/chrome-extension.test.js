@@ -144,15 +144,17 @@ test("the privacy disclosure matches the extension's narrow data boundary", asyn
 
   assert.match(privacy, /does one thing/i);
   assert.match(privacy, /activeTab/);
-  assert.match(privacy, /does not handle unrelated pages/i);
-  assert.match(privacy, /does not retrieve reviews itself/i);
+  assert.match(privacy, /doesn’t handle unrelated pages/i);
+  assert.match(privacy, /doesn’t collect reviews itself/i);
   assert.match(privacy, /no storage permission/i);
   assert.match(privacy, /web browsing activity/i);
   assert.match(privacy, /Chrome Web Store User Data Policy/i);
+  assert.match(privacy, /Limited Use requirements/i);
+  assert.match(privacy, /Get the reviews/i);
   assert.match(privacy, /Google Analytics/);
   assert.match(privacy, /Vercel/);
-  assert.match(privacy, /tools@doubledash\.me/);
-  assert.doesNotMatch(privacy, /dash@doubledash\.me/);
+  assert.match(privacy, /support@willthiseverwork\.com/);
+  assert.doesNotMatch(privacy, /(?:dash|tools)@doubledash\.me/);
 });
 
 test("all executable extension code is packaged and contains no remote-code loader", async () => {

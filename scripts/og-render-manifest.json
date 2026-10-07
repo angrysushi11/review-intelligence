@@ -1,0 +1,22 @@
+{
+  "sourceSha256": "0a479eee41247ce6cbae46303fb68388bb84764e9d757b3fddc98ea230e6b9c9",
+  "chromium": "149.0.7827.55",
+  "deviceScaleFactor": 1,
+  "cards": [
+    {
+      "id": "og-review-intel",
+      "filename": "og-review-intel-v2.png",
+      "width": 1200,
+      "height": 630,
+      "sha256": "ed8ed5ae964d121926e3868ddaf2b0af4b025d7b2915825f04ca158a2e0571c5",
+      "fonts": [
+        {
+          "familyName": "Geist",
+          "postScriptName": "Geist-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 42
+        }
+      ]
+    }
+  ]
+}
