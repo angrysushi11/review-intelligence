@@ -1,31 +1,10 @@
-import { isProductionHost, trackReviewEvent } from "./analytics.js";
+import { initializeReviewAnalytics, trackReviewEvent } from "./analytics.js";
 
 // Keep page locations, referrers and campaign attribution separate from inputs.
-if (isProductionHost(window.location.hostname)) {
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
-  const campaignFields = {
-    utm_id: "campaign_id", utm_source: "campaign_source", utm_medium: "campaign_medium",
-    utm_campaign: "campaign_name", utm_content: "campaign_content", utm_term: "campaign_term",
-  };
+if (initializeReviewAnalytics(window, document)) {
   const params = new URLSearchParams(window.location.search);
-  const campaignConfig = {};
-  for (const [key, field] of Object.entries(campaignFields)) {
-    const value = params.get(key)?.trim() || "";
-    if (/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(value)) campaignConfig[field] = value;
-  }
   let referrer;
   try { referrer = new URL(document.referrer); } catch { /* No valid referrer. */ }
-  const loader = document.createElement("script");
-  loader.async = true;
-  loader.src = "https://www.googletagmanager.com/gtag/js?id=G-R8F1QX6HKC";
-  document.head.append(loader);
-  window.gtag("js", new Date());
-  window.gtag("config", "G-R8F1QX6HKC", {
-    page_location: `${window.location.origin}${window.location.pathname}`,
-    page_referrer: referrer && /^https?:$/.test(referrer.protocol) ? `${referrer.origin}/` : "",
-    ...campaignConfig,
-  });
   const host = referrer?.hostname || "";
   const source = params.get("utm_source")?.toLowerCase() || "";
   const domain = (value) => host === value || host.endsWith(`.${value}`);

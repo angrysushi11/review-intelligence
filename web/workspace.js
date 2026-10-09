@@ -1,4 +1,5 @@
 import { DEFAULT_QUESTION_ID, QUESTION_GROUPS, findQuestion } from "./analysis-prompt.js";
+import { initializeReviewAnalytics } from "./analytics.js";
 
 const API_URL = "/review-intel/api/workspace";
 const DEMO_URL = "/review-intel/workspace-demo.json";
@@ -8,12 +9,7 @@ const $ = (selector) => document.querySelector(selector);
 const sourceForm = $("#source-form"), appUrl = $("#app-url"), market = $("#market"), limit = $("#review-limit"), sampleButton = $("#sample-button"), samplePanel = $("#sample-panel"), sampleFacts = $("#sample-facts"), sampleCaption = $("#sample-caption"), questionGroups = $("#question-groups"), questions = $("#questions"), modelSelect = $("#model-select"), analyzeButton = $("#analyze-button"), trialNote = $("#trial-note"), warning = $("#consumption-warning"), reportEmpty = $("#report-empty"), reportView = $("#report-view"), liveStatus = $("#live-status"), accessDialog = $("#access-dialog"), evidenceDialog = $("#evidence-dialog"), appResults = $("#app-results");
 
 function initializeAnalytics() {
-  if (!["reviews.doubledash.me", "willthiseverwork.com", "www.willthiseverwork.com"].includes(window.location.hostname)) return;
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
-  const script = document.createElement("script"); script.async = true; script.src = "https://www.googletagmanager.com/gtag/js?id=G-R8F1QX6HKC"; document.head.append(script);
-  let referrer = ""; try { const url = document.referrer ? new URL(document.referrer) : null; referrer = url && /^https?:$/.test(url.protocol) ? `${url.origin}/` : ""; } catch {}
-  window.gtag("js", new Date()); window.gtag("config", "G-R8F1QX6HKC", { page_location: `${window.location.origin}${window.location.pathname}`, page_referrer: referrer });
+  if (!initializeReviewAnalytics(window, document)) return;
   document.addEventListener("click", (event) => { const control = event.target.closest("[data-track]"); if (control?.dataset.track) window.gtag("event", "review_workspace_control", { control_id: control.dataset.track }); });
 }
 function track(name, details = {}) { window.gtag?.("event", name, details); }

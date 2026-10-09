@@ -673,7 +673,7 @@ test("production analytics keeps page URLs private while passing only validated 
   const setupScript = inlineScript;
   assert.match(html, /src="site\.js"/);
   assert.match(setupHtml, /src="site\.js"/);
-  assert.match(source, /G-R8F1QX6HKC/);
+  assert.match(shared, /G-R8F1QX6HKC/);
   assert.doesNotMatch(`${html}\n${setupHtml}\n${source}`, /G-5W48W3ZCBF/);
 
   function execute(script, href, referrer = "") {
@@ -683,6 +683,7 @@ test("production analytics keeps page URLs private while passing only validated 
       URL,
       URLSearchParams,
       document: {
+        cookie: "",
         referrer,
         createElement: () => ({}),
         head: { append: () => {} },
@@ -697,8 +698,12 @@ test("production analytics keeps page URLs private while passing only validated 
           origin: url.origin,
           pathname: url.pathname,
           search: url.search,
-          href: url.href
-        }
+          href: url.href,
+          hash: url.hash,
+          protocol: url.protocol
+        },
+        localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+        history: { state: null, replaceState: () => {} }
       }
     };
     runInNewContext(script, context);
@@ -714,14 +719,14 @@ test("production analytics keeps page URLs private while passing only validated 
   const aiEvent = analyticsCalls.find(([command, name]) => command === "event" && name === "ai_referral_landing");
 
   assert.deepEqual(JSON.parse(JSON.stringify(pageConfig[2])), {
+    page_location: "https://www.willthiseverwork.com/review-intel/", page_referrer: "https://www.willthiseverwork.com/",
+    campaign_id: "RI2026", campaign_source: "Threads", campaign_medium: "social", campaign_name: "review_intel", campaign_content: "post", campaign_term: "app-reviews", send_page_view: false
+  });
+  const pageView = analyticsCalls.find(([command, name]) => command === "event" && name === "page_view");
+  assert.deepEqual(JSON.parse(JSON.stringify(pageView[2])), {
     page_location: "https://www.willthiseverwork.com/review-intel/",
     page_referrer: "https://www.willthiseverwork.com/",
-    campaign_id: "RI2026",
-    campaign_source: "Threads",
-    campaign_medium: "social",
-    campaign_name: "review_intel",
-    campaign_content: "post",
-    campaign_term: "app-reviews"
+    campaign_id: "RI2026", campaign_source: "Threads", campaign_medium: "social", campaign_name: "review_intel", campaign_content: "post", campaign_term: "app-reviews"
   });
   assert.equal(aiEvent, undefined);
 
@@ -730,8 +735,8 @@ test("production analytics keeps page URLs private while passing only validated 
     "https://www.willthiseverwork.com/review-intel/setup/?utm_source=threads&utm_medium=social&utm_campaign=private%40example.com&utm_content=post%2Fwith%2Fpath&utm_term=x%3Femail%3Dprivate",
     "https://search.example.com/results?q=private"
   );
-  const unsafePageConfig = unsafeCampaignCalls.find(([command]) => command === "config");
-  assert.deepEqual(JSON.parse(JSON.stringify(unsafePageConfig[2])), {
+  const unsafePageView = unsafeCampaignCalls.find(([command, name]) => command === "event" && name === "page_view");
+  assert.deepEqual(JSON.parse(JSON.stringify(unsafePageView[2])), {
     page_location: "https://www.willthiseverwork.com/review-intel/setup/",
     page_referrer: "https://search.example.com/",
     campaign_source: "threads",
