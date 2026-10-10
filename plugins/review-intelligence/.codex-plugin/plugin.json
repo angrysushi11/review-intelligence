@@ -1,0 +1,36 @@
+{
+  "name": "review-intelligence",
+  "version": "0.3.2",
+  "description": "Analyze public app reviews to see what people love, hate, and wish worked differently before deciding what to build, improve, test, or say.",
+  "author": {
+    "name": "Dasha Antonova",
+    "url": "https://www.willthiseverwork.com/#about"
+  },
+  "homepage": "https://www.willthiseverwork.com/review-intel/",
+  "repository": "https://github.com/angrysushi11/review-intelligence",
+  "keywords": [
+    "app reviews",
+    "review analysis",
+    "product strategy",
+    "growth",
+    "ASO"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Review Intelligence",
+    "shortDescription": "See what app users want",
+    "longDescription": "Use Review Intelligence when you need to see what people love, hate, and wish worked differently in products they already use. Give it an App Store or Google Play URL, or upload a review export. It brings public written reviews together for evidence-backed analysis of product friction, unmet needs, customer language, pricing, growth, and ASO. Findings point to decisions worth researching or testing; they do not prove demand, revenue, or causality.",
+    "developerName": "DoubleDash by Dasha Antonova",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://www.willthiseverwork.com/review-intel/",
+    "defaultPrompt": [
+      "Retrieve reviews from this App Store or Google Play URL and show me the first useful read.",
+      "Analyze this review export and find the strongest product, pricing, and ASO gaps.",
+      "Compare these competitor app URLs and reveal the most actionable gap."
+    ]
+  }
+}

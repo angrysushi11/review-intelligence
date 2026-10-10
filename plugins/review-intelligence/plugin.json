@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "review-intelligence",
+  "version": "0.3.2",
+  "description": "Analyze public app reviews to see what people love, hate, and wish worked differently before deciding what to build, improve, test, or say.",
+  "author": {
+    "name": "Dasha Antonova",
+    "url": "https://www.willthiseverwork.com/#about"
+  },
+  "homepage": "https://www.willthiseverwork.com/review-intel/",
+  "repository": "https://github.com/angrysushi11/review-intelligence",
+  "license": "Apache-2.0",
+  "keywords": [
+    "app reviews",
+    "review analysis",
+    "product strategy",
+    "growth",
+    "ASO"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "review-intelligence": {
+      "type": "http",
+      "url": "https://www.willthiseverwork.com/review-intel/mcp"
+    }
+  }
+}
