@@ -79,6 +79,13 @@ test("direction D preserves the source example, accessible controls and free han
   assert.match(styles, /focus-visible/);
   assert.match(appJs, /CHATGPT_REVIEW_CAP/);
   assert.match(appJs, /QUESTION_GROUPS/);
+  assert.match(appJs, /image\.loading = "lazy"/);
+  assert.match(appJs, /image\.decoding = "async"/);
+  assert.match(appJs, /512x512bb\\\.jpg/);
+  assert.match(appJs, /\$\{iconUrl\}=s128/);
+  assert.match(appJs, /image\.addEventListener\("error", \(\) => image\.remove\(\)/);
+  assert.match(styles, /\.ri-app-tile \{[^}]*overflow: hidden/);
+  assert.match(styles, /\.ri-app-tile img \{[^}]*object-fit: cover/);
 });
 
 test("the extension handoff prefills locally, clears the fragment, and waits for user action", async () => {

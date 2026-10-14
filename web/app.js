@@ -289,6 +289,16 @@ function renderSearchResults() {
     const icon = document.createElement("span");
     icon.className = "ri-app-tile";
     icon.setAttribute("aria-hidden", "true");
+    const iconUrl = searchIconUrl(result);
+    if (iconUrl) {
+      const image = document.createElement("img");
+      image.src = iconUrl;
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.addEventListener("error", () => image.remove(), { once: true });
+      icon.append(image);
+    }
     button.append(icon);
 
     const copy = document.createElement("span");
@@ -313,6 +323,17 @@ function renderSearchResults() {
   appUrl.setAttribute("aria-expanded", String(expanded));
   if (activeSearchResult >= 0) appUrl.setAttribute("aria-activedescendant", `search-result-${activeSearchResult}`);
   else appUrl.removeAttribute("aria-activedescendant");
+}
+
+function searchIconUrl(result) {
+  const iconUrl = safeImageUrl(result.iconUrl);
+  if (!iconUrl) return "";
+
+  if (result.store === "app_store") {
+    return iconUrl.replace(/512x512bb\.jpg(?=([?#]|$))/i, "128x128bb.jpg");
+  }
+
+  return result.store === "google_play" ? `${iconUrl}=s128` : iconUrl;
 }
 
 function closeSearchResults() {
