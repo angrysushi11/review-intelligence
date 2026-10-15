@@ -39,8 +39,8 @@ You can also upload a Markdown review export and ask for product, pricing, growt
 - `.mcp.json` — compatibility connection for existing Codex plugin installs
 - `skills/app-review-growth-analyzer/` — the Review Intelligence workflow and evidence protocol
 
-Product: https://www.willthiseverwork.com/review-intel/
+Product: https://appreviewintel.com/?utm_source=github&utm_medium=referral
 
-Setup guide: https://www.willthiseverwork.com/review-intel/setup/
+Setup guide: https://appreviewintel.com/setup/?utm_source=github&utm_medium=referral
 
-Privacy: https://www.willthiseverwork.com/review-intel/privacy/
+Privacy: https://appreviewintel.com/privacy/?utm_source=github&utm_medium=referral

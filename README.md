@@ -21,9 +21,9 @@ Start a new task after installation so the skill and its connection load. The fi
 
 ## Use it
 
-- Review Intel (free web tool, up to 500 reviews, no account): <https://www.willthiseverwork.com/review-intel/>
-- Setup for Claude, ChatGPT, Codex and other MCP clients: <https://www.willthiseverwork.com/review-intel/setup/>
-- Privacy: <https://www.willthiseverwork.com/review-intel/privacy/>
+- Review Intel (free web tool, up to 500 reviews, no account): <https://appreviewintel.com/?utm_source=github&utm_medium=referral>
+- Setup for Claude, ChatGPT, Codex and other MCP clients: <https://appreviewintel.com/setup/?utm_source=github&utm_medium=referral>
+- Privacy: <https://appreviewintel.com/privacy/?utm_source=github&utm_medium=referral>
 
 ## License
 

@@ -6,7 +6,7 @@
     "name": "Dasha Antonova",
     "url": "https://www.willthiseverwork.com/#about"
   },
-  "homepage": "https://www.willthiseverwork.com/review-intel/",
+  "homepage": "https://appreviewintel.com/",
   "repository": "https://github.com/angrysushi11/review-intelligence",
   "keywords": [
     "app reviews",
@@ -26,7 +26,7 @@
     "capabilities": [
       "Read"
     ],
-    "websiteURL": "https://www.willthiseverwork.com/review-intel/",
+    "websiteURL": "https://appreviewintel.com/",
     "defaultPrompt": [
       "Retrieve reviews from this App Store or Google Play URL and show me the first useful read.",
       "Analyze this review export and find the strongest product, pricing, and ASO gaps.",
